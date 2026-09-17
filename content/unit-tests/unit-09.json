@@ -1,0 +1,1143 @@
+{
+  "unit": 9,
+  "title": "Aggregate demand and aggregate supply",
+  "questions": [
+    {
+      "id": "u9-mcq-01",
+      "format": "mcq",
+      "section": "9.1",
+      "concepts": [
+        "c9-aggregate-demand-curve"
+      ],
+      "command_term": "explain",
+      "marks": 1,
+      "prompt": "Which of the following best explains why the aggregate demand (AD) curve slopes downward?",
+      "options": [
+        {
+          "id": "a",
+          "text": "A fall in the price level raises the real value of people's money and savings, so they buy more output",
+          "misconception": null
+        },
+        {
+          "id": "b",
+          "text": "As the price level falls, firms choose to produce more output",
+          "misconception": "This describes a supply-side response; the AD curve is about how much buyers want to buy, not how much firms produce."
+        },
+        {
+          "id": "c",
+          "text": "When the price of one good falls, buyers switch to it from other goods",
+          "misconception": "This is the substitution effect for a single good; when the whole price level falls there are no cheaper domestic goods to switch to."
+        },
+        {
+          "id": "d",
+          "text": "A lower price level causes the government to raise its spending",
+          "misconception": "Government spending is set by policy decisions, not by the price level, so it would shift AD rather than explain its slope."
+        }
+      ],
+      "answer": "a",
+      "hints": [
+        "Think about the reasons that apply to the whole economy when the average price level changes, not to a single product.",
+        "Ask what happens to the purchasing power of the money and savings people already hold when all prices change."
+      ],
+      "targets": "Wealth/real balance effect as a reason for the AD slope; not micro substitution"
+    },
+    {
+      "id": "u9-sa-01",
+      "format": "short_answer",
+      "section": "9.1",
+      "concepts": [
+        "c9-aggregate-demand"
+      ],
+      "command_term": "define",
+      "marks": 2,
+      "prompt": "Define aggregate demand.",
+      "marking_points": [
+        "The total planned spending on / quantity of real output (real GDP) that all buyers in an economy want to buy [1]",
+        "at each possible price level, over a given time period (ceteris paribus) [1]"
+      ],
+      "model_answer_note": "A full-mark answer refers to total real output or spending by all buyers in the economy and links it to different price levels.",
+      "hints": [
+        "This is the macro version of a term you met in microeconomics, applied to the whole economy.",
+        "Say who the buyers are, what they are buying, and what variable changes along the curve."
+      ],
+      "targets": "Precise definition including 'all buyers' and 'different price levels'"
+    },
+    {
+      "id": "u9-mcq-02",
+      "format": "mcq",
+      "section": "9.1",
+      "concepts": [
+        "c9-aggregate-demand",
+        "c9-aggregate-demand-consists-demand-of"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Surveys in Veld show that households have become much more pessimistic about their future job security. Which of the following is the most likely effect?",
+      "options": [
+        {
+          "id": "a",
+          "text": "A movement up along the AD curve",
+          "misconception": "A movement along AD is caused only by a change in the price level, not by a change in confidence."
+        },
+        {
+          "id": "b",
+          "text": "The AD curve shifts to the right",
+          "misconception": "Lower confidence makes households cut spending and save more, so AD falls rather than rises."
+        },
+        {
+          "id": "c",
+          "text": "The AD curve shifts to the left",
+          "misconception": null
+        },
+        {
+          "id": "d",
+          "text": "The short-run aggregate supply (SRAS) curve shifts to the left",
+          "misconception": "Consumer confidence affects spending decisions, which is the demand side, not firms' costs of production."
+        }
+      ],
+      "answer": "c",
+      "hints": [
+        "Decide which component of AD is affected by how confident households feel.",
+        "Then decide whether this is a change in the price level (movement) or a change in a non-price determinant (shift), and in which direction."
+      ],
+      "targets": "Consumer confidence as a non-price determinant; shift vs movement along AD"
+    },
+    {
+      "id": "u9-mcq-03",
+      "format": "mcq",
+      "section": "9.1",
+      "concepts": [
+        "c9-aggregate-demand",
+        "c9-aggregate-demand-consists-demand-of"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Which of the following would most likely shift the AD curve of Veld to the right through higher investment spending?",
+      "options": [
+        {
+          "id": "a",
+          "text": "A rise in interest rates set by the central bank",
+          "misconception": "Higher interest rates make borrowing for investment more expensive, so investment would fall, not rise."
+        },
+        {
+          "id": "b",
+          "text": "A rise in business confidence about future sales",
+          "misconception": null
+        },
+        {
+          "id": "c",
+          "text": "An appreciation of the zed, Veld's currency",
+          "misconception": "An appreciation affects net exports (making exports dearer), and would tend to reduce AD, not raise investment."
+        },
+        {
+          "id": "d",
+          "text": "An increase in household indebtedness",
+          "misconception": "Higher household debt tends to reduce consumption; it is not a determinant of firms' investment."
+        }
+      ],
+      "answer": "b",
+      "hints": [
+        "Focus on the determinants of investment (I) by firms.",
+        "Ask which option makes firms expect higher future profits or makes investment cheaper."
+      ],
+      "targets": "Determinants of investment: business confidence vs interest rates"
+    },
+    {
+      "id": "u9-sa-02",
+      "format": "short_answer",
+      "section": "9.1",
+      "concepts": [
+        "c9-wealth",
+        "c9-indebtedness",
+        "c9-aggregate-demand-consists-demand-of"
+      ],
+      "command_term": "outline",
+      "marks": 2,
+      "prompt": "Outline two factors, other than a change in income, that could cause consumption spending in Veld to increase.",
+      "marking_points": [
+        "One valid factor with brief explanation, e.g. a rise in wealth (higher house or share prices) makes households feel richer and spend more [1]",
+        "A second valid factor with brief explanation, e.g. lower interest rates, lower household indebtedness or higher consumer confidence encourage borrowing and spending [1]"
+      ],
+      "model_answer_note": "A full-mark answer names two distinct non-income determinants of consumption and says briefly how each raises spending.",
+      "hints": [
+        "Look at the non-income determinants of consumption (C) from your notes.",
+        "For each factor, state the change and then link it to households being willing or able to spend more."
+      ],
+      "targets": "Non-income determinants of consumption"
+    },
+    {
+      "id": "u9-mcq-04",
+      "format": "mcq",
+      "section": "9.1",
+      "concepts": [
+        "c9-aggregate-demand-consists-demand-of"
+      ],
+      "command_term": "calculate",
+      "marks": 1,
+      "prompt": "Table 1 shows spending in Kuva in one year. What is the value of aggregate demand?",
+      "table": {
+        "caption": "Table 1: Spending in Kuva (billion kuvs)",
+        "columns": [
+          "Component",
+          "Value"
+        ],
+        "rows": [
+          [
+            "Consumption (C)",
+            "60"
+          ],
+          [
+            "Investment (I)",
+            "15"
+          ],
+          [
+            "Government spending (G)",
+            "20"
+          ],
+          [
+            "Exports (X)",
+            "25"
+          ],
+          [
+            "Imports (M)",
+            "30"
+          ]
+        ]
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": "150 billion kuvs",
+          "misconception": "This adds imports to the total, but imports are spending on foreign output and must be subtracted."
+        },
+        {
+          "id": "b",
+          "text": "120 billion kuvs",
+          "misconception": "This includes exports but forgets to subtract imports, so it uses X instead of (X − M)."
+        },
+        {
+          "id": "c",
+          "text": "95 billion kuvs",
+          "misconception": "This leaves out net exports altogether, but negative net exports still reduce AD."
+        },
+        {
+          "id": "d",
+          "text": "90 billion kuvs",
+          "misconception": null
+        }
+      ],
+      "answer": "d",
+      "hints": [
+        "Use the formula for the components of aggregate demand.",
+        "Add the domestic spending components, then add net exports, remembering that net exports can be negative."
+      ],
+      "targets": "AD = C + I + G + (X − M), handling negative net exports"
+    },
+    {
+      "id": "u9-sa-03",
+      "format": "short_answer",
+      "section": "9.1",
+      "concepts": [
+        "c9-aggregate-demand",
+        "c9-aggregate-demand-consists-demand-of"
+      ],
+      "command_term": "calculate",
+      "marks": 3,
+      "prompt": "Table 2 shows spending in Veld in two years. Export demand fell in Year 2 while imports rose. Calculate aggregate demand in each year and the percentage change in aggregate demand between Year 1 and Year 2.",
+      "table": {
+        "caption": "Table 2: Spending in Veld (billion zeds)",
+        "columns": [
+          "Component",
+          "Year 1",
+          "Year 2"
+        ],
+        "rows": [
+          [
+            "Consumption (C)",
+            "250",
+            "250"
+          ],
+          [
+            "Investment (I)",
+            "60",
+            "60"
+          ],
+          [
+            "Government spending (G)",
+            "80",
+            "80"
+          ],
+          [
+            "Exports (X)",
+            "90",
+            "70"
+          ],
+          [
+            "Imports (M)",
+            "80",
+            "90"
+          ]
+        ]
+      },
+      "marking_points": [
+        "Year 1: AD = 250 + 60 + 80 + (90 − 80) = 400 billion zeds [1]",
+        "Year 2: AD = 250 + 60 + 80 + (70 − 90) = 370 billion zeds [1]",
+        "Percentage change = (370 − 400) / 400 × 100 = −7.5% [1]"
+      ],
+      "model_answer_note": "Both AD values with working and a percentage change of −7.5% (a fall of 7.5%) earns full marks; own-figure rule applies for the last mark.",
+      "hints": [
+        "Use the AD formula for each year, taking care with the net exports term.",
+        "Find each year's total first, then use (new − old) / old × 100 for the percentage change."
+      ],
+      "targets": "Trade balance and real GDP: calculating AD with net exports turning negative"
+    },
+    {
+      "id": "u9-mcq-05",
+      "format": "mcq",
+      "section": "9.2",
+      "concepts": [
+        "c9-short-run-aggregate-supply-curve-sras"
+      ],
+      "command_term": "explain",
+      "marks": 1,
+      "prompt": "Why does the short-run aggregate supply (SRAS) curve slope upward?",
+      "options": [
+        {
+          "id": "a",
+          "text": "A higher price level reduces real wealth, so buyers purchase less",
+          "misconception": "This is a reason for the slope of the AD curve, not the SRAS curve."
+        },
+        {
+          "id": "b",
+          "text": "Resource prices, especially wages, are fixed in the short run, so a higher price level makes production more profitable",
+          "misconception": null
+        },
+        {
+          "id": "c",
+          "text": "In the short run all factors of production can be changed",
+          "misconception": "In the short run at least some inputs and resource prices are fixed; that is what defines the short run here."
+        },
+        {
+          "id": "d",
+          "text": "Firms can always raise output without any increase in costs",
+          "misconception": "That describes the horizontal section of the Keynesian AS curve, which would give a flat, not upward-sloping, curve."
+        }
+      ],
+      "answer": "b",
+      "hints": [
+        "Recall what is assumed to stay constant along the SRAS curve.",
+        "Compare what happens to the prices firms receive and the costs they pay when the price level rises."
+      ],
+      "targets": "Sticky wages as the reason for an upward-sloping SRAS"
+    },
+    {
+      "id": "u9-sa-04",
+      "format": "short_answer",
+      "section": "9.2",
+      "concepts": [
+        "c9-short-run-aggregate-supply-curve-sras",
+        "c9-non-labor-resources"
+      ],
+      "command_term": "distinguish",
+      "marks": 2,
+      "prompt": "Distinguish between a movement along the SRAS curve and a shift of the SRAS curve.",
+      "marking_points": [
+        "A movement along SRAS is caused by a change in the price level (e.g. after AD shifts), with resource prices unchanged [1]",
+        "A shift of SRAS is caused by a change in a non-price determinant, e.g. wages, prices of non-labour resources, business taxes/subsidies or a supply shock [1]"
+      ],
+      "model_answer_note": "A full-mark answer states the cause of each and gives at least one example of a shift factor.",
+      "hints": [
+        "Use the SRAS diagram with the price level on the vertical axis.",
+        "Ask which change is shown on an axis and which changes must move the whole curve."
+      ],
+      "targets": "Movement vs shift of SRAS"
+    },
+    {
+      "id": "u9-mcq-06",
+      "format": "mcq",
+      "section": "9.2",
+      "concepts": [
+        "c9-short-run-aggregate-supply-curve-sras",
+        "c9-non-labor-resources"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Which of the following would cause the SRAS curve of Veld to shift to the right?",
+      "options": [
+        {
+          "id": "a",
+          "text": "A fall in the price of imported raw materials",
+          "misconception": null
+        },
+        {
+          "id": "b",
+          "text": "A rise in nominal wages across the economy",
+          "misconception": "Higher wages raise firms' costs, shifting SRAS to the left, not the right."
+        },
+        {
+          "id": "c",
+          "text": "An increase in government spending on pensions",
+          "misconception": "This raises aggregate demand; it shifts AD, not SRAS."
+        },
+        {
+          "id": "d",
+          "text": "A rise in taxes on business profits and production",
+          "misconception": "Higher business taxes act like higher costs and shift SRAS to the left."
+        }
+      ],
+      "answer": "a",
+      "hints": [
+        "Think about the determinants of SRAS: the costs firms face.",
+        "Pick the change that lowers production costs for firms across the economy."
+      ],
+      "targets": "Determinants of SRAS vs determinants of AD"
+    },
+    {
+      "id": "u9-mcq-07",
+      "format": "mcq",
+      "section": "9.2",
+      "concepts": [
+        "c9-supply-shocks",
+        "c9-non-labor-resources",
+        "c9-short-run-aggregate-supply-curve-sras"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Veld imports all of its oil. The world price of oil rises sharply. On an AD-SRAS diagram, what is the most likely short-run effect?",
+      "options": [
+        {
+          "id": "a",
+          "text": "AD shifts left; the price level and real GDP both fall",
+          "misconception": "Oil is an input to production, so the main effect is on firms' costs (SRAS), not first on AD."
+        },
+        {
+          "id": "b",
+          "text": "SRAS shifts right; the price level falls and real GDP rises",
+          "misconception": "Higher input costs reduce SRAS; a rightward shift would follow a fall in oil prices."
+        },
+        {
+          "id": "c",
+          "text": "LRAS shifts left; the price level is unchanged",
+          "misconception": "A price rise for an input does not change the economy's quantity or quality of resources, so potential output is not the main effect."
+        },
+        {
+          "id": "d",
+          "text": "SRAS shifts left; the price level rises and real GDP falls",
+          "misconception": null
+        }
+      ],
+      "answer": "d",
+      "hints": [
+        "Oil is a non-labour resource, so start with firms' costs of production.",
+        "Decide which curve shifts and in which direction, then read the new equilibrium price level and output against an unchanged AD."
+      ],
+      "targets": "Energy price supply shock on the AD-SRAS diagram"
+    },
+    {
+      "id": "u9-sa-05",
+      "format": "short_answer",
+      "section": "9.2",
+      "concepts": [
+        "c9-supply-shocks",
+        "c9-non-labor-resources",
+        "c9-short-run-aggregate-supply-curve-sras"
+      ],
+      "command_term": "explain",
+      "marks": 4,
+      "prompt": "Natural gas is a key input for factories and power stations in Kuva. The price of natural gas doubles in a few months. Using an AD-SRAS diagram described in words, explain the likely short-run effect on the price level and real GDP in Kuva.",
+      "marking_points": [
+        "Natural gas is a non-labour input, so firms' costs of production rise [1]",
+        "The SRAS curve shifts to the left (from SRAS1 to SRAS2) [1]",
+        "With AD unchanged, the price level rises (from P1 to P2) [1]",
+        "Real GDP falls (from Y1 to Y2), so the economy experiences cost-push inflation with lower output [1]"
+      ],
+      "model_answer_note": "A full-mark answer identifies the cost increase, the leftward SRAS shift with labels, and both outcomes: higher price level and lower real GDP.",
+      "hints": [
+        "Use an AD-SRAS diagram with the price level and real GDP on the axes.",
+        "Link the input price to costs, costs to the SRAS curve, then compare the old and new equilibrium points."
+      ],
+      "targets": "Supply shock: cost increase, SRAS shift, both effects on the diagram"
+    },
+    {
+      "id": "u9-mcq-08",
+      "format": "mcq",
+      "section": "9.2",
+      "concepts": [
+        "c9-supply-shocks",
+        "c9-short-run-aggregate-supply-curve-sras"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Table 3 shows data for Veld. Which event is most consistent with the change between 2024 and 2025?",
+      "table": {
+        "caption": "Table 3: Veld's price level and real GDP",
+        "columns": [
+          "Year",
+          "Price level index",
+          "Real GDP (billion zeds)"
+        ],
+        "rows": [
+          [
+            "2024",
+            "100",
+            "500"
+          ],
+          [
+            "2025",
+            "108",
+            "480"
+          ]
+        ]
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": "A rise in consumer confidence",
+          "misconception": "Higher AD would raise both the price level and real GDP, but real GDP fell."
+        },
+        {
+          "id": "b",
+          "text": "A fall in demand for Veld's exports",
+          "misconception": "A fall in AD would lower the price level, but the price level rose."
+        },
+        {
+          "id": "c",
+          "text": "A severe drought that destroyed a large part of the harvest",
+          "misconception": null
+        },
+        {
+          "id": "d",
+          "text": "An improvement in production technology",
+          "misconception": "This would increase supply, lowering the price level and raising real GDP, the opposite of the data."
+        }
+      ],
+      "answer": "c",
+      "hints": [
+        "Compare the direction of change in the price level and in real GDP.",
+        "Ask which curve must shift, and in which direction, to move both variables the way the table shows."
+      ],
+      "targets": "Reading data to identify a negative supply shock"
+    },
+    {
+      "id": "u9-sa-06",
+      "format": "short_answer",
+      "section": "9.1",
+      "concepts": [
+        "c9-aggregate-demand",
+        "c9-aggregate-demand-consists-demand-of"
+      ],
+      "command_term": "explain",
+      "marks": 3,
+      "prompt": "Many households in Tarsa receive money from family members working abroad. Table 4 shows these remittances fell sharply in 2025. Explain the likely short-run effect of this change on aggregate demand and real GDP in Tarsa.",
+      "table": {
+        "caption": "Table 4: Remittances received by households in Tarsa",
+        "columns": [
+          "Year",
+          "Remittances (billion tarsa dollars)"
+        ],
+        "rows": [
+          [
+            "2024",
+            "12"
+          ],
+          [
+            "2025",
+            "7"
+          ]
+        ]
+      },
+      "marking_points": [
+        "Remittances are part of household income, so households' disposable income falls [1]",
+        "Consumption falls, so AD shifts to the left [1]",
+        "On an AD-SRAS diagram, real GDP falls (and the price level falls) [1]"
+      ],
+      "model_answer_note": "A full-mark answer links remittances to household income and consumption, then states the leftward AD shift and the fall in real GDP.",
+      "hints": [
+        "Decide which component of AD depends on the income households receive.",
+        "Follow the chain: income, then that component, then the AD curve, then the new equilibrium output."
+      ],
+      "targets": "Falling remittances and output via consumption"
+    },
+    {
+      "id": "u9-mcq-09",
+      "format": "mcq",
+      "section": "9.3",
+      "concepts": [
+        "c9-aggregate-supply"
+      ],
+      "command_term": "explain",
+      "marks": 1,
+      "prompt": "In the monetarist/new classical model, why is the long-run aggregate supply (LRAS) curve vertical?",
+      "options": [
+        {
+          "id": "a",
+          "text": "The government uses price controls to stop output rising",
+          "misconception": "The vertical LRAS comes from flexible wages and prices, not from government controls."
+        },
+        {
+          "id": "b",
+          "text": "Wages and prices are fully flexible in the long run, so output returns to its potential level whatever the price level",
+          "misconception": null
+        },
+        {
+          "id": "c",
+          "text": "Aggregate demand never changes in the long run",
+          "misconception": "AD can change in the long run; the model says such changes affect only the price level."
+        },
+        {
+          "id": "d",
+          "text": "At full employment output, unemployment is zero",
+          "misconception": "Even at potential output there is still natural unemployment (frictional and structural), so unemployment is not zero."
+        }
+      ],
+      "answer": "b",
+      "hints": [
+        "Think about what happens to resource prices in the long run in this model.",
+        "Ask whether any change in the price level can keep output above or below potential once wages have adjusted."
+      ],
+      "targets": "Flexible wages and prices behind the vertical LRAS"
+    },
+    {
+      "id": "u9-sa-07",
+      "format": "short_answer",
+      "section": "9.3",
+      "concepts": [
+        "c9-natural-rate-of-unemployment"
+      ],
+      "command_term": "define",
+      "marks": 2,
+      "prompt": "Define the natural rate of unemployment.",
+      "marking_points": [
+        "The unemployment that exists when the economy is producing its full employment (potential) output [1]",
+        "It is made up of structural, frictional (and seasonal) unemployment, with no cyclical unemployment [1]"
+      ],
+      "model_answer_note": "A full-mark answer links the term to potential output and states that it excludes cyclical (demand-deficient) unemployment.",
+      "hints": [
+        "Link this term to where the vertical LRAS curve sits.",
+        "Say at what level of output it occurs and which types of unemployment still exist at that point."
+      ],
+      "targets": "Natural rate linked to potential output; excludes cyclical unemployment"
+    },
+    {
+      "id": "u9-mcq-10",
+      "format": "mcq",
+      "section": "9.3",
+      "concepts": [
+        "c9-natural-rate-of-unemployment",
+        "c9-aggregate-supply"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Table 5 shows data for Kuva. According to the monetarist/new classical model, what will happen over time if the government takes no action?",
+      "table": {
+        "caption": "Table 5: Output in Kuva",
+        "columns": [
+          "Year",
+          "Real GDP (billion kuvs)",
+          "Potential real GDP (billion kuvs)"
+        ],
+        "rows": [
+          [
+            "2025",
+            "520",
+            "500"
+          ]
+        ]
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": "Nominal wages rise, SRAS shifts left, and real GDP returns to 500 billion kuvs at a higher price level",
+          "misconception": null
+        },
+        {
+          "id": "b",
+          "text": "LRAS shifts right until potential output equals 520 billion kuvs",
+          "misconception": "Producing above potential does not increase the economy's resources, so LRAS does not move."
+        },
+        {
+          "id": "c",
+          "text": "Nominal wages fall, SRAS shifts right, and real GDP rises further",
+          "misconception": "Wages fall when there is a recessionary gap; here real GDP is above potential, so labour is scarce."
+        },
+        {
+          "id": "d",
+          "text": "AD shifts left by itself until real GDP returns to 500 billion kuvs",
+          "misconception": "In this model the adjustment happens through wages and SRAS, not through an automatic change in AD."
+        }
+      ],
+      "answer": "a",
+      "hints": [
+        "Compare actual real GDP with potential real GDP to name the type of gap.",
+        "Think about what happens in the labour market when unemployment is below its natural rate, then which curve moves."
+      ],
+      "targets": "Self-correction from an inflationary gap"
+    },
+    {
+      "id": "u9-sa-08",
+      "format": "short_answer",
+      "section": "9.3",
+      "concepts": [
+        "c9-natural-rate-of-unemployment",
+        "c9-short-run-aggregate-supply-curve-sras",
+        "c9-aggregate-supply"
+      ],
+      "command_term": "explain",
+      "marks": 4,
+      "prompt": "A fall in aggregate demand has left real GDP in Veld below its potential level. Explain, using the monetarist/new classical model, how the economy returns to long-run equilibrium without government intervention.",
+      "marking_points": [
+        "There is a recessionary (deflationary) gap and unemployment is above the natural rate [1]",
+        "The surplus of labour causes nominal wages (resource prices) to fall over time [1]",
+        "Lower costs shift the SRAS curve to the right [1]",
+        "Equilibrium returns to potential output on the LRAS curve at a lower price level [1]"
+      ],
+      "model_answer_note": "A full-mark answer names the gap, explains the fall in wages, shows the SRAS shift and ends at potential output with a lower price level.",
+      "hints": [
+        "Use an AD-SRAS-LRAS diagram with equilibrium to the left of LRAS.",
+        "Trace the steps: labour market conditions, then wages, then SRAS, then the new long-run equilibrium."
+      ],
+      "targets": "Automatic adjustment through flexible wages"
+    },
+    {
+      "id": "u9-mcq-11",
+      "format": "mcq",
+      "section": "9.4",
+      "concepts": [
+        "c9-horizontal-part"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "An economy is operating on the horizontal section of the Keynesian aggregate supply curve. Aggregate demand increases. What is the most likely result?",
+      "options": [
+        {
+          "id": "a",
+          "text": "The price level rises and real GDP stays the same",
+          "misconception": "This describes the vertical section, where the economy is already at full employment output."
+        },
+        {
+          "id": "b",
+          "text": "Both real GDP and the price level rise",
+          "misconception": "This describes the upward-sloping section, where bottlenecks start to appear."
+        },
+        {
+          "id": "c",
+          "text": "Neither real GDP nor the price level changes",
+          "misconception": "With spare capacity, higher spending can be met by producing more, so output does change."
+        },
+        {
+          "id": "d",
+          "text": "Real GDP rises and the price level stays the same",
+          "misconception": null
+        }
+      ],
+      "answer": "d",
+      "hints": [
+        "Picture the three sections of the Keynesian AS curve.",
+        "Ask how much spare capacity exists on this section and whether firms need to raise prices to produce more."
+      ],
+      "targets": "Effects of AD changes on each section of the Keynesian AS curve"
+    },
+    {
+      "id": "u9-sa-09",
+      "format": "short_answer",
+      "section": "9.4",
+      "concepts": [
+        "c9-horizontal-part",
+        "c9-aggregate-supply"
+      ],
+      "command_term": "describe",
+      "marks": 3,
+      "prompt": "Describe the three sections of the Keynesian aggregate supply curve.",
+      "marking_points": [
+        "Horizontal section: large spare capacity, so real GDP can rise without the price level rising [1]",
+        "Upward-sloping section: as the economy approaches full employment, bottlenecks and resource shortages mean real GDP and the price level both rise [1]",
+        "Vertical section: the economy is at full capacity (full employment output), so only the price level can rise [1]"
+      ],
+      "model_answer_note": "A full-mark answer describes the shape of each section and what it means for output and the price level.",
+      "hints": [
+        "Think of the curve from left to right, from deep recession to full capacity.",
+        "For each part, say how much unused capacity there is and what happens to output and prices as spending rises."
+      ],
+      "targets": "Shape and meaning of the Keynesian AS curve"
+    },
+    {
+      "id": "u9-mcq-12",
+      "format": "mcq",
+      "section": "9.4",
+      "concepts": [
+        "c9-horizontal-part",
+        "c9-aggregate-supply"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Table 6 shows what happened in Tarsa as aggregate demand increased in each period. Between which two periods was Tarsa operating on the vertical section of the Keynesian aggregate supply curve?",
+      "table": {
+        "caption": "Table 6: Tarsa's price level and real GDP",
+        "columns": [
+          "Period",
+          "Price level index",
+          "Real GDP (billion tarsa dollars)"
+        ],
+        "rows": [
+          [
+            "1",
+            "100",
+            "300"
+          ],
+          [
+            "2",
+            "100",
+            "340"
+          ],
+          [
+            "3",
+            "106",
+            "360"
+          ],
+          [
+            "4",
+            "115",
+            "360"
+          ]
+        ]
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": "Period 1 to Period 2",
+          "misconception": "Output rose while the price level was unchanged, which matches the horizontal section."
+        },
+        {
+          "id": "b",
+          "text": "Period 2 to Period 3",
+          "misconception": "Both output and the price level rose, which matches the upward-sloping section."
+        },
+        {
+          "id": "c",
+          "text": "Period 3 to Period 4",
+          "misconception": null
+        },
+        {
+          "id": "d",
+          "text": "Period 1 to Period 3",
+          "misconception": "This spans the horizontal and upward-sloping sections; output was still rising throughout."
+        }
+      ],
+      "answer": "c",
+      "hints": [
+        "Compare the change in the price level and the change in real GDP for each pair of periods.",
+        "The vertical section is where one of these two variables stops changing; find the pair that matches."
+      ],
+      "targets": "Reading data to locate sections of the Keynesian AS curve"
+    },
+    {
+      "id": "u9-sa-10",
+      "format": "short_answer",
+      "section": "9.4",
+      "concepts": [
+        "c9-horizontal-part",
+        "c9-natural-rate-of-unemployment"
+      ],
+      "command_term": "explain",
+      "marks": 3,
+      "prompt": "Table 7 shows data for Tarsa. Using the Keynesian model, explain why Tarsa may remain below its full employment level of output for several years.",
+      "table": {
+        "caption": "Table 7: Tarsa's economy",
+        "columns": [
+          "Year",
+          "Real GDP (billion tarsa dollars)",
+          "Full employment real GDP (billion tarsa dollars)",
+          "Unemployment rate (%)"
+        ],
+        "rows": [
+          [
+            "2022",
+            "450",
+            "500",
+            "11"
+          ],
+          [
+            "2023",
+            "450",
+            "500",
+            "11"
+          ],
+          [
+            "2024",
+            "452",
+            "500",
+            "10"
+          ],
+          [
+            "2025",
+            "451",
+            "500",
+            "11"
+          ]
+        ]
+      },
+      "marking_points": [
+        "Wages and prices are 'sticky' downward (e.g. contracts, unions, minimum wages), so they do not fall when AD is low [1]",
+        "So there is no automatic fall in costs to move the economy back to full employment [1]",
+        "Equilibrium stays on the horizontal section below full employment output, with high (cyclical) unemployment, unless AD increases [1]"
+      ],
+      "model_answer_note": "A full-mark answer explains downward wage/price rigidity and concludes that the deflationary gap persists without a rise in AD.",
+      "hints": [
+        "Use the horizontal section of the Keynesian AS curve and the data showing the gap is not closing.",
+        "Explain what Keynesians believe about wages when unemployment is high, and what that means for self-correction."
+      ],
+      "targets": "Persistent Keynesian deflationary gap"
+    },
+    {
+      "id": "u9-mcq-13",
+      "format": "mcq",
+      "section": "9.5",
+      "concepts": [
+        "c9-aggregate-supply"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Which of the following is most likely to shift Veld's long-run aggregate supply (LRAS) curve to the right?",
+      "options": [
+        {
+          "id": "a",
+          "text": "A fall in interest rates that raises consumer spending",
+          "misconception": "This increases AD; it does not raise the economy's productive capacity."
+        },
+        {
+          "id": "b",
+          "text": "Government investment in new ports and roads",
+          "misconception": null
+        },
+        {
+          "id": "c",
+          "text": "A temporary fall in world oil prices",
+          "misconception": "A temporary cost change shifts SRAS, not the economy's long-run potential output."
+        },
+        {
+          "id": "d",
+          "text": "A rise in the price level",
+          "misconception": "A change in the price level causes a movement along a curve, not a shift of LRAS."
+        }
+      ],
+      "answer": "b",
+      "hints": [
+        "LRAS shows potential output, so think about what changes the quantity or quality of resources.",
+        "Eliminate options that act only on demand, on short-run costs, or on the price level."
+      ],
+      "targets": "Infrastructure/public investment shifts LRAS"
+    },
+    {
+      "id": "u9-mcq-14",
+      "format": "mcq",
+      "section": "9.5",
+      "concepts": [
+        "c9-aggregate-supply",
+        "c9-short-run-aggregate-supply-curve-sras"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Which of the following would shift Veld's SRAS curve but not its LRAS curve?",
+      "options": [
+        {
+          "id": "a",
+          "text": "The discovery of large new mineral deposits",
+          "misconception": "New natural resources raise productive capacity, so LRAS shifts too."
+        },
+        {
+          "id": "b",
+          "text": "Improvements in the quality of the education system",
+          "misconception": "Better education raises labour productivity and potential output, shifting LRAS."
+        },
+        {
+          "id": "c",
+          "text": "An increase in the number of working-age migrants",
+          "misconception": "More workers increase the quantity of labour, shifting LRAS to the right."
+        },
+        {
+          "id": "d",
+          "text": "A temporary rise in the price of imported fuel",
+          "misconception": null
+        }
+      ],
+      "answer": "d",
+      "hints": [
+        "Separate short-run cost changes from long-run changes in resources.",
+        "Ask which option changes firms' costs without changing how much the economy could produce at full employment."
+      ],
+      "targets": "Distinguishing SRAS determinants from LRAS determinants"
+    },
+    {
+      "id": "u9-sa-11",
+      "format": "short_answer",
+      "section": "9.5",
+      "concepts": [
+        "c9-aggregate-supply"
+      ],
+      "command_term": "explain",
+      "marks": 3,
+      "prompt": "The government of Veld greatly expands vocational training for young workers. Explain how this policy could affect Veld's potential output.",
+      "marking_points": [
+        "Training increases human capital, the skills and knowledge of the workforce [1]",
+        "This raises labour productivity (the quality of the labour factor of production) [1]",
+        "So productive capacity rises and the LRAS curve shifts to the right, increasing potential output [1]"
+      ],
+      "model_answer_note": "A full-mark answer links training to human capital and productivity and ends with a rightward LRAS shift (or Keynesian AS shifting right at full employment).",
+      "hints": [
+        "Use the idea of human capital and the LRAS curve.",
+        "Follow the chain: the policy, then the quality of labour, then productivity, then the curve."
+      ],
+      "targets": "Education/human capital shifts LRAS"
+    },
+    {
+      "id": "u9-sa-12",
+      "format": "short_answer",
+      "section": "9.5",
+      "concepts": [
+        "c9-aggregate-supply"
+      ],
+      "command_term": "calculate",
+      "marks": 3,
+      "prompt": "Table 8 shows data for Veld. Assume that potential output equals the number of workers at full employment multiplied by output per worker. Calculate potential output in each year and the percentage change between 2025 and 2026.",
+      "table": {
+        "caption": "Table 8: Labour and productivity in Veld",
+        "columns": [
+          "Year",
+          "Workers at full employment (millions)",
+          "Output per worker (zeds per year)"
+        ],
+        "rows": [
+          [
+            "2025",
+            "20",
+            "5,000"
+          ],
+          [
+            "2026",
+            "22",
+            "5,500"
+          ]
+        ]
+      },
+      "marking_points": [
+        "2025: 20 million × 5,000 zeds = 100 billion zeds [1]",
+        "2026: 22 million × 5,500 zeds = 121 billion zeds [1]",
+        "Percentage change = (121 − 100) / 100 × 100 = 21% [1]"
+      ],
+      "model_answer_note": "Both potential output figures with working and a 21% increase earns full marks; own-figure rule applies for the last mark.",
+      "hints": [
+        "Use the formula given in the question with both columns of Table 8.",
+        "Multiply for each year, keeping track of millions and thousands, then use (new − old) / old × 100."
+      ],
+      "targets": "Labour force growth and productivity raise potential output"
+    },
+    {
+      "id": "u9-sa-13",
+      "format": "short_answer",
+      "section": "9.5",
+      "concepts": [
+        "c9-trade-protection",
+        "c9-aggregate-supply"
+      ],
+      "command_term": "explain",
+      "marks": 3,
+      "prompt": "Kuva removes its tariffs on imported machinery and equipment. Explain how this change could increase Kuva's potential output.",
+      "marking_points": [
+        "Removing this trade protection lowers the price of imported capital goods for firms [1]",
+        "Firms invest more and gain access to better technology, increasing the quantity and quality of capital [1]",
+        "Productive capacity rises, so the LRAS curve shifts to the right [1]"
+      ],
+      "model_answer_note": "A full-mark answer links lower tariffs to cheaper capital, more or better capital, and a rightward LRAS shift.",
+      "hints": [
+        "Think about what a tariff does to the price of an imported good, and what type of good machinery is.",
+        "Link the change in price to firms' investment decisions and then to productive capacity."
+      ],
+      "targets": "Lower tariffs raise potential output via capital"
+    },
+    {
+      "id": "u9-mcq-15",
+      "format": "mcq",
+      "section": "9.6",
+      "concepts": [
+        "c9-horizontal-part",
+        "c9-aggregate-supply"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Which statement reflects the Keynesian view rather than the monetarist/new classical view?",
+      "options": [
+        {
+          "id": "a",
+          "text": "The economy returns to potential output fairly quickly by itself",
+          "misconception": "This self-correction through flexible wages is the monetarist/new classical view."
+        },
+        {
+          "id": "b",
+          "text": "In the long run, increases in aggregate demand only raise the price level",
+          "misconception": "This follows from a vertical LRAS, which is the monetarist/new classical view."
+        },
+        {
+          "id": "c",
+          "text": "Government action to raise aggregate demand is needed to close a recessionary gap",
+          "misconception": null
+        },
+        {
+          "id": "d",
+          "text": "The long-run aggregate supply curve is vertical at potential output",
+          "misconception": "A vertical LRAS is the key feature of the monetarist/new classical model."
+        }
+      ],
+      "answer": "c",
+      "hints": [
+        "Compare the shapes of the AS curves in the two models.",
+        "Ask which model assumes wages do not fall easily, and what that implies for the role of government."
+      ],
+      "targets": "Policy implications of the two models"
+    },
+    {
+      "id": "u9-sa-14",
+      "format": "short_answer",
+      "section": "9.6",
+      "concepts": [
+        "c9-horizontal-part",
+        "c9-aggregate-supply"
+      ],
+      "command_term": "explain",
+      "marks": 4,
+      "prompt": "Veld is in a deep recession and the government increases its spending. Explain how the Keynesian model and the monetarist/new classical model differ in their predictions of the effect on real GDP.",
+      "marking_points": [
+        "Keynesian: the economy is on the horizontal section of the AS curve with a lot of spare capacity [1]",
+        "So higher AD raises real GDP and lowers unemployment with little or no rise in the price level [1]",
+        "Monetarist/new classical: in the long run the economy is at potential output on a vertical LRAS [1]",
+        "So the rise in AD raises real GDP only in the short run; in the long run it only raises the price level [1]"
+      ],
+      "model_answer_note": "A full-mark answer explains each model's AS curve and gives a clear, contrasting prediction for real GDP and the price level.",
+      "hints": [
+        "Describe where the economy is on each model's aggregate supply curve.",
+        "For each model, shift AD right and compare what happens to output and prices, including in the long run."
+      ],
+      "targets": "Contrasting predictions of fiscal expansion in the two models"
+    },
+    {
+      "id": "u9-sa-15",
+      "format": "short_answer",
+      "section": "9.6",
+      "concepts": [
+        "c9-aggregate-supply"
+      ],
+      "command_term": "explain",
+      "marks": 2,
+      "prompt": "Explain why monetarist/new classical economists argue that governments should use supply-side measures rather than demand-side measures to raise real GDP in the long run.",
+      "marking_points": [
+        "In their model long-run output is set by the vertical LRAS (potential output), which does not depend on AD [1]",
+        "Only shifting LRAS to the right (e.g. by raising productivity) raises real GDP permanently without causing inflation [1]"
+      ],
+      "model_answer_note": "A full-mark answer uses the vertical LRAS to explain why AD increases only raise prices, while supply-side measures raise potential output.",
+      "hints": [
+        "Start from the shape of the LRAS curve in this model.",
+        "Compare what an AD shift and an LRAS shift each do to output and the price level in the long run."
+      ],
+      "targets": "Why the vertical LRAS implies a supply-side focus"
+    }
+  ]
+}

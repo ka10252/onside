@@ -1,0 +1,685 @@
+{
+  "unit": 1,
+  "title": "Introduction to economics",
+  "questions": [
+    {
+      "id": "u1-mcq-01",
+      "format": "mcq",
+      "section": "1.0",
+      "concepts": ["c1-capital", "c1-land", "c1-labour", "c1-entrepreneurship"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "A bakery in Veld makes bread for local shops. Which of the following is an example of capital as a factor of production for the bakery?",
+      "hints": [
+        "Use the four factors of production: land, labour, capital and entrepreneurship.",
+        "Ask which item is man-made and is itself used to produce other goods."
+      ],
+      "targets": "Classifying inputs into the four factors of production",
+      "options": [
+        { "id": "a", "text": "The field where the wheat for the flour is grown", "misconception": "The field is a natural resource, so it is land, not capital." },
+        { "id": "b", "text": "The oven used to bake the bread", "misconception": null },
+        { "id": "c", "text": "The hours the bakers work each day", "misconception": "Human effort put into production is labour, not capital." },
+        { "id": "d", "text": "The owner's idea for a new bread delivery service", "misconception": "Developing new ideas and taking risks is entrepreneurship, not capital." }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "u1-sa-01",
+      "format": "short_answer",
+      "section": "1.0",
+      "concepts": ["c1-land", "c1-labour", "c1-capital", "c1-entrepreneurship"],
+      "command_term": "define",
+      "marks": 2,
+      "prompt": "Define the term economic resources (factors of production).",
+      "hints": [
+        "Think about what an economy needs in order to make any good or service.",
+        "Say what these resources are used for, then name the groups they are divided into."
+      ],
+      "targets": "Definition of economic resources with the four categories",
+      "marking_points": [
+        "The inputs used to produce goods and services [1]",
+        "Named as land, labour, capital and entrepreneurship [1]"
+      ],
+      "model_answer_note": "A full-mark answer says they are inputs used in production and lists the four factors."
+    },
+    {
+      "id": "u1-mcq-02",
+      "format": "mcq",
+      "section": "1.0",
+      "concepts": ["c1-free-good", "c1-economic-good", "c1-opportunity-cost"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Which of the following is the best example of a free good?",
+      "hints": [
+        "Use the difference between free goods and economic goods.",
+        "Check whether getting more of the item means giving up anything else."
+      ],
+      "targets": "Free good means not scarce, not simply zero price",
+      "options": [
+        { "id": "a", "text": "Bottled water sold in shops in Kuva", "misconception": "Bottled water uses scarce resources to produce and package, so it is an economic good." },
+        { "id": "b", "text": "A public park in Veld that the government maintains and opens at no charge", "misconception": "The park is free to use but uses scarce land and labour, so it is an economic good." },
+        { "id": "c", "text": "A free sample of shampoo handed out in a shopping centre", "misconception": "A zero price does not make a good free; the sample still used scarce resources." },
+        { "id": "d", "text": "Sunlight on a beach", "misconception": null }
+      ],
+      "answer": "d"
+    },
+    {
+      "id": "u1-sa-02",
+      "format": "short_answer",
+      "section": "1.0",
+      "concepts": ["c1-opportunity-cost"],
+      "command_term": "define",
+      "marks": 2,
+      "prompt": "Define the term opportunity cost.",
+      "hints": [
+        "This term comes from the fact that every choice has a cost.",
+        "Think about which of the other options counts, and what happens to it when the choice is made."
+      ],
+      "targets": "Next best alternative forgone",
+      "marking_points": [
+        "The value of the next best alternative [1]",
+        "That is given up (sacrificed) when a choice is made [1]"
+      ],
+      "model_answer_note": "Both 'next best alternative' and 'given up / forgone' are needed for full marks."
+    },
+    {
+      "id": "u1-mcq-03",
+      "format": "mcq",
+      "section": "1.0",
+      "concepts": ["c1-microeconomics", "c1-macroeconomics"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Which of the following would be studied in macroeconomics rather than microeconomics?",
+      "hints": [
+        "Use the difference between microeconomics and macroeconomics.",
+        "Decide whether each item is about one consumer, firm or market, or about the economy as a whole."
+      ],
+      "targets": "Scope of micro vs macro",
+      "options": [
+        { "id": "a", "text": "The rate of unemployment in Kuva", "misconception": null },
+        { "id": "b", "text": "The price of coffee in Kuva", "misconception": "This is a single market, which is microeconomics even if the market is national." },
+        { "id": "c", "text": "A Kuvan firm's decision to hire five more workers", "misconception": "Hiring by one firm is an individual decision, so it is microeconomics." },
+        { "id": "d", "text": "A household's choice between buying a bicycle or a laptop", "misconception": "A single consumer choice is microeconomics." }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u1-mcq-04",
+      "format": "mcq",
+      "section": "1.0",
+      "concepts": ["c1-opportunity-cost", "c1-scarcity"],
+      "command_term": "calculate",
+      "marks": 1,
+      "prompt": "A farmer in Kuva has one hectare of land and can use it for only one crop this year. Table 1 shows the revenue she expects from each crop. She chooses to grow corn. What is the opportunity cost of her choice?",
+      "table": {
+        "caption": "Table 1: Expected revenue from one hectare of land",
+        "columns": ["Crop", "Expected revenue (zeds)"],
+        "rows": [
+          ["Wheat", "300"],
+          ["Corn", "450"],
+          ["Rice", "400"]
+        ]
+      },
+      "hints": [
+        "Use the definition of opportunity cost and the revenue column in Table 1.",
+        "Remove the crop she chose, then look only at the best of the options that remain."
+      ],
+      "targets": "Opportunity cost is only the next best alternative, not all alternatives",
+      "options": [
+        { "id": "a", "text": "300 zeds", "misconception": "Wheat is an alternative, but it is not the next best one." },
+        { "id": "b", "text": "700 zeds", "misconception": "Opportunity cost counts only the next best alternative, not the sum of all alternatives." },
+        { "id": "c", "text": "400 zeds", "misconception": null },
+        { "id": "d", "text": "450 zeds", "misconception": "This is the value of the chosen option, not of what was given up." }
+      ],
+      "answer": "c"
+    },
+    {
+      "id": "u1-sa-03",
+      "format": "short_answer",
+      "section": "1.0",
+      "concepts": ["c1-entrepreneurship"],
+      "command_term": "define",
+      "marks": 2,
+      "prompt": "Define the term entrepreneurship.",
+      "hints": [
+        "This is one of the four factors of production.",
+        "Think about what this factor does with the other three factors, and what the person accepts in doing so."
+      ],
+      "targets": "Organising factors, innovation and risk-taking",
+      "marking_points": [
+        "The ability to organise/combine the other factors of production to produce goods and services [1]",
+        "And to innovate (develop new ideas or ways of doing things) and take risks [1]"
+      ],
+      "model_answer_note": "Full marks need both the organising role and the innovation/risk-taking element."
+    },
+    {
+      "id": "u1-mcq-05",
+      "format": "mcq",
+      "section": "1.0",
+      "concepts": ["c1-distribution-of-income", "c1-resource-allocation"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Every economy must answer the basic economic questions. The question 'for whom to produce?' is mainly concerned with:",
+      "hints": [
+        "Use the three basic economic questions: what, how and for whom to produce.",
+        "Match each option to the question it actually answers."
+      ],
+      "targets": "Matching the 'for whom' question to distribution of output/income",
+      "options": [
+        { "id": "a", "text": "which production methods and technology firms use", "misconception": "Choice of methods answers the 'how to produce' question." },
+        { "id": "b", "text": "how output is shared out among the people in the economy", "misconception": null },
+        { "id": "c", "text": "how much of each good the economy should produce", "misconception": "Quantities of goods answer the 'what and how much to produce' question." },
+        { "id": "d", "text": "whether resources are owned by the public or private sector", "misconception": "Resource ownership describes the type of economic system, not the 'for whom' question itself." }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "u1-sa-04",
+      "format": "short_answer",
+      "section": "1.0",
+      "concepts": ["c1-free-good", "c1-economic-good", "c1-scarcity", "c1-opportunity-cost"],
+      "command_term": "distinguish",
+      "marks": 2,
+      "prompt": "Distinguish between a free good and an economic good.",
+      "hints": [
+        "Use the ideas of scarcity and opportunity cost.",
+        "For each type of good, say whether it is scarce and what that means for its opportunity cost."
+      ],
+      "targets": "Scarcity and opportunity cost as the dividing line (not price)",
+      "marking_points": [
+        "A free good is not scarce, so it has zero opportunity cost [1]",
+        "An economic good is scarce (made with scarce resources), so it has an opportunity cost greater than zero [1]"
+      ],
+      "model_answer_note": "Both goods must be covered with a clear contrast based on scarcity/opportunity cost; answers based only on price should not get full marks."
+    },
+    {
+      "id": "u1-mcq-06",
+      "format": "mcq",
+      "section": "1.0",
+      "concepts": ["c1-efficiency", "c1-scarcity"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "On a production possibilities curve (PPC) diagram for Tarsa, the economy is producing at a point inside the curve. What does this show?",
+      "hints": [
+        "Use the PPC and what points on, inside and outside the curve mean.",
+        "Ask whether Tarsa could produce more of both goods without any new resources."
+      ],
+      "targets": "Meaning of a point inside the PPC",
+      "options": [
+        { "id": "a", "text": "Some resources are unemployed or not used efficiently", "misconception": null },
+        { "id": "b", "text": "The output combination cannot be reached with current resources", "misconception": "Unattainable combinations lie outside the PPC, not inside it." },
+        { "id": "c", "text": "Tarsa has experienced an increase in its productive capacity", "misconception": "An increase in productive capacity is shown by an outward shift of the curve." },
+        { "id": "d", "text": "Tarsa is producing the combination of goods society wants most", "misconception": "A point inside the curve wastes resources, so it cannot be efficient." }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u1-sa-05",
+      "format": "short_answer",
+      "section": "1.0",
+      "concepts": ["c1-opportunity-cost"],
+      "command_term": "calculate",
+      "marks": 2,
+      "prompt": "Table 2 shows combinations of tractors and wheat that Veld can produce when all its resources are fully and efficiently employed. Calculate the opportunity cost of increasing tractor production from 20 to 30 units.",
+      "table": {
+        "caption": "Table 2: Production possibilities for Veld",
+        "columns": ["Point", "Tractors (units)", "Wheat (thousand tonnes)"],
+        "rows": [
+          ["A", "0", "100"],
+          ["B", "10", "90"],
+          ["C", "20", "70"],
+          ["D", "30", "40"],
+          ["E", "40", "0"]
+        ]
+      },
+      "hints": [
+        "Use the two rows of Table 2 where tractor output is 20 and 30.",
+        "Find how much wheat output changes between those rows, and express it in the units of the other good."
+      ],
+      "targets": "Reading opportunity cost off PPC data",
+      "marking_points": [
+        "Working: wheat falls from 70 to 40 thousand tonnes, 70 - 40 = 30 [1]",
+        "Opportunity cost = 30 thousand tonnes of wheat (3 thousand tonnes per tractor) [1]"
+      ],
+      "model_answer_note": "Full marks need the correct working and an answer expressed in wheat, not zeds or tractors; either the total (30 thousand tonnes) or per-unit (3 thousand tonnes per tractor) is acceptable."
+    },
+    {
+      "id": "u1-mcq-07",
+      "format": "mcq",
+      "section": "1.0",
+      "concepts": ["c1-opportunity-cost"],
+      "command_term": "calculate",
+      "marks": 1,
+      "prompt": "Table 3 shows points on Zarnia's PPC for robots and cloth. What is the total opportunity cost of the extra 10 robots when Zarnia moves from point B to point D?",
+      "table": {
+        "caption": "Table 3: Production possibilities for Zarnia",
+        "columns": ["Point", "Robots (units)", "Cloth (units)"],
+        "rows": [
+          ["A", "0", "50"],
+          ["B", "5", "45"],
+          ["C", "10", "35"],
+          ["D", "15", "20"],
+          ["E", "20", "0"]
+        ]
+      },
+      "hints": [
+        "Use rows B and D of Table 3.",
+        "The cost of the extra robots is measured by the change in the other good between those two points."
+      ],
+      "targets": "Opportunity cost on a PPC as the amount of the other good given up",
+      "options": [
+        { "id": "a", "text": "20 units of cloth", "misconception": "This is the cloth still produced at D, not the cloth given up." },
+        { "id": "b", "text": "2.5 units of cloth", "misconception": "This is the cost per robot; the question asks for the total cost of 10 robots." },
+        { "id": "c", "text": "45 units of cloth", "misconception": "This is the cloth produced at B, not the amount lost in moving to D." },
+        { "id": "d", "text": "25 units of cloth", "misconception": null }
+      ],
+      "answer": "d"
+    },
+    {
+      "id": "u1-sa-06",
+      "format": "short_answer",
+      "section": "1.0",
+      "concepts": ["c1-microeconomics", "c1-macroeconomics"],
+      "command_term": "distinguish",
+      "marks": 2,
+      "prompt": "Distinguish between microeconomics and macroeconomics.",
+      "hints": [
+        "Think about the level at which each branch looks at the economy.",
+        "For each branch, name who or what is studied and give an example of a variable it looks at."
+      ],
+      "targets": "Individual units vs the economy as a whole",
+      "marking_points": [
+        "Microeconomics studies individual decision-makers (consumers, firms) and individual markets [1]",
+        "Macroeconomics studies the economy as a whole, e.g. total output, unemployment, the price level [1]"
+      ],
+      "model_answer_note": "A full-mark answer gives a clear contrast, with each branch's focus; examples help but are not essential."
+    },
+    {
+      "id": "u1-mcq-08",
+      "format": "mcq",
+      "section": "1.0",
+      "concepts": ["c1-land", "c1-natural-capital", "c1-economic-growth"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Tarsa discovers large new reserves of natural gas. On a PPC diagram with natural gas on one axis and all other goods on the other, which change is most likely?",
+      "hints": [
+        "Decide whether a new resource changes how resources are used or how many resources there are.",
+        "A change in the use of existing resources moves the point; a change in the amount of resources moves the curve."
+      ],
+      "targets": "Resource discovery shifts the PPC rather than moving along it",
+      "options": [
+        { "id": "a", "text": "A movement along the PPC towards more natural gas", "misconception": "Moving along the curve only reallocates existing resources; the discovery adds new resources." },
+        { "id": "b", "text": "A movement from a point inside the PPC to a point on it", "misconception": "That shows unemployed resources being used, not new resources being found." },
+        { "id": "c", "text": "An outward shift of the PPC", "misconception": null },
+        { "id": "d", "text": "An inward shift of the PPC", "misconception": "An inward shift shows a loss of resources, not a gain." }
+      ],
+      "answer": "c"
+    },
+    {
+      "id": "u1-sa-07",
+      "format": "short_answer",
+      "section": "1.0",
+      "concepts": ["c1-physical-capital", "c1-capital", "c1-scarcity"],
+      "command_term": "explain",
+      "marks": 3,
+      "prompt": "A large earthquake in Kuva destroys many factories, roads and power stations. Using a production possibilities curve (PPC) diagram, explain the likely effect on Kuva's economy. (Describe what the diagram would show in words.)",
+      "hints": [
+        "Use a PPC and think about which factor of production has been damaged.",
+        "Link the change in resources to the position of the curve, then to what Kuva can now produce."
+      ],
+      "targets": "Loss of productive capacity shown by an inward PPC shift",
+      "marking_points": [
+        "The PPC shifts inward (to the left) [1]",
+        "Because the quantity of physical capital (a factor of production) has fallen [1]",
+        "So Kuva's maximum possible output falls and some combinations that were attainable before are now unattainable [1]"
+      ],
+      "model_answer_note": "A full-mark answer states the direction of the shift, gives the reason (loss of capital/productive capacity) and explains the consequence for output."
+    },
+    {
+      "id": "u1-mcq-09",
+      "format": "mcq",
+      "section": "1.0",
+      "concepts": ["c1-this-model-demonstrates-an-important-principle", "c1-global-market-sector", "c1-financial-sector"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "In the circular flow of income model for Veld, which of the following is an injection?",
+      "hints": [
+        "Use the circular flow of income model with the financial, government and foreign sectors.",
+        "Ask whether each flow adds money to the flow between households and firms or takes money out of it."
+      ],
+      "targets": "Leakages vs injections",
+      "options": [
+        { "id": "a", "text": "Saving by households", "misconception": "Saving is income not spent, so it is a leakage." },
+        { "id": "b", "text": "Revenue from exports", "misconception": null },
+        { "id": "c", "text": "Taxes paid to the government", "misconception": "Taxes take income out of the flow, so they are a leakage." },
+        { "id": "d", "text": "Spending on imports", "misconception": "Spending on imports goes to foreign firms, so it is a leakage." }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "u1-sa-08",
+      "format": "short_answer",
+      "section": "1.0",
+      "concepts": ["c1-resource-ownership"],
+      "command_term": "define",
+      "marks": 2,
+      "prompt": "Define the term private sector.",
+      "hints": [
+        "Think about resource ownership in an economy.",
+        "Focus on who owns and controls the firms and resources, and contrast this with the other sector."
+      ],
+      "targets": "Private ownership contrasted with government ownership",
+      "marking_points": [
+        "The part of the economy where firms and resources are owned by private individuals or businesses [1]",
+        "Rather than being owned or controlled by the government (public sector) [1]"
+      ],
+      "model_answer_note": "Full marks need private ownership plus the contrast with government/public ownership."
+    },
+    {
+      "id": "u1-mcq-10",
+      "format": "mcq",
+      "section": "1.0",
+      "concepts": ["c1-human-capital", "c1-physical-capital", "c1-financial-capital", "c1-natural-capital"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Which of the following is an increase in human capital?",
+      "hints": [
+        "Use the four types of capital: physical, human, natural and financial.",
+        "Ask which option improves the people who do the work rather than the tools, money or environment."
+      ],
+      "targets": "Distinguishing types of capital",
+      "options": [
+        { "id": "a", "text": "The government of Veld pays for a new nurse training programme", "misconception": null },
+        { "id": "b", "text": "A firm in Veld buys ten new delivery trucks", "misconception": "Trucks are man-made tools of production, so they are physical capital." },
+        { "id": "c", "text": "A household in Veld buys shares in a company", "misconception": "Shares are financial instruments, so this is financial capital." },
+        { "id": "d", "text": "Veld protects a large forest from logging", "misconception": "A forest is part of the natural environment, so this is natural capital." }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u1-sa-09",
+      "format": "short_answer",
+      "section": "1.0",
+      "concepts": ["c1-saving", "c1-investment", "c1-imports", "c1-financial-sector", "c1-global-market-sector"],
+      "command_term": "calculate",
+      "marks": 3,
+      "prompt": "Table 4 shows flows in Kuva's circular flow of income in one year. Calculate total leakages and total injections, and state what is likely to happen to the size of Kuva's national income.",
+      "table": {
+        "caption": "Table 4: Flows in Kuva's economy (billion zeds)",
+        "columns": ["Flow", "Value (billion zeds)"],
+        "rows": [
+          ["Saving", "40"],
+          ["Taxes", "30"],
+          ["Imports", "50"],
+          ["Investment", "35"],
+          ["Government spending", "30"],
+          ["Exports", "45"]
+        ]
+      },
+      "hints": [
+        "Sort the six flows in Table 4 into leakages and injections.",
+        "Add each group, compare the two totals, and think about whether more money is leaving or entering the flow."
+      ],
+      "targets": "Classifying flows and linking leakages vs injections to the size of the flow",
+      "marking_points": [
+        "Leakages = 40 + 30 + 50 = 120 billion zeds [1]",
+        "Injections = 35 + 30 + 45 = 110 billion zeds [1]",
+        "Leakages exceed injections, so national income is likely to fall [1]"
+      ],
+      "model_answer_note": "Full marks need both totals with working and the correct conclusion that the circular flow shrinks."
+    },
+    {
+      "id": "u1-mcq-11",
+      "format": "mcq",
+      "section": "1.0",
+      "concepts": ["c1-price-rationing", "c1-non-price-rationing"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Which of the following is an example of non-price rationing?",
+      "hints": [
+        "Use the difference between price rationing and non-price rationing.",
+        "For each option, ask whether prices set in a market decide who gets the good."
+      ],
+      "targets": "Recognising allocation methods that do not use market prices",
+      "options": [
+        { "id": "a", "text": "Concert tickets in Tarsa are sold at auction to the highest bidders", "misconception": "An auction allocates by willingness to pay, which is price rationing." },
+        { "id": "b", "text": "A supermarket cuts the price of unsold bread at the end of the day", "misconception": "Lowering the price to clear stock is price rationing at work." },
+        { "id": "c", "text": "Petrol prices in Tarsa rise when supply falls", "misconception": "A rising price that reduces quantity demanded is price rationing." },
+        { "id": "d", "text": "The government of Tarsa allocates hospital beds using a waiting list", "misconception": null }
+      ],
+      "answer": "d"
+    },
+    {
+      "id": "u1-sa-10",
+      "format": "short_answer",
+      "section": "1.0",
+      "concepts": ["c1-opportunity-cost", "c1-scarcity"],
+      "command_term": "explain",
+      "marks": 3,
+      "prompt": "Explain why a production possibilities curve (PPC) is usually drawn bowed outward (concave to the origin).",
+      "hints": [
+        "Use the idea of opportunity cost along the PPC.",
+        "Think about whether all resources are equally good at producing both goods, and what happens as more and more resources are moved to one good."
+      ],
+      "targets": "Increasing opportunity cost and resource specialisation",
+      "marking_points": [
+        "The opportunity cost of producing more of one good rises as more of it is produced [1]",
+        "Because resources are not equally suited (are specialised) to producing both goods [1]",
+        "So each extra unit requires giving up increasing amounts of the other good, making the curve steeper and bowed outward [1]"
+      ],
+      "model_answer_note": "A full-mark answer names increasing opportunity cost, explains it with unequal suitability of resources, and links this to the shape of the curve."
+    },
+    {
+      "id": "u1-mcq-12",
+      "format": "mcq",
+      "section": "1.0",
+      "concepts": ["c1-economic-growth"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Table 5 shows the real output of Tarsa. In which year did the quantity of output fall compared with the year before?",
+      "table": {
+        "caption": "Table 5: Real output of Tarsa (million units)",
+        "columns": ["Year", "Real output (million units)"],
+        "rows": [
+          ["2021", "500"],
+          ["2022", "520"],
+          ["2023", "510"],
+          ["2024", "530"]
+        ]
+      },
+      "hints": [
+        "Use the real output column in Table 5.",
+        "Compare each year with the one directly before it, not with the first year."
+      ],
+      "targets": "Reading year-on-year change in output",
+      "options": [
+        { "id": "a", "text": "2022", "misconception": "Output rose from 500 to 520 in 2022." },
+        { "id": "b", "text": "2024", "misconception": "Output rose from 510 to 530 in 2024." },
+        { "id": "c", "text": "2023", "misconception": null },
+        { "id": "d", "text": "2021", "misconception": "There is no earlier year in the table to compare 2021 with." }
+      ],
+      "answer": "c"
+    },
+    {
+      "id": "u1-sa-11",
+      "format": "short_answer",
+      "section": "1.0",
+      "concepts": ["c1-scarcity", "c1-opportunity-cost"],
+      "command_term": "explain",
+      "marks": 2,
+      "prompt": "Explain why scarcity means that every economic decision involves an opportunity cost.",
+      "hints": [
+        "Start from the basic economic problem of limited resources and unlimited wants.",
+        "Link scarcity to the need to choose, then to what happens to the alternatives."
+      ],
+      "targets": "Scarcity -> choice -> opportunity cost chain",
+      "marking_points": [
+        "Resources are limited while wants are unlimited, so choices must be made about how to use them [1]",
+        "Choosing one use means the next best alternative use must be given up, which is the opportunity cost [1]"
+      ],
+      "model_answer_note": "A full-mark answer connects scarcity to choice and choice to the sacrifice of the next best alternative."
+    },
+    {
+      "id": "u1-mcq-13",
+      "format": "mcq",
+      "section": "1.0",
+      "concepts": ["c1-sustainability"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Which of the following situations best illustrates the central concept of sustainability?",
+      "hints": [
+        "Use the key concepts of the course: scarcity, choice, efficiency, equity, economic well-being, sustainability, change, interdependence, intervention.",
+        "Look for the option that is about keeping an activity viable in the long term."
+      ],
+      "targets": "Applying the sustainability concept to a scenario",
+      "options": [
+        { "id": "a", "text": "Veld limits fishing catches so that fish stocks can recover for future generations", "misconception": null },
+        { "id": "b", "text": "A Veld firm raises output to earn the highest possible profit this year", "misconception": "This is about short-term gain, not long-term viability." },
+        { "id": "c", "text": "Veld and Kuva increase trade with each other", "misconception": "Trade between countries mainly illustrates interdependence." },
+        { "id": "d", "text": "The government of Veld gives subsidies to raise current farm output", "misconception": "This mainly illustrates intervention aimed at current output, not long-term viability." }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u1-sa-12",
+      "format": "short_answer",
+      "section": "1.0",
+      "concepts": ["c1-investment", "c1-physical-capital", "c1-opportunity-cost", "c1-economic-growth"],
+      "command_term": "explain",
+      "marks": 3,
+      "prompt": "The government of Veld encourages the economy to produce more capital goods and fewer consumer goods this year. Using a PPC diagram (described in words), explain how this choice may affect Veld now and in the future.",
+      "hints": [
+        "Use a PPC with capital goods on one axis and consumer goods on the other.",
+        "First think about the cost of the choice today, then about what extra capital does to the economy's resources later."
+      ],
+      "targets": "Present opportunity cost vs future outward shift of the PPC",
+      "marking_points": [
+        "Now: Veld moves along its PPC, giving up consumer goods (the opportunity cost) [1]",
+        "The extra capital goods increase the quantity of physical capital, so productive capacity rises [1]",
+        "In the future the PPC shifts outward, so Veld can produce more of both goods [1]"
+      ],
+      "model_answer_note": "Full marks need the present trade-off, the link to more capital/productive capacity, and the future outward shift."
+    },
+    {
+      "id": "u1-mcq-14",
+      "format": "mcq",
+      "section": "1.0",
+      "concepts": ["c1-opportunity-cost"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Table 6 shows points on Oskaland's PPC for fish and timber. What does the data show?",
+      "table": {
+        "caption": "Table 6: Production possibilities for Oskaland",
+        "columns": ["Point", "Fish (tonnes)", "Timber (tonnes)"],
+        "rows": [
+          ["A", "0", "60"],
+          ["B", "10", "45"],
+          ["C", "20", "30"],
+          ["D", "30", "15"],
+          ["E", "40", "0"]
+        ]
+      },
+      "hints": [
+        "Work out how much timber is given up for each extra 10 tonnes of fish in Table 6.",
+        "Check whether that amount stays the same, rises or falls as you move down the table, then think about the shape of the curve."
+      ],
+      "targets": "Constant opportunity cost gives a straight-line PPC",
+      "options": [
+        { "id": "a", "text": "Opportunity cost rises as more fish is produced, so the PPC is bowed outward", "misconception": "The timber given up is the same at every step, so opportunity cost is not rising." },
+        { "id": "b", "text": "Opportunity cost falls as more fish is produced, so the PPC is bowed inward", "misconception": "The timber given up does not get smaller at each step." },
+        { "id": "c", "text": "Oskaland is producing inside its PPC", "misconception": "The table lists points on the PPC, which assume full and efficient use of resources." },
+        { "id": "d", "text": "Opportunity cost is constant, so the PPC is a straight line", "misconception": null }
+      ],
+      "answer": "d"
+    },
+    {
+      "id": "u1-sa-13",
+      "format": "short_answer",
+      "section": "1.0",
+      "concepts": ["c1-economic-growth", "c1-efficiency"],
+      "command_term": "distinguish",
+      "marks": 2,
+      "prompt": "Using the PPC model, distinguish between an increase in actual output and an increase in production possibilities (potential output).",
+      "hints": [
+        "Use a PPC and the difference between moving a point and moving the curve.",
+        "For each type of change, say what happens to resources and how it appears on the diagram."
+      ],
+      "targets": "Movement towards the PPC vs outward shift of the PPC",
+      "marking_points": [
+        "Actual output rises when unused or inefficiently used resources are put to work, shown by a movement from a point inside the PPC towards (or onto) the curve [1]",
+        "Production possibilities rise when the quantity or quality of resources increases, shown by an outward shift of the PPC [1]"
+      ],
+      "model_answer_note": "Full marks need both changes described with their diagram representation."
+    },
+    {
+      "id": "u1-mcq-15",
+      "format": "mcq",
+      "section": "1.0",
+      "concepts": ["c1-intervention", "c1-interdependence", "c1-sustainability", "c1-change"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "The government of Kuva places a tax on sugary drinks to reduce how much people buy. Which central concept does this policy best illustrate?",
+      "hints": [
+        "Use the key concepts of the course.",
+        "Ask who is acting here and what they are doing to the way the market works."
+      ],
+      "targets": "Applying the intervention concept",
+      "options": [
+        { "id": "a", "text": "Interdependence", "misconception": "Interdependence is about decision-makers relying on each other, not about government action in a market." },
+        { "id": "b", "text": "Intervention", "misconception": null },
+        { "id": "c", "text": "Change", "misconception": "The policy does cause change, but the concept that best describes a government acting in a market is intervention." },
+        { "id": "d", "text": "Sustainability", "misconception": "The tax targets current consumption for health reasons, not long-term viability of an activity." }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "u1-sa-14",
+      "format": "short_answer",
+      "section": "1.0",
+      "concepts": ["c1-economic-growth"],
+      "command_term": "calculate",
+      "marks": 2,
+      "prompt": "Table 7 shows real output in Veld. Calculate the rate of economic growth between 2024 and 2025.",
+      "table": {
+        "caption": "Table 7: Real output of Veld (billion zeds)",
+        "columns": ["Year", "Real output (billion zeds)"],
+        "rows": [
+          ["2023", "380"],
+          ["2024", "400"],
+          ["2025", "420"]
+        ]
+      },
+      "hints": [
+        "Use the percentage change formula with the 2024 and 2025 rows of Table 7.",
+        "Find the change, divide it by the starting year's value, then multiply by 100."
+      ],
+      "targets": "Percentage change using the correct base year",
+      "marking_points": [
+        "Working: (420 - 400) / 400 x 100 [1]",
+        "Growth rate = 5% [1]"
+      ],
+      "model_answer_note": "Full marks need correct working with 2024 as the base and the answer as a percentage."
+    },
+    {
+      "id": "u1-sa-15",
+      "format": "short_answer",
+      "section": "1.0",
+      "concepts": ["c1-resource-allocation", "c1-resource-ownership", "c1-price-rationing", "c1-non-price-rationing"],
+      "command_term": "explain",
+      "marks": 4,
+      "prompt": "Explain how a free market economy and a centrally planned economy each answer the question 'what to produce?'.",
+      "hints": [
+        "Use resource ownership and the difference between price and non-price rationing.",
+        "For each system, say who owns the resources and what signal or decision tells producers what to make."
+      ],
+      "targets": "Market signals vs central decisions in resource allocation",
+      "marking_points": [
+        "In a free market economy, resources are mainly privately owned [1]",
+        "Consumer demand and market prices signal what to produce, and firms produce what is profitable (price rationing) [1]",
+        "In a centrally planned economy, resources are mainly owned by the government [1]",
+        "A central authority decides what to produce through plans and targets, not market prices (non-price rationing) [1]"
+      ],
+      "model_answer_note": "A full-mark answer covers both systems, giving ownership and the decision mechanism for each."
+    }
+  ]
+}

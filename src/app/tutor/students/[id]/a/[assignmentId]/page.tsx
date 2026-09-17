@@ -1,0 +1,475 @@
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import { Blocks, Rich } from "@/components/Rich";
+import { Crumbs } from "@/components/Crumbs";
+import { Nav, TUTOR_TABS } from "@/components/Nav";
+import { AutoRefresh } from "@/components/review/AutoRefresh";
+import { MarkForm } from "@/components/review/MarkForm";
+import { QuestionRow, Reveal } from "@/components/review/QuestionRows";
+import { HelpPill, StatusBadge } from "@/components/review/StatusBadge";
+import { hasPendingBatches, isMarking, pollMarkingBatches, queueMarking } from "@/lib/ai/marking";
+import { isPast, pastContext, type Question } from "@/lib/content";
+import { ConfirmForm } from "@/components/ConfirmForm";
+import { db, json } from "@/lib/db";
+import { FORMAT_LABEL, initials } from "@/lib/format";
+import { acceptAiMarks, markReviewed, rerunMarking } from "@/lib/review-actions";
+import { loadReview, type ReviewItem } from "@/lib/review";
+import { pct } from "@/lib/scoring";
+import { requireUser } from "@/lib/session";
+import { answerText } from "@/lib/answer-text";
+
+export default async function ReviewPage({ params }: PageProps<"/tutor/students/[id]/a/[assignmentId]">) {
+  const user = await requireUser("tutor");
+  const { id, assignmentId } = await params;
+  const rv = loadReview(assignmentId);
+  if (!rv || rv.a.student_id !== id) notFound();
+  const { a, items, score, concepts, weak, facts } = rv;
+  // Written answers submitted before marking existed, or never marked: start now.
+  const unmarked = items.some((it) => it.r?.submitted_at && !it.auto && it.confirmed === null && !it.aiMark);
+  if (rv.closed && unmarked) queueMarking(a.id);
+  const batching = hasPendingBatches(a.id);
+  if (batching) void pollMarkingBatches().catch(() => {});
+  const marking = isMarking(a.id);
+  const aiWaiting = items.filter((it) => it.confirmed === null && it.aiMark?.status === "done").length;
+  const aiErrors = items.filter((it) => it.confirmed === null && it.aiMark?.status === "error").length;
+  const first = a.student_name.split(" ")[0];
+  const quizzes = db()
+    .prepare(
+      `SELECT s.created_at, q.id AS assignment_id, q.status FROM sets s JOIN assignments q ON q.set_id = s.id
+        WHERE s.review_of = ? ORDER BY s.created_at`,
+    )
+    .all(a.id) as { created_at: string; assignment_id: string; status: string }[];
+  const lastQuiz = quizzes.at(-1);
+  const reviewed = a.status === "reviewed";
+  const statusLabel = { not_started: "Not started", in_progress: "In progress", submitted: "Submitted", reviewed: "Reviewed" }[a.status];
+
+  return (
+    <>
+      <Nav user={user} tabs={TUTOR_TABS} active="/tutor" />
+      <AutoRefresh active={marking || batching} every={batching ? 30_000 : 5_000} />
+      <main className="page">
+        <div className="wrap stack">
+          <div>
+            <Crumbs items={[{ href: "/tutor", label: "Students" }, { href: `/tutor/students/${id}`, label: a.student_name }, { label: a.title }]} />
+            <div className="phead" style={{ marginBottom: 0, alignItems: "center" }}>
+              <div className="who-cell">
+                <span className="avatar lg" aria-hidden>{initials(a.student_name)}</span>
+                <div>
+                  <h1 style={{ fontSize: 36 }}>{a.student_name}</h1>
+                  <p style={{ margin: 0 }}>{a.student_subtitle ?? ""}</p>
+                </div>
+              </div>
+              {reviewed && (
+                <div className="actions-row">
+                  {lastQuiz && (
+                    <Link href={`/tutor/students/${id}/a/${lastQuiz.assignment_id}`} className="muted" style={{ fontSize: 14 }}>
+                      Review quiz sent {new Date(lastQuiz.created_at).toLocaleDateString("en-SG", { day: "numeric", month: "short" })}
+                    </Link>
+                  )}
+                  <Link href={`/tutor/students/${id}/review?from=${a.id}`} className={lastQuiz ? "btn" : "btn accent"}>
+                    {lastQuiz ? "Create another review quiz" : "Create review quiz"}
+                  </Link>
+                </div>
+              )}
+            </div>
+          </div>
+
+          <section className="card hero">
+            <p className="eyebrow">
+              {a.title} · {statusLabel}
+              {a.helper === "off" ? " · Helper off" : ""}
+            </p>
+            <h2 className="headline">
+              <span>
+                {score.marks}/{score.total} marks{score.pending ? ` (${score.pending} to confirm)` : ""}
+              </span>
+              <span className="sep">|</span>
+              <span>
+                {score.withoutAi} of {score.count} without AI
+              </span>
+              {weak && (
+                <>
+                  <span className="sep">|</span>
+                  <span>
+                    Weak spot: <em>{weak.label}</em>
+                  </span>
+                </>
+              )}
+            </h2>
+            <div className="scores">
+              <div className="score ind">
+                <div>
+                  <span className="sl">Independent score · no AI</span>
+                  <span className="sv">{score.pending ? "Pending" : pct(score.independent)}</span>
+                  <span className="ss">
+                    Solved without AI: <b>{score.withoutAi} of {score.count}</b>
+                    {score.unverified ? ` · Unverified: ${score.unverified}` : ""}
+                  </span>
+                </div>
+                <div className="qboxes">
+                  {score.questions.map((s, i) => (
+                    <span key={s.id} className={s.category === "without_ai" ? "on" : undefined}>Q{i + 1}</span>
+                  ))}
+                </div>
+              </div>
+              <div className="score sup">
+                <div>
+                  <span className="sl">Supported score · with AI</span>
+                  <span className="sv">{score.pending ? "Pending" : pct(score.supported)}</span>
+                  <span className="ss">
+                    Solved with AI help: <b>{score.withAi} of {score.count}</b>
+                  </span>
+                </div>
+                <div className="qboxes">
+                  {score.questions.map((s, i) => (
+                    <span key={s.id} className={s.category === "with_ai" ? "on" : undefined}>Q{i + 1}</span>
+                  ))}
+                </div>
+              </div>
+            </div>
+            <div className="scorefoot">
+              <span className="facts">
+                {facts.minutes} min · {facts.aiQuestions} AI questions · {facts.hints} hints
+              </span>
+              <div className="actions-row">
+                {marking && <span className="muted">AI is suggesting marks…</span>}
+                {!marking && batching && <span className="muted">AI marks arrive within about an hour (half-price batch).</span>}
+                {!marking && aiErrors > 0 && (
+                  <form action={rerunMarking.bind(null, a.id)}>
+                    <button className="btn sm" type="submit">Retry AI marking ({aiErrors})</button>
+                  </form>
+                )}
+                {aiWaiting > 0 && (
+                  <ConfirmForm
+                    action={acceptAiMarks.bind(null, a.id)}
+                    label={`Accept all AI marks (${aiWaiting})`}
+                    className="btn sm"
+                    title={`Accept ${aiWaiting} AI ${aiWaiting === 1 ? "mark" : "marks"}?`}
+                    body="Each AI suggestion becomes the confirmed mark. You can still change any of them before sending."
+                    confirmLabel="Accept all"
+                  />
+                )}
+                {a.status === "submitted" && (
+                  <ConfirmForm
+                    action={markReviewed.bind(null, a.id)}
+                    label={score.pending > 0 ? `${score.pending} to confirm` : `Send marks to ${first}`}
+                    className="btn accent sm"
+                    disabled={score.pending > 0}
+                    title={`Send marks to ${first}?`}
+                    body={`${first} sees ${score.marks}/${score.total} marks, your comments and the answers. You can still change a mark afterwards.`}
+                    confirmLabel="Send marks"
+                  />
+                )}
+                {reviewed && <span className="muted">Marks sent · changes show to {first} straight away</span>}
+              </div>
+            </div>
+          </section>
+
+          {concepts.length > 0 && (
+            <section className="card">
+              <div className="card-hd">
+                <h2>Concepts in this set</h2>
+                <Link href={`/tutor/students/${id}/concepts`} className="muted" style={{ fontSize: 14 }}>
+                  Across the last 3 sets
+                </Link>
+              </div>
+              <div className="scrollx">
+                <table className="t">
+                  <thead>
+                    <tr>
+                      <th>Concept</th>
+                      <th>Status</th>
+                      <th>Why</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {concepts.map((c) => (
+                      <tr key={c.key}>
+                        <td className="concept">{c.label}</td>
+                        <td>
+                          <StatusBadge status={c.status} />
+                        </td>
+                        <td>
+                          {c.why} · {c.got}/{c.available} marks
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              {score.pending > 0 && <p className="cardbody muted" style={{ margin: 0 }}>Questions still to confirm are not counted yet.</p>}
+            </section>
+          )}
+
+          <section className="card">
+            <div className="card-hd">
+              <h2>Question by question</h2>
+            </div>
+            <div className="scrollx">
+              <div className="qlist">
+                <div className="qrow head" aria-hidden>
+                  <span>Q</span>
+                  <span>Question</span>
+                  <span>Result</span>
+                  <span>Score</span>
+                  <span>Solved</span>
+                  <span>Hints</span>
+                  <span>AI qs</span>
+                  <span>Time</span>
+                  <span />
+                </div>
+                {items.map((it, i) => (
+                  <QuestionRow
+                    key={it.q.id}
+                    open={it.confirmed === null && Boolean(it.r)}
+                    head={
+                      <>
+                        <span className="n">{it.n}</span>
+                        <span className="qt clamp">{it.q.prompt.replace(/\*\*/g, "")}</span>
+                        <span>{it.result}</span>
+                        <span>{score.questions[i]!.score === null ? "—" : `${Math.round((score.questions[i]!.score! / it.q.marks) * 100)}%`}</span>
+                        <span>
+                          <HelpPill category={score.questions[i]!.category} />
+                        </span>
+                        <span className="pips" aria-label={`${it.r?.hint_level ?? 0} hints`}>
+                          <span className={(it.r?.hint_level ?? 0) >= 1 ? "on" : undefined} />
+                          <span className={(it.r?.hint_level ?? 0) >= 2 ? "on" : undefined} />
+                        </span>
+                        <span>{it.r?.ai_questions ?? 0}</span>
+                        <span>{it.timeMin} min</span>
+                      </>
+                    }
+                  >
+                    <Detail it={it} assignmentId={a.id} />
+                  </QuestionRow>
+                ))}
+              </div>
+            </div>
+          </section>
+        </div>
+      </main>
+    </>
+  );
+}
+
+function Detail({ it, assignmentId }: { it: ReviewItem; assignmentId: string }) {
+  const { q, r, aiMark } = it;
+  const attempts = json.parse<{ value: string; correct: boolean }[]>(r?.attempts, []);
+  const past = isPast(q);
+  return (
+    <>
+      <p className="meta" style={{ margin: 0 }}>
+        {past && <span className="pill gray">{q.past.label}</span>}
+        <span className="pill gray">{FORMAT_LABEL[q.format]}</span>
+        <span>{it.concepts.map((c) => c.label).join(" · ")}</span>
+        <span>{q.marks} marks</span>
+      </p>
+      {it.honesty && <p className="honesty" style={{ margin: 0 }}>{it.honesty}</p>}
+
+      <div className="two">
+        <div>
+          {attempts.length > 0 && (
+            <>
+              <h3>Attempts</h3>
+              {attempts.map((x, i) => (
+                <div key={i} className="att">
+                  <span className="muted">{i + 1}</span>
+                  {x.correct ? <span className="v">{attemptLabel(q, x.value)}</span> : <s className="v">{attemptLabel(q, x.value)}</s>}
+                  <span className={`pill ${x.correct ? "green" : "red"}`}>{x.correct ? "Correct" : "Incorrect"}</span>
+                </div>
+              ))}
+            </>
+          )}
+          {r?.photo_path && (
+            <>
+              <h3>Diagram</h3>
+              {/* eslint-disable-next-line @next/next/no-img-element -- private upload */}
+              <img className="upload" src={`/api/photo?r=${r.id}`} alt="Student's diagram" />
+            </>
+          )}
+        </div>
+        <div>
+          <h3>AI summary</h3>
+          {it.bullets.length ? (
+            <ul className="summary">
+              {it.bullets.map((b, i) => (
+                <li key={i}>{b}</li>
+              ))}
+            </ul>
+          ) : (
+            <p className="muted" style={{ margin: 0 }}>{r ? "No help used." : "Not opened."}</p>
+          )}
+        </div>
+      </div>
+
+      {(r?.plan_text || r?.working_text || r?.final_text) && (
+        <div className="stack" style={{ gap: 10 }}>
+          {r.plan_text && (
+            <div>
+              <h3>Plan</h3>
+              <div className="answerbox">{planText(r.plan_text)}</div>
+            </div>
+          )}
+          {r.working_text && (
+            <div>
+              <h3>Working</h3>
+              <div className="answerbox">{r.working_text}</div>
+            </div>
+          )}
+          {r.final_text && (
+            <div>
+              <h3>{q.format === "calculation" ? "Final answer" : "Answer"}</h3>
+              <div className="answerbox">{r.final_text}</div>
+            </div>
+          )}
+        </div>
+      )}
+
+      {!it.auto && (
+        <div className="stack" style={{ gap: 10 }}>
+          <h3>Marking</h3>
+          {aiMark?.status === "done" && (
+            <div className="sub" style={{ padding: 14 }}>
+              <p style={{ margin: "0 0 8px", fontWeight: 600 }}>
+                AI suggests {aiMark.marks}/{q.marks}
+                {aiMark.band ? ` · ${aiMark.band}` : ""}
+              </p>
+              {aiMark.evidence && aiMark.evidence.length > 0 && (
+                <ul className="evid">
+                  {aiMark.evidence.map((e, i) => (
+                    <li key={i}>
+                      <span aria-label={e.met ? "met" : "not met"}>{e.met ? "✓" : "✗"}</span>
+                      <span>
+                        {e.point}
+                        {e.quote && (
+                          <>
+                            {" "}
+                            — <q>{e.quote}</q>
+                          </>
+                        )}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+              {aiMark.items && aiMark.items.length > 0 && (
+                <ul className="evid" style={{ marginTop: 8 }}>
+                  {aiMark.items.map((x, i) => (
+                    <li key={i}>
+                      <span>{x.status === "present" ? "✓" : x.status === "unreadable" ? "?" : "✗"}</span>
+                      <span>
+                        {x.item}
+                        {x.note ? ` — ${x.note}` : ""}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+              {aiMark.missed && aiMark.missed.length > 0 && (
+                <p className="muted" style={{ margin: "8px 0 0", fontSize: 14 }}>Missed: {aiMark.missed.join("; ")}</p>
+              )}
+            </div>
+          )}
+          {aiMark?.status === "error" && <p className="formmsg bad" style={{ margin: 0 }}>AI marking failed. Mark it yourself or retry.</p>}
+          <MarkForm
+            assignmentId={assignmentId}
+            responseId={r?.id ?? null}
+            questionId={q.id}
+            max={q.marks}
+            suggested={aiMark?.status === "done" ? (aiMark.marks ?? null) : null}
+            current={it.tutorMark?.marks ?? null}
+            note={it.tutorMark?.note}
+          />
+        </div>
+      )}
+
+      <Reveal label="question and mark scheme">
+        <QuestionAndScheme q={q} />
+      </Reveal>
+
+      {it.log.length > 0 && (
+        <Reveal label="full conversation">
+          <ol className="convo">
+            {it.log.map((l, i) =>
+              l.who === "marker" ? (
+                <li key={i} className="mk">
+                  <span className="tm">{l.at}</span>
+                  <span>{l.text}</span>
+                </li>
+              ) : (
+                <li key={i}>
+                  <span className="tm">{l.at}</span>
+                  <b>{l.who === "student" ? "Student" : "AI"}</b>
+                  <span className={l.who === "helper" ? "muted" : undefined}>{l.text}</span>
+                </li>
+              ),
+            )}
+          </ol>
+        </Reveal>
+      )}
+
+      {it.snapshots.length > 1 && (
+        <Reveal label={`how it was written (${it.snapshots.length} snapshots)`}>
+          <div className="answerbox">
+            {it.snapshots.map((s, i) => (
+              <div key={i} className="snap">
+                <span className="tm">{s.at}</span>
+                <span>{s.text || "—"}</span>
+              </div>
+            ))}
+          </div>
+        </Reveal>
+      )}
+    </>
+  );
+}
+
+function attemptLabel(q: Question, value: string) {
+  if (!isPast(q) && q.format === "mcq") {
+    const o = q.options.find((x) => x.id === value);
+    return `${value.toUpperCase()}${o ? ` · ${o.text}` : ""}`;
+  }
+  if (!isPast(q) && q.format === "analysis_chain") {
+    const byId = new Map(q.steps.map((s, i) => [s.id, i + 1]));
+    return value
+      .split(",")
+      .map((id) => byId.get(id) ?? "?")
+      .join(" → ");
+  }
+  return value;
+}
+
+function planText(plan: string) {
+  try {
+    const v = JSON.parse(plan);
+    return Array.isArray(v) ? v.filter(Boolean).join("\n") : plan;
+  } catch {
+    return plan;
+  }
+}
+
+function QuestionAndScheme({ q }: { q: Question }) {
+  if (isPast(q)) {
+    return (
+      <div className="stack" style={{ gap: 10 }}>
+        <details className="sub">
+          <summary>Extracts and data</summary>
+          <Blocks blocks={pastContext(q.past.paper, q.past.question)} />
+        </details>
+        {q.past.lead.length > 0 && <Blocks blocks={q.past.lead} />}
+        <p className="qtext" style={{ margin: 0 }}>
+          <Rich text={q.prompt} />
+        </p>
+        <div className="answerbox mstext">
+          <Rich text={q.marking.text || "Not found in the mark scheme file."} />
+        </div>
+      </div>
+    );
+  }
+  return (
+    <div className="stack" style={{ gap: 10 }}>
+      <p className="qtext" style={{ margin: 0 }}>{q.prompt}</p>
+      <div className="answerbox">{answerText(q)}</div>
+    </div>
+  );
+}

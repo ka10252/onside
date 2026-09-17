@@ -1,0 +1,15 @@
+/* From design/tokens.css. Fonts are loaded with next/font in app/layout.tsx. */
+:root {
+  color-scheme: light;
+  --bg: #F7F6F1; --surface: #FFFFFF; --surface2: #FAF9F5; --sunk: #F0EFE8;
+  --line: #E2E0D6; --line2: #CAC7BA;
+  --ink: #141414; --ink-hover: #2E2E2E; --ink2: #55544E; --faint: #8A887E;
+  --red: #C8322B; --red-hover: #A92822; --redtint: #FDE7E5; --redtext: #9A231D;
+  --green: #2E7D4F; --greentint: #E5F2E9;
+  --amber: #8A5F00; --ambertint: #F7EED3;
+  --hl: #E4F86A; --hlborder: #C9DE45; --hllabel: #3E4A00;
+  --pink: #FF6FAE; --pink-hover: #F2559A; --pinktint: #FFE3EE; --pinktext: #9E1F4F;
+  --serif: var(--font-serif), Georgia, 'Times New Roman', serif;
+  --sans: var(--font-sans), 'Helvetica Neue', Arial, sans-serif;
+  --shadow: 0 1px 2px rgba(20, 20, 20, .05), 0 4px 16px rgba(20, 20, 20, .05);
+}

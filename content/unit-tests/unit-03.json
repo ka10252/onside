@@ -1,0 +1,1114 @@
+{
+  "unit": 3,
+  "title": "Elasticities",
+  "questions": [
+    {
+      "id": "u3-mcq-01",
+      "format": "mcq",
+      "section": "3.1",
+      "concepts": [
+        "c3-price-elasticity-of-demand-ped"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Which of the following best describes price elasticity of demand (PED)?",
+      "options": [
+        {
+          "id": "a",
+          "text": "The change in the price of a good caused by a change in the quantity demanded",
+          "misconception": "It reverses cause and effect: in PED the price changes first and quantity demanded responds."
+        },
+        {
+          "id": "b",
+          "text": "The responsiveness of the quantity demanded of a good to a change in its price",
+          "misconception": null
+        },
+        {
+          "id": "c",
+          "text": "The responsiveness of the demand for a good to a change in consumers' incomes",
+          "misconception": "This describes income elasticity of demand (YED), not PED."
+        },
+        {
+          "id": "d",
+          "text": "The slope of the demand curve",
+          "misconception": "Slope uses absolute changes, while elasticity uses percentage changes, so the two are not the same."
+        }
+      ],
+      "answer": "b",
+      "hints": [
+        "Think about what the word 'elasticity' measures in economics: how much one variable reacts to another.",
+        "Decide which variable changes first in PED and which variable responds to it."
+      ],
+      "targets": "Basic meaning of PED; not confusing it with YED or slope"
+    },
+    {
+      "id": "u3-sa-01",
+      "format": "short_answer",
+      "section": "3.1",
+      "concepts": [
+        "c3-price-inelastic-demand"
+      ],
+      "command_term": "define",
+      "marks": 2,
+      "prompt": "Define price inelastic demand.",
+      "marking_points": [
+        "Quantity demanded is not very responsive to a change in price [1]",
+        "A change in price leads to a proportionately smaller change in quantity demanded (PED between 0 and 1 in absolute value) [1]"
+      ],
+      "model_answer_note": "A full answer says quantity demanded responds only a little to price and shows the relative size of the changes, in words or as a PED value range.",
+      "hints": [
+        "Think about how strongly buyers react when the price of a good changes.",
+        "Link a change in price to a change in quantity demanded and compare how big the two changes are."
+      ],
+      "targets": "Precise definition, including the relative size of the percentage changes"
+    },
+    {
+      "id": "u3-mcq-02",
+      "format": "mcq",
+      "section": "3.1",
+      "concepts": [
+        "c3-price-elasticity-of-demand-ped",
+        "c3-price-inelastic-demand"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "The PED for rice in Veld is estimated to be −0.4. Which statement is correct?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Demand for rice is price elastic because the value is negative",
+          "misconception": "The minus sign only shows that price and quantity move in opposite directions; elasticity is judged by the absolute value."
+        },
+        {
+          "id": "b",
+          "text": "Demand for rice is unit elastic",
+          "misconception": "Unit elastic demand needs an absolute value of exactly 1."
+        },
+        {
+          "id": "c",
+          "text": "Demand for rice is price inelastic",
+          "misconception": null
+        },
+        {
+          "id": "d",
+          "text": "Demand for rice is perfectly price inelastic",
+          "misconception": "Perfectly inelastic demand has a PED of 0, meaning quantity would not change at all."
+        }
+      ],
+      "answer": "c",
+      "hints": [
+        "Look at the absolute value of the PED coefficient and compare it with 1.",
+        "Ignore the minus sign, which only shows direction, then decide which range the number falls in."
+      ],
+      "targets": "Interpreting a PED value; role of the minus sign"
+    },
+    {
+      "id": "u3-mcq-03",
+      "format": "mcq",
+      "section": "3.2",
+      "concepts": [
+        "c3-income-elasticity-of-demand-yed"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "In Kuva, average incomes rise. Households now buy fewer bus tickets and take more taxi rides. What is the YED for bus tickets most likely to be?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Positive and greater than 1",
+          "misconception": "This describes a luxury, whose demand rises faster than income; demand for bus tickets fell."
+        },
+        {
+          "id": "b",
+          "text": "Positive and less than 1",
+          "misconception": "This describes a normal necessity, whose demand still rises when income rises."
+        },
+        {
+          "id": "c",
+          "text": "Zero",
+          "misconception": "A YED of zero means demand does not change with income, but here it changed."
+        },
+        {
+          "id": "d",
+          "text": "Negative",
+          "misconception": null
+        }
+      ],
+      "answer": "d",
+      "hints": [
+        "Use the sign of YED to link the direction of the income change to the direction of the demand change.",
+        "Income went up; note which way demand for bus tickets moved and what sign that combination gives."
+      ],
+      "targets": "Sign of YED and inferior goods"
+    },
+    {
+      "id": "u3-sa-02",
+      "format": "short_answer",
+      "section": "3.3",
+      "concepts": [
+        "c3-price-elastic-supply",
+        "c3-price-inelastic-supply"
+      ],
+      "command_term": "define",
+      "marks": 2,
+      "prompt": "Define price elasticity of supply (PES).",
+      "marking_points": [
+        "A measure of the responsiveness of the quantity supplied of a good [1]",
+        "to a change in its price (% change in quantity supplied ÷ % change in price) [1]"
+      ],
+      "model_answer_note": "A full answer names responsiveness of quantity supplied and links it to a change in the good's own price; the formula is acceptable for the second mark.",
+      "hints": [
+        "Think about the supply side of the market and what producers react to.",
+        "State what is being measured, which variable responds and which variable changes first."
+      ],
+      "targets": "Definition of PES; quantity supplied rather than supply"
+    },
+    {
+      "id": "u3-mcq-04",
+      "format": "mcq",
+      "section": "3.1",
+      "concepts": [
+        "c3-price-elasticity-of-demand-ped",
+        "c3-price-elastic-demand"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Which of the following is likely to have the most price elastic demand in Veld?",
+      "options": [
+        {
+          "id": "a",
+          "text": "One particular brand of bottled water",
+          "misconception": null
+        },
+        {
+          "id": "b",
+          "text": "Tap water supplied to homes",
+          "misconception": "Tap water is essential and has no close substitute, so demand is inelastic."
+        },
+        {
+          "id": "c",
+          "text": "Insulin for people with diabetes",
+          "misconception": "Insulin is a necessity with no substitute, so demand is very inelastic."
+        },
+        {
+          "id": "d",
+          "text": "Salt",
+          "misconception": "Salt takes a tiny share of income and has few substitutes, so demand is inelastic."
+        }
+      ],
+      "answer": "a",
+      "hints": [
+        "Use the determinants of PED: number of close substitutes, necessity versus luxury, and share of income.",
+        "For each good, ask how easily a consumer could switch to something else if its price rose."
+      ],
+      "targets": "Determinants of PED, especially substitutes and brand vs product"
+    },
+    {
+      "id": "u3-sa-03",
+      "format": "short_answer",
+      "section": "3.1",
+      "concepts": [
+        "c3-price-elasticity-of-demand-ped"
+      ],
+      "command_term": "calculate",
+      "marks": 2,
+      "prompt": "Table 1 shows the price of a bus ticket in Kuva City and the number of tickets sold per day. Calculate the price elasticity of demand (PED) for bus tickets.",
+      "table": {
+        "caption": "Table 1: Bus tickets in Kuva City",
+        "columns": [
+          "Period",
+          "Price per ticket (zeds)",
+          "Tickets sold per day"
+        ],
+        "rows": [
+          [
+            "Before",
+            "2.00",
+            "800"
+          ],
+          [
+            "After",
+            "2.50",
+            "700"
+          ]
+        ]
+      },
+      "marking_points": [
+        "% change in quantity demanded = (700 − 800) ÷ 800 × 100 = −12.5% and % change in price = (2.50 − 2.00) ÷ 2.00 × 100 = +25% [1]",
+        "PED = −12.5 ÷ 25 = −0.5 [1]"
+      ],
+      "model_answer_note": "Both percentage changes calculated from the original values and the correct PED of −0.5 (0.5 accepted if the absolute value is used).",
+      "hints": [
+        "Use PED = % change in quantity demanded ÷ % change in price.",
+        "Find each percentage change using the original value as the base, then divide the quantity change by the price change."
+      ],
+      "targets": "PED calculation from a table; using original values as the base"
+    },
+    {
+      "id": "u3-mcq-05",
+      "format": "mcq",
+      "section": "3.1",
+      "concepts": [
+        "c3-price-elasticity-of-demand-ped",
+        "c3-price-elastic-demand",
+        "c3-total-revenue"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "A shop in Veld cuts the price of Kuva Cola. Using Table 2, which statement is correct?",
+      "table": {
+        "caption": "Table 2: Weekly sales of Kuva Cola",
+        "columns": [
+          "Week",
+          "Price per bottle (zeds)",
+          "Bottles sold"
+        ],
+        "rows": [
+          [
+            "Week 1",
+            "10",
+            "50"
+          ],
+          [
+            "Week 2",
+            "8",
+            "70"
+          ]
+        ]
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": "Demand is price inelastic and total revenue falls",
+          "misconception": "It assumes a price cut always lowers revenue; here quantity rose by a larger percentage than price fell."
+        },
+        {
+          "id": "b",
+          "text": "Demand is price elastic and total revenue rises",
+          "misconception": null
+        },
+        {
+          "id": "c",
+          "text": "Demand is price elastic and total revenue falls",
+          "misconception": "With elastic demand, a price cut raises total revenue, not lowers it."
+        },
+        {
+          "id": "d",
+          "text": "Demand is unit elastic and total revenue does not change",
+          "misconception": "Total revenue changes between the two weeks, so demand cannot be unit elastic."
+        }
+      ],
+      "answer": "b",
+      "hints": [
+        "Calculate total revenue (P × Q) in each week and compare the percentage changes in price and quantity.",
+        "Decide whether quantity changed by a larger or smaller percentage than price, then link that to PED and to revenue."
+      ],
+      "targets": "PED and total revenue with data"
+    },
+    {
+      "id": "u3-sa-04",
+      "format": "short_answer",
+      "section": "3.2",
+      "concepts": [
+        "c3-income-elasticity-of-demand-yed",
+        "c3-luxuries"
+      ],
+      "command_term": "calculate",
+      "marks": 3,
+      "prompt": "Table 3 shows average household income in Veld and the number of restaurant meals bought per household. Assuming nothing else changed, calculate the income elasticity of demand (YED) for restaurant meals and state what type of good they are.",
+      "table": {
+        "caption": "Table 3: Income and restaurant meals in Veld",
+        "columns": [
+          "Year",
+          "Average monthly household income (zeds)",
+          "Restaurant meals per household per month"
+        ],
+        "rows": [
+          [
+            "2024",
+            "2,000",
+            "40"
+          ],
+          [
+            "2025",
+            "2,200",
+            "46"
+          ]
+        ]
+      },
+      "marking_points": [
+        "% change in income = (2,200 − 2,000) ÷ 2,000 × 100 = 10% [1]",
+        "% change in quantity demanded = (46 − 40) ÷ 40 × 100 = 15% [1]",
+        "YED = 15 ÷ 10 = 1.5, so restaurant meals are a normal good that is a luxury (income elastic) [1]"
+      ],
+      "model_answer_note": "Both percentage changes, YED of +1.5 and the classification as a normal, income-elastic (luxury) good.",
+      "hints": [
+        "Use YED = % change in quantity demanded ÷ % change in income.",
+        "Work out both percentage changes from the first-year values, divide, then use the sign and size of the result to classify the good."
+      ],
+      "targets": "YED calculation and classification of luxuries"
+    },
+    {
+      "id": "u3-mcq-06",
+      "format": "mcq",
+      "section": "3.3",
+      "concepts": [
+        "c3-price-elastic-supply"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Which of the following would make the supply of bicycles in Veld more price elastic?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Bicycle factories are operating at full capacity",
+          "misconception": "With no spare capacity, firms find it hard to raise output, so supply is less elastic."
+        },
+        {
+          "id": "b",
+          "text": "Bicycles take a long time to produce",
+          "misconception": "A long production period makes it slower to respond to price, lowering PES."
+        },
+        {
+          "id": "c",
+          "text": "Firms hold large stocks of unsold bicycles",
+          "misconception": null
+        },
+        {
+          "id": "d",
+          "text": "Firms cannot easily hire extra skilled workers",
+          "misconception": "Immobile factors of production make it harder to expand output, lowering PES."
+        }
+      ],
+      "answer": "c",
+      "hints": [
+        "Use the determinants of PES, such as spare capacity, stocks, production time and factor mobility.",
+        "Ask which option lets firms increase quantity supplied quickly when the price rises."
+      ],
+      "targets": "Determinants of PES"
+    },
+    {
+      "id": "u3-sa-05",
+      "format": "short_answer",
+      "section": "3.1",
+      "concepts": [
+        "c3-price-elasticity-of-demand-ped",
+        "c3-price-inelastic-demand",
+        "c3-necessities"
+      ],
+      "command_term": "explain",
+      "marks": 4,
+      "prompt": "Explain two reasons why the demand for insulin in Veld is likely to be price inelastic.",
+      "marking_points": [
+        "Insulin is a necessity for people with diabetes [1]",
+        "so they keep buying almost the same amount when its price rises [1]",
+        "Insulin has few or no close substitutes [1]",
+        "so consumers cannot switch to another product when its price rises [1]"
+      ],
+      "model_answer_note": "Two separate determinants, each applied to insulin and linked to a small response of quantity demanded to price.",
+      "hints": [
+        "Use the determinants of PED.",
+        "For each determinant, state the feature insulin has, then link it to how buyers react when the price goes up."
+      ],
+      "targets": "Applying determinants of PED to a specific good"
+    },
+    {
+      "id": "u3-mcq-07",
+      "format": "mcq",
+      "section": "3.2",
+      "concepts": [
+        "c3-income-elasticity-of-demand-yed"
+      ],
+      "command_term": "calculate",
+      "marks": 1,
+      "prompt": "Table 4 shows data for Kuva. Assuming nothing else changed, what is the YED for bus trips and what type of good are they?",
+      "table": {
+        "caption": "Table 4: Income and bus travel in Kuva",
+        "columns": [
+          "Year",
+          "Average weekly income (zeds)",
+          "Bus trips per person per month"
+        ],
+        "rows": [
+          [
+            "2024",
+            "400",
+            "50"
+          ],
+          [
+            "2025",
+            "420",
+            "49"
+          ]
+        ]
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": "+0.4; normal good",
+          "misconception": "The sign is wrong: demand fell while income rose, so YED is negative."
+        },
+        {
+          "id": "b",
+          "text": "−2.5; inferior good",
+          "misconception": "The formula has been turned upside down (income change ÷ quantity change)."
+        },
+        {
+          "id": "c",
+          "text": "−0.4; normal good",
+          "misconception": "A negative YED shows an inferior good, not a normal good."
+        },
+        {
+          "id": "d",
+          "text": "−0.4; inferior good",
+          "misconception": null
+        }
+      ],
+      "answer": "d",
+      "hints": [
+        "Use YED = % change in quantity demanded ÷ % change in income.",
+        "Work out each percentage change from the 2024 values, divide in the correct order, then use the sign to classify the good."
+      ],
+      "targets": "YED calculation with a negative result; formula order"
+    },
+    {
+      "id": "u3-sa-06",
+      "format": "short_answer",
+      "section": "3.3",
+      "concepts": [
+        "c3-price-inelastic-supply"
+      ],
+      "command_term": "calculate",
+      "marks": 2,
+      "prompt": "Table 5 shows the price of wheat in Veld and the quantity supplied by farmers. Calculate the price elasticity of supply (PES) for wheat and state whether supply is price elastic or price inelastic.",
+      "table": {
+        "caption": "Table 5: Wheat market in Veld",
+        "columns": [
+          "Year",
+          "Price per tonne (zeds)",
+          "Quantity supplied (tonnes)"
+        ],
+        "rows": [
+          [
+            "2024",
+            "200",
+            "1,000"
+          ],
+          [
+            "2025",
+            "240",
+            "1,100"
+          ]
+        ]
+      },
+      "marking_points": [
+        "% change in quantity supplied = (1,100 − 1,000) ÷ 1,000 × 100 = 10% and % change in price = (240 − 200) ÷ 200 × 100 = 20% [1]",
+        "PES = 10 ÷ 20 = 0.5, so supply is price inelastic [1]"
+      ],
+      "model_answer_note": "Both percentage changes, PES of 0.5 and the correct label of price inelastic supply.",
+      "hints": [
+        "Use PES = % change in quantity supplied ÷ % change in price.",
+        "Calculate each percentage change from the original values, divide, then compare the result with 1."
+      ],
+      "targets": "PES calculation and interpretation"
+    },
+    {
+      "id": "u3-mcq-08",
+      "format": "mcq",
+      "section": "3.1",
+      "concepts": [
+        "c3-price-elasticity-of-demand-ped",
+        "c3-price-elastic-demand",
+        "c3-price-inelastic-demand"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "The demand curve for train tickets in Veld is a downward-sloping straight line. Which statement is correct?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Demand is more price elastic at higher prices than at lower prices",
+          "misconception": null
+        },
+        {
+          "id": "b",
+          "text": "PED is the same at every point because the slope is constant",
+          "misconception": "The slope is constant, but PED depends on percentage changes, which differ along the line."
+        },
+        {
+          "id": "c",
+          "text": "Demand is more price elastic at lower prices than at higher prices",
+          "misconception": "This reverses the pattern along a straight-line demand curve."
+        },
+        {
+          "id": "d",
+          "text": "Demand is unit elastic at every point",
+          "misconception": "Only one point on a straight-line demand curve is unit elastic."
+        }
+      ],
+      "answer": "a",
+      "hints": [
+        "PED uses percentage changes, not absolute changes, so compare the price and quantity values at different points on the line.",
+        "For the same step along the line, think about how large that step is as a percentage when price is high and quantity is low, and the reverse."
+      ],
+      "targets": "PED varies along a linear demand curve"
+    },
+    {
+      "id": "u3-sa-07",
+      "format": "short_answer",
+      "section": "3.1",
+      "concepts": [
+        "c3-price-elasticity-of-demand-ped",
+        "c3-price-elastic-demand"
+      ],
+      "command_term": "calculate",
+      "marks": 2,
+      "prompt": "A café in Veld sells 5,000 cups of coffee per month. The PED for its coffee is −1.5. The café raises its price by 8%. Calculate the new number of cups sold per month, assuming nothing else changes.",
+      "marking_points": [
+        "% change in quantity demanded = −1.5 × 8 = −12% [1]",
+        "New quantity = 5,000 × (1 − 0.12) = 4,400 cups per month [1]"
+      ],
+      "model_answer_note": "The percentage change in quantity found by rearranging the PED formula, then applied to 5,000 to give 4,400 cups.",
+      "hints": [
+        "Rearrange the PED formula to find the percentage change in quantity demanded.",
+        "Multiply PED by the price change, then apply that percentage to the original quantity."
+      ],
+      "targets": "Rearranging PED to find a quantity change"
+    },
+    {
+      "id": "u3-mcq-09",
+      "format": "mcq",
+      "section": "3.1",
+      "concepts": [
+        "c3-price-elasticity-of-demand-ped",
+        "c3-price-inelastic-demand",
+        "c3-total-revenue"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Demand for Veld Rail's commuter tickets is price inelastic. If Veld Rail wants to increase its total revenue, it should:",
+      "options": [
+        {
+          "id": "a",
+          "text": "lower the price, because more tickets will be sold",
+          "misconception": "With inelastic demand, the rise in tickets sold is proportionately smaller than the price cut, so revenue falls."
+        },
+        {
+          "id": "b",
+          "text": "keep the price unchanged, because PED has no effect on revenue",
+          "misconception": "PED determines how revenue responds to a price change."
+        },
+        {
+          "id": "c",
+          "text": "raise the price",
+          "misconception": null
+        },
+        {
+          "id": "d",
+          "text": "lower the price, because demand is not responsive to price",
+          "misconception": "Unresponsive demand means a price cut barely raises sales, so revenue falls."
+        }
+      ],
+      "answer": "c",
+      "hints": [
+        "Use the relationship between PED and total revenue (TR = P × Q).",
+        "Compare the size of the percentage change in quantity with the percentage change in price when demand is inelastic."
+      ],
+      "targets": "PED and total revenue decisions for firms"
+    },
+    {
+      "id": "u3-sa-08",
+      "format": "short_answer",
+      "section": "3.2",
+      "concepts": [
+        "c3-income-elasticity-of-demand-yed"
+      ],
+      "command_term": "distinguish",
+      "marks": 2,
+      "prompt": "Using income elasticity of demand (YED), distinguish between a normal good and an inferior good.",
+      "marking_points": [
+        "Normal good: YED is positive, so demand rises when income rises [1]",
+        "Inferior good: YED is negative, so demand falls when income rises [1]"
+      ],
+      "model_answer_note": "Both goods covered, each with the sign of YED and the direction of the demand change when income rises.",
+      "hints": [
+        "Use the sign of YED.",
+        "For each type of good, state the sign and describe the direction demand moves when income rises."
+      ],
+      "targets": "Normal vs inferior goods from the sign of YED"
+    },
+    {
+      "id": "u3-mcq-10",
+      "format": "mcq",
+      "section": "3.3",
+      "concepts": [
+        "c3-price-elastic-supply"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "On a diagram, a straight-line supply curve starts at the origin and slopes upward. What is the PES along this curve?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Greater than 1 at every point",
+          "misconception": "This is true of a straight-line supply curve that starts on the price axis."
+        },
+        {
+          "id": "b",
+          "text": "Equal to 1 at every point",
+          "misconception": null
+        },
+        {
+          "id": "c",
+          "text": "Less than 1 at every point",
+          "misconception": "This is true of a straight-line supply curve that starts on the quantity axis."
+        },
+        {
+          "id": "d",
+          "text": "Zero at every point",
+          "misconception": "A PES of zero is shown by a vertical supply curve."
+        }
+      ],
+      "answer": "b",
+      "hints": [
+        "Think about where a straight-line supply curve meets the axes and what that tells you about PES.",
+        "For a line through the origin, compare the percentage change in price with the percentage change in quantity between any two points."
+      ],
+      "targets": "PES from the shape and intercept of a supply curve"
+    },
+    {
+      "id": "u3-sa-09",
+      "format": "short_answer",
+      "section": "3.1",
+      "concepts": [
+        "c3-price-elasticity-of-demand-ped",
+        "c3-price-inelastic-demand",
+        "c3-total-revenue"
+      ],
+      "command_term": "calculate",
+      "marks": 4,
+      "prompt": "Table 6 shows the price of cinema tickets at a Kuva cinema and the number sold per week. Calculate (i) the PED for cinema tickets and (ii) the change in the cinema's weekly total revenue.",
+      "table": {
+        "caption": "Table 6: Cinema tickets in Kuva",
+        "columns": [
+          "Month",
+          "Price per ticket (zeds)",
+          "Tickets sold per week"
+        ],
+        "rows": [
+          [
+            "March",
+            "10",
+            "600"
+          ],
+          [
+            "April",
+            "12",
+            "540"
+          ]
+        ]
+      },
+      "marking_points": [
+        "% change in quantity demanded = (540 − 600) ÷ 600 × 100 = −10% and % change in price = (12 − 10) ÷ 10 × 100 = +20% [1]",
+        "PED = −10 ÷ 20 = −0.5 [1]",
+        "Total revenue before = 10 × 600 = 6,000 zeds and after = 12 × 540 = 6,480 zeds [1]",
+        "Total revenue rises by 480 zeds per week [1]"
+      ],
+      "model_answer_note": "PED of −0.5 with working, both total revenue figures, and the rise of 480 zeds.",
+      "hints": [
+        "Use the PED formula for part (i) and TR = P × Q for part (ii).",
+        "Find both percentage changes and divide; then work out revenue before and after and subtract."
+      ],
+      "targets": "PED and total revenue calculation"
+    },
+    {
+      "id": "u3-mcq-11",
+      "format": "mcq",
+      "section": "3.1",
+      "concepts": [
+        "c3-price-elasticity-of-demand-ped",
+        "c3-price-inelastic-demand",
+        "c3-indirect-tax"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "The government of Kuva wants to raise as much revenue as possible from a new indirect tax while causing only a small fall in consumption. Which good should it tax?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Petrol, with a PED of −0.2",
+          "misconception": null
+        },
+        {
+          "id": "b",
+          "text": "Restaurant meals, with a PED of −1.8",
+          "misconception": "Elastic demand means quantity falls sharply, shrinking the amount taxed and changing consumption a lot."
+        },
+        {
+          "id": "c",
+          "text": "Holiday flights, with a PED of −1.4",
+          "misconception": "Elastic demand means the tax causes a large fall in the quantity bought."
+        },
+        {
+          "id": "d",
+          "text": "One brand of chocolate, with a PED of −2.5",
+          "misconception": "A single brand has many substitutes, so buyers switch away and tax revenue is small."
+        }
+      ],
+      "answer": "a",
+      "hints": [
+        "Use PED to predict how much quantity falls when the tax pushes up the price.",
+        "Tax revenue equals tax per unit times quantity sold, so compare how far quantity would fall for each good."
+      ],
+      "targets": "Use of PED for government tax decisions"
+    },
+    {
+      "id": "u3-sa-10",
+      "format": "short_answer",
+      "section": "3.2",
+      "concepts": [
+        "c3-income-elasticity-of-demand-yed",
+        "c3-necessities",
+        "c3-luxuries",
+        "c3-primary-commodities",
+        "c3-manufactured-products"
+      ],
+      "command_term": "explain",
+      "marks": 4,
+      "prompt": "As average incomes in Veld grow, the share of agriculture in Veld's total output falls, while the share of manufacturing and services rises. Explain this change using income elasticity of demand (YED).",
+      "marking_points": [
+        "Food and other agricultural products have a low YED (between 0 and 1) [1]",
+        "so as incomes rise, demand for them rises by a smaller percentage than income [1]",
+        "Manufactured goods and services have a higher YED (often above 1), so their demand grows faster than income [1]",
+        "Resources move towards the faster-growing sectors, so agriculture's share of output falls [1]"
+      ],
+      "model_answer_note": "A full answer contrasts low YED for agricultural goods with high YED for manufactures and services and links this to the shift in output shares.",
+      "hints": [
+        "Compare the YED values of agricultural goods with those of manufactured goods and services.",
+        "Link rising income to how fast demand grows in each sector, then to where resources and output go."
+      ],
+      "targets": "YED and sectoral change during growth"
+    },
+    {
+      "id": "u3-mcq-12",
+      "format": "mcq",
+      "section": "3.3",
+      "concepts": [
+        "c3-price-inelastic-supply",
+        "c3-primary-commodities",
+        "c3-manufactured-products"
+      ],
+      "command_term": "explain",
+      "marks": 1,
+      "prompt": "Why is the supply of primary commodities, such as cocoa, usually less price elastic in the short run than the supply of manufactured goods, such as phones?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Primary commodities have many substitutes",
+          "misconception": "The number of substitutes is a determinant of PED, not PES."
+        },
+        {
+          "id": "b",
+          "text": "Manufactured goods are necessities",
+          "misconception": "Whether a good is a necessity affects demand, not supply."
+        },
+        {
+          "id": "c",
+          "text": "Demand for primary commodities is price inelastic",
+          "misconception": "This describes the demand side, not how producers respond to a price change."
+        },
+        {
+          "id": "d",
+          "text": "Crops take a long time to grow, so output cannot be raised quickly",
+          "misconception": null
+        }
+      ],
+      "answer": "d",
+      "hints": [
+        "Focus on the determinants of PES, not PED.",
+        "Consider how quickly each type of producer can raise output after a price rise."
+      ],
+      "targets": "PES of commodities vs manufactures; not mixing PED and PES determinants"
+    },
+    {
+      "id": "u3-sa-11",
+      "format": "short_answer",
+      "section": "3.1",
+      "concepts": [
+        "c3-price-elasticity-of-demand-ped",
+        "c3-primary-commodities",
+        "c3-manufactured-products",
+        "c3-necessities"
+      ],
+      "command_term": "explain",
+      "marks": 3,
+      "prompt": "Explain why the PED for primary commodities tends to be lower than the PED for manufactured products.",
+      "marking_points": [
+        "Many primary commodities, such as food and fuel, are necessities or essential inputs [1]",
+        "and have few close substitutes, so quantity demanded responds little to price changes [1]",
+        "Manufactured products usually have many substitutes (other brands and models), so buyers switch when price rises, making demand more elastic [1]"
+      ],
+      "model_answer_note": "Reasons why commodity demand is inelastic (necessity, few substitutes) and a contrast with the many substitutes for manufactured products.",
+      "hints": [
+        "Use the determinants of PED, especially necessity and the number of substitutes.",
+        "Apply each determinant to commodities first, then contrast with manufactured products."
+      ],
+      "targets": "PED of commodities vs manufactured products"
+    },
+    {
+      "id": "u3-mcq-13",
+      "format": "mcq",
+      "section": "3.2",
+      "concepts": [
+        "c3-income-elasticity-of-demand-yed",
+        "c3-luxuries",
+        "c3-necessities"
+      ],
+      "command_term": "calculate",
+      "marks": 1,
+      "prompt": "Average incomes in Kuva are expected to rise by 10%. Using Table 7, which statement is correct, assuming nothing else changes?",
+      "table": {
+        "caption": "Table 7: Estimated YED for three goods in Kuva",
+        "columns": [
+          "Good",
+          "YED"
+        ],
+        "rows": [
+          [
+            "Foreign holidays",
+            "1.8"
+          ],
+          [
+            "Bread",
+            "0.3"
+          ],
+          [
+            "Second-hand clothes",
+            "−0.6"
+          ]
+        ]
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": "Demand for bread will rise by 30%",
+          "misconception": "The YED has been multiplied by 100 instead of by the 10% income change."
+        },
+        {
+          "id": "b",
+          "text": "Demand for foreign holidays will rise by 1.8%",
+          "misconception": "The YED has not been multiplied by the 10% income change."
+        },
+        {
+          "id": "c",
+          "text": "Demand for second-hand clothes will fall by 6%",
+          "misconception": null
+        },
+        {
+          "id": "d",
+          "text": "Bread is an inferior good because its YED is less than 1",
+          "misconception": "A YED between 0 and 1 shows a normal good (a necessity); inferior goods have a negative YED."
+        }
+      ],
+      "answer": "c",
+      "hints": [
+        "Rearrange the YED formula to find the percentage change in demand.",
+        "Multiply each YED by the income change and use the sign to judge the direction."
+      ],
+      "targets": "Using YED values to predict demand changes"
+    },
+    {
+      "id": "u3-sa-12",
+      "format": "short_answer",
+      "section": "3.3",
+      "concepts": [
+        "c3-price-inelastic-supply",
+        "c3-price-inelastic-demand",
+        "c3-primary-commodities"
+      ],
+      "command_term": "explain",
+      "marks": 4,
+      "prompt": "New coffee trees in Kuva take several years to produce beans, and demand for coffee is price inelastic. Explain why a poor harvest can cause a large rise in the price of coffee. Refer to what a demand and supply diagram would show.",
+      "marking_points": [
+        "Supply of coffee is price inelastic in the short run because farmers cannot raise output quickly [1]",
+        "A poor harvest shifts the supply curve to the left [1]",
+        "Because demand is price inelastic (a steep demand curve), a large rise in price is needed to cut quantity demanded to the smaller amount available [1]",
+        "Farmers cannot respond to the higher price by producing more in the short run, so the price stays high [1]"
+      ],
+      "model_answer_note": "A full answer links inelastic supply and inelastic demand to the leftward supply shift and explains the large price change shown on the diagram.",
+      "hints": [
+        "Use a demand and supply diagram with steep curves, and think about the determinants of PES for crops.",
+        "Show what the harvest does to the supply curve, then explain how the steepness of each curve affects the size of the price change."
+      ],
+      "targets": "Low PES and PED causing commodity price volatility"
+    },
+    {
+      "id": "u3-mcq-14",
+      "format": "mcq",
+      "section": "3.1",
+      "concepts": [
+        "c3-price-elasticity-of-demand-ped",
+        "c3-price-inelastic-demand",
+        "c3-total-revenue",
+        "c3-primary-commodities"
+      ],
+      "command_term": "calculate",
+      "marks": 1,
+      "prompt": "Veld exports copper. World demand for copper is price inelastic, with a PED of −0.3. If the world price of copper falls by 10%, what happens to Veld's copper export revenue, other things equal?",
+      "options": [
+        {
+          "id": "a",
+          "text": "It rises by about 3%",
+          "misconception": "This counts only the rise in quantity sold and ignores the lower price."
+        },
+        {
+          "id": "b",
+          "text": "It falls by about 7%",
+          "misconception": null
+        },
+        {
+          "id": "c",
+          "text": "It rises by about 13%",
+          "misconception": "The percentage changes have been combined in the wrong direction."
+        },
+        {
+          "id": "d",
+          "text": "It does not change",
+          "misconception": "Revenue would stay the same only if demand were unit elastic."
+        }
+      ],
+      "answer": "b",
+      "hints": [
+        "Use PED to find the percentage change in quantity, then think about TR = P × Q.",
+        "Combine the percentage change in price with the percentage change in quantity to estimate the change in revenue."
+      ],
+      "targets": "PED and export revenue for commodity exporters"
+    },
+    {
+      "id": "u3-sa-13",
+      "format": "short_answer",
+      "section": "3.2",
+      "concepts": [
+        "c3-income-elasticity-of-demand-yed",
+        "c3-luxuries"
+      ],
+      "command_term": "calculate",
+      "marks": 2,
+      "prompt": "The YED for holidays in Veld taken by foreign tourists is 2.5. Incomes in the tourists' home countries rise by 4%. Veld currently receives 200,000 tourists per year. Calculate the expected number of tourists per year, assuming nothing else changes.",
+      "marking_points": [
+        "% change in demand = 2.5 × 4 = 10% [1]",
+        "New number of tourists = 200,000 × 1.10 = 220,000 [1]"
+      ],
+      "model_answer_note": "The percentage change in demand from the rearranged YED formula, then applied to give 220,000 tourists.",
+      "hints": [
+        "Rearrange the YED formula to find the percentage change in demand.",
+        "Multiply YED by the income change, then apply that percentage to the current number of tourists."
+      ],
+      "targets": "YED and export demand growth"
+    },
+    {
+      "id": "u3-mcq-15",
+      "format": "mcq",
+      "section": "3.3",
+      "concepts": [
+        "c3-price-elastic-supply"
+      ],
+      "command_term": "calculate",
+      "marks": 1,
+      "prompt": "Using Table 8, what is the PES for furniture in Veld?",
+      "table": {
+        "caption": "Table 8: Furniture supplied in Veld",
+        "columns": [
+          "Year",
+          "Price per chair (zeds)",
+          "Chairs supplied per month"
+        ],
+        "rows": [
+          [
+            "2024",
+            "50",
+            "400"
+          ],
+          [
+            "2025",
+            "60",
+            "500"
+          ]
+        ]
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": "1.25; supply is price elastic",
+          "misconception": null
+        },
+        {
+          "id": "b",
+          "text": "0.8; supply is price inelastic",
+          "misconception": "The formula has been turned upside down (price change ÷ quantity change)."
+        },
+        {
+          "id": "c",
+          "text": "1.25; supply is price inelastic",
+          "misconception": "A PES above 1 shows elastic supply, not inelastic supply."
+        },
+        {
+          "id": "d",
+          "text": "0.1; supply is price inelastic",
+          "misconception": "This divides the absolute changes instead of the percentage changes."
+        }
+      ],
+      "answer": "a",
+      "hints": [
+        "Use PES = % change in quantity supplied ÷ % change in price.",
+        "Calculate each percentage change from the original values, divide, then compare the result with 1."
+      ],
+      "targets": "PES calculation and interpretation"
+    },
+    {
+      "id": "u3-sa-14",
+      "format": "short_answer",
+      "section": "3.2",
+      "concepts": [
+        "c3-price-elasticity-of-demand-ped",
+        "c3-income-elasticity-of-demand-yed"
+      ],
+      "command_term": "distinguish",
+      "marks": 2,
+      "prompt": "Distinguish between price elasticity of demand (PED) and income elasticity of demand (YED).",
+      "marking_points": [
+        "PED measures the responsiveness of quantity demanded to a change in the good's price, shown as a movement along the demand curve [1]",
+        "YED measures the responsiveness of demand to a change in income, shown as a shift of the demand curve [1]"
+      ],
+      "model_answer_note": "A clear contrast of the variable that changes in each (price vs income), ideally noting movement along vs shift of the curve.",
+      "hints": [
+        "Compare what causes the change in each measure.",
+        "For each measure, name the variable that changes and say whether it moves along or shifts the demand curve."
+      ],
+      "targets": "PED vs YED; movement along vs shift"
+    },
+    {
+      "id": "u3-sa-15",
+      "format": "short_answer",
+      "section": "3.2",
+      "concepts": [
+        "c3-income-elasticity-of-demand-yed",
+        "c3-luxuries"
+      ],
+      "command_term": "explain",
+      "marks": 3,
+      "prompt": "Kuva Motors sells new cars, which have a YED of 2.0. Explain why its sales are likely to fall sharply if Kuva enters a recession.",
+      "marking_points": [
+        "A YED of 2.0 means demand for new cars is income elastic (cars are a luxury) [1]",
+        "In a recession, household incomes fall [1]",
+        "so demand for new cars falls by a larger percentage than income (about twice as much), shifting the demand curve far to the left [1]"
+      ],
+      "model_answer_note": "A full answer interprets YED of 2.0, links recession to falling income, and explains the proportionately larger fall in demand.",
+      "hints": [
+        "Use the value of YED and what it says about the size of the demand response.",
+        "Link the recession to the change in income, then to the change in demand for cars."
+      ],
+      "targets": "Income elastic goods and the business cycle"
+    }
+  ]
+}

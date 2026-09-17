@@ -1,0 +1,1094 @@
+{
+  "unit": 15,
+  "title": "International trade: Part II",
+  "questions": [
+    {
+      "id": "u15-mcq-01",
+      "format": "mcq",
+      "section": "15.4",
+      "concepts": [
+        "c15-world-trade-organization"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "What is the main aim of the World Trade Organization (WTO)?",
+      "options": [
+        {
+          "id": "a",
+          "text": "To set exchange rates between member countries' currencies",
+          "misconception": "Managing currencies is linked to the IMF, not the WTO."
+        },
+        {
+          "id": "b",
+          "text": "To lend money to developing countries for infrastructure projects",
+          "misconception": "Development lending is the role of the World Bank, not the WTO."
+        },
+        {
+          "id": "c",
+          "text": "To make trade between countries freer by reducing trade barriers",
+          "misconception": null
+        },
+        {
+          "id": "d",
+          "text": "To make sure every member country has a trade surplus",
+          "misconception": "Not every country can have a surplus at the same time, and this is not a WTO goal."
+        }
+      ],
+      "answer": "c",
+      "hints": [
+        "Think about what the WTO does to the rules that govern trade between countries.",
+        "Rule out the options that describe other international organizations, then check what is left against the WTO's purpose."
+      ],
+      "targets": "Role of the WTO vs IMF and World Bank"
+    },
+    {
+      "id": "u15-sa-01",
+      "format": "short_answer",
+      "section": "15.2",
+      "concepts": [
+        "c15-economic-integration"
+      ],
+      "command_term": "define",
+      "marks": 2,
+      "prompt": "Define the term economic integration.",
+      "marking_points": [
+        "Co-operation between countries / countries reduce barriers between them and co-ordinate economic policies [1]",
+        "leading to closer economic links between them (e.g. more trade, factor movements) [1]"
+      ],
+      "model_answer_note": "Full marks for a definition that covers both co-operation or policy co-ordination and the resulting closer economic ties; one of the two earns 1.",
+      "hints": [
+        "This term sits behind every type of trading bloc, from a preferential trade agreement to a monetary union.",
+        "Say what the countries do together, and then what happens to the links between their economies as a result."
+      ],
+      "targets": "Core definition for trading bloc questions"
+    },
+    {
+      "id": "u15-mcq-02",
+      "format": "mcq",
+      "section": "15.2",
+      "concepts": [
+        "c15-economic-integration"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "What is the key difference between a free trade area and a customs union?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Members of a customs union set the same tariffs on imports from non-members",
+          "misconception": null
+        },
+        {
+          "id": "b",
+          "text": "Members of a free trade area share a common currency",
+          "misconception": "Neither a free trade area nor a customs union needs a common currency; that belongs to a monetary union."
+        },
+        {
+          "id": "c",
+          "text": "Only a customs union removes tariffs on trade between its members",
+          "misconception": "Both types remove trade barriers between members."
+        },
+        {
+          "id": "d",
+          "text": "Members of a customs union allow workers to move freely between them",
+          "misconception": "Free movement of labour is the added feature of a common market, not a customs union."
+        }
+      ],
+      "answer": "a",
+      "hints": [
+        "Put the types of trading bloc in order of how integrated they are.",
+        "Ask what one step up from a free trade area adds, especially for trade with countries outside the bloc."
+      ],
+      "targets": "Common external tariff as the feature that separates the two"
+    },
+    {
+      "id": "u15-mcq-03",
+      "format": "mcq",
+      "section": "15.1",
+      "concepts": [
+        "c15-anti-dumping-argument"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Which situation is an example of dumping?",
+      "options": [
+        {
+          "id": "a",
+          "text": "A Kuvan firm sells its steel in Veld at a price higher than it charges at home",
+          "misconception": "Charging more abroad is the opposite of dumping."
+        },
+        {
+          "id": "b",
+          "text": "Veld places a quota on steel imports from Kuva",
+          "misconception": "A quota is a form of protection, not dumping; dumping is done by the exporter."
+        },
+        {
+          "id": "c",
+          "text": "A Kuvan firm exports steel to Veld because Kuva has a comparative advantage in steel",
+          "misconception": "Exporting because of comparative advantage is normal trade based on lower opportunity cost."
+        },
+        {
+          "id": "d",
+          "text": "A subsidised Kuvan firm sells its steel in Veld at a price below its cost of production",
+          "misconception": null
+        }
+      ],
+      "answer": "d",
+      "hints": [
+        "Think about the price at which the exporting firm sells abroad and how it compares with its costs.",
+        "Check each option: who is acting, and is the export price fair compared with what it costs to make the good?"
+      ],
+      "targets": "Recognising dumping"
+    },
+    {
+      "id": "u15-sa-02",
+      "format": "short_answer",
+      "section": "15.4",
+      "concepts": [
+        "c15-world-trade-organization"
+      ],
+      "command_term": "outline",
+      "marks": 2,
+      "prompt": "Outline two functions of the World Trade Organization (WTO).",
+      "marking_points": [
+        "One function outlined, e.g. provides a forum for negotiating trade agreements to reduce trade barriers [1]",
+        "A second function outlined, e.g. settles trade disputes between members / monitors members' trade policies / enforces trade rules [1]"
+      ],
+      "model_answer_note": "Two distinct functions, each briefly outlined, earn 2; a list of two words without any detail earns 1 at most.",
+      "hints": [
+        "Think about what the WTO does before a trade agreement exists and what it does when members disagree.",
+        "Write one sentence for each function, saying what the WTO does and why."
+      ],
+      "targets": "WTO functions: negotiation, dispute settlement, monitoring"
+    },
+    {
+      "id": "u15-mcq-04",
+      "format": "mcq",
+      "section": "15.1",
+      "concepts": [],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Which argument is most often used to justify protecting a newly established domestic industry?",
+      "options": [
+        {
+          "id": "a",
+          "text": "New domestic firms cannot yet produce at low average costs because they have not reached economies of scale",
+          "misconception": null
+        },
+        {
+          "id": "b",
+          "text": "Imports from abroad are always of lower quality than domestic goods",
+          "misconception": "Import quality is not the basis of this argument and is not always true."
+        },
+        {
+          "id": "c",
+          "text": "The industry has been in decline for many years and workers need time to retrain",
+          "misconception": "This describes protecting a declining (sunset) industry, not a new one."
+        },
+        {
+          "id": "d",
+          "text": "The good is needed in wartime so the country must never rely on imports",
+          "misconception": "This is the national security (strategic) argument."
+        }
+      ],
+      "answer": "a",
+      "hints": [
+        "This is the infant industry argument.",
+        "Think about why a young firm might struggle to compete on price with large, established foreign firms."
+      ],
+      "targets": "Infant industry argument vs other arguments"
+    },
+    {
+      "id": "u15-mcq-05",
+      "format": "mcq",
+      "section": "15.2",
+      "concepts": [
+        "c15-economic-integration"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Table 1 shows features of four trading blocs. Which bloc is a common market?",
+      "table": {
+        "caption": "Table 1: Features of four trading blocs",
+        "columns": [
+          "Bloc",
+          "Free trade among members",
+          "Common external tariff",
+          "Free movement of labour and capital",
+          "Common currency"
+        ],
+        "rows": [
+          [
+            "W",
+            "Yes",
+            "No",
+            "No",
+            "No"
+          ],
+          [
+            "X",
+            "Yes",
+            "Yes",
+            "No",
+            "No"
+          ],
+          [
+            "Y",
+            "Yes",
+            "Yes",
+            "Yes",
+            "No"
+          ],
+          [
+            "Z",
+            "Yes",
+            "Yes",
+            "Yes",
+            "Yes"
+          ]
+        ]
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": "Bloc W",
+          "misconception": "Bloc W only removes barriers between members, so it is a free trade area."
+        },
+        {
+          "id": "b",
+          "text": "Bloc X",
+          "misconception": "Bloc X adds a common external tariff but no factor mobility, so it is a customs union."
+        },
+        {
+          "id": "c",
+          "text": "Bloc Y",
+          "misconception": null
+        },
+        {
+          "id": "d",
+          "text": "Bloc Z",
+          "misconception": "Bloc Z also shares a currency, so it has gone beyond a common market to a monetary union."
+        }
+      ],
+      "answer": "c",
+      "hints": [
+        "Use the stages of economic integration and match each stage to its features in Table 1.",
+        "Work along each row and find the bloc that has the features of a customs union plus one more, but no shared currency."
+      ],
+      "targets": "Stages of integration from data"
+    },
+    {
+      "id": "u15-mcq-06",
+      "format": "mcq",
+      "section": "15.1",
+      "concepts": [],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Which of the following is an argument against trade protection?",
+      "options": [
+        {
+          "id": "a",
+          "text": "It protects jobs in domestic industries facing foreign competition",
+          "misconception": "This is one of the main arguments for protection."
+        },
+        {
+          "id": "b",
+          "text": "It can reduce a deficit on the balance of trade",
+          "misconception": "This is an argument used in favour of protection."
+        },
+        {
+          "id": "c",
+          "text": "It raises prices and reduces choice for domestic consumers",
+          "misconception": null
+        },
+        {
+          "id": "d",
+          "text": "It raises revenue for the government through tariffs",
+          "misconception": "Government revenue is an argument used in favour of tariffs."
+        }
+      ],
+      "answer": "c",
+      "hints": [
+        "Think about who loses when imports become dearer or scarcer.",
+        "Sort the options into benefits claimed by supporters of protection and costs pointed out by critics."
+      ],
+      "targets": "For vs against protection"
+    },
+    {
+      "id": "u15-sa-03",
+      "format": "short_answer",
+      "section": "15.2",
+      "concepts": [
+        "c15-economic-integration"
+      ],
+      "command_term": "distinguish",
+      "marks": 2,
+      "prompt": "Distinguish between a free trade area and a common market.",
+      "marking_points": [
+        "A free trade area removes trade barriers between members, but each member keeps its own trade policy / tariffs towards non-members [1]",
+        "A common market has a common external tariff and also allows free movement of factors of production (labour and capital) between members [1]"
+      ],
+      "model_answer_note": "A full answer gives the feature of each type and makes the contrast clear; describing only one type earns 1.",
+      "hints": [
+        "Place both types on the stages of economic integration and note the stages in between.",
+        "State what each type does about non-member trade and about the movement of workers and capital, then contrast them."
+      ],
+      "targets": "Asked as a comparison in past papers"
+    },
+    {
+      "id": "u15-mcq-07",
+      "format": "mcq",
+      "section": "15.2",
+      "concepts": [
+        "c15-economic-integration"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Which describes a preferential trade agreement?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Member countries give each other lower trade barriers on certain goods",
+          "misconception": null
+        },
+        {
+          "id": "b",
+          "text": "Member countries adopt a single currency and one central bank",
+          "misconception": "This is a monetary union, the most integrated stage."
+        },
+        {
+          "id": "c",
+          "text": "Member countries remove all barriers to trade and set a common external tariff",
+          "misconception": "This describes a customs union."
+        },
+        {
+          "id": "d",
+          "text": "Member countries allow free movement of labour and capital",
+          "misconception": "Factor mobility is the feature of a common market."
+        }
+      ],
+      "answer": "a",
+      "hints": [
+        "This is the first, least integrated stage of economic integration.",
+        "Look for the option where barriers are reduced for some goods rather than removed on everything."
+      ],
+      "targets": "Lowest stage of integration"
+    },
+    {
+      "id": "u15-sa-04",
+      "format": "short_answer",
+      "section": "15.1",
+      "concepts": [
+        "c15-anti-dumping-argument"
+      ],
+      "command_term": "explain",
+      "marks": 3,
+      "prompt": "Explain the anti-dumping argument for trade protection.",
+      "marking_points": [
+        "Dumping is when a foreign firm sells exports at a price below its cost of production, often helped by a subsidy [1]",
+        "This is unfair competition that can drive efficient domestic firms out of the market / cause job losses [1]",
+        "So the importing country may impose tariffs or quotas on the dumped goods to limit these imports and protect domestic producers [1]"
+      ],
+      "model_answer_note": "A full answer explains what dumping is, why it harms domestic producers, and what protection the importing country uses in response.",
+      "hints": [
+        "Start with what the foreign exporter is doing to its price and why.",
+        "Link that pricing to the effect on domestic firms, then to the action the importing government takes."
+      ],
+      "targets": "Anti-dumping as a case for protection"
+    },
+    {
+      "id": "u15-mcq-08",
+      "format": "mcq",
+      "section": "15.2",
+      "concepts": [
+        "c15-economic-integration"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Veld used to import rice from Kuva, the lowest-cost producer in the world. After Veld joins a customs union with Tarn, it imports rice from Tarn instead, where rice costs more to produce. What is this an example of?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Trade creation",
+          "misconception": "Trade creation is a switch towards a lower-cost producer, not a higher-cost one."
+        },
+        {
+          "id": "b",
+          "text": "Trade diversion",
+          "misconception": null
+        },
+        {
+          "id": "c",
+          "text": "Dumping",
+          "misconception": "Dumping is selling exports below cost; nothing here says Tarn prices below its cost."
+        },
+        {
+          "id": "d",
+          "text": "Comparative advantage",
+          "misconception": "The switch is caused by the tariff arrangement, and moves trade away from the producer with the lower opportunity cost."
+        }
+      ],
+      "answer": "b",
+      "hints": [
+        "Think about how joining a bloc changes which supplier is cheapest for Veld's importers.",
+        "Compare the production cost of the old and the new supplier and ask whether world resources are now used better or worse."
+      ],
+      "targets": "Trade creation vs trade diversion"
+    },
+    {
+      "id": "u15-sa-05",
+      "format": "short_answer",
+      "section": "15.1",
+      "concepts": [
+        "c15-anti-dumping-argument"
+      ],
+      "command_term": "calculate",
+      "marks": 2,
+      "prompt": "Table 2 shows data for a steel firm in Kuva that exports to Veld. Calculate, as a percentage of average cost, how far the firm's export price is below its average cost.",
+      "table": {
+        "caption": "Table 2: Kuvan steel firm, 2025 (kuvars per tonne)",
+        "columns": [
+          "Item",
+          "Value"
+        ],
+        "rows": [
+          [
+            "Average cost of production",
+            "400"
+          ],
+          [
+            "Price charged in Kuva",
+            "450"
+          ],
+          [
+            "Export price charged in Veld",
+            "320"
+          ]
+        ]
+      },
+      "marking_points": [
+        "Working: (400 − 320) / 400 × 100 [1]",
+        "= 20% [1]"
+      ],
+      "model_answer_note": "Correct working and 20% earns 2; correct answer with no working earns 1.",
+      "hints": [
+        "Use the average cost and the export price from Table 2.",
+        "Find the gap between the two prices, divide by the average cost, then multiply by 100."
+      ],
+      "targets": "Evidence of dumping from cost data"
+    },
+    {
+      "id": "u15-sa-06",
+      "format": "short_answer",
+      "section": "15.2",
+      "concepts": [
+        "c15-economic-integration"
+      ],
+      "command_term": "distinguish",
+      "marks": 2,
+      "prompt": "Distinguish between a common market and a monetary union.",
+      "marking_points": [
+        "A common market has free trade, a common external tariff and free movement of labour and capital, but members keep their own currencies [1]",
+        "A monetary union adds a common currency and a single central bank / common monetary policy (and exchange rate) [1]"
+      ],
+      "model_answer_note": "The answer must show what the two share and the extra feature of a monetary union; describing only one type earns 1.",
+      "hints": [
+        "Place both on the stages of economic integration; one is the step after the other.",
+        "Say what a common market already includes, then state what members give up and share when they move one step further."
+      ],
+      "targets": "Asked as a comparison in past papers"
+    },
+    {
+      "id": "u15-sa-07",
+      "format": "short_answer",
+      "section": "15.2",
+      "concepts": [
+        "c15-better-use-of-factors-of-production",
+        "c15-economic-integration"
+      ],
+      "command_term": "explain",
+      "marks": 3,
+      "prompt": "Explain how joining a common market could lead to a better use of factors of production in a member country.",
+      "marking_points": [
+        "A common market allows free movement of labour and capital between members [1]",
+        "Workers can move to where there are jobs / skill shortages, and capital can flow to where its return is highest [1]",
+        "So resources move to their most productive uses, improving allocation and raising employment and output [1]"
+      ],
+      "model_answer_note": "A full answer names the free movement of factors, explains where they move, and links this to better resource allocation or employment.",
+      "hints": [
+        "Think about which feature a common market adds beyond free trade in goods.",
+        "Follow what happens to unemployed workers and to spare capital when they can move across borders, then link to efficiency."
+      ],
+      "targets": "Common market benefit: factor mobility"
+    },
+    {
+      "id": "u15-mcq-09",
+      "format": "mcq",
+      "section": "15.1",
+      "concepts": [],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Tarn places a tariff on imported shoes to protect jobs in its shoe industry. Which outcome is most likely to reduce the overall benefit of this policy for Tarn's workers?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Domestic shoe production in Tarn rises",
+          "misconception": "This is the intended effect of the tariff, not a problem with it."
+        },
+        {
+          "id": "b",
+          "text": "The government of Tarn collects tariff revenue",
+          "misconception": "Revenue is a side benefit of the tariff."
+        },
+        {
+          "id": "c",
+          "text": "Shoe imports into Tarn fall",
+          "misconception": "Fewer imports is how the tariff protects domestic producers."
+        },
+        {
+          "id": "d",
+          "text": "Trading partners respond with tariffs on Tarn's exports",
+          "misconception": null
+        }
+      ],
+      "answer": "d",
+      "hints": [
+        "Think about how other countries might react to the tariff.",
+        "Trace what happens to Tarn's export industries, and their workers, if other countries react."
+      ],
+      "targets": "Retaliation as a cost of protection"
+    },
+    {
+      "id": "u15-mcq-10",
+      "format": "mcq",
+      "section": "15.2",
+      "concepts": [
+        "c15-economic-integration"
+      ],
+      "command_term": "calculate",
+      "marks": 1,
+      "prompt": "Table 3 shows Tarn's exports. Tarn joined the Coral trading bloc in 2020. By what percentage did Tarn's exports to other Coral members rise between 2019 and 2023?",
+      "table": {
+        "caption": "Table 3: Tarn's exports (US$ billion)",
+        "columns": [
+          "Destination",
+          "2019",
+          "2023"
+        ],
+        "rows": [
+          [
+            "Other Coral members",
+            "40",
+            "50"
+          ],
+          [
+            "Non-members",
+            "60",
+            "60"
+          ]
+        ]
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": "10%",
+          "misconception": "This is the change in US$ billion, not a percentage change."
+        },
+        {
+          "id": "b",
+          "text": "20%",
+          "misconception": "This divides the change by the 2023 value instead of the 2019 value."
+        },
+        {
+          "id": "c",
+          "text": "45%",
+          "misconception": "This is roughly the share of Tarn's 2023 exports that went to Coral members."
+        },
+        {
+          "id": "d",
+          "text": "25%",
+          "misconception": null
+        }
+      ],
+      "answer": "d",
+      "hints": [
+        "Use the percentage change formula on the row for Coral members.",
+        "Subtract the old value from the new, then divide by the old value and multiply by 100."
+      ],
+      "targets": "Percentage change from trade data"
+    },
+    {
+      "id": "u15-mcq-11",
+      "format": "mcq",
+      "section": "15.4",
+      "concepts": [
+        "c15-world-trade-organization"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Table 4 shows Veld's tariffs on imported cars. All five countries are WTO members, and Veld has no trade agreement with any of them. Which statement is correct?",
+      "table": {
+        "caption": "Table 4: Veld's tariffs on imported cars, 2025",
+        "columns": [
+          "Exporting country",
+          "Tariff (%)"
+        ],
+        "rows": [
+          [
+            "Kuva",
+            "10"
+          ],
+          [
+            "Tarn",
+            "10"
+          ],
+          [
+            "Rudd",
+            "10"
+          ],
+          [
+            "Ostra",
+            "4"
+          ]
+        ]
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": "Veld breaks WTO rules because it charges a tariff at all",
+          "misconception": "WTO members may charge tariffs up to agreed limits; they do not have to remove all tariffs."
+        },
+        {
+          "id": "b",
+          "text": "Veld breaks WTO rules because it treats imports from Ostra more favourably than imports from the others",
+          "misconception": null
+        },
+        {
+          "id": "c",
+          "text": "Veld follows WTO rules because all its tariffs are below 15%",
+          "misconception": "The level of a tariff is not the issue here; how different partners are treated is."
+        },
+        {
+          "id": "d",
+          "text": "Veld breaks WTO rules because its tariffs on Kuva, Tarn and Rudd are the same",
+          "misconception": "Charging members the same tariff is what WTO rules ask for."
+        }
+      ],
+      "answer": "b",
+      "hints": [
+        "Use the WTO principle of non-discrimination (most-favoured nation).",
+        "Compare the tariff each partner faces and ask whether any member gets a better deal outside a trade agreement."
+      ],
+      "targets": "Most-favoured nation principle"
+    },
+    {
+      "id": "u15-mcq-12",
+      "format": "mcq",
+      "section": "15.2",
+      "concepts": [
+        "c15-better-use-of-factors-of-production",
+        "c15-economic-integration"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Which is the most likely reason why a country would choose to join a common market rather than a free trade area?",
+      "options": [
+        {
+          "id": "a",
+          "text": "To keep full control over its own tariffs on imports from non-members",
+          "misconception": "A common market requires a common external tariff, so this control is given up."
+        },
+        {
+          "id": "b",
+          "text": "To allow labour and capital to move to where they are most productive across member countries",
+          "misconception": null
+        },
+        {
+          "id": "c",
+          "text": "To adopt a common currency with its trading partners",
+          "misconception": "A common currency is a feature of a monetary union, not a common market."
+        },
+        {
+          "id": "d",
+          "text": "To be allowed to keep tariffs on imports from other members",
+          "misconception": "Tariffs between members are removed in both types of bloc."
+        }
+      ],
+      "answer": "b",
+      "hints": [
+        "Think about what a common market offers that a free trade area does not.",
+        "Check each option against the features of a common market and ask which is a gain, not a loss."
+      ],
+      "targets": "Joining a common market: factor mobility"
+    },
+    {
+      "id": "u15-sa-08",
+      "format": "short_answer",
+      "section": "15.1",
+      "concepts": [],
+      "command_term": "calculate",
+      "marks": 3,
+      "prompt": "Table 5 shows the market for bicycles in Veld with a tariff of US$20 per bicycle and after the tariff is removed. The world price is US$100. Calculate (a) the change in the quantity of bicycles imported and (b) the tariff revenue the government gives up by removing the tariff.",
+      "table": {
+        "caption": "Table 5: Market for bicycles in Veld",
+        "columns": [
+          "Item",
+          "With tariff",
+          "Without tariff"
+        ],
+        "rows": [
+          [
+            "Price per bicycle (US$)",
+            "120",
+            "100"
+          ],
+          [
+            "Quantity demanded (thousands)",
+            "50",
+            "60"
+          ],
+          [
+            "Domestic quantity supplied (thousands)",
+            "20",
+            "12"
+          ]
+        ]
+      },
+      "marking_points": [
+        "(a) Imports with tariff = 50 − 20 = 30 thousand and without tariff = 60 − 12 = 48 thousand [1]",
+        "(a) Change = +18 thousand bicycles [1]",
+        "(b) Revenue given up = US$20 × 30 000 = US$600 000 [1]"
+      ],
+      "model_answer_note": "Full marks need both import figures, the change of +18 thousand, and US$600 000 with working.",
+      "hints": [
+        "Imports are the gap between quantity demanded and domestic quantity supplied; tariff revenue uses imports under the tariff.",
+        "Find imports in each column, subtract, then multiply the tariff per unit by the number of units imported while the tariff was in place."
+      ],
+      "targets": "Effects of removing a tariff (data)"
+    },
+    {
+      "id": "u15-sa-09",
+      "format": "short_answer",
+      "section": "15.1",
+      "concepts": [],
+      "command_term": "explain",
+      "marks": 3,
+      "prompt": "Explain how trade protection can lead to an inefficient allocation of resources.",
+      "marking_points": [
+        "Protection shields domestic firms from lower-cost foreign competition [1]",
+        "So resources stay in (or move to) industries where the country does not have a comparative advantage / high-cost producers survive [1]",
+        "Firms have less incentive to cut costs or innovate, so output is produced at higher cost than necessary [1]"
+      ],
+      "model_answer_note": "A full answer links protection to reduced competition, to resources used where opportunity costs are high, and to weaker incentives for efficiency.",
+      "hints": [
+        "Think about comparative advantage and what competition normally forces firms to do.",
+        "Follow what happens to high-cost domestic firms when imports are restricted, and where resources end up."
+      ],
+      "targets": "Argument against protection: misallocation"
+    },
+    {
+      "id": "u15-mcq-13",
+      "format": "mcq",
+      "section": "15.2",
+      "concepts": [
+        "c15-economic-integration"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Veld is in a monetary union. Veld goes into recession while the other members are growing fast. Which is the main problem Veld faces?",
+      "options": [
+        {
+          "id": "a",
+          "text": "It must pay tariffs on its exports to other members",
+          "misconception": "There are no tariffs between members of a monetary union."
+        },
+        {
+          "id": "b",
+          "text": "Its workers cannot move to other member countries",
+          "misconception": "Free movement of labour is part of a monetary union."
+        },
+        {
+          "id": "c",
+          "text": "It cannot lower its own interest rates or let its own currency depreciate",
+          "misconception": null
+        },
+        {
+          "id": "d",
+          "text": "It must charge a different tariff on non-members from the other members",
+          "misconception": "Members share a common external tariff."
+        }
+      ],
+      "answer": "c",
+      "hints": [
+        "Think about which economic policy tools a member gives up when it shares a currency.",
+        "Ask what Veld would normally do to boost demand in a recession, and whether it still controls those tools."
+      ],
+      "targets": "Cost of monetary union: loss of independent monetary policy"
+    },
+    {
+      "id": "u15-mcq-14",
+      "format": "mcq",
+      "section": "15.4",
+      "concepts": [
+        "c15-world-trade-organization"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Veld believes that Kuva is giving its exporters subsidies that break WTO rules. What can the WTO do?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Rule on the dispute and, if Kuva does not comply, allow Veld to impose retaliatory tariffs",
+          "misconception": null
+        },
+        {
+          "id": "b",
+          "text": "Fine Kuva's government and pay the fine to Veld's firms",
+          "misconception": "The WTO does not collect fines or pay compensation to firms."
+        },
+        {
+          "id": "c",
+          "text": "Lend money to Veld's firms to make up their lost sales",
+          "misconception": "The WTO is not a lender."
+        },
+        {
+          "id": "d",
+          "text": "Remove Kuva's subsidies directly from its national budget",
+          "misconception": "The WTO cannot change a member's budget; it can only rule and authorise responses."
+        }
+      ],
+      "answer": "a",
+      "hints": [
+        "Think about the WTO's role when members disagree.",
+        "Ask which option matches the powers of an organization that sets and enforces trade rules but has no money or control over budgets."
+      ],
+      "targets": "WTO dispute settlement"
+    },
+    {
+      "id": "u15-sa-10",
+      "format": "short_answer",
+      "section": "15.2",
+      "concepts": [],
+      "command_term": "calculate",
+      "marks": 2,
+      "prompt": "Veld joined a trading bloc in 2021. Table 6 shows Veld's imports. Calculate the share of Veld's total imports that came from bloc members in 2020 and in 2024.",
+      "table": {
+        "caption": "Table 6: Veld's imports (US$ billion)",
+        "columns": [
+          "Source",
+          "2020",
+          "2024"
+        ],
+        "rows": [
+          [
+            "Bloc members",
+            "30",
+            "60"
+          ],
+          [
+            "Rest of the world",
+            "70",
+            "90"
+          ]
+        ]
+      },
+      "marking_points": [
+        "2020: 30 / (30 + 70) × 100 = 30% [1]",
+        "2024: 60 / (60 + 90) × 100 = 40% [1]"
+      ],
+      "model_answer_note": "One mark for each correct share with working.",
+      "hints": [
+        "Total imports in each year are the two rows added together.",
+        "Divide imports from members by total imports for each year, then multiply by 100."
+      ],
+      "targets": "Growth of intra-bloc trade (share)"
+    },
+    {
+      "id": "u15-mcq-15",
+      "format": "mcq",
+      "section": "15.4",
+      "concepts": [
+        "c15-world-trade-organization"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Which criticism is often made of the WTO by developing countries?",
+      "options": [
+        {
+          "id": "a",
+          "text": "The WTO sets exchange rates that favour developed countries",
+          "misconception": "The WTO does not set exchange rates."
+        },
+        {
+          "id": "b",
+          "text": "Developed countries keep subsidising their farmers while developing countries are pressed to open their markets",
+          "misconception": null
+        },
+        {
+          "id": "c",
+          "text": "The WTO has no way of settling trade disputes",
+          "misconception": "The WTO has a dispute settlement process."
+        },
+        {
+          "id": "d",
+          "text": "The WTO only allows developed countries to become members",
+          "misconception": "Most WTO members are developing countries."
+        }
+      ],
+      "answer": "b",
+      "hints": [
+        "Think about the sectors where developing countries often have a comparative advantage.",
+        "Remove the options that are factually wrong about the WTO, then consider whose trade barriers have been hardest to reduce."
+      ],
+      "targets": "Criticism of the WTO"
+    },
+    {
+      "id": "u15-sa-11",
+      "format": "short_answer",
+      "section": "15.2",
+      "concepts": [],
+      "command_term": "calculate",
+      "marks": 3,
+      "prompt": "Table 7 shows the cost of producing a tonne of rice in Kuva and in Tarn. Veld charges a 25% tariff on all rice imports and buys from the cheapest source. Veld then forms a customs union with Tarn and keeps a 25% tariff on non-members. (a) Calculate the price per tonne Veld's importers pay before and after the customs union. (b) State whether this change is trade creation or trade diversion.",
+      "table": {
+        "caption": "Table 7: Cost of producing rice (US$ per tonne, before any tariff)",
+        "columns": [
+          "Country",
+          "Cost"
+        ],
+        "rows": [
+          [
+            "Kuva (not a member)",
+            "80"
+          ],
+          [
+            "Tarn (member after the customs union)",
+            "90"
+          ]
+        ]
+      },
+      "marking_points": [
+        "(a) Before: Kuva 80 × 1.25 = US$100 (Tarn would be 90 × 1.25 = US$112.50), so Veld pays US$100 [1]",
+        "(a) After: Tarn has no tariff, so US$90 (Kuva still US$100), so Veld pays US$90 [1]",
+        "(b) Trade diversion: imports switch from the lower-cost non-member (Kuva) to the higher-cost member (Tarn) [1]"
+      ],
+      "model_answer_note": "Full marks need both prices with tariff working and the correct classification with a reason tied to production costs.",
+      "hints": [
+        "Work out the tariff-inclusive price from each country, before and after Veld joins.",
+        "Pick the cheapest source in each case, then compare the production cost of the new supplier with that of the old one."
+      ],
+      "targets": "Trade creation vs diversion with numbers"
+    },
+    {
+      "id": "u15-sa-12",
+      "format": "short_answer",
+      "section": "15.4",
+      "concepts": [
+        "c15-world-trade-organization"
+      ],
+      "command_term": "calculate",
+      "marks": 2,
+      "prompt": "Rudd joined the WTO in 2010. Table 8 shows its average tariff rate. Calculate the percentage change in Rudd's average tariff rate between 2010 and 2025.",
+      "table": {
+        "caption": "Table 8: Rudd's average tariff rate",
+        "columns": [
+          "Year",
+          "Average tariff (%)"
+        ],
+        "rows": [
+          [
+            "2010",
+            "20"
+          ],
+          [
+            "2015",
+            "15"
+          ],
+          [
+            "2020",
+            "12"
+          ],
+          [
+            "2025",
+            "10"
+          ]
+        ]
+      },
+      "marking_points": [
+        "Working: (10 − 20) / 20 × 100 [1]",
+        "= −50% (a fall of 50%) [1]"
+      ],
+      "model_answer_note": "Correct working and −50% earns 2. An answer of 10 (percentage points) earns 0 for the result.",
+      "hints": [
+        "Use the percentage change formula on the first and last years in Table 8.",
+        "The rates are already percentages, so treat them as the numbers in the formula; do not just subtract them."
+      ],
+      "targets": "Percentage change vs percentage-point change"
+    },
+    {
+      "id": "u15-sa-13",
+      "format": "short_answer",
+      "section": "15.2",
+      "concepts": [
+        "c15-economic-integration"
+      ],
+      "command_term": "explain",
+      "marks": 3,
+      "prompt": "Explain one disadvantage for a country of joining a customs union.",
+      "marking_points": [
+        "Disadvantage identified, e.g. loss of control over its own trade policy / must adopt the common external tariff [1]",
+        "Explanation, e.g. the country can no longer set tariffs to suit its own industries or sign separate trade deals with non-members [1]",
+        "Consequence, e.g. it may have to import from higher-cost members instead of cheaper non-members, raising prices / its protected industries may shrink and workers lose jobs [1]"
+      ],
+      "model_answer_note": "A full answer names one disadvantage, explains why joining causes it, and states who in the country loses.",
+      "hints": [
+        "Think about what a member of a customs union must agree to on trade with countries outside the bloc.",
+        "Pick one cost, say why membership causes it, then say what it means for consumers, firms or workers."
+      ],
+      "targets": "Costs of trading bloc membership"
+    },
+    {
+      "id": "u15-sa-14",
+      "format": "short_answer",
+      "section": "15.1",
+      "concepts": [],
+      "command_term": "explain",
+      "marks": 4,
+      "prompt": "Explain two reasons why a government might remove a tariff on an imported good.",
+      "marking_points": [
+        "Reason 1 identified, e.g. to lower prices for consumers / raise consumer surplus [1]",
+        "Reason 1 explained, e.g. without the tariff the domestic price falls to the world price, so consumers buy more at a lower price [1]",
+        "Reason 2 identified, e.g. to lower costs for domestic firms that use the import as an input / to improve efficiency / to meet trade agreement or WTO commitments / to avoid retaliation [1]",
+        "Reason 2 explained, e.g. cheaper inputs cut production costs and make domestic firms more competitive; or more competition forces domestic producers to become efficient [1]"
+      ],
+      "model_answer_note": "Two separate reasons, each named and then linked to its effect, earn 4; two reasons named without explanation earn 2.",
+      "hints": [
+        "Think about who gains when the domestic price falls to the world price, and about the country's trade commitments.",
+        "For each reason, name who benefits, then give the chain from lower import prices to that benefit."
+      ],
+      "targets": "Reasons to remove a tariff"
+    },
+    {
+      "id": "u15-sa-15",
+      "format": "short_answer",
+      "section": "15.4",
+      "concepts": [
+        "c15-world-trade-organization"
+      ],
+      "command_term": "explain",
+      "marks": 3,
+      "prompt": "Explain why it can be difficult for WTO members to reach new multilateral trade agreements.",
+      "marking_points": [
+        "Agreements need consensus among a very large number of member countries [1]",
+        "Members have different interests, e.g. developed countries want access for manufactures and services while developing countries want cuts in agricultural subsidies [1]",
+        "Domestic pressure groups / governments resist removing protection for their own industries, so talks stall [1]"
+      ],
+      "model_answer_note": "A full answer links the number of members and the decision rule to conflicting interests and domestic political pressure.",
+      "hints": [
+        "Think about how many countries negotiate and how decisions are made.",
+        "Give an example of two groups of members wanting different things, then add why governments at home find it hard to give way."
+      ],
+      "targets": "Limits of the WTO in negotiations"
+    }
+  ]
+}

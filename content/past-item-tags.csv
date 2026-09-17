@@ -1,0 +1,638 @@
+id,unit,section,secondary,topic,diagram,skill,confidence
+M22-P1-HL-1(a),7,7.5,7.3,Perfect vs monopolistic competition,,extended response,high
+M22-P1-HL-1(b),7,7.4,7.6,Impact of market power,monopoly,evaluation essay,high
+M22-P1-HL-2(a),13,13.6,14.1,Supply-side policy and competitiveness,,extended response,high
+M22-P1-HL-2(b),13,13.6,10.1,Interventionist SSP and unemployment,AD/AS,evaluation essay,high
+M22-P1-HL-3(a),14,14.2,,Limits of comparative advantage,,extended response,high
+M22-P1-HL-3(b),15,15.2,,Trading bloc membership,,evaluation essay,high
+M22-P1-SL-1(a),4,4.1,4.4 4.2,Intervention for firms and equity,,extended response,medium
+M22-P1-SL-1(b),4,4.3,,Indirect tax stakeholder effects,demand and supply (indirect tax),evaluation essay,high
+M22-P1-SL-2(a),13,13.6,14.1,Supply-side policy and competitiveness,,extended response,high
+M22-P1-SL-2(b),13,13.6,10.1,Interventionist SSP and unemployment,AD/AS,evaluation essay,high
+M22-P1-SL-3(a),19,19.2,,Political and social barriers,,extended response,high
+M22-P1-SL-3(b),19,19.2,11.1,Economic barriers to development,,evaluation essay,high
+M22-P2-HL-1(a)(i),19,19.2,11.2,Debt servicing definition,,definition,medium
+M22-P2-HL-1(a)(ii),12,12.1,,Gini coefficient definition,,definition,high
+M22-P2-HL-1(b)(i),2,2.4,2.2,Demand increase and revenue,demand and supply,diagram explanation,high
+M22-P2-HL-1(b)(ii),16,16.4,,Trade balance change,,calculation,high
+M22-P2-HL-1(c),7,7.2,7.4,Economies of scale,,short explanation,medium
+M22-P2-HL-1(d),14,14.2,1.0,Comparative advantage on PPC,PPC,diagram explanation,high
+M22-P2-HL-1(e),13,13.2,,Reserve requirement and interest,money market,diagram explanation,high
+M22-P2-HL-1(f),16,16.3,16.1,Central bank support of currency,exchange rate,diagram explanation,high
+M22-P2-HL-1(g),20,20.1,20.5 14.1,Trade vs FDI for development,,evaluation essay,medium
+M22-P2-HL-2(a)(i),18,18.1,,Sustainable Development Goals,,short explanation,high
+M22-P2-HL-2(a)(ii),14,14.3,,Tariff definition,,definition,high
+M22-P2-HL-2(b)(i),11,11.1,1.0,Human capital and potential output,PPC,diagram explanation,medium
+M22-P2-HL-2(b)(ii),8,8.3,10.2,Real GDP using deflator,,calculation,high
+M22-P2-HL-2(c),19,19.1,12.5,Education breaking poverty cycle,poverty cycle,diagram explanation,high
+M22-P2-HL-2(d),13,13.3,9.1 10.2,Contractionary fiscal policy and inflation,AD/AS,diagram explanation,high
+M22-P2-HL-2(e),17,17.1,16.1,Current account and exchange rate,exchange rate,diagram explanation,high
+M22-P2-HL-2(f),4,4.2,2.5,Maximum price welfare loss,demand and supply (price ceiling),diagram explanation,high
+M22-P2-HL-2(g),20,20.4,20.9 11.1,Government growth and development policies,,evaluation essay,medium
+M22-P2-SL-1(a)(i),20,20.5,,FDI definition,,definition,high
+M22-P2-SL-1(a)(ii),10,10.1,,Unemployment rate definition,,definition,high
+M22-P2-SL-1(b)(i),10,10.2,,Inflation rate from CPI,,calculation,high
+M22-P2-SL-1(b)(ii),10,10.2,,Identifying disinflation,,short explanation,high
+M22-P2-SL-1(b)(iii),16,16.4,,Balance of trade,,calculation,high
+M22-P2-SL-1(c),13,13.6,9.5,Supply-side policy and LRAS,AD/AS,diagram explanation,high
+M22-P2-SL-1(d),5,5.3,5.2,Coal as negative externality,externality (negative production),diagram explanation,high
+M22-P2-SL-1(e),16,16.3,16.1,Preventing currency appreciation,exchange rate,diagram explanation,high
+M22-P2-SL-1(f),14,14.3,14.1,Removing import quotas,international trade (quota),diagram explanation,high
+M22-P2-SL-1(g),15,15.2,14.1,Joining a common market,,evaluation essay,high
+M22-P2-SL-2(a)(i),8,8.2,,GDP definition,,definition,high
+M22-P2-SL-2(a)(ii),18,18.2,,IHDI dimensions,,short explanation,high
+M22-P2-SL-2(b)(i),16,16.4,,Current account balance change,,calculation,high
+M22-P2-SL-2(b)(ii),11,11.1,8.3,Economic growth rate,,calculation,high
+M22-P2-SL-2(c),16,16.1,16.2,Export fall and depreciation,exchange rate,diagram explanation,high
+M22-P2-SL-2(d),10,10.2,9.2,Cost-push inflation,AD/AS,diagram explanation,high
+M22-P2-SL-2(e),19,19.1,12.5,Free education and poverty cycle,poverty cycle,diagram explanation,high
+M22-P2-SL-2(f),2,2.4,2.3,Supply increase in rice market,demand and supply,diagram explanation,high
+M22-P2-SL-2(g),20,20.4,20.9 11.1,Government intervention for development,,evaluation essay,medium
+M22-P3-HL-1(a)(i),10,10.1,,Unemployment rate,,calculation,high
+M22-P3-HL-1(a)(ii),19,19.2,,Primary sector dependence,,short explanation,high
+M22-P3-HL-1(a)(iii),3,3.1,,PED calculation,,calculation,high
+M22-P3-HL-1(a)(iv),14,14.1,2.4,Change in export revenue,,calculation,low
+M22-P3-HL-1(a)(v),12,12.5,,Progressive tax definition,,definition,high
+M22-P3-HL-1(a)(vi),4,4.3,,VAT amount,,calculation,medium
+M22-P3-HL-1(a)(vii),13,13.6,9.5,Corporate tax cut and LRAS,AD/AS,diagram explanation,high
+M22-P3-HL-1(a)(viii),19,19.2,12.1,Gender inequality as barrier,,short explanation,high
+M22-P3-HL-1(b),12,12.5,12.1,Policy to reduce inequality,,extended response,high
+M22-P3-HL-2(a)(i),5,5.4,5.2,Traffic congestion market failure,externality (negative consumption),diagram explanation,high
+M22-P3-HL-2(a)(ii),4,4.3,,Supply curve without tax,demand and supply (indirect tax),diagram explanation,high
+M22-P3-HL-2(a)(iii),4,4.3,,Indirect tax revenue,,calculation,high
+M22-P3-HL-2(a)(iv),4,4.3,2.5,Consumer surplus loss from tax,,calculation,high
+M22-P3-HL-2(a)(v),3,3.3,,PES from supply curve,,calculation,high
+M22-P3-HL-2(a)(vi),7,7.2,,Total profit of suppliers,,calculation,medium
+M22-P3-HL-2(a)(vii),2,2.6,,Rational consumer choice,,definition,high
+M22-P3-HL-2(a)(viii),2,2.6,5.4,Limits of rationality,,short explanation,high
+M22-P3-HL-2(b),5,5.4,4.3,Policy for traffic congestion,,extended response,high
+N22-P1-HL-1(a),6,6.2,2.5,Positive consumption externality welfare loss,externality (positive consumption),extended response,high
+N22-P1-HL-1(b),6,6.4,,Policies for asymmetric information,,evaluation essay,high
+N22-P1-HL-2(a),11,11.2,13.3,Importance of sustainable debt,,extended response,high
+N22-P1-HL-2(b),10,10.3,9.2,Unemployment-inflation trade-off,Phillips curve,evaluation essay,high
+N22-P1-HL-3(a),15,15.2,,Free trade area vs common market,,extended response,high
+N22-P1-HL-3(b),15,15.2,14.1,Trading bloc membership,international trade,evaluation essay,high
+N22-P1-SL-1(a),4,4.1,4.2 4.3,Forms of government intervention,demand and supply,extended response,high
+N22-P1-SL-1(b),6,6.3,,Government provision of public goods,,evaluation essay,high
+N22-P1-SL-2(a),13,13.3,13.1,Goals of fiscal policy,AD/AS,extended response,high
+N22-P1-SL-2(b),13,13.3,9.4,Fiscal policy and recessionary gap,AD/AS,evaluation essay,high
+N22-P1-SL-3(a),16,16.1,,Causes of currency appreciation,exchange rate,extended response,high
+N22-P1-SL-3(b),16,16.2,9.1,Consequences of appreciation,AD/AS,evaluation essay,high
+N22-P2-HL-1(a)(i),2,2.2,,Demand definition,,definition,high
+N22-P2-HL-1(a)(ii),18,18.1,5.3,Circular economy definition,,definition,medium
+N22-P2-HL-1(b)(i),3,3.2,,YED calculation,,calculation,high
+N22-P2-HL-1(b)(ii),12,12.1,,Lorenz curve and Gini change,Lorenz curve,diagram explanation,high
+N22-P2-HL-1(c),13,13.3,9.1,Crowding out and inflation,AD/AS,diagram explanation,medium
+N22-P2-HL-1(d),14,14.3,4.4,Production subsidy against imports,international trade (subsidy),diagram explanation,high
+N22-P2-HL-1(e),16,16.1,16.4,FDI and currency value,exchange rate,diagram explanation,high
+N22-P2-HL-1(f),5,5.3,,Negative production externality,externality (negative production),diagram explanation,high
+N22-P2-HL-1(g),19,19.2,19.1 11.1,Barriers to growth and development,,evaluation essay,medium
+N22-P2-HL-2(a)(i),20,20.6,,Humanitarian aid definition,,definition,high
+N22-P2-HL-2(a)(ii),7,7.4,,Monopoly definition,,definition,high
+N22-P2-HL-2(b)(i),8,8.3,8.2,GNI calculation,,calculation,high
+N22-P2-HL-2(b)(ii),4,4.3,,Indirect tax effect,demand and supply,diagram explanation,high
+N22-P2-HL-2(c),1,1.0,11.1,Loss of productive capacity,PPC,diagram explanation,high
+N22-P2-HL-2(d),9,9.1,9.2,Falling remittances and output,AD/AS,diagram explanation,medium
+N22-P2-HL-2(e),17,17.1,16.1,Current account and currency,exchange rate,diagram explanation,high
+N22-P2-HL-2(f),7,7.4,7.2,Loss-making monopoly,monopoly,diagram explanation,high
+N22-P2-HL-2(g),20,20.7,13.6 13.3,IMF conditionality effects,,evaluation essay,medium
+N22-P2-SL-1(a)(i),12,12.2,,Absolute poverty definition,,definition,high
+N22-P2-SL-1(a)(ii),19,19.2,8.5,Informal economy definition,,definition,medium
+N22-P2-SL-1(b)(i),10,10.1,,Unemployment rate calculation,,calculation,high
+N22-P2-SL-1(b)(ii),16,16.1,,Price conversion via exchange rate,,calculation,high
+N22-P2-SL-1(b)(iii),16,16.1,,Identifying depreciation,,short explanation,high
+N22-P2-SL-1(c),2,2.4,2.2,Falling demand and revenue,demand and supply,diagram explanation,high
+N22-P2-SL-1(d),14,14.3,,Tariff effect on exporters,international trade (tariff),diagram explanation,high
+N22-P2-SL-1(e),16,16.1,17.1,Rising imports and currency,exchange rate,diagram explanation,high
+N22-P2-SL-1(f),12,12.1,,Changing income distribution,Lorenz curve,diagram explanation,high
+N22-P2-SL-1(g),18,18.1,11.1 20.1,Export sector and sustainable growth,,evaluation essay,medium
+N22-P2-SL-2(a)(i),13,13.3,11.2,Budget deficit definition,,definition,high
+N22-P2-SL-2(a)(ii),16,16.4,,Portfolio investment definition,,definition,high
+N22-P2-SL-2(b)(i),3,3.2,,YED calculation,,calculation,high
+N22-P2-SL-2(b)(ii),16,16.4,,Current account balance calculation,,calculation,high
+N22-P2-SL-2(c),6,6.2,4.4,Merit good subsidy,externality (positive consumption),diagram explanation,high
+N22-P2-SL-2(d),9,9.2,11.1,Supply shock and real GDP,AD/AS,diagram explanation,high
+N22-P2-SL-2(e),14,14.3,,Import quota and consumers,international trade (quota),diagram explanation,high
+N22-P2-SL-2(f),16,16.3,,Using reserves to support currency,exchange rate,diagram explanation,high
+N22-P2-SL-2(g),13,13.3,12.5 18.2,Macro policies for growth and development,,evaluation essay,medium
+N22-P3-HL-1(a)(i),7,7.2,,Cost figures calculation,,calculation,high
+N22-P3-HL-1(a)(ii),7,7.5,,Monopolistic competition long run,monopolistic competition,diagram explanation,high
+N22-P3-HL-1(a)(iii),4,4.2,2.5,Price floor consumer surplus,,calculation,high
+N22-P3-HL-1(a)(iv),4,4.2,2.5,Price floor and allocative efficiency,,short explanation,high
+N22-P3-HL-1(a)(v),4,4.3,,Indirect tax paid calculation,,calculation,high
+N22-P3-HL-1(a)(vi),3,3.1,,PED quantity change calculation,,calculation,high
+N22-P3-HL-1(a)(vii),3,3.2,,YED and demand growth,,short explanation,high
+N22-P3-HL-1(a)(viii),5,5.3,,Aviation negative externality,externality (negative production),diagram explanation,high
+N22-P3-HL-1(b),5,5.3,4.3,Policy to cut aviation emissions,,extended response,medium
+N22-P3-HL-2(a)(i),2,2.4,,Describing price trend data,,short explanation,low
+N22-P3-HL-2(a)(ii),15,15.1,14.3,Reasons to remove a tariff,,short explanation,medium
+N22-P3-HL-2(a)(iii),14,14.3,,Tariff removal welfare gain,international trade (tariff),calculation,high
+N22-P3-HL-2(a)(iv),14,14.3,16.1,Producer revenue after tariff removal,international trade (tariff),calculation,high
+N22-P3-HL-2(a)(v),12,12.5,,Marginal income tax calculation,,calculation,high
+N22-P3-HL-2(a)(vi),12,12.1,,Constructing a Lorenz curve,Lorenz curve,diagram explanation,high
+N22-P3-HL-2(a)(vii),12,12.5,12.1,Indirect taxes and inequality,,short explanation,high
+N22-P3-HL-2(a)(viii),18,18.2,,GNI versus HDI ranking,,short explanation,high
+N22-P3-HL-2(b),12,12.5,,Policy to reduce inequality,,extended response,high
+M23-P1-HL-TZ1-1(a),7,7.5,,Monopolistic competition long run,monopolistic competition,extended response,high
+M23-P1-HL-TZ1-1(b),7,7.5,7.6,Monopolistic competition vs oligopoly,,evaluation essay,high
+M23-P1-HL-TZ1-2(a),10,10.1,,Natural rate of unemployment,labour market,extended response,high
+M23-P1-HL-TZ1-2(b),13,13.2,9.2,Monetary policy and recessionary gap,AD/AS,evaluation essay,high
+M23-P1-HL-TZ1-3(a),20,20.4,6.2,Education and health for development,,extended response,medium
+M23-P1-HL-TZ1-3(b),19,19.2,20.8,Weak institutions as barrier,,evaluation essay,high
+M23-P1-HL-TZ2-1(a),3,3.2,,Differences in YED,,extended response,high
+M23-P1-HL-TZ2-1(b),2,2.6,,Utility maximization assumption,,evaluation essay,high
+M23-P1-HL-TZ2-2(a),10,10.1,,Costs of unemployment,,extended response,high
+M23-P1-HL-TZ2-2(b),10,10.3,9.2,Unemployment-inflation trade-off,Phillips curve,evaluation essay,high
+M23-P1-HL-TZ2-3(a),19,19.2,,Primary sector dependence,,extended response,high
+M23-P1-HL-TZ2-3(b),20,20.3,20.9,Market-based development policies,,evaluation essay,high
+M23-P1-SL-TZ1-1(a),6,6.2,,Merit goods market failure,externality (positive consumption),extended response,high
+M23-P1-SL-TZ1-1(b),6,6.2,4.4,Subsidies for merit goods,externality (positive consumption),evaluation essay,high
+M23-P1-SL-TZ1-2(a),10,10.2,,Costs of deflation,,extended response,high
+M23-P1-SL-TZ1-2(b),10,10.2,10.1,Inflation vs unemployment costs,,evaluation essay,high
+M23-P1-SL-TZ1-3(a),19,19.1,,Poverty cycle as barrier,poverty cycle,extended response,high
+M23-P1-SL-TZ1-3(b),18,18.1,11.1,Growth versus development,,evaluation essay,medium
+M23-P1-SL-TZ2-1(a),5,5.4,4.3,Correcting demerit goods,externality (negative consumption),extended response,high
+M23-P1-SL-TZ2-1(b),6,6.3,,Public goods provision,,evaluation essay,high
+M23-P1-SL-TZ2-2(a),12,12.2,,Measuring poverty,,extended response,high
+M23-P1-SL-TZ2-2(b),12,12.5,12.1,Taxation to reduce inequality,,evaluation essay,high
+M23-P1-SL-TZ2-3(a),19,19.2,11.2,Government debt as barrier,,extended response,medium
+M23-P1-SL-TZ2-3(b),20,20.6,,Foreign aid effectiveness,,evaluation essay,high
+M23-P2-HL-1(a)(i),20,20.7,,IMF functions,,short explanation,high
+M23-P2-HL-1(a)(ii),16,16.4,20.6,Remittances definition,,definition,low
+M23-P2-HL-1(b)(i),8,8.3,,GDP from per capita data,,calculation,high
+M23-P2-HL-1(b)(ii),4,4.2,10.1,Minimum wage and unemployment,labour market (minimum wage),diagram explanation,high
+M23-P2-HL-1(c),13,13.3,8.4,Automatic stabilizers,business cycle,diagram explanation,high
+M23-P2-HL-1(d),2,2.4,2.2,Falling demand for oil,demand and supply,diagram explanation,high
+M23-P2-HL-1(e),16,16.2,3.1,J-curve effect,J-curve,diagram explanation,high
+M23-P2-HL-1(f),19,19.1,20.2,Rural finance and poverty cycle,poverty cycle,diagram explanation,high
+M23-P2-HL-1(g),15,15.2,14.1 15.1,Free trade agreement costs and benefits,,evaluation essay,medium
+M23-P2-HL-2(a)(i),7,7.2,,Profit definition,,definition,high
+M23-P2-HL-2(a)(ii),20,20.8,19.2,Property rights definition,,definition,medium
+M23-P2-HL-2(b)(i),8,8.3,,Net factor income calculation,,calculation,high
+M23-P2-HL-2(b)(ii),9,9.1,,Net exports and real GDP,AD/AS,diagram explanation,high
+M23-P2-HL-2(c),4,4.4,2.4,Subsidy market effect,demand and supply (subsidy),diagram explanation,high
+M23-P2-HL-2(d),16,16.1,,Export prices and appreciation,exchange rate,diagram explanation,high
+M23-P2-HL-2(e),14,14.3,,Tariff effect on imports,international trade (tariff),diagram explanation,high
+M23-P2-HL-2(f),12,12.1,,Lorenz curve income distribution,Lorenz curve,diagram explanation,high
+M23-P2-HL-2(g),11,11.3,18.1,Sustainability vs growth conflict,,evaluation essay,medium
+M23-P2-SL-1(a)(i),8,8.2,,GDP definition,,definition,high
+M23-P2-SL-1(a)(ii),18,18.1,,Sustainability definition,,definition,high
+M23-P2-SL-1(b)(i),16,16.4,,Current account balance change,,calculation,high
+M23-P2-SL-1(b)(ii),16,16.4,,Trade balance surplus or deficit,,short explanation,high
+M23-P2-SL-1(b)(iii),12,12.1,,Sketching Lorenz curve shift,Lorenz curve,diagram explanation,high
+M23-P2-SL-1(c),2,2.4,2.2,Demand increase raises revenue,demand and supply,diagram explanation,high
+M23-P2-SL-1(d),16,16.1,16.2,"Currency demand fall, depreciation",exchange rate,diagram explanation,high
+M23-P2-SL-1(e),10,10.1,15.2,Trade integration structural unemployment,labour market,diagram explanation,high
+M23-P2-SL-1(f),9,9.5,15.2,Lower tariffs raise potential output,AD/AS,diagram explanation,high
+M23-P2-SL-1(g),15,15.2,14.1,Economic integration impacts,,evaluation essay,high
+M23-P2-SL-2(a)(i),12,12.2,,Relative poverty definition,,definition,high
+M23-P2-SL-2(a)(ii),13,13.6,20.4,Infrastructure definition,,definition,medium
+M23-P2-SL-2(b)(i),10,10.2,,Inflation rate from CPI,,calculation,high
+M23-P2-SL-2(b)(ii),13,13.2,10.2,Real interest rate calculation,,calculation,medium
+M23-P2-SL-2(b)(iii),10,10.1,4.2,Minimum wage unemployment,labour market,diagram explanation,high
+M23-P2-SL-2(c),13,13.3,9.1,Expansionary fiscal policy and growth,AD/AS,diagram explanation,high
+M23-P2-SL-2(d),16,16.3,17.2,Capital flight and overvaluation,exchange rate (fixed),diagram explanation,high
+M23-P2-SL-2(e),4,4.4,,Subsidy lowers food prices,demand and supply (subsidy),diagram explanation,high
+M23-P2-SL-2(f),14,14.3,15.2,Removing an import tariff,international trade (tariff),diagram explanation,high
+M23-P2-SL-2(g),20,20.9,20.3 20.4,Market vs interventionist balance,,evaluation essay,high
+M23-P3-HL-1(a)(i),3,3.1,,PED calculation,,calculation,high
+M23-P3-HL-1(a)(ii),2,2.5,2.4,Consumer surplus loss,demand and supply,calculation,high
+M23-P3-HL-1(a)(iii),4,4.3,,Producer revenue net of tax,,calculation,high
+M23-P3-HL-1(a)(iv),3,3.1,,PED along linear demand,demand and supply,short explanation,high
+M23-P3-HL-1(a)(v),7,7.1,7.4,Market power definition,,definition,high
+M23-P3-HL-1(a)(vi),7,7.6,7.4,Collusion and allocative inefficiency,monopoly,diagram explanation,high
+M23-P3-HL-1(a)(vii),7,7.4,7.2,Collusive monopoly profit,monopoly,calculation,high
+M23-P3-HL-1(b),7,7.7,7.6,Policy against supermarket market power,,extended response,high
+M23-P3-HL-2(a)(i),10,10.2,,Inflation rate calculation,,calculation,high
+M23-P3-HL-2(a)(ii),8,8.3,,Real GDP from deflator,,calculation,high
+M23-P3-HL-2(a)(iii),8,8.3,,Real GDP per capita,,calculation,high
+M23-P3-HL-2(a)(iv),16,16.1,16.2,Currency conversion cost change,,calculation,high
+M23-P3-HL-2(a)(v),16,16.3,,Overvalued currency definition,,definition,high
+M23-P3-HL-2(a)(vi),16,16.3,,Central bank maintaining fixed rate,exchange rate,diagram explanation,high
+M23-P3-HL-2(a)(vii),16,16.1,,Currency conversion at official rate,,calculation,medium
+M23-P3-HL-2(a)(viii),16,16.2,10.2,Devaluation and inflation,AD/AS,diagram explanation,high
+M23-P3-HL-2(b),16,16.3,17.2,Policy to stabilize currency,,extended response,high
+N23-P1-HL-TZ1-1(a),3,3.1,,Determinants of PED,demand and supply,extended response,high
+N23-P1-HL-TZ1-1(b),7,7.7,7.6,Responses to market concentration,monopoly,evaluation essay,high
+N23-P1-HL-TZ1-2(a),9,9.1,,Investment determinants and GDP,AD/AS,extended response,high
+N23-P1-HL-TZ1-2(b),8,8.5,8.2,GNI as well-being measure,,evaluation essay,high
+N23-P1-HL-TZ1-3(a),14,14.2,,Comparative advantage gains,PPC,extended response,high
+N23-P1-HL-TZ1-3(b),15,15.2,,Pros and cons of trading blocs,international trade,evaluation essay,high
+N23-P1-HL-TZ2-1(a),5,5.3,5.2,Tradable permits for emissions,tradable permits,extended response,high
+N23-P1-HL-TZ2-1(b),4,4.4,6.1 5.3,Subsidies for clean technology,demand and supply,evaluation essay,medium
+N23-P1-HL-TZ2-2(a),10,10.2,,Limitations of CPI,,extended response,high
+N23-P1-HL-TZ2-2(b),10,10.3,9.2,Unemployment-inflation trade-off,Phillips curve,evaluation essay,high
+N23-P1-HL-TZ2-3(a),16,16.1,,Floating exchange rate determination,exchange rate,extended response,high
+N23-P1-HL-TZ2-3(b),16,16.2,10.1 17.1,"Depreciation, jobs and current account",exchange rate,evaluation essay,high
+N23-P1-SL-TZ1-1(a),3,3.1,,"Substitutes, necessities and PED",demand and supply,extended response,high
+N23-P1-SL-TZ1-1(b),3,3.1,,Uses of PED,demand and supply,evaluation essay,high
+N23-P1-SL-TZ1-2(a),9,9.5,11.1,Raising potential output,AD/AS,extended response,high
+N23-P1-SL-TZ1-2(b),11,11.1,18.2,Growth and living standards,AD/AS,evaluation essay,high
+N23-P1-SL-TZ1-3(a),15,15.1,14.3,Protection vs dumping and infant industry,international trade (tariff),extended response,high
+N23-P1-SL-TZ1-3(b),14,14.3,15.1,Tariff effects,international trade (tariff),evaluation essay,high
+N23-P1-SL-TZ2-1(a),3,3.1,3.2,PED versus YED,,extended response,high
+N23-P1-SL-TZ2-1(b),3,3.1,,PED and total revenue,demand and supply,evaluation essay,high
+N23-P1-SL-TZ2-2(a),9,9.2,13.2,Short-run AD shifts,AD/AS,extended response,high
+N23-P1-SL-TZ2-2(b),11,11.1,18.1,Growth and well-being,AD/AS,evaluation essay,high
+N23-P1-SL-TZ2-3(a),14,14.3,15.1,Tariff revenue and jobs,international trade (tariff),extended response,high
+N23-P1-SL-TZ2-3(b),15,15.1,14.3,Case for trade protection,international trade (tariff),evaluation essay,high
+N23-P2-HL-1(a)(i),20,20.1,,Import substitution definition,,definition,high
+N23-P2-HL-1(a)(ii),18,18.2,,Happy Planet Index components,,definition,high
+N23-P2-HL-1(b)(i),13,13.4,,Multiplier effect on GDP,,calculation,high
+N23-P2-HL-1(b)(ii),7,7.4,,Monopoly welfare loss,monopoly,diagram explanation,high
+N23-P2-HL-1(c),12,12.5,12.1,Transfer payments and Lorenz curve,Lorenz curve,diagram explanation,high
+N23-P2-HL-1(d),4,4.2,10.1,Minimum wage unemployment,labour market (minimum wage),diagram explanation,high
+N23-P2-HL-1(e),16,16.1,17.1,Trade balance and currency value,exchange rate,diagram explanation,high
+N23-P2-HL-1(f),5,5.3,5.2,Agricultural chemical externality,externality (negative production),diagram explanation,high
+N23-P2-HL-1(g),20,20.9,11.1 18.1,Growth and development policy evaluation,,evaluation essay,medium
+N23-P2-HL-2(a)(i),9,9.5,20.4,Human capital definition,,definition,medium
+N23-P2-HL-2(a)(ii),6,6.4,,Asymmetric information definition,,definition,high
+N23-P2-HL-2(b)(i),8,8.3,,Real GDP from per capita,,calculation,high
+N23-P2-HL-2(b)(ii),9,9.1,9.2,Consumer confidence AD shift,AD/AS,diagram explanation,high
+N23-P2-HL-2(c),14,14.1,15.2,Export revenue after preference loss,international trade (export),diagram explanation,medium
+N23-P2-HL-2(d),4,4.2,,Rent control welfare loss,price ceiling,diagram explanation,high
+N23-P2-HL-2(e),5,5.3,,Circular economy reducing externality,externality (negative production),diagram explanation,high
+N23-P2-HL-2(f),8,8.1,20.3,Microfinance and circular flow,circular flow of income,diagram explanation,medium
+N23-P2-HL-2(g),20,20.2,11.1,Social enterprise and microfinance impact,,evaluation essay,high
+N23-P2-SL-1(a)(i),16,16.1,,Floating exchange rate definition,,definition,high
+N23-P2-SL-1(a)(ii),5,5.3,4.3,Carbon tax definition,,definition,high
+N23-P2-SL-1(b)(i),3,3.1,,Quantity change from PED,,calculation,high
+N23-P2-SL-1(b)(ii),13,13.2,10.2,Real interest rate,,calculation,high
+N23-P2-SL-1(c),10,10.2,9.2,Cost-push inflation from labour market,AD/AS,diagram explanation,high
+N23-P2-SL-1(d),16,16.1,16.2,Relative inflation and exchange rate,exchange rate,diagram explanation,high
+N23-P2-SL-1(e),13,13.2,9.1,Contractionary monetary policy and inflation,AD/AS,diagram explanation,high
+N23-P2-SL-1(f),4,4.3,,Indirect tax revenue,demand and supply (indirect tax),diagram explanation,high
+N23-P2-SL-1(g),11,11.3,18.1 5.3,Growth vs environmental sustainability,,evaluation essay,high
+N23-P2-SL-2(a)(i),5,5.1,,Common pool resources definition,,definition,high
+N23-P2-SL-2(a)(ii),18,18.2,12.2,Multidimensional Poverty Index definition,,definition,high
+N23-P2-SL-2(b)(i),8,8.3,,Real GDP using deflator,,calculation,high
+N23-P2-SL-2(b)(ii),16,16.4,,Current account balance,,calculation,high
+N23-P2-SL-2(b)(iii),16,16.4,,Trade balance identification,,calculation,high
+N23-P2-SL-2(c),1,1.0,11.1,Resource discovery and PPC,PPC,diagram explanation,high
+N23-P2-SL-2(d),16,16.1,17.1,Trade deficit and currency,exchange rate,diagram explanation,high
+N23-P2-SL-2(e),14,14.3,,Tariff and producer surplus,international trade (tariff),diagram explanation,high
+N23-P2-SL-2(f),5,5.1,5.3,Water overuse market failure,externality (negative production),diagram explanation,medium
+N23-P2-SL-2(g),12,12.5,,Inequality reduction policies,Lorenz curve,evaluation essay,high
+N23-P3-HL-1(a)(i),5,5.1,,Common pool resources definition,,definition,high
+N23-P3-HL-1(a)(ii),5,5.1,5.3,Tragedy of the commons,externality (negative production),diagram explanation,high
+N23-P3-HL-1(a)(iii),3,3.1,,PED calculation,,calculation,high
+N23-P3-HL-1(a)(iv),3,3.2,,YED calculation,,calculation,high
+N23-P3-HL-1(a)(v),4,4.3,2.5,Tax effect on producer surplus,,calculation,high
+N23-P3-HL-1(a)(vi),4,4.3,12.5,Regressive indirect tax,,short explanation,medium
+N23-P3-HL-1(a)(vii),5,5.1,4.1,Fishing stock regulation,,short explanation,medium
+N23-P3-HL-1(a)(viii),5,5.1,,Collective self-governance of commons,,short explanation,high
+N23-P3-HL-1(b),5,5.1,4.3,Sustainable fisheries policy,,extended response,high
+N23-P3-HL-2(a)(i),15,15.2,17.3,Common market vs monetary union,,short explanation,high
+N23-P3-HL-2(a)(ii),17,17.3,,Monetary union drawback,,short explanation,high
+N23-P3-HL-2(a)(iii),10,10.2,,Consumer basket expenditure,,calculation,high
+N23-P3-HL-2(a)(iv),10,10.2,,CPI calculation,,calculation,high
+N23-P3-HL-2(a)(v),10,10.2,,Inflation rate from CPI,,calculation,high
+N23-P3-HL-2(a)(vi),13,13.2,10.2,Real interest rate,,calculation,high
+N23-P3-HL-2(a)(vii),10,10.2,,CPI limitations,,short explanation,high
+N23-P3-HL-2(a)(viii),16,16.1,10.2,Currency conversion of basket,,calculation,medium
+N23-P3-HL-2(a)(ix),13,13.3,11.2,Crowding out definition,,definition,high
+N23-P3-HL-2(a)(x),9,9.5,19.2,Infrastructure and potential output,AD/AS,diagram explanation,high
+N23-P3-HL-2(b),13,13.6,13.2,Policy to raise investment,,extended response,medium
+M24-P1-HL-TZ1-1(a),7,7.3,7.2,Perfect competition long-run profits,perfect competition,extended response,high
+M24-P1-HL-TZ1-1(b),7,7.2,2.6,Profit maximization critique,,evaluation essay,high
+M24-P1-HL-TZ1-2(a),13,13.4,13.3,Multiplier and government spending,AD/AS,extended response,high
+M24-P1-HL-TZ1-2(b),11,11.3,11.1,Growth vs other objectives,,evaluation essay,high
+M24-P1-HL-TZ1-3(a),18,18.1,12.2,Poverty and sustainability,,extended response,medium
+M24-P1-HL-TZ1-3(b),20,20.9,20.4,Government intervention for development,,evaluation essay,high
+M24-P1-HL-TZ2-1(a),7,7.5,,Monopolistic competition profits,monopolistic competition,extended response,high
+M24-P1-HL-TZ2-1(b),7,7.4,7.7,Market power desirability,monopoly,evaluation essay,high
+M24-P1-HL-TZ2-2(a),13,13.2,9.1,Interest rate cut and national income,AD/AS,extended response,high
+M24-P1-HL-TZ2-2(b),13,13.6,13.3,Supply-side policy effectiveness,AD/AS,evaluation essay,high
+M24-P1-HL-TZ2-3(a),20,20.6,19.1,Benefits of foreign aid,,extended response,high
+M24-P1-HL-TZ2-3(b),20,20.5,,Inward FDI benefits and costs,,evaluation essay,high
+M24-P1-SL-TZ1-1(a),2,2.4,2.2 2.3,Demand and supply determinants,demand and supply,extended response,high
+M24-P1-SL-TZ1-1(b),4,4.2,,Price floor evaluation,demand and supply (price floor),evaluation essay,high
+M24-P1-SL-TZ1-2(a),10,10.2,9.2,Demand-pull vs cost-push inflation,AD/AS,extended response,high
+M24-P1-SL-TZ1-2(b),13,13.2,10.2,Monetary policy against inflation,AD/AS,evaluation essay,high
+M24-P1-SL-TZ1-3(a),19,19.2,20.2,Microfinance and banking access,,extended response,low
+M24-P1-SL-TZ1-3(b),20,20.3,20.9,Market-based policies for development,,evaluation essay,high
+M24-P1-SL-TZ2-1(a),2,2.2,2.4,Substitutes and complements,demand and supply,extended response,high
+M24-P1-SL-TZ2-1(b),4,4.4,,Subsidies to firms evaluation,demand and supply (subsidy),evaluation essay,high
+M24-P1-SL-TZ2-2(a),10,10.1,9.1,Cyclical vs structural unemployment,AD/AS,extended response,high
+M24-P1-SL-TZ2-2(b),13,13.3,10.1,Fiscal policy vs unemployment,AD/AS,evaluation essay,high
+M24-P1-SL-TZ2-3(a),19,19.2,11.1,Capital flight and human capital barriers,,extended response,high
+M24-P1-SL-TZ2-3(b),18,18.2,8.2,Real GDP as development measure,,evaluation essay,high
+M24-P2-HLSL-TZ1-1(a)(i),8,8.4,,Recession definition,,definition,high
+M24-P2-HLSL-TZ1-1(a)(ii),16,16.4,,Portfolio investment definition,,definition,high
+M24-P2-HLSL-TZ1-1(b)(i),3,3.1,,PED and revenue calculation,,calculation,high
+M24-P2-HLSL-TZ1-1(b)(ii),16,16.4,,Balance of trade in goods,,calculation,high
+M24-P2-HLSL-TZ1-1(c),13,13.2,9.1,Higher interest rates and GDP,AD/AS,diagram explanation,high
+M24-P2-HLSL-TZ1-1(d),16,16.1,,Export demand and appreciation,exchange rate,diagram explanation,high
+M24-P2-HLSL-TZ1-1(e),14,14.3,15.2,Trade agreement tariff removal,international trade (tariff),diagram explanation,high
+M24-P2-HLSL-TZ1-1(f),5,5.3,4.4,Solar subsidy and fossil fuel output,externality (negative production),diagram explanation,medium
+M24-P2-HLSL-TZ1-1(g),16,16.2,17.1,Exchange rate trend and BoP,exchange rate,evaluation essay,high
+M24-P2-HLSL-TZ1-2(a)(i),16,16.4,20.6,Remittances definition,,definition,medium
+M24-P2-HLSL-TZ1-2(a)(ii),13,13.3,,Expansionary fiscal policy definition,,definition,high
+M24-P2-HLSL-TZ1-2(b)(i),8,8.3,,Imports from expenditure GDP,,calculation,high
+M24-P2-HLSL-TZ1-2(b)(ii),8,8.3,,Net income from abroad,,calculation,high
+M24-P2-HLSL-TZ1-2(b)(iii),3,3.2,,YED calculation,,calculation,high
+M24-P2-HLSL-TZ1-2(c),9,9.2,10.2,Energy price supply shock,AD/AS,diagram explanation,high
+M24-P2-HLSL-TZ1-2(d),14,14.3,,Tariff revenue,international trade (tariff),diagram explanation,high
+M24-P2-HLSL-TZ1-2(e),4,4.2,2.5,Price floor and consumer surplus,demand and supply (price floor),diagram explanation,high
+M24-P2-HLSL-TZ1-2(f),20,20.6,19.1,ODA and poverty cycle,poverty cycle,diagram explanation,high
+M24-P2-HLSL-TZ1-2(g),12,12.5,12.2,Poverty and inequality policies,,evaluation essay,high
+M24-P2-HLSL-TZ2-1(a)(i),10,10.2,,Inflation definition,,definition,high
+M24-P2-HLSL-TZ2-1(a)(ii),20,20.5,,FDI definition,,definition,high
+M24-P2-HLSL-TZ2-1(b)(i),3,3.1,,PED and revenue calculation,,calculation,high
+M24-P2-HLSL-TZ2-1(b)(ii),16,16.4,,Balance of trade in services,,calculation,high
+M24-P2-HLSL-TZ2-1(c),13,13.6,9.5,Infrastructure spending and LRAS,AD/AS,diagram explanation,high
+M24-P2-HLSL-TZ2-1(d),16,16.1,,Export demand and appreciation,exchange rate,diagram explanation,high
+M24-P2-HLSL-TZ2-1(e),14,14.3,15.2,Trade agreement tariff removal,international trade (tariff),diagram explanation,high
+M24-P2-HLSL-TZ2-1(f),5,5.3,4.3,Carbon tax on production,externality (negative production),diagram explanation,high
+M24-P2-HLSL-TZ2-1(g),16,16.2,17.1,Exchange rate trend and BoP,exchange rate,evaluation essay,high
+M24-P2-HLSL-TZ2-2(a)(i),8,8.5,19.2,Informal economy definition,,definition,medium
+M24-P2-HLSL-TZ2-2(a)(ii),16,16.1,,Depreciation definition,,definition,high
+M24-P2-HLSL-TZ2-2(b)(i),8,8.3,,Consumption from expenditure GDP,,calculation,high
+M24-P2-HLSL-TZ2-2(b)(ii),3,3.2,,YED calculation,,calculation,high
+M24-P2-HLSL-TZ2-2(b)(iii),3,3.2,,Normal vs inferior from YED,,short explanation,high
+M24-P2-HLSL-TZ2-2(c),9,9.2,10.2,Energy price supply shock,AD/AS,diagram explanation,high
+M24-P2-HLSL-TZ2-2(d),14,14.3,,Removing an import quota,international trade (quota),diagram explanation,high
+M24-P2-HLSL-TZ2-2(e),16,16.1,14.3,Tariff and currency supply,exchange rate,diagram explanation,high
+M24-P2-HLSL-TZ2-2(f),4,4.2,,Price floor and excess supply,demand and supply (price floor),diagram explanation,high
+M24-P2-HLSL-TZ2-2(g),12,12.5,12.2,Poverty and inequality policies,,evaluation essay,high
+M24-P3-HL-1(a)(i),16,16.4,,Current account balance,,calculation,high
+M24-P3-HL-1(a)(ii),16,16.4,17.1,Reserve assets change,,calculation,high
+M24-P3-HL-1(a)(iii),14,14.1,2.4,Domestic spending at world price,international trade (exports),calculation,medium
+M24-P3-HL-1(a)(iv),3,3.1,,PED calculation,,calculation,high
+M24-P3-HL-1(a)(v),14,14.1,2.5,Social surplus with exports,international trade (exports),calculation,medium
+M24-P3-HL-1(a)(vi),14,14.3,,Export subsidy,international trade (export subsidy),diagram explanation,high
+M24-P3-HL-1(a)(vii),5,5.1,,Common access resources definition,,definition,high
+M24-P3-HL-1(a)(viii),5,5.3,5.2,Aquaculture pollution market failure,externality (negative production),diagram explanation,high
+M24-P3-HL-1(b),5,5.3,4.3 5.1,Policy for production externality,,extended response,high
+M24-P3-HL-2(a)(i),8,8.3,8.2,Real GDP per capita,,calculation,high
+M24-P3-HL-2(a)(ii),10,10.2,,Inflation rate from price index,,calculation,high
+M24-P3-HL-2(a)(iii),8,8.5,18.2,PPP adjustment rationale,,short explanation,medium
+M24-P3-HL-2(a)(iv),8,8.5,18.2,GNI per capita and living standards,,short explanation,medium
+M24-P3-HL-2(a)(v),13,13.2,10.2,Rate cuts amid high inflation,,short explanation,high
+M24-P3-HL-2(a)(vi),16,16.1,10.2,Inflation effect on currency,exchange rate,diagram explanation,high
+M24-P3-HL-2(a)(vii),16,16.1,,Currency conversion of export price,,calculation,high
+M24-P3-HL-2(a)(viii),4,4.3,,Ad valorem tax amount,,calculation,high
+M24-P3-HL-2(b),13,13.2,10.2 13.3,Anti-inflation policy choice,,extended response,medium
+N24-P1-HL-TZ1-1(a),7,7.4,7.5,Long-run profit by market structure,monopoly,extended response,high
+N24-P1-HL-TZ1-1(b),7,7.2,2.6,Firm objectives beyond profit,monopoly,evaluation essay,high
+N24-P1-HL-TZ1-2(a),9,9.3,10.1,Long-run natural unemployment,AD/AS,extended response,high
+N24-P1-HL-TZ1-2(b),10,10.1,10.2,Costs of unemployment vs inflation,AD/AS,evaluation essay,high
+N24-P1-HL-TZ1-3(a),16,16.1,,Relative inflation and currency demand,exchange rate,extended response,high
+N24-P1-HL-TZ1-3(b),17,17.3,15.2,Monetary union pros and cons,,evaluation essay,high
+N24-P1-HL-TZ2-1(a),5,5.2,5.3,Firms ignoring externalities,externality (negative production),extended response,high
+N24-P1-HL-TZ2-1(b),5,5.3,5.1,Tradable permits for carbon,demand and supply,evaluation essay,high
+N24-P1-HL-TZ2-2(a),10,10.2,,Costs of inflation,AD/AS,extended response,high
+N24-P1-HL-TZ2-2(b),11,11.1,11.3,Costs and benefits of growth,AD/AS,evaluation essay,high
+N24-P1-HL-TZ2-3(a),17,17.4,14.3,Quota removal and current account,international trade (quota),extended response,high
+N24-P1-HL-TZ2-3(b),16,16.2,,Consequences of appreciation,exchange rate,evaluation essay,high
+N24-P1-SL-TZ1-1(a),2,2.4,2.2,Demand shifts vs movements,demand and supply,extended response,high
+N24-P1-SL-TZ1-1(b),6,6.3,,Government provision of public goods,,evaluation essay,high
+N24-P1-SL-TZ1-2(a),11,11.1,9.5,Short vs long-term growth causes,AD/AS,extended response,high
+N24-P1-SL-TZ1-2(b),11,11.3,,Growth and objective conflicts,AD/AS,evaluation essay,high
+N24-P1-SL-TZ1-3(a),20,20.6,19.1,Foreign aid and development,poverty cycle,extended response,high
+N24-P1-SL-TZ1-3(b),19,19.2,12.4,Inequality as development barrier,Lorenz curve,evaluation essay,medium
+N24-P1-SL-TZ2-1(a),2,2.4,2.3,Supply shifts vs movements,demand and supply,extended response,high
+N24-P1-SL-TZ2-1(b),4,4.2,,Maximum price effects,price ceiling,evaluation essay,high
+N24-P1-SL-TZ2-2(a),13,13.6,9.5,Supply-side policy AD and AS effects,AD/AS,extended response,high
+N24-P1-SL-TZ2-2(b),13,13.6,,Supply-side policy evaluation,AD/AS,evaluation essay,high
+N24-P1-SL-TZ2-3(a),19,19.2,,Primary commodity dependence,demand and supply,extended response,high
+N24-P1-SL-TZ2-3(b),20,20.9,,Intervention vs market-led development,,evaluation essay,high
+N24-P2-HLSL-1(a)(i),13,13.2,,Monetary policy definition,,definition,high
+N24-P2-HLSL-1(a)(ii),16,16.4,17.4,Current account deficit definition,,definition,high
+N24-P2-HLSL-1(b)(i),8,8.3,,Real GDP per capita growth,,calculation,high
+N24-P2-HLSL-1(b)(ii),13,13.2,9.1,Tight monetary policy and prices,AD/AS,diagram explanation,high
+N24-P2-HLSL-1(c),17,17.1,16.4,Balance of payments interdependence,,short explanation,high
+N24-P2-HLSL-1(d),14,14.3,,Tariff cut and exporter revenue,international trade (tariff),diagram explanation,high
+N24-P2-HLSL-1(e),5,5.3,,Fossil fuel externality,externality (negative production),diagram explanation,high
+N24-P2-HLSL-1(f),9,9.5,,Labour force and potential output,AD/AS,diagram explanation,high
+N24-P2-HLSL-1(g),18,18.1,20.1,Trade agreement and SDGs,,evaluation essay,high
+N24-P2-HLSL-2(a)(i),13,13.3,,Fiscal policy definition,,definition,high
+N24-P2-HLSL-2(a)(ii),5,5.3,4.1,Tradable permits definition,,definition,high
+N24-P2-HLSL-2(b)(i),8,8.3,,Real GDP using deflator,,calculation,high
+N24-P2-HLSL-2(b)(ii),8,8.3,,Real GDP per capita,,calculation,high
+N24-P2-HLSL-2(b)(iii),8,8.4,,Output gap on business cycle,business cycle,diagram explanation,high
+N24-P2-HLSL-2(c),13,13.3,9.4,Fiscal policy closing recessionary gap,AD/AS,diagram explanation,high
+N24-P2-HLSL-2(d),4,4.4,,Subsidy cost to government,demand and supply (subsidy),diagram explanation,high
+N24-P2-HLSL-2(e),16,16.1,14.3,Import barrier removal and currency,exchange rate,diagram explanation,high
+N24-P2-HLSL-2(f),12,12.1,,Gini and Lorenz comparison,Lorenz curve,diagram explanation,high
+N24-P2-HLSL-2(g),4,4.1,13.3 12.5,Market intervention vs objectives,,evaluation essay,medium
+N24-P3-HL-1(a)(i),16,16.4,,Current account definition,,definition,high
+N24-P3-HL-1(a)(ii),16,16.4,,Current account calculation,,calculation,high
+N24-P3-HL-1(a)(iii),17,17.1,16.1,Current account and currency value,exchange rate,diagram explanation,high
+N24-P3-HL-1(a)(iv),16,16.1,,Reading currency depreciation data,,short explanation,high
+N24-P3-HL-1(a)(v),16,16.2,16.1,Exchange rate price conversion,,calculation,high
+N24-P3-HL-1(a)(vi),14,14.3,,Consumption at world price,,calculation,high
+N24-P3-HL-1(a)(vii),14,14.3,3.1,Tariff effect on expenditure,,calculation,high
+N24-P3-HL-1(a)(viii),19,19.1,20.6,Remittances and poverty cycle,poverty cycle,diagram explanation,high
+N24-P3-HL-1(b),16,16.3,17.4,Policies to stabilize currency,,extended response,medium
+N24-P3-HL-2(a)(i),7,7.2,7.4,Profit-maximizing output,,calculation,high
+N24-P3-HL-2(a)(ii),7,7.4,2.5,Allocatively efficient output,,calculation,high
+N24-P3-HL-2(a)(iii),7,7.4,,Natural monopoly reasons,,short explanation,high
+N24-P3-HL-2(a)(iv),3,3.1,7.2,PED along linear demand,demand and marginal revenue,diagram explanation,high
+N24-P3-HL-2(a)(v),4,4.4,,Per-unit subsidy from graph,,calculation,high
+N24-P3-HL-2(a)(vi),4,4.4,2.5,Subsidy consumer surplus change,,calculation,high
+N24-P3-HL-2(a)(vii),4,4.4,2.5,Subsidy producer surplus change,,calculation,high
+N24-P3-HL-2(a)(viii),13,13.4,,Multiplier effect on GDP,,calculation,high
+N24-P3-HL-2(a)(ix),11,11.2,13.3,Budget deficit versus debt,,short explanation,high
+N24-P3-HL-2(a)(x),2,2.6,4.1,Nudge definition,,definition,high
+N24-P3-HL-2(b),6,6.2,4.4,Policy to boost rail travel,,extended response,medium
+M25-P1-HL-TZ1-1(a),3,3.1,,PED commodities vs manufactures,,extended response,high
+M25-P1-HL-TZ1-1(b),3,3.1,4.3,PED uses for firms and government,,evaluation essay,high
+M25-P1-HL-TZ1-2(a),13,13.6,9.5,Interventionist SSP dual effects,AD/AS,extended response,high
+M25-P1-HL-TZ1-2(b),13,13.6,10.1,Market-based SSP and unemployment,AD/AS,evaluation essay,high
+M25-P1-HL-TZ1-3(a),17,17.2,16.1 16.3,Fixed versus floating regimes,exchange rate,extended response,medium
+M25-P1-HL-TZ1-3(b),16,16.2,16.1 9.1,Depreciation consequences,exchange rate,evaluation essay,high
+M25-P1-HL-TZ2-1(a),3,3.2,,YED and sectoral change,,extended response,high
+M25-P1-HL-TZ2-1(b),5,5.4,4.1,Regulating demerit goods,externality (negative consumption),evaluation essay,high
+M25-P1-HL-TZ2-2(a),17,17.4,13.3,Fiscal policy for CA deficit,AD/AS,extended response,medium
+M25-P1-HL-TZ2-2(b),13,13.3,10.1 13.4,Fiscal policy and unemployment,AD/AS,evaluation essay,high
+M25-P1-HL-TZ2-3(a),14,14.3,,Types of trade protection,international trade (tariff),extended response,high
+M25-P1-HL-TZ2-3(b),14,14.2,15.1,Comparative advantage specialization,PPC (comparative advantage),evaluation essay,high
+M25-P1-HL-TZ3-1(a),3,3.3,,PES commodities vs manufactures,,extended response,high
+M25-P1-HL-TZ3-1(b),4,4.3,3.1,Indirect tax stakeholder effects,indirect tax,evaluation essay,high
+M25-P1-HL-TZ3-2(a),12,12.1,,Lorenz curve and Gini,Lorenz curve,extended response,high
+M25-P1-HL-TZ3-2(b),12,12.5,12.1,Progressive taxation and inequality,Lorenz curve,evaluation essay,high
+M25-P1-HL-TZ3-3(a),17,17.4,16.4,Persistent CA deficit implications,,extended response,high
+M25-P1-HL-TZ3-3(b),17,17.4,16.2,Depreciation to fix CA deficit,exchange rate,evaluation essay,high
+M25-P1-SL-TZ1-1(a),6,6.3,6.2,Public vs merit goods,,extended response,high
+M25-P1-SL-TZ1-1(b),4,4.2,4.4 6.2,Price ceilings vs subsidies,price ceiling,evaluation essay,high
+M25-P1-SL-TZ1-2(a),9,9.4,9.6,Persistent Keynesian deflationary gap,AD/AS (Keynesian),extended response,high
+M25-P1-SL-TZ1-2(b),8,8.5,18.2,GDP per capita and well-being,,evaluation essay,high
+M25-P1-SL-TZ1-3(a),14,14.1,,Gains from trade,,extended response,high
+M25-P1-SL-TZ1-3(b),13,13.6,20.4 11.1,"Interventionist SSP, growth and development",AD/AS,evaluation essay,medium
+M25-P1-SL-TZ2-1(a),5,5.1,5.2,Common access resources overuse,,extended response,high
+M25-P1-SL-TZ2-1(b),5,5.4,4.3,Taxes vs education for demerit goods,externality (negative consumption),evaluation essay,high
+M25-P1-SL-TZ2-2(a),12,12.1,,Lorenz curve distribution change,Lorenz curve,extended response,high
+M25-P1-SL-TZ2-2(b),12,12.5,12.1,Taxation and inequality,Lorenz curve,evaluation essay,high
+M25-P1-SL-TZ2-3(a),19,19.2,3.1 3.3,Primary commodity dependence,,extended response,high
+M25-P1-SL-TZ2-3(b),20,20.3,20.9,Market-based development policies,AD/AS,evaluation essay,high
+M25-P1-SL-TZ3-1(a),1,1.0,,Scarcity and opportunity cost,PPC,extended response,high
+M25-P1-SL-TZ3-1(b),4,4.4,6.2,Subsidies for healthcare,externality (positive consumption),evaluation essay,high
+M25-P1-SL-TZ3-2(a),8,8.1,13.2,Interest rates and circular flow,circular flow,extended response,medium
+M25-P1-SL-TZ3-2(b),8,8.5,18.2,Cross-country GDP comparisons,,evaluation essay,high
+M25-P1-SL-TZ3-3(a),15,15.1,,Arguments for protection,,extended response,high
+M25-P1-SL-TZ3-3(b),15,15.2,,Trading bloc consequences,,evaluation essay,high
+M25-P2-HLSL-TZ1-1(a)(i),10,10.2,,Inflation definition,,definition,high
+M25-P2-HLSL-TZ1-1(a)(ii),20,20.6,,Foreign aid definition,,definition,high
+M25-P2-HLSL-TZ1-1(b)(i),3,3.3,,PES calculation,,calculation,high
+M25-P2-HLSL-TZ1-1(b)(ii),3,3.1,7.2,Total revenue calculation,,calculation,medium
+M25-P2-HLSL-TZ1-1(b)(iii),2,2.3,2.4,Supply shock raises price,demand and supply,diagram explanation,high
+M25-P2-HLSL-TZ1-1(c),14,14.3,,Tariff cut and import demand,international trade (tariff),diagram explanation,high
+M25-P2-HLSL-TZ1-1(d),16,16.1,13.2,Interest rates supporting currency,exchange rate,diagram explanation,medium
+M25-P2-HLSL-TZ1-1(e),9,9.5,13.6,Education shifts LRAS,AD/AS,diagram explanation,high
+M25-P2-HLSL-TZ1-1(f),12,12.1,,Lorenz curve over time,Lorenz curve,diagram explanation,high
+M25-P2-HLSL-TZ1-1(g),11,11.1,18.1 5.3,Growth and environmental sustainability,,evaluation essay,medium
+M25-P2-HLSL-TZ1-2(a)(i),11,11.1,,Economic growth definition,,definition,high
+M25-P2-HLSL-TZ1-2(a)(ii),1,1.0,,Economic resources definition,,definition,high
+M25-P2-HLSL-TZ1-2(b)(i),8,8.3,,Real GDP from deflator,,calculation,high
+M25-P2-HLSL-TZ1-2(b)(ii),8,8.3,,Nominal GDP per capita,,calculation,high
+M25-P2-HLSL-TZ1-2(b)(iii),8,8.3,8.2,Change in nominal GNI,,calculation,high
+M25-P2-HLSL-TZ1-2(c),9,9.1,9.2,Export rise and real GDP,AD/AS,diagram explanation,high
+M25-P2-HLSL-TZ1-2(d),2,2.3,2.4,Lower transport costs and price,demand and supply,diagram explanation,high
+M25-P2-HLSL-TZ1-2(e),16,16.3,16.1,Defending a fixed peg,exchange rate,diagram explanation,high
+M25-P2-HLSL-TZ1-2(f),6,6.2,,Education positive externality,externality (positive consumption),diagram explanation,high
+M25-P2-HLSL-TZ1-2(g),20,20.4,18.1 20.9,Evaluating development strategy,,evaluation essay,medium
+M25-P2-HLSL-TZ2-1(a)(i),4,4.2,,Price ceiling definition,,definition,high
+M25-P2-HLSL-TZ2-1(a)(ii),5,5.3,4.3,Carbon tax definition,,definition,high
+M25-P2-HLSL-TZ2-1(b)(i),16,16.4,,Current account calculation,,calculation,high
+M25-P2-HLSL-TZ2-1(b)(ii),16,16.1,,Currency conversion of export price,,calculation,high
+M25-P2-HLSL-TZ2-1(b)(iii),1,1.0,,Opportunity cost on PPC,PPC,diagram explanation,high
+M25-P2-HLSL-TZ2-1(c),16,16.1,,Falling exports and currency,exchange rate,diagram explanation,high
+M25-P2-HLSL-TZ2-1(d),3,3.1,2.4,Inelastic demand and revenue,demand and supply,diagram explanation,high
+M25-P2-HLSL-TZ2-1(e),5,5.4,,Household fuel consumption externality,externality (negative consumption),diagram explanation,high
+M25-P2-HLSL-TZ2-1(f),9,9.1,16.4,Trade balance and real GDP,AD/AS,diagram explanation,high
+M25-P2-HLSL-TZ2-1(g),11,11.1,12.1 12.3,Growth and income distribution,Lorenz curve,evaluation essay,medium
+M25-P2-HLSL-TZ2-2(a)(i),19,19.2,13.6,Infrastructure definition,,definition,medium
+M25-P2-HLSL-TZ2-2(a)(ii),1,1.0,,Private sector definition,,definition,medium
+M25-P2-HLSL-TZ2-2(b)(i),8,8.3,,GDP deflator calculation,,calculation,high
+M25-P2-HLSL-TZ2-2(b)(ii),8,8.3,,Real GDP per capita,,calculation,high
+M25-P2-HLSL-TZ2-2(b)(iii),16,16.1,8.2,Currency conversion of output,,calculation,medium
+M25-P2-HLSL-TZ2-2(c),9,9.1,9.2,Export fall and real GDP,AD/AS,diagram explanation,high
+M25-P2-HLSL-TZ2-2(d),2,2.3,2.4,Mechanization and farm prices,demand and supply,diagram explanation,high
+M25-P2-HLSL-TZ2-2(e),16,16.3,16.1,Defending a fixed peg,exchange rate,diagram explanation,high
+M25-P2-HLSL-TZ2-2(f),6,6.2,4.4,Subsidy for positive externality,externality (positive consumption),diagram explanation,high
+M25-P2-HLSL-TZ2-2(g),20,20.4,18.1 20.9,Evaluating development strategy,,evaluation essay,medium
+M25-P2-HLSL-TZ3-1(a)(i),14,14.3,,Tariff definition,,definition,high
+M25-P2-HLSL-TZ3-1(a)(ii),18,18.2,,HDI components,,definition,high
+M25-P2-HLSL-TZ3-1(b)(i),16,16.4,,Balance of trade in goods,,calculation,high
+M25-P2-HLSL-TZ3-1(b)(ii),16,16.4,,Balance of trade in services,,calculation,high
+M25-P2-HLSL-TZ3-1(b)(iii),4,4.2,2.4,Price ceiling shortage,price ceiling,diagram explanation,high
+M25-P2-HLSL-TZ3-1(c),13,13.2,9.1 10.2,Tight monetary policy and inflation,AD/AS,diagram explanation,high
+M25-P2-HLSL-TZ3-1(d),19,19.1,20.3,Microcredit breaking poverty cycle,poverty cycle,diagram explanation,medium
+M25-P2-HLSL-TZ3-1(e),5,5.3,4.3,Carbon tax on production externality,externality (negative production),diagram explanation,high
+M25-P2-HLSL-TZ3-1(f),16,16.1,17.1,Portfolio flows and currency,exchange rate,diagram explanation,high
+M25-P2-HLSL-TZ3-1(g),11,11.1,11.3 18.1,Consequences of rapid growth,,evaluation essay,medium
+M25-P2-HLSL-TZ3-2(a)(i),16,16.4,,Balance of payments definition,,definition,high
+M25-P2-HLSL-TZ3-2(a)(ii),1,1.0,,Entrepreneurship definition,,definition,high
+M25-P2-HLSL-TZ3-2(b)(i),8,8.3,,Real GDP from deflator,,calculation,high
+M25-P2-HLSL-TZ3-2(b)(ii),8,8.3,,Real GDP per capita,,calculation,high
+M25-P2-HLSL-TZ3-2(b)(iii),16,16.1,8.2,Currency conversion of output,,calculation,medium
+M25-P2-HLSL-TZ3-2(c),9,9.5,13.6,Public investment shifts LRAS,AD/AS,diagram explanation,high
+M25-P2-HLSL-TZ3-2(d),2,2.3,2.4,Cheaper credit and farm prices,demand and supply,diagram explanation,high
+M25-P2-HLSL-TZ3-2(e),16,16.3,16.1,Defending a fixed peg,exchange rate,diagram explanation,high
+M25-P2-HLSL-TZ3-2(f),6,6.2,,Healthcare positive externality,externality (positive consumption),diagram explanation,high
+M25-P2-HLSL-TZ3-2(g),20,20.4,20.1 18.1,Evaluating a development strategy,,evaluation essay,medium
+M25-P3-HL-1(a)(i),2,2.5,2.4,Consumer surplus change,demand and supply,calculation,high
+M25-P3-HL-1(a)(ii),6,6.2,,Positive consumption externality,externality (positive consumption),diagram explanation,high
+M25-P3-HL-1(a)(iii),2,2.6,,Bounded self-control definition,,definition,high
+M25-P3-HL-1(a)(iv),7,7.4,,Natural monopoly cost curve,natural monopoly,diagram explanation,high
+M25-P3-HL-1(a)(v),7,7.2,,Marginal revenue calculation,,calculation,high
+M25-P3-HL-1(a)(vi),7,7.2,,Change in profit calculation,,calculation,high
+M25-P3-HL-1(a)(vii),7,7.2,,Average cost calculation,,calculation,high
+M25-P3-HL-1(a)(viii),7,7.2,,Alternative business objectives,,short explanation,high
+M25-P3-HL-1(b),6,6.2,4.4 2.6,Policy to raise exercise uptake,,extended response,medium
+M25-P3-HL-2(a)(i),10,10.3,,Phillips curve relationship,,short explanation,high
+M25-P3-HL-2(a)(ii),10,10.3,,Long-run Phillips curve,Phillips curve,diagram explanation,high
+M25-P3-HL-2(a)(iii),10,10.2,,Weighted basket cost,,calculation,high
+M25-P3-HL-2(a)(iv),10,10.2,,Consumer price index calculation,,calculation,high
+M25-P3-HL-2(a)(v),10,10.2,,Inflation rate from CPI,,calculation,high
+M25-P3-HL-2(a)(vi),10,10.2,,CPI measurement limitations,,short explanation,high
+M25-P3-HL-2(a)(vii),7,7.6,,Oligopoly payoff matrix collusion,,short explanation,high
+M25-P3-HL-2(a)(viii),7,7.6,,Game theory incentive to cheat,,short explanation,high
+M25-P3-HL-2(a)(ix),13,13.2,,Real interest rate,,calculation,high
+M25-P3-HL-2(a)(x),13,13.2,,Money creation by banks,,short explanation,high
+M25-P3-HL-2(b),13,13.2,13.3 10.2,Policy to raise inflation,,extended response,medium
+N25-P1-HL-TZ1-1(a),7,7.4,7.2,Monopoly abnormal profits,monopoly,extended response,high
+N25-P1-HL-TZ1-1(b),7,7.4,7.6,Desirability of market power,monopoly,evaluation essay,medium
+N25-P1-HL-TZ1-2(a),10,10.2,,Redistributive effects of inflation,,extended response,high
+N25-P1-HL-TZ1-2(b),13,13.3,10.2,Fiscal policy against inflation,AD/AS,evaluation essay,high
+N25-P1-HL-TZ1-3(a),19,19.2,2.4,Primary product dependence,demand and supply,extended response,high
+N25-P1-HL-TZ1-3(b),15,15.1,14.3,Protection versus free trade,international trade (tariff),evaluation essay,high
+N25-P1-HL-TZ3-1(a),7,7.6,,Reasons for oligopoly collusion,collusive oligopoly,extended response,high
+N25-P1-HL-TZ3-1(b),7,7.7,7.4,Regulating market power,monopoly,evaluation essay,high
+N25-P1-HL-TZ3-2(a),10,10.1,13.3,Unemployment and public finances,AD/AS,extended response,medium
+N25-P1-HL-TZ3-2(b),13,13.3,10.1,Fiscal policy against unemployment,AD/AS,evaluation essay,high
+N25-P1-HL-TZ3-3(a),20,20.5,19.1,FDI and poverty cycle,poverty cycle,extended response,high
+N25-P1-HL-TZ3-3(b),17,17.3,,Monetary union costs and benefits,AD/AS,evaluation essay,high
+N25-P1-SL-TZ1-1(a),2,2.2,,Non-price demand determinants,demand and supply,extended response,high
+N25-P1-SL-TZ1-1(b),4,4.3,5.4,Taxing demerit goods,externality (negative consumption),evaluation essay,high
+N25-P1-SL-TZ1-2(a),9,9.1,,Determinants of investment,AD/AS,extended response,high
+N25-P1-SL-TZ1-2(b),13,13.2,10.1,Monetary policy and unemployment,AD/AS,evaluation essay,high
+N25-P1-SL-TZ1-3(a),15,15.1,14.3,Advantages of trade protection,international trade (tariff),extended response,high
+N25-P1-SL-TZ1-3(b),15,15.2,14.1,Trading bloc membership,AD/AS,evaluation essay,high
+N25-P1-SL-TZ3-1(a),2,2.3,,Non-price supply determinants,demand and supply,extended response,high
+N25-P1-SL-TZ3-1(b),4,4.4,,Evaluating subsidies,demand and supply (subsidy),evaluation essay,high
+N25-P1-SL-TZ3-2(a),9,9.1,,Determinants of consumption,AD/AS,extended response,high
+N25-P1-SL-TZ3-2(b),13,13.6,10.1,Supply-side policy and unemployment,AD/AS,evaluation essay,high
+N25-P1-SL-TZ3-3(a),14,14.1,,Gains from international trade,,extended response,high
+N25-P1-SL-TZ3-3(b),15,15.1,14.3,Protection pros and cons,international trade (tariff),evaluation essay,high
+N25-P2-HLSL-TZ1-1(a)(i),12,12.2,,Relative poverty definition,,definition,high
+N25-P2-HLSL-TZ1-1(a)(ii),16,16.1,16.2,Currency depreciation definition,,definition,high
+N25-P2-HLSL-TZ1-1(b)(i),16,16.2,,Import cost after depreciation,,calculation,high
+N25-P2-HLSL-TZ1-1(b)(ii),8,8.4,,Business cycle phases,business cycle,diagram explanation,high
+N25-P2-HLSL-TZ1-1(c),4,4.4,13.3,Removing energy subsidies,demand and supply (subsidy),diagram explanation,high
+N25-P2-HLSL-TZ1-1(d),16,16.1,,Speculation and exchange rate,exchange rate,diagram explanation,high
+N25-P2-HLSL-TZ1-1(e),19,19.1,20.4,Education and poverty cycle,poverty cycle,diagram explanation,high
+N25-P2-HLSL-TZ1-1(f),12,12.1,,Change in income distribution,Lorenz curve,diagram explanation,high
+N25-P2-HLSL-TZ1-1(g),13,13.6,13.3,Evaluating market-oriented reforms,AD/AS,evaluation essay,medium
+N25-P2-HLSL-TZ1-2(a)(i),16,16.3,,Overvalued currency definition,,definition,high
+N25-P2-HLSL-TZ1-2(a)(ii),20,20.4,13.6,Infrastructure definition,,definition,medium
+N25-P2-HLSL-TZ1-2(b)(i),3,3.2,,YED and export quantity,,calculation,high
+N25-P2-HLSL-TZ1-2(b)(ii),8,8.3,,Real GDP calculation,,calculation,high
+N25-P2-HLSL-TZ1-2(b)(iii),5,5.3,,Social optimum with pollution,externality (negative production),diagram explanation,high
+N25-P2-HLSL-TZ1-2(c),3,3.3,2.4,PES and price volatility,demand and supply,diagram explanation,high
+N25-P2-HLSL-TZ1-2(d),10,10.2,16.2,Depreciation and cost-push inflation,AD/AS,diagram explanation,high
+N25-P2-HLSL-TZ1-2(e),11,11.1,13.6,Human capital and growth,PPC,diagram explanation,high
+N25-P2-HLSL-TZ1-2(f),14,14.3,,Tariff and producer surplus,international trade (tariff),diagram explanation,high
+N25-P2-HLSL-TZ1-2(g),20,20.6,20.5,Aid versus FDI,poverty cycle,evaluation essay,high
+N25-P2-HLSL-TZ3-1(a)(i),16,16.4,16.3,Reserve assets definition,,definition,high
+N25-P2-HLSL-TZ3-1(a)(ii),10,10.2,,Inflation definition,,definition,high
+N25-P2-HLSL-TZ3-1(b)(i),8,8.3,10.2,GDP deflator calculation,,calculation,high
+N25-P2-HLSL-TZ3-1(b)(ii),8,8.3,10.2,Price change from deflator,,calculation,high
+N25-P2-HLSL-TZ3-1(b)(iii),12,12.5,12.1,Income tax and distribution,Lorenz curve,diagram explanation,high
+N25-P2-HLSL-TZ3-1(c),13,13.6,10.2,Privatization and inflation,AD/AS,diagram explanation,high
+N25-P2-HLSL-TZ3-1(d),4,4.4,,Subsidy removal and revenue,demand and supply (subsidy),diagram explanation,high
+N25-P2-HLSL-TZ3-1(e),14,14.3,,Tariff and consumption,international trade (tariff),diagram explanation,high
+N25-P2-HLSL-TZ3-1(f),11,11.1,13.6,Education and production possibilities,PPC,diagram explanation,high
+N25-P2-HLSL-TZ3-1(g),16,16.2,10.2,Consequences of depreciation,exchange rate,evaluation essay,high
+N25-P2-HLSL-TZ3-2(a)(i),3,3.1,3.3,Price inelastic definition,,definition,high
+N25-P2-HLSL-TZ3-2(a)(ii),16,16.4,,Portfolio investment definition,,definition,high
+N25-P2-HLSL-TZ3-2(b)(i),3,3.1,,PED quantity change,,calculation,high
+N25-P2-HLSL-TZ3-2(b)(ii),3,3.1,,PED and export revenue,,calculation,high
+N25-P2-HLSL-TZ3-2(b)(iii),19,19.1,20.6,Aid entry into poverty cycle,poverty cycle,diagram explanation,high
+N25-P2-HLSL-TZ3-2(c),16,16.3,,Central bank currency support,exchange rate,diagram explanation,high
+N25-P2-HLSL-TZ3-2(d),9,9.5,13.6,Human capital and LRAS,AD/AS,diagram explanation,high
+N25-P2-HLSL-TZ3-2(e),6,6.2,4.4,Education merit good welfare loss,externality (positive consumption),diagram explanation,high
+N25-P2-HLSL-TZ3-2(f),13,13.3,8.4,Expansionary fiscal response,AD/AS,diagram explanation,high
+N25-P2-HLSL-TZ3-2(g),20,20.1,15.1,Trade strategies for growth,international trade (tariff),evaluation essay,high
+N25-P3-HL-1(a)(i),8,8.3,11.1,GDP growth rate,,calculation,high
+N25-P3-HL-1(a)(ii),13,13.2,10.2,Real interest rate,,calculation,high
+N25-P3-HL-1(a)(iii),13,13.2,,Commercial bank money creation,,short explanation,high
+N25-P3-HL-1(a)(iv),13,13.2,,Quantitative easing meaning,,short explanation,high
+N25-P3-HL-1(a)(v),13,13.2,,Money supply and interest rate,money market,diagram explanation,high
+N25-P3-HL-1(a)(vi),16,16.4,,Trade balance calculation,,calculation,high
+N25-P3-HL-1(a)(vii),16,16.4,17.1,Financial account calculation,,calculation,high
+N25-P3-HL-1(a)(viii),16,16.1,,Exchange rate percentage change,,calculation,high
+N25-P3-HL-1(a)(ix),10,10.2,16.2,Depreciation and demand-pull inflation,AD/AS,diagram explanation,high
+N25-P3-HL-1(b),17,17.4,16.4,Correcting current account deficit,,extended response,high
+N25-P3-HL-2(a)(i),14,14.2,,Comparative advantage identification,,calculation,high
+N25-P3-HL-2(a)(ii),14,14.2,1.0,PPCs for two countries,PPC,diagram explanation,high
+N25-P3-HL-2(a)(iii),14,14.2,15.1,Limits of specialization,,short explanation,high
+N25-P3-HL-2(a)(iv),7,7.3,7.1,Evidence of market power,,short explanation,medium
+N25-P3-HL-2(a)(v),7,7.2,,Profit from cost table,,calculation,high
+N25-P3-HL-2(a)(vi),7,7.2,,Marginal cost from table,,calculation,high
+N25-P3-HL-2(a)(vii),5,5.3,7.2,Socially optimal output,,calculation,medium
+N25-P3-HL-2(a)(viii),12,12.1,,Plotting Lorenz curve,Lorenz curve,diagram explanation,high
+N25-P3-HL-2(a)(ix),12,12.3,,Causes of income inequality,,short explanation,high
+N25-P3-HL-2(a)(x),4,4.4,5.4,Subsidy welfare loss,,calculation,high
+N25-P3-HL-2(b),5,5.3,18.1,Policy to cut carbon emissions,,extended response,medium

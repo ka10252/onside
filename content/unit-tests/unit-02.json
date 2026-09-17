@@ -1,0 +1,676 @@
+{
+  "unit": 2,
+  "title": "Competitive markets: demand and supply",
+  "questions": [
+    {
+      "id": "u2-mcq-01",
+      "format": "mcq",
+      "section": "2.1",
+      "concepts": ["c2-market"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Which statement best describes a market in economics?",
+      "hints": [
+        "Think about what a market does rather than what it looks like.",
+        "Check whether each option would still work for online trade or trade in resources such as labour."
+      ],
+      "targets": "A market is any arrangement for exchange, not only a physical place",
+      "options": [
+        { "id": "a", "text": "A building where firms store goods before selling them", "misconception": "Storage is not exchange; a market is about buyers and sellers trading." },
+        { "id": "b", "text": "A place where buyers and sellers must meet face to face", "misconception": "Many markets, such as online markets, have no physical meeting place." },
+        { "id": "c", "text": "Any arrangement that links buyers and sellers so that they can carry out an exchange", "misconception": null },
+        { "id": "d", "text": "A government agency that decides the prices of goods", "misconception": "In a market, prices come from buyers and sellers interacting, not from a government agency." }
+      ],
+      "answer": "c"
+    },
+    {
+      "id": "u2-sa-01",
+      "format": "short_answer",
+      "section": "2.2",
+      "concepts": ["c2-demand", "c2-ceteris-paribus"],
+      "command_term": "define",
+      "marks": 2,
+      "prompt": "Define the term demand.",
+      "hints": [
+        "Think about the consumer side of a market and the demand curve.",
+        "Your definition should say what consumers must be able to do, and what conditions the curve is drawn under."
+      ],
+      "targets": "Willing and able; range of prices; time period; ceteris paribus",
+      "marking_points": [
+        "The quantities of a good or service that consumers are willing and able to buy [1]",
+        "At different possible prices over a given time period, ceteris paribus [1]"
+      ],
+      "model_answer_note": "Full marks need 'willing and able' plus the idea of different prices over a time period with other things constant."
+    },
+    {
+      "id": "u2-mcq-02",
+      "format": "mcq",
+      "section": "2.1",
+      "concepts": ["c2-market"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Which of the following is a feature of a competitive market?",
+      "hints": [
+        "Think about the number of buyers and sellers in a competitive market.",
+        "Ask whether any one buyer or seller could change the market price on their own."
+      ],
+      "targets": "Many buyers and sellers, none with power over price",
+      "options": [
+        { "id": "a", "text": "A single firm sets the market price", "misconception": "One firm setting price describes market power, which competitive markets lack." },
+        { "id": "b", "text": "Buyers and sellers must trade in a single physical location", "misconception": "Location does not define competition; markets can be spread out or online." },
+        { "id": "c", "text": "Each firm sells a product very different from its rivals'", "misconception": "Very different products give firms some power over price, which does not fit a competitive market." },
+        { "id": "d", "text": "There are many buyers and sellers, so none can influence the price alone", "misconception": null }
+      ],
+      "answer": "d"
+    },
+    {
+      "id": "u2-sa-02",
+      "format": "short_answer",
+      "section": "2.6",
+      "concepts": ["c2-nudge-theory", "c2-choice-architecture"],
+      "command_term": "define",
+      "marks": 2,
+      "prompt": "Define the term nudge.",
+      "hints": [
+        "This term comes from behavioural economics and choice architecture.",
+        "Say what a nudge tries to change, and what tools it avoids using."
+      ],
+      "targets": "Influence choices predictably without incentives, penalties or removing options",
+      "marking_points": [
+        "A way of influencing people's choices in a predictable (usually socially desirable) direction by changing how options are presented [1]",
+        "Without using financial incentives or penalties and without removing any options (freedom of choice is kept) [1]"
+      ],
+      "model_answer_note": "Full marks need both the aim of influencing choices and the fact that freedom of choice is kept without incentives or bans."
+    },
+    {
+      "id": "u2-mcq-03",
+      "format": "mcq",
+      "section": "2.2",
+      "concepts": ["c2-substitute-goods", "c2-demand"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "In Veld, tea and coffee are substitutes. The price of tea rises. What happens in the market for coffee?",
+      "hints": [
+        "Use the idea of substitute goods as a non-price determinant of demand.",
+        "Think about what tea drinkers do when tea becomes dearer, then decide whether coffee's own price has changed."
+      ],
+      "targets": "Change in the price of a related good shifts the demand curve",
+      "options": [
+        { "id": "a", "text": "There is a movement up along the demand curve for coffee", "misconception": "A movement along the curve needs a change in coffee's own price, which has not happened." },
+        { "id": "b", "text": "The demand curve for coffee shifts to the right", "misconception": null },
+        { "id": "c", "text": "The demand curve for coffee shifts to the left", "misconception": "Demand shifts left when the price of a complement rises, not a substitute." },
+        { "id": "d", "text": "The supply curve for coffee shifts to the right", "misconception": "The price of tea affects coffee buyers, so it is a demand change, not a supply change." }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "u2-mcq-04",
+      "format": "mcq",
+      "section": "2.3",
+      "concepts": ["c2-supply", "c2-market-supply"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Which of the following would shift the supply curve of rice in Kuva to the right?",
+      "hints": [
+        "Use the non-price determinants of supply.",
+        "Rule out anything that changes the price of rice itself or affects buyers, then ask which change lowers producers' costs."
+      ],
+      "targets": "Non-price determinants of supply vs price changes and demand factors",
+      "options": [
+        { "id": "a", "text": "A rise in the price of rice", "misconception": "A change in the good's own price causes a movement along the supply curve, not a shift." },
+        { "id": "b", "text": "An increase in consumer incomes", "misconception": "Income is a determinant of demand, not supply." },
+        { "id": "c", "text": "A rise in the wages paid to rice farm workers", "misconception": "Higher costs reduce supply, shifting the curve to the left." },
+        { "id": "d", "text": "A fall in the price of fertiliser", "misconception": null }
+      ],
+      "answer": "d"
+    },
+    {
+      "id": "u2-sa-03",
+      "format": "short_answer",
+      "section": "2.2",
+      "concepts": ["c2-normal-goods", "c2-inferior-goods"],
+      "command_term": "distinguish",
+      "marks": 2,
+      "prompt": "Distinguish between a normal good and an inferior good.",
+      "hints": [
+        "Use consumer income as a determinant of demand.",
+        "For each type of good, describe what happens to demand when income goes up."
+      ],
+      "targets": "Direction of the income effect on demand",
+      "marking_points": [
+        "For a normal good, demand increases when consumer income rises [1]",
+        "For an inferior good, demand decreases when consumer income rises [1]"
+      ],
+      "model_answer_note": "Full marks need both goods with the direction of the demand change for a rise (or fall) in income."
+    },
+    {
+      "id": "u2-mcq-05",
+      "format": "mcq",
+      "section": "2.2",
+      "concepts": ["c2-market-demand"],
+      "command_term": "calculate",
+      "marks": 1,
+      "prompt": "Table 1 shows the only three consumers of juice in a small market in Tarsa. What is the market quantity demanded at a price of 4 zeds?",
+      "table": {
+        "caption": "Table 1: Individual demand for juice (bottles per week)",
+        "columns": ["Price (zeds)", "Consumer X", "Consumer Y", "Consumer Z"],
+        "rows": [
+          ["2", "5", "8", "4"],
+          ["4", "3", "5", "2"]
+        ]
+      },
+      "hints": [
+        "Use the row in Table 1 for a price of 4 zeds.",
+        "Market demand is built by adding across consumers at one price only."
+      ],
+      "targets": "Horizontal summation of individual demand",
+      "options": [
+        { "id": "a", "text": "3 bottles", "misconception": "This is only Consumer X's quantity, not the market total." },
+        { "id": "b", "text": "10 bottles", "misconception": null },
+        { "id": "c", "text": "17 bottles", "misconception": "This is the market quantity at a price of 2 zeds, not 4 zeds." },
+        { "id": "d", "text": "27 bottles", "misconception": "This adds quantities at both prices; market demand adds consumers at one price only." }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "u2-sa-04",
+      "format": "short_answer",
+      "section": "2.2",
+      "concepts": ["c2-demand", "c2-ceteris-paribus"],
+      "command_term": "distinguish",
+      "marks": 2,
+      "prompt": "Distinguish between a movement along a demand curve and a shift of a demand curve.",
+      "hints": [
+        "Think about what is measured on the axes of a demand diagram and what is held constant.",
+        "For each case, name the kind of change that causes it and what happens to the quantity bought."
+      ],
+      "targets": "Own-price change vs non-price determinant",
+      "marking_points": [
+        "A movement along the curve is caused by a change in the good's own price, giving a change in quantity demanded [1]",
+        "A shift is caused by a change in a non-price determinant (e.g. income, tastes, prices of related goods), so a different quantity is demanded at every price [1]"
+      ],
+      "model_answer_note": "A full-mark answer gives the cause of each and makes clear that a shift changes demand at every price."
+    },
+    {
+      "id": "u2-mcq-06",
+      "format": "mcq",
+      "section": "2.4",
+      "concepts": ["c2-excess-demand-shortage", "c2-market-disequilibrium"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "In a free market for bus passes in Veld, the price is currently below the equilibrium price. What is the situation and what will happen next?",
+      "hints": [
+        "Compare quantity demanded and quantity supplied at a price below equilibrium on a demand and supply diagram.",
+        "Decide whether there is a shortage or a surplus, then think about how buyers and sellers react."
+      ],
+      "targets": "Disequilibrium below equilibrium price and the adjustment process",
+      "options": [
+        { "id": "a", "text": "There is excess demand, so the price tends to rise", "misconception": null },
+        { "id": "b", "text": "There is excess supply, so the price tends to fall", "misconception": "Excess supply happens when the price is above equilibrium, not below." },
+        { "id": "c", "text": "There is excess demand, so the price tends to fall", "misconception": "A shortage leads buyers to compete for the good, which pushes the price up, not down." },
+        { "id": "d", "text": "The market is in equilibrium because buyers and sellers are still trading", "misconception": "Trade happening does not mean quantity demanded equals quantity supplied." }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u2-sa-05",
+      "format": "short_answer",
+      "section": "2.4",
+      "concepts": ["c2-market-equilibrium", "c2-excess-demand-shortage"],
+      "command_term": "calculate",
+      "marks": 3,
+      "prompt": "Table 2 shows the demand and supply schedules for mangoes in Kuva. (a) Identify the equilibrium price and quantity. (b) Calculate the excess demand at a price of 4 zeds.",
+      "table": {
+        "caption": "Table 2: Market for mangoes in Kuva (thousand per week)",
+        "columns": ["Price (zeds)", "Quantity demanded", "Quantity supplied"],
+        "rows": [
+          ["2", "80", "20"],
+          ["4", "60", "40"],
+          ["6", "50", "50"],
+          ["8", "40", "60"],
+          ["10", "30", "70"]
+        ]
+      },
+      "hints": [
+        "Use the condition for market equilibrium and the row for 4 zeds in Table 2.",
+        "Find the row where the two quantities match, then at 4 zeds subtract the smaller quantity from the larger one."
+      ],
+      "targets": "Reading equilibrium from a schedule and measuring a shortage",
+      "marking_points": [
+        "Equilibrium price = 6 zeds, where quantity demanded equals quantity supplied [1]",
+        "Equilibrium quantity = 50 thousand mangoes per week [1]",
+        "Excess demand at 4 zeds = 60 - 40 = 20 thousand mangoes per week [1]"
+      ],
+      "model_answer_note": "Full marks need the equilibrium price and quantity plus the shortage with working and units."
+    },
+    {
+      "id": "u2-mcq-07",
+      "format": "mcq",
+      "section": "2.3",
+      "concepts": ["c2-joint-supply", "c2-competitive-supply"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Beef and leather are in joint supply. A rise in the demand for beef in Kuva is most likely to lead to:",
+      "hints": [
+        "Use the difference between joint supply and competitive supply.",
+        "Think about what happens to beef output, and what necessarily comes with it."
+      ],
+      "targets": "Joint supply: more of one means more of the other",
+      "options": [
+        { "id": "a", "text": "a fall in the supply of leather", "misconception": "Producing more of one good means less of the other only in competitive supply." },
+        { "id": "b", "text": "a rise in the demand for leather", "misconception": "The link between beef and leather is on the production side, not the buyers' side." },
+        { "id": "c", "text": "an increase in the supply of leather", "misconception": null },
+        { "id": "d", "text": "no change in the leather market", "misconception": "Because both goods come from the same animals, more beef output affects leather output." }
+      ],
+      "answer": "c"
+    },
+    {
+      "id": "u2-sa-06",
+      "format": "short_answer",
+      "section": "2.2",
+      "concepts": ["c2-complementary-goods", "c2-demand"],
+      "command_term": "explain",
+      "marks": 3,
+      "prompt": "The price of electric scooters in Veld falls sharply. Using a demand and supply diagram for scooter helmets (described in words), explain the likely effect on the market for scooter helmets.",
+      "hints": [
+        "Decide how scooters and helmets are related, and which curve in the helmet market this affects.",
+        "Trace the chain: scooter price, quantity of scooters bought, helmet demand, then the new helmet equilibrium."
+      ],
+      "targets": "Complements as a demand shifter and the new equilibrium",
+      "marking_points": [
+        "Scooters and helmets are complements, so more scooters are bought when their price falls [1]",
+        "The demand for helmets increases, shown by a rightward shift of the demand curve [1]",
+        "The equilibrium price and quantity of helmets both rise [1]"
+      ],
+      "model_answer_note": "A full-mark answer identifies the complement relationship, the direction of the demand shift and the effect on both price and quantity."
+    },
+    {
+      "id": "u2-mcq-08",
+      "format": "mcq",
+      "section": "2.4",
+      "concepts": ["c2-market-equilibrium", "c2-demand"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "In a competitive market with an upward-sloping supply curve, demand increases. What happens to the total revenue of the firms in the market?",
+      "hints": [
+        "Total revenue is price multiplied by quantity sold.",
+        "On a demand and supply diagram, find what happens to both equilibrium price and equilibrium quantity after the shift."
+      ],
+      "targets": "Demand increase raises both P and Q, so revenue rises",
+      "options": [
+        { "id": "a", "text": "It falls", "misconception": "Revenue would only fall if price or quantity fell, and neither does here." },
+        { "id": "b", "text": "It stays the same", "misconception": "Both price and quantity change in the same direction, so revenue cannot stay the same." },
+        { "id": "c", "text": "It may rise or fall depending on price elasticity of demand", "misconception": "Elasticity matters when a supply shift moves price and quantity in opposite directions, not for a demand shift." },
+        { "id": "d", "text": "It rises", "misconception": null }
+      ],
+      "answer": "d"
+    },
+    {
+      "id": "u2-sa-07",
+      "format": "short_answer",
+      "section": "2.3",
+      "concepts": ["c2-total-product", "c2-marginal-product", "c2-short-run"],
+      "command_term": "calculate",
+      "marks": 2,
+      "prompt": "Table 3 shows the total product of a small furniture workshop in Tarsa in the short run. Calculate the marginal product of the third worker.",
+      "table": {
+        "caption": "Table 3: Output of a furniture workshop (chairs per week)",
+        "columns": ["Number of workers", "Total product"],
+        "rows": [
+          ["0", "0"],
+          ["1", "10"],
+          ["2", "25"],
+          ["3", "35"],
+          ["4", "40"]
+        ]
+      },
+      "hints": [
+        "Use the idea of marginal product and the rows for 2 and 3 workers in Table 3.",
+        "Find how much total product changes when the number of workers goes up by one."
+      ],
+      "targets": "Marginal product as a change in total product",
+      "marking_points": [
+        "Working: 35 - 25 [1]",
+        "Marginal product of the third worker = 10 chairs per week [1]"
+      ],
+      "model_answer_note": "Full marks need the correct subtraction and the answer with units; 35 (total product) scores 0."
+    },
+    {
+      "id": "u2-mcq-09",
+      "format": "mcq",
+      "section": "2.5",
+      "concepts": ["c2-consumer-surplus", "c2-marginal-benefit"],
+      "command_term": "calculate",
+      "marks": 1,
+      "prompt": "Mara is willing to pay up to 12 zeds for a concert ticket. She buys one for 8 zeds. What is her consumer surplus?",
+      "hints": [
+        "Use the idea of consumer surplus.",
+        "Compare the most she would pay with what she actually paid."
+      ],
+      "targets": "Consumer surplus = willingness to pay minus price paid",
+      "options": [
+        { "id": "a", "text": "4 zeds", "misconception": null },
+        { "id": "b", "text": "8 zeds", "misconception": "This is the price she paid, not the extra benefit she received." },
+        { "id": "c", "text": "12 zeds", "misconception": "This is her maximum willingness to pay, not her surplus." },
+        { "id": "d", "text": "20 zeds", "misconception": "Consumer surplus is a difference, not the sum of the two values." }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u2-sa-08",
+      "format": "short_answer",
+      "section": "2.4",
+      "concepts": ["c2-market-equilibrium", "c2-excess-demand-shortage", "c2-supply"],
+      "command_term": "explain",
+      "marks": 3,
+      "prompt": "Floods destroy a large part of Kuva's rice crop. Using a demand and supply diagram (described in words), explain the effect on the market for rice.",
+      "hints": [
+        "Decide which curve the floods affect and in which direction.",
+        "Describe what happens at the old price, how the market responds, and where it settles."
+      ],
+      "targets": "Supply shock: leftward shift, shortage, higher price",
+      "marking_points": [
+        "The supply of rice decreases, shown by a leftward shift of the supply curve [1]",
+        "At the original price there is excess demand (a shortage), which pushes the price up [1]",
+        "The new equilibrium has a higher price and a lower quantity of rice [1]"
+      ],
+      "model_answer_note": "A full-mark answer gives the direction of the shift, the adjustment through a shortage, and the new price and quantity."
+    },
+    {
+      "id": "u2-mcq-10",
+      "format": "mcq",
+      "section": "2.6",
+      "concepts": ["c2-bounded-self-control", "c2-anchoring", "c2-bounded-selfishness", "c2-bounded-rationality"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Which of the following is the best example of bounded self-control?",
+      "hints": [
+        "Use the three 'bounded' ideas and the common biases from behavioural economics.",
+        "Look for the person whose choice goes against a plan they had already made."
+      ],
+      "targets": "Recognising bounded self-control among other behavioural ideas",
+      "options": [
+        { "id": "a", "text": "A shopper thinks a jacket is good value because its label shows a much higher 'original' price", "misconception": "Being influenced by a first number seen is anchoring." },
+        { "id": "b", "text": "A worker plans to save her bonus but spends it all on impulse the same day", "misconception": null },
+        { "id": "c", "text": "A student gives money to charity even though it lowers her own spending", "misconception": "Acting to help others at a personal cost shows bounded selfishness." },
+        { "id": "d", "text": "A consumer picks a phone plan without comparing all the plans because there are too many", "misconception": "Limited ability to process information is bounded rationality." }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "u2-sa-09",
+      "format": "short_answer",
+      "section": "2.5",
+      "concepts": ["c2-consumer-surplus"],
+      "command_term": "calculate",
+      "marks": 3,
+      "prompt": "The demand curve for gym passes in Veld is a straight line. Table 4 shows three points on it. The market price rises from 8 zeds to 12 zeds. Calculate the fall in consumer surplus.",
+      "table": {
+        "caption": "Table 4: Points on the demand curve for gym passes",
+        "columns": ["Point", "Price (zeds)", "Quantity demanded (passes)"],
+        "rows": [
+          ["Price at which quantity demanded is zero", "20", "0"],
+          ["Before the price rise", "8", "60"],
+          ["After the price rise", "12", "40"]
+        ]
+      },
+      "hints": [
+        "Consumer surplus is a triangle on the demand diagram, so use the formula for the area of a triangle.",
+        "Work out the triangle before and after the price rise using the top of the demand curve, then find the difference."
+      ],
+      "targets": "Consumer surplus as a triangle area and how it changes when price rises",
+      "marking_points": [
+        "Before: 1/2 x 60 x (20 - 8) = 360 zeds [1]",
+        "After: 1/2 x 40 x (20 - 12) = 160 zeds [1]",
+        "Fall in consumer surplus = 360 - 160 = 200 zeds [1]"
+      ],
+      "model_answer_note": "Full marks need both triangle areas with working and the correct difference in zeds."
+    },
+    {
+      "id": "u2-mcq-11",
+      "format": "mcq",
+      "section": "2.3",
+      "concepts": ["c2-supply", "c2-market-supply"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Table 5 shows the supply of bicycles in Tarsa before and after a change. Which change is most likely to explain the data?",
+      "table": {
+        "caption": "Table 5: Quantity of bicycles supplied (per month)",
+        "columns": ["Price (zeds)", "Quantity supplied before", "Quantity supplied after"],
+        "rows": [
+          ["200", "10", "30"],
+          ["400", "20", "40"],
+          ["600", "30", "50"]
+        ]
+      },
+      "hints": [
+        "Compare the two quantity columns in Table 5 at each price.",
+        "Decide whether this is a movement along the supply curve or a shift, and in which direction, then match it to a cause."
+      ],
+      "targets": "Reading a supply shift from a schedule and linking it to a determinant",
+      "options": [
+        { "id": "a", "text": "A rise in the price of bicycles", "misconception": "A price change moves along one supply schedule; here quantity rises at every price." },
+        { "id": "b", "text": "A rise in the wages of bicycle factory workers", "misconception": "Higher costs would lower quantity supplied at every price, not raise it." },
+        { "id": "c", "text": "An improvement in the technology used to make bicycles", "misconception": null },
+        { "id": "d", "text": "An increase in consumers' demand for bicycles", "misconception": "A change in demand does not change the quantity firms will supply at each price." }
+      ],
+      "answer": "c"
+    },
+    {
+      "id": "u2-sa-10",
+      "format": "short_answer",
+      "section": "2.5",
+      "concepts": ["c2-price-mechanism", "c2-rationing", "c2-price-rationing"],
+      "command_term": "explain",
+      "marks": 4,
+      "prompt": "The demand for electric cars in Kuva rises. Explain how the price mechanism reallocates resources in response, referring to the signalling and incentive functions of price.",
+      "hints": [
+        "Use the two functions of price in the price mechanism.",
+        "Start from the change in the price of electric cars, then say what information it gives and how producers and consumers respond."
+      ],
+      "targets": "Signalling vs incentive functions and resource reallocation",
+      "marking_points": [
+        "The price of electric cars rises, signalling to producers that consumers want more of this good [1]",
+        "The price change passes information about a shortage to both buyers and sellers [1]",
+        "The higher price is an incentive for firms to produce more because it may raise profits (and for some consumers to buy less) [1]",
+        "So resources move towards making electric cars, the market where they are most wanted [1]"
+      ],
+      "model_answer_note": "A full-mark answer explains both functions in the context of electric cars and ends with resources moving to the higher-valued use."
+    },
+    {
+      "id": "u2-mcq-12",
+      "format": "mcq",
+      "section": "2.5",
+      "concepts": ["c2-allocative-efficiency", "c2-marginal-benefit", "c2-marginal-cost", "c2-social-surplus"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "A competitive market with no externalities is at equilibrium. Which statement is correct?",
+      "hints": [
+        "Use the condition for allocative efficiency and the idea of social surplus.",
+        "Remember what the demand curve and supply curve each represent at the margin."
+      ],
+      "targets": "MB = MC at competitive equilibrium maximises social surplus",
+      "options": [
+        { "id": "a", "text": "Marginal benefit equals marginal cost, so social surplus is maximised", "misconception": null },
+        { "id": "b", "text": "Consumer surplus is at its highest possible level", "misconception": "Consumer surplus would be larger at a lower price; it is the sum of both surpluses that is maximised." },
+        { "id": "c", "text": "The price equals the highest price any consumer is willing to pay", "misconception": "Many consumers are willing to pay more than the equilibrium price, which is why consumer surplus exists." },
+        { "id": "d", "text": "Producer surplus is zero because firms sell at the market price", "misconception": "Most firms would accept less than the market price, so producer surplus is positive." }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u2-sa-11",
+      "format": "short_answer",
+      "section": "2.6",
+      "concepts": ["c2-bounded-rationality", "c2-bounded-self-control", "c2-imperfect-information", "c2-anchoring", "c2-framing"],
+      "command_term": "explain",
+      "marks": 4,
+      "prompt": "Standard economic theory assumes consumers are rational and aim to maximise utility. Explain two reasons why consumers may not behave in this way.",
+      "hints": [
+        "Use ideas from behavioural economics, such as the 'bounded' ideas and common biases.",
+        "For each reason, name the limit on the consumer and then show how it leads to a choice that does not give the most utility."
+      ],
+      "targets": "Limits of rationality applied to utility maximisation",
+      "marking_points": [
+        "First reason identified, e.g. bounded rationality or imperfect information: consumers have limited information and limited ability to process it [1]",
+        "Explained: so they settle for a satisfactory choice (satisfice) rather than the utility-maximising one [1]",
+        "Second reason identified, e.g. bounded self-control or a bias such as anchoring or framing [1]",
+        "Explained: so they make choices, such as overspending or reacting to how a choice is presented, that do not maximise their utility [1]"
+      ],
+      "model_answer_note": "Accept any two valid behavioural reasons; each needs to be named and linked to a non-maximising choice for 2 marks."
+    },
+    {
+      "id": "u2-mcq-13",
+      "format": "mcq",
+      "section": "2.4",
+      "concepts": ["c2-market-equilibrium"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Table 6 shows the average market price of cocoa in Kuva. Which statement about the data is correct?",
+      "table": {
+        "caption": "Table 6: Average price of cocoa in Kuva",
+        "columns": ["Year", "Price (zeds per kg)"],
+        "rows": [
+          ["2021", "2.00"],
+          ["2022", "2.50"],
+          ["2023", "3.50"],
+          ["2024", "3.00"]
+        ]
+      },
+      "hints": [
+        "Use the price column in Table 6 and compare each year with the one before.",
+        "Check each statement against the numbers one at a time, including the size of each change."
+      ],
+      "targets": "Describing a price trend accurately from data",
+      "options": [
+        { "id": "a", "text": "The price rose in every year shown", "misconception": "The price fell between 2023 and 2024." },
+        { "id": "b", "text": "The largest yearly rise in price was between 2022 and 2023", "misconception": null },
+        { "id": "c", "text": "The price fell between 2022 and 2023", "misconception": "The price rose from 2.50 to 3.50 in that period." },
+        { "id": "d", "text": "The price in 2024 was double the price in 2021", "misconception": "The price rose from 2.00 to 3.00, which is 50% higher, not double." }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "u2-sa-12",
+      "format": "short_answer",
+      "section": "2.4",
+      "concepts": ["c2-demand", "c2-market-equilibrium"],
+      "command_term": "explain",
+      "marks": 3,
+      "prompt": "Global demand for oil falls as more countries switch to renewable energy. Using a demand and supply diagram (described in words), explain the effect on the total revenue of oil producers.",
+      "hints": [
+        "Decide which curve moves, then use the formula for total revenue.",
+        "Find the new equilibrium price and quantity, then think about what happens when you multiply them."
+      ],
+      "targets": "Demand decrease lowers both P and Q, so revenue falls",
+      "marking_points": [
+        "The demand curve for oil shifts to the left [1]",
+        "Equilibrium price and quantity of oil both fall [1]",
+        "Total revenue (price x quantity) therefore falls [1]"
+      ],
+      "model_answer_note": "A full-mark answer gives the direction of the shift, the effect on both price and quantity, and links this to revenue."
+    },
+    {
+      "id": "u2-mcq-14",
+      "format": "mcq",
+      "section": "2.6",
+      "concepts": ["c2-default-choice", "c2-restricted-choice", "c2-mandated-choice", "c2-anchoring", "c2-choice-architecture"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Firms in Tarsa automatically enrol all new workers in a pension savings plan, but workers can leave the plan at any time. Which type of choice architecture is this?",
+      "hints": [
+        "Use the types of choice architecture: default, restricted and mandated choice.",
+        "Ask what happens to a worker who does nothing at all."
+      ],
+      "targets": "Recognising default choice (opt-out)",
+      "options": [
+        { "id": "a", "text": "Default choice", "misconception": null },
+        { "id": "b", "text": "Restricted choice", "misconception": "No options have been removed; workers can still leave the plan." },
+        { "id": "c", "text": "Mandated choice", "misconception": "Workers are not forced to make an active decision; the plan applies if they do nothing." },
+        { "id": "d", "text": "Anchoring", "misconception": "Anchoring is a bias from a first piece of information, not a way of designing choices." }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u2-sa-13",
+      "format": "short_answer",
+      "section": "2.3",
+      "concepts": ["c2-short-run", "c2-long-run"],
+      "command_term": "distinguish",
+      "marks": 2,
+      "prompt": "Distinguish between the short run and the long run in production.",
+      "hints": [
+        "Think about the inputs a firm uses, such as labour, materials and factory buildings.",
+        "For each time period, say whether every input can be changed."
+      ],
+      "targets": "At least one fixed input vs all inputs variable",
+      "marking_points": [
+        "The short run is a period in which at least one input (e.g. factory size) is fixed [1]",
+        "The long run is a period in which all inputs can be changed [1]"
+      ],
+      "model_answer_note": "Full marks need the fixed-input idea for the short run and all-variable inputs for the long run; answers based only on calendar time get 0."
+    },
+    {
+      "id": "u2-mcq-15",
+      "format": "mcq",
+      "section": "2.5",
+      "concepts": ["c2-producer-surplus", "c2-consumer-surplus", "c2-social-surplus"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "On a demand and supply diagram of a competitive market at equilibrium, which area shows producer surplus?",
+      "hints": [
+        "Use what the supply curve shows about the lowest price firms will accept.",
+        "Producer surplus compares that lowest acceptable price with the price firms actually receive, for the units sold."
+      ],
+      "targets": "Locating producer surplus on the diagram",
+      "options": [
+        { "id": "a", "text": "The area below the demand curve and above the price", "misconception": "This area is consumer surplus." },
+        { "id": "b", "text": "The area below the supply curve up to the quantity sold", "misconception": "This area reflects firms' costs of production, not their surplus." },
+        { "id": "c", "text": "The area above the supply curve and below the price, up to the quantity sold", "misconception": null },
+        { "id": "d", "text": "The whole area between the demand and supply curves up to the quantity sold", "misconception": "This area is social surplus, the sum of consumer and producer surplus." }
+      ],
+      "answer": "c"
+    },
+    {
+      "id": "u2-sa-14",
+      "format": "short_answer",
+      "section": "2.6",
+      "concepts": ["c2-nudge-theory", "c2-choice-architecture", "c2-availability"],
+      "command_term": "explain",
+      "marks": 3,
+      "prompt": "A school canteen in Veld wants students to eat more fruit but does not want to ban snacks or change prices. Explain how it could use choice architecture to do this.",
+      "hints": [
+        "Use nudge theory and choice architecture.",
+        "Think about where and how foods are shown, why that affects what students pick, and what the canteen avoids doing."
+      ],
+      "targets": "Applying a nudge to a real setting",
+      "marking_points": [
+        "It changes how the options are presented, e.g. placing fruit first in the line or at eye level and snacks further away [1]",
+        "Students often choose what is most visible or easiest to reach rather than weighing every option [1]",
+        "So more fruit is chosen while all options remain available and prices are unchanged (freedom of choice is kept) [1]"
+      ],
+      "model_answer_note": "A full-mark answer gives a specific nudge, explains why it changes behaviour, and notes that choice is not restricted."
+    },
+    {
+      "id": "u2-sa-15",
+      "format": "short_answer",
+      "section": "2.3",
+      "concepts": ["c2-supply", "c2-market-supply", "c2-market-equilibrium"],
+      "command_term": "explain",
+      "marks": 4,
+      "prompt": "Banks in Kuva start offering farmers loans at much lower interest rates. Using a demand and supply diagram for crops (described in words), explain the likely effect on the price of crops.",
+      "hints": [
+        "Think about which side of the crop market cheaper loans affect, and which determinant is involved.",
+        "Trace the chain: cost of borrowing, what farmers do with the money, their costs or capacity, the curve, then the new equilibrium."
+      ],
+      "targets": "Cheaper credit as a supply-side determinant and its effect on price",
+      "marking_points": [
+        "Lower interest rates reduce the cost of borrowing for farmers [1]",
+        "Farmers can invest in machinery or better inputs, lowering costs of production or raising capacity [1]",
+        "The supply curve of crops shifts to the right [1]",
+        "The equilibrium price of crops falls and the quantity rises [1]"
+      ],
+      "model_answer_note": "A full-mark answer links cheaper credit to lower costs or more capacity, shows the rightward supply shift and states the fall in price."
+    }
+  ]
+}

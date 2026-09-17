@@ -1,0 +1,1040 @@
+{
+  "unit": 20,
+  "title": "Strategies for growth and development",
+  "questions": [
+    {
+      "id": "u20-mcq-01",
+      "format": "mcq",
+      "section": "20.1",
+      "concepts": [],
+      "command_term": "define",
+      "marks": 1,
+      "prompt": "Which of the following best describes an import substitution strategy?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Offering tax breaks to firms that sell their output in foreign markets",
+          "misconception": "This is export promotion, which looks outward to world markets."
+        },
+        {
+          "id": "b",
+          "text": "Protecting domestic industries with tariffs and quotas so that they can replace imported goods",
+          "misconception": null
+        },
+        {
+          "id": "c",
+          "text": "Removing all barriers to trade so that consumers can buy the cheapest goods",
+          "misconception": "This is trade liberalisation, the opposite of protecting domestic producers."
+        },
+        {
+          "id": "d",
+          "text": "Encouraging foreign firms to set up factories that export to their home country",
+          "misconception": "This describes attracting export-oriented FDI, not replacing imports."
+        }
+      ],
+      "answer": "b",
+      "hints": [
+        "Think about inward-looking versus outward-looking trade strategies.",
+        "Ask what the strategy is trying to replace, and which trade policy tools would help domestic firms do that."
+      ],
+      "targets": "Import substitution vs export promotion"
+    },
+    {
+      "id": "u20-sa-01",
+      "format": "short_answer",
+      "section": "20.5",
+      "concepts": [
+        "c20-foreign-direct-investment"
+      ],
+      "command_term": "define",
+      "marks": 2,
+      "prompt": "Define the term \"foreign direct investment\".",
+      "marking_points": [
+        "Investment by a firm based in one country in productive activities (such as factories or mines) in another country [1]",
+        "where the investor gains a controlling or lasting interest, usually at least 10% ownership of the firm in the host country [1]"
+      ],
+      "model_answer_note": "A full answer covers cross-border investment in productive assets and the element of control/lasting interest (the 10% threshold).",
+      "hints": [
+        "Think about what makes this different from buying a few shares on a foreign stock exchange.",
+        "Say what kind of assets are involved and how much say the investor has over the foreign firm."
+      ],
+      "targets": "FDI vs portfolio investment"
+    },
+    {
+      "id": "u20-mcq-03",
+      "format": "mcq",
+      "section": "20.6",
+      "concepts": [],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Which of the following is an example of humanitarian aid?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Food, clean water and medical supplies sent to Kuva after a major flood",
+          "misconception": null
+        },
+        {
+          "id": "b",
+          "text": "A 20-year loan from a donor government to build a hydroelectric dam in Kuva",
+          "misconception": "This is development aid for a long-term capital project, not emergency relief."
+        },
+        {
+          "id": "c",
+          "text": "A reduction in tariffs on Kuva's exports by a rich trading partner",
+          "misconception": "This is a change in trade policy, not a transfer of aid."
+        },
+        {
+          "id": "d",
+          "text": "A multinational corporation building a factory in Kuva",
+          "misconception": "This is foreign direct investment, undertaken for profit."
+        }
+      ],
+      "answer": "a",
+      "hints": [
+        "Separate short-term emergency help from long-term development projects.",
+        "Ask which option responds to a crisis and aims to relieve immediate suffering."
+      ],
+      "targets": "Humanitarian vs development aid"
+    },
+    {
+      "id": "u20-sa-02",
+      "format": "short_answer",
+      "section": "20.1",
+      "concepts": [],
+      "command_term": "define",
+      "marks": 2,
+      "prompt": "Define the term \"import substitution\".",
+      "marking_points": [
+        "A growth strategy in which a country aims to produce domestically goods that it previously imported [1]",
+        "by protecting domestic industries with trade barriers such as tariffs and quotas [1]"
+      ],
+      "model_answer_note": "A full answer states the aim (replacing imports with domestic production) and the method (protectionism).",
+      "hints": [
+        "This is an inward-looking trade strategy.",
+        "Say what the country tries to produce and which policy tools it uses to help domestic firms."
+      ],
+      "targets": "Inward-looking trade strategy"
+    },
+    {
+      "id": "u20-mcq-02",
+      "format": "mcq",
+      "section": "20.9",
+      "concepts": [
+        "c20-interventionist-policy"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Which of the following is a limitation of relying mainly on government intervention to achieve growth and development?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Markets may fail to provide enough education and health care",
+          "misconception": "This is a limitation of market-oriented approaches, and a reason for intervention."
+        },
+        {
+          "id": "b",
+          "text": "Governments cannot raise any tax revenue in developing countries",
+          "misconception": "Tax revenue may be low, but it is not zero."
+        },
+        {
+          "id": "c",
+          "text": "Intervention always makes income distribution more unequal",
+          "misconception": "Intervention such as transfer payments and public services is often used to reduce inequality."
+        },
+        {
+          "id": "d",
+          "text": "Government failure, such as corruption, poor information and inefficient state firms, can waste resources",
+          "misconception": null
+        }
+      ],
+      "answer": "d",
+      "hints": [
+        "Recall the idea of government failure.",
+        "Ask which option describes something going wrong because the government, rather than the market, is allocating resources."
+      ],
+      "targets": "Government failure as a limitation of intervention"
+    },
+    {
+      "id": "u20-sa-03",
+      "format": "short_answer",
+      "section": "20.6",
+      "concepts": [],
+      "command_term": "define",
+      "marks": 2,
+      "prompt": "Define the term \"foreign aid\".",
+      "marking_points": [
+        "Any assistance, such as grants, concessional loans, goods or technical help, given to developing countries [1]",
+        "by donor governments, international organisations or NGOs, on terms more favourable than the market, to promote welfare or development [1]"
+      ],
+      "model_answer_note": "A full answer covers the forms of assistance, the donors and the non-commercial (concessional) nature of the transfer.",
+      "hints": [
+        "Think about who gives it, in what forms, and on what terms compared with ordinary market lending.",
+        "Mention the source, the form and the purpose."
+      ],
+      "targets": "Foreign aid as a concessional transfer"
+    },
+    {
+      "id": "u20-mcq-04",
+      "format": "mcq",
+      "section": "20.2",
+      "concepts": [
+        "c20-diversification"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Table 1 shows the share of primary products in total exports for four countries. Which country diversified its exports the most between 2010 and 2024?",
+      "table": {
+        "caption": "Table 1: Primary products as a share of total exports (%)",
+        "columns": [
+          "Country",
+          "2010",
+          "2024"
+        ],
+        "rows": [
+          [
+            "Veld",
+            "85",
+            "50"
+          ],
+          [
+            "Kuva",
+            "60",
+            "58"
+          ],
+          [
+            "Lomar",
+            "40",
+            "45"
+          ],
+          [
+            "Tarn",
+            "90",
+            "88"
+          ]
+        ]
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": "Tarn",
+          "misconception": "Tarn's share fell by only 2 percentage points, from 90% to 88%."
+        },
+        {
+          "id": "b",
+          "text": "Lomar",
+          "misconception": "Lomar's primary share rose, so it became less diversified away from primary products."
+        },
+        {
+          "id": "c",
+          "text": "Veld",
+          "misconception": null
+        },
+        {
+          "id": "d",
+          "text": "Kuva",
+          "misconception": "Kuva's share fell by only 2 percentage points, from 60% to 58%; a lower level is not the same as a larger change."
+        }
+      ],
+      "answer": "c",
+      "hints": [
+        "Look at the change in each country's primary share, not its level.",
+        "Subtract the 2024 figure from the 2010 figure for each country and compare."
+      ],
+      "targets": "Measuring diversification from data"
+    },
+    {
+      "id": "u20-sa-04",
+      "format": "short_answer",
+      "section": "20.8",
+      "concepts": [],
+      "command_term": "define",
+      "marks": 2,
+      "prompt": "Define the term \"property rights\".",
+      "marking_points": [
+        "The legal rights of individuals or firms to own, use and control resources or assets [1]",
+        "and to sell or transfer them, protected and enforced by the legal system [1]"
+      ],
+      "model_answer_note": "A full answer includes ownership/use of assets and legal protection or enforcement.",
+      "hints": [
+        "Think about what a farmer with an official land title can do that one without it cannot.",
+        "Say what the owner is entitled to do with an asset, and what makes that entitlement secure."
+      ],
+      "targets": "Legally protected ownership"
+    },
+    {
+      "id": "u20-mcq-05",
+      "format": "mcq",
+      "section": "20.3",
+      "concepts": [
+        "c20-market-oriented-policies"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Which of the following is a market-oriented policy for growth and development?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Nationalising the largest mining company",
+          "misconception": "Nationalisation increases state ownership, which is interventionist."
+        },
+        {
+          "id": "b",
+          "text": "Selling the state-owned telecommunications company to private investors",
+          "misconception": null
+        },
+        {
+          "id": "c",
+          "text": "Setting a maximum price on rice",
+          "misconception": "Price controls are government intervention in markets."
+        },
+        {
+          "id": "d",
+          "text": "Introducing import quotas to protect domestic car producers",
+          "misconception": "Quotas restrict competition, the opposite of a market-oriented approach."
+        }
+      ],
+      "answer": "b",
+      "hints": [
+        "Market-oriented policies increase the role of competition and private ownership.",
+        "Check each option: does it expand or reduce the role of the state?"
+      ],
+      "targets": "Privatisation as a market-based policy"
+    },
+    {
+      "id": "u20-mcq-06",
+      "format": "mcq",
+      "section": "20.7",
+      "concepts": [
+        "c20-imf",
+        "c20-world-bank"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Which of the following best describes the main role of the IMF?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Providing long-term loans for specific development projects such as dams and roads",
+          "misconception": "This is the main role of the World Bank."
+        },
+        {
+          "id": "b",
+          "text": "Setting and enforcing the rules of international trade",
+          "misconception": "This is the role of the World Trade Organization."
+        },
+        {
+          "id": "c",
+          "text": "Lending to countries with balance of payments difficulties, usually with policy conditions attached",
+          "misconception": null
+        },
+        {
+          "id": "d",
+          "text": "Giving emergency food and shelter after natural disasters",
+          "misconception": "This is humanitarian aid, mainly from governments, UN agencies and NGOs."
+        }
+      ],
+      "answer": "c",
+      "hints": [
+        "Compare the IMF with the World Bank, which was set up at the same time.",
+        "Think about which institution deals with short-term financial crises rather than long-term projects."
+      ],
+      "targets": "IMF vs World Bank roles"
+    },
+    {
+      "id": "u20-mcq-07",
+      "format": "mcq",
+      "section": "20.8",
+      "concepts": [
+        "c20-mobile-banking"
+      ],
+      "command_term": "define",
+      "marks": 1,
+      "prompt": "Which of the following is an example of mobile banking?",
+      "options": [
+        {
+          "id": "a",
+          "text": "A market trader in Tarn uses her phone to receive payment from a customer and pay her electricity bill",
+          "misconception": null
+        },
+        {
+          "id": "b",
+          "text": "A bank opens a new branch in a rural town",
+          "misconception": "This expands traditional banking, not banking by mobile phone."
+        },
+        {
+          "id": "c",
+          "text": "A microfinance lender gives a group of women small loans in cash",
+          "misconception": "This is microfinance, which need not involve phones."
+        },
+        {
+          "id": "d",
+          "text": "A telecom company sells prepaid phone credit",
+          "misconception": "Buying airtime is a purchase, not a way to send, receive or store money."
+        }
+      ],
+      "answer": "a",
+      "hints": [
+        "Focus on the technology used and what it is used for.",
+        "Look for the option where money itself moves using a phone."
+      ],
+      "targets": "Recognising mobile banking"
+    },
+    {
+      "id": "u20-sa-05",
+      "format": "short_answer",
+      "section": "20.8",
+      "concepts": [
+        "c20-microfinance"
+      ],
+      "command_term": "explain",
+      "marks": 3,
+      "prompt": "Explain how microfinance can help poor women in rural Lomar escape poverty.",
+      "marking_points": [
+        "Microfinance provides small loans to people without collateral who cannot borrow from commercial banks [1]",
+        "Women can invest in small businesses, such as livestock or tailoring, generating income [1]",
+        "Higher income can be spent on children's education and health and increases women's decision-making power, reducing poverty over time [1]"
+      ],
+      "model_answer_note": "A full answer explains access to credit, its use for income-earning investment, and the wider effect on household welfare or empowerment.",
+      "hints": [
+        "Think about why poor women are often excluded from ordinary bank loans.",
+        "Follow the loan into an investment, then into income, then into spending that improves the family's future."
+      ],
+      "targets": "Microfinance, empowerment and the poverty cycle"
+    },
+    {
+      "id": "u20-mcq-08",
+      "format": "mcq",
+      "section": "20.1",
+      "concepts": [],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "The government of Veld wants to follow an export promotion strategy. Which policy is most consistent with this?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Imposing a tariff on imported clothing",
+          "misconception": "Tariffs protect the domestic market, which is import substitution."
+        },
+        {
+          "id": "b",
+          "text": "Setting a quota on imported steel",
+          "misconception": "Quotas also protect domestic producers from imports."
+        },
+        {
+          "id": "c",
+          "text": "Subsidising the price of food for domestic consumers",
+          "misconception": "This targets domestic consumption, not sales abroad."
+        },
+        {
+          "id": "d",
+          "text": "Setting up special economic zones with tax breaks for firms that sell to world markets",
+          "misconception": null
+        }
+      ],
+      "answer": "d",
+      "hints": [
+        "Export promotion is an outward-looking strategy.",
+        "Look for the policy that helps firms sell abroad rather than protecting them at home."
+      ],
+      "targets": "Export promotion policy tools"
+    },
+    {
+      "id": "u20-sa-06",
+      "format": "short_answer",
+      "section": "20.5",
+      "concepts": [
+        "c20-multinational-corporation",
+        "c20-foreign-direct-investment"
+      ],
+      "command_term": "calculate",
+      "marks": 2,
+      "prompt": "Table 2 shows data for Orix, a multinational corporation operating in Kuva. Calculate the percentage of Orix's profit in Kuva that is repatriated to its home country.",
+      "table": {
+        "caption": "Table 2: Orix in Kuva, 2024",
+        "columns": [
+          "Item",
+          "Zed million"
+        ],
+        "rows": [
+          [
+            "Sales revenue",
+            "200"
+          ],
+          [
+            "Wages paid to local workers",
+            "50"
+          ],
+          [
+            "Profit",
+            "40"
+          ],
+          [
+            "Profit sent to home country",
+            "30"
+          ],
+          [
+            "Taxes paid to Kuva's government",
+            "8"
+          ]
+        ]
+      },
+      "marking_points": [
+        "Repatriated profit ÷ total profit × 100 = 30 ÷ 40 × 100 [1]",
+        "= 75% [1]"
+      ],
+      "model_answer_note": "Correct method and the answer 75%.",
+      "hints": [
+        "Use only the rows about profit.",
+        "Divide the amount sent home by the total profit, then multiply by 100."
+      ],
+      "targets": "Profit repatriation by MNCs"
+    },
+    {
+      "id": "u20-mcq-09",
+      "format": "mcq",
+      "section": "20.4",
+      "concepts": [
+        "c20-interventionist-policy"
+      ],
+      "command_term": "calculate",
+      "marks": 1,
+      "prompt": "Table 3 shows data for Veld after the government increased public spending on health. Which statement is correct?",
+      "table": {
+        "caption": "Table 3: Veld, health indicators",
+        "columns": [
+          "Year",
+          "Public health spending per person (zed)",
+          "Infant mortality (per 1,000 live births)"
+        ],
+        "rows": [
+          [
+            "2015",
+            "20",
+            "60"
+          ],
+          [
+            "2025",
+            "50",
+            "36"
+          ]
+        ]
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": "Health spending per person rose by 30% and infant mortality fell by 24%",
+          "misconception": "These are the absolute changes, not percentage changes."
+        },
+        {
+          "id": "b",
+          "text": "Health spending per person rose by 150% and infant mortality fell by 40%",
+          "misconception": null
+        },
+        {
+          "id": "c",
+          "text": "Health spending per person rose by 60% and infant mortality fell by 40%",
+          "misconception": "This divides the rise in spending by the 2025 value instead of the 2015 value."
+        },
+        {
+          "id": "d",
+          "text": "Health spending per person rose by 150% and infant mortality fell by 67%",
+          "misconception": "This divides the fall in infant mortality by the 2025 value instead of the 2015 value."
+        }
+      ],
+      "answer": "b",
+      "hints": [
+        "Use percentage change = change ÷ original value × 100.",
+        "Work out the change for each indicator, then divide by its 2015 value."
+      ],
+      "targets": "Percentage change with the correct base"
+    },
+    {
+      "id": "u20-sa-07",
+      "format": "short_answer",
+      "section": "20.6",
+      "concepts": [],
+      "command_term": "calculate",
+      "marks": 3,
+      "prompt": "Using Table 4, calculate Lomar's official development assistance (ODA) as a percentage of its GNI, and calculate how much more ODA Lomar would need to give to reach the UN target of 0.7% of GNI.",
+      "table": {
+        "caption": "Table 4: Lomar (donor country), 2024",
+        "columns": [
+          "Indicator",
+          "Zed billion"
+        ],
+        "rows": [
+          [
+            "Gross national income (GNI)",
+            "400"
+          ],
+          [
+            "Official development assistance (ODA) given",
+            "2.4"
+          ]
+        ]
+      },
+      "marking_points": [
+        "ODA as % of GNI = 2.4 ÷ 400 × 100 = 0.6% [1]",
+        "0.7% of GNI = 0.007 × 400 = 2.8 (zed billion) [1]",
+        "Additional ODA needed = 2.8 − 2.4 = 0.4 (zed billion) [1]"
+      ],
+      "model_answer_note": "Correct percentage (0.6%), correct target value (2.8 billion) and the shortfall of 0.4 billion zeds, with working.",
+      "hints": [
+        "Use ODA divided by GNI for the first part, and the target percentage applied to GNI for the second.",
+        "Find the value of ODA that meets the target, then compare it with what Lomar actually gives."
+      ],
+      "targets": "ODA/GNI ratio and the 0.7% target"
+    },
+    {
+      "id": "u20-mcq-10",
+      "format": "mcq",
+      "section": "20.5",
+      "concepts": [
+        "c20-foreign-direct-investment",
+        "c20-multinational-corporation"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Which of the following is a possible disadvantage for Kuva of hosting a large multinational corporation?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Profits sent back to the MNC's home country create an outflow of income from Kuva",
+          "misconception": null
+        },
+        {
+          "id": "b",
+          "text": "Local workers gain new skills through training",
+          "misconception": "This is a benefit of FDI, not a disadvantage."
+        },
+        {
+          "id": "c",
+          "text": "The government receives extra tax revenue from the MNC",
+          "misconception": "Extra tax revenue is a benefit, although it may be reduced by tax incentives."
+        },
+        {
+          "id": "d",
+          "text": "Foreign exchange flows into Kuva when the factory is built",
+          "misconception": "The capital inflow is a benefit for the balance of payments."
+        }
+      ],
+      "answer": "a",
+      "hints": [
+        "Think about what happens to the MNC's profits after they are earned.",
+        "Check each option: does it bring resources into Kuva or take them out?"
+      ],
+      "targets": "Costs vs benefits of inward FDI"
+    },
+    {
+      "id": "u20-sa-08",
+      "format": "short_answer",
+      "section": "20.7",
+      "concepts": [
+        "c20-multilateral-development-assistance"
+      ],
+      "command_term": "calculate",
+      "marks": 2,
+      "prompt": "Kuva needs to borrow 100 million zeds for one year. Table 5 shows two possible sources. Calculate how much more interest Kuva would pay for one year by borrowing on non-concessional terms rather than concessional terms.",
+      "table": {
+        "caption": "Table 5: Borrowing options for Kuva",
+        "columns": [
+          "Source",
+          "Terms",
+          "Annual interest rate"
+        ],
+        "rows": [
+          [
+            "Multilateral development lender",
+            "Non-concessional (market rate)",
+            "6%"
+          ],
+          [
+            "Donor government",
+            "Concessional",
+            "1%"
+          ]
+        ]
+      },
+      "marking_points": [
+        "Interest: 6% × 100 = 6 million zeds; 1% × 100 = 1 million zeds [1]",
+        "Extra interest = 6 − 1 = 5 million zeds [1]"
+      ],
+      "model_answer_note": "Both interest amounts and the difference of 5 million zeds, with working.",
+      "hints": [
+        "Find the interest cost of each loan separately.",
+        "Apply each rate to the amount borrowed, then find the difference."
+      ],
+      "targets": "Concessional vs non-concessional lending"
+    },
+    {
+      "id": "u20-mcq-11",
+      "format": "mcq",
+      "section": "20.4",
+      "concepts": [
+        "c20-interventionist-policy"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Which of the following is an interventionist policy to promote development?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Removing restrictions on foreign ownership of firms",
+          "misconception": "This is liberalisation, a market-oriented policy."
+        },
+        {
+          "id": "b",
+          "text": "Abolishing the minimum wage",
+          "misconception": "Removing regulation is a market-oriented, supply-side policy."
+        },
+        {
+          "id": "c",
+          "text": "Providing free primary health care funded by taxation",
+          "misconception": null
+        },
+        {
+          "id": "d",
+          "text": "Floating the exchange rate so that it is set by market forces",
+          "misconception": "Letting the market set the exchange rate reduces government's role."
+        }
+      ],
+      "answer": "c",
+      "hints": [
+        "Interventionist policies increase the government's role in allocating resources.",
+        "Look for the option where the state provides a service directly."
+      ],
+      "targets": "Interventionist vs market-oriented policies"
+    },
+    {
+      "id": "u20-sa-09",
+      "format": "short_answer",
+      "section": "20.2",
+      "concepts": [
+        "c20-diversification"
+      ],
+      "command_term": "calculate",
+      "marks": 3,
+      "prompt": "Table 6 shows Veld's export revenue. Calculate manufactured goods as a percentage of total export revenue in 2015 and in 2025, and state the change in percentage points.",
+      "table": {
+        "caption": "Table 6: Veld, export revenue (zed million)",
+        "columns": [
+          "Type of export",
+          "2015",
+          "2025"
+        ],
+        "rows": [
+          [
+            "Primary products",
+            "180",
+            "210"
+          ],
+          [
+            "Manufactured goods",
+            "20",
+            "90"
+          ]
+        ]
+      },
+      "marking_points": [
+        "2015: 20 ÷ (180 + 20) × 100 = 10% [1]",
+        "2025: 90 ÷ (210 + 90) × 100 = 30% [1]",
+        "Change: 30 − 10 = a rise of 20 percentage points [1]"
+      ],
+      "model_answer_note": "Correct totals and shares for both years and the 20 percentage point rise.",
+      "hints": [
+        "Total export revenue is the sum of the two rows for each year.",
+        "Divide manufactured exports by the total for each year, then subtract the earlier share from the later one."
+      ],
+      "targets": "Measuring diversification"
+    },
+    {
+      "id": "u20-sa-10",
+      "format": "short_answer",
+      "section": "20.1",
+      "concepts": [],
+      "command_term": "explain",
+      "marks": 4,
+      "prompt": "Explain how an export promotion strategy can lead to economic growth in a developing country.",
+      "marking_points": [
+        "Selling to world markets allows firms to grow larger and gain economies of scale, lowering average costs [1]",
+        "Competition in world markets pushes firms to become more efficient and adopt new technology [1]",
+        "Higher exports increase aggregate demand (X in AD = C + I + G + (X − M)), raising real GDP [1]",
+        "Export earnings provide foreign exchange to import capital goods, increasing productive capacity [1]"
+      ],
+      "model_answer_note": "A full answer gives developed links for two to four channels, such as scale, efficiency, AD and foreign exchange for capital imports.",
+      "hints": [
+        "Consider both demand-side effects and supply-side effects of selling abroad.",
+        "For each channel, show the step from exporting to higher output."
+      ],
+      "targets": "Channels from exports to growth"
+    },
+    {
+      "id": "u20-mcq-12",
+      "format": "mcq",
+      "section": "20.6",
+      "concepts": [
+        "c20-hipc"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Which of the following best describes the Heavily Indebted Poor Countries (HIPC) Initiative?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Short-term loans to countries facing a sudden fall in foreign exchange reserves",
+          "misconception": "This describes IMF balance of payments lending."
+        },
+        {
+          "id": "b",
+          "text": "Grants to rebuild infrastructure after natural disasters",
+          "misconception": "This is humanitarian or reconstruction aid, not debt relief."
+        },
+        {
+          "id": "c",
+          "text": "Rules that reduce tariffs on exports from the poorest countries",
+          "misconception": "This is preferential trade access, not debt relief."
+        },
+        {
+          "id": "d",
+          "text": "Cancelling part of the external debts of some very poor, highly indebted countries",
+          "misconception": null
+        }
+      ],
+      "answer": "d",
+      "hints": [
+        "The name of the initiative tells you what problem it addresses.",
+        "Ask which option reduces the burden of debt a country already has."
+      ],
+      "targets": "HIPC as debt relief"
+    },
+    {
+      "id": "u20-sa-11",
+      "format": "short_answer",
+      "section": "20.3",
+      "concepts": [
+        "c20-market-oriented-policies"
+      ],
+      "command_term": "explain",
+      "marks": 3,
+      "prompt": "Explain how privatising a state-owned electricity company could promote economic growth in Tarn.",
+      "marking_points": [
+        "Private owners have a profit motive, so they have an incentive to cut costs and improve efficiency [1]",
+        "They may invest more in new capacity and technology, improving the reliability of power supply [1]",
+        "Cheaper, more reliable electricity lowers firms' costs, increasing output and investment across the economy (LRAS shifts right) [1]"
+      ],
+      "model_answer_note": "A full answer links the profit motive to efficiency/investment and then to lower costs and higher output for the wider economy.",
+      "hints": [
+        "Compare the incentives facing a state manager with those facing a private owner.",
+        "Follow the change from the electricity firm to the firms that use electricity, and then to the whole economy."
+      ],
+      "targets": "Privatisation and efficiency"
+    },
+    {
+      "id": "u20-mcq-13",
+      "format": "mcq",
+      "section": "20.9",
+      "concepts": [
+        "c20-market-oriented-policies"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Which of the following is a limitation of relying mainly on market-oriented policies to achieve development?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Markets may under-provide merit goods such as education and may increase income inequality",
+          "misconception": null
+        },
+        {
+          "id": "b",
+          "text": "Markets always lead to government corruption",
+          "misconception": "Corruption is a form of government failure and is not caused by markets."
+        },
+        {
+          "id": "c",
+          "text": "Price signals do not exist in a market economy",
+          "misconception": "Price signals are the main feature of market economies."
+        },
+        {
+          "id": "d",
+          "text": "Private firms have no incentive to be efficient",
+          "misconception": "The profit motive gives private firms a strong incentive to be efficient."
+        }
+      ],
+      "answer": "a",
+      "hints": [
+        "Recall the types of market failure.",
+        "Ask what markets tend to do badly, especially for the poorest groups."
+      ],
+      "targets": "Market failure as a limitation of market-led development"
+    },
+    {
+      "id": "u20-sa-12",
+      "format": "short_answer",
+      "section": "20.4",
+      "concepts": [
+        "c20-interventionist-policy"
+      ],
+      "command_term": "explain",
+      "marks": 4,
+      "prompt": "Explain how increased government spending on education and health can promote economic development in Veld.",
+      "marking_points": [
+        "Education and health are merit goods that markets under-provide, especially for the poor, so government provision increases access [1]",
+        "Better education and health increase human capital and labour productivity [1]",
+        "Higher productivity raises incomes and potential output, helping break the poverty cycle [1]",
+        "Improvements in literacy and life expectancy directly raise living standards and HDI [1]"
+      ],
+      "model_answer_note": "A full answer justifies the need for intervention and links spending to human capital, productivity and income, and to direct improvements in well-being.",
+      "hints": [
+        "Think about merit goods and human capital.",
+        "Explain why the market under-provides these services, then follow the effect on workers, incomes and living standards."
+      ],
+      "targets": "Education and health as interventionist development policy"
+    },
+    {
+      "id": "u20-mcq-14",
+      "format": "mcq",
+      "section": "20.2",
+      "concepts": [],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Which of the following is the best example of a social enterprise?",
+      "options": [
+        {
+          "id": "a",
+          "text": "A charity that gives away free blankets funded entirely by donations",
+          "misconception": "A charity relying on donations does not run as a business earning revenue."
+        },
+        {
+          "id": "b",
+          "text": "A firm in Kuva that sells low-cost solar lamps to poor households and reinvests its profits in expanding access to electricity",
+          "misconception": null
+        },
+        {
+          "id": "c",
+          "text": "A multinational that pays high dividends to its shareholders",
+          "misconception": "Its main aim is profit for shareholders, not a social objective."
+        },
+        {
+          "id": "d",
+          "text": "A state-owned water company funded by taxation",
+          "misconception": "This is government provision, not a private business with a social mission."
+        }
+      ],
+      "answer": "b",
+      "hints": [
+        "A social enterprise combines business methods with a social aim.",
+        "Look for the option that earns revenue from sales and uses the surplus for a social purpose."
+      ],
+      "targets": "Social enterprise vs charity vs profit-maximising firm"
+    },
+    {
+      "id": "u20-sa-13",
+      "format": "short_answer",
+      "section": "20.7",
+      "concepts": [
+        "c20-imf"
+      ],
+      "command_term": "explain",
+      "marks": 3,
+      "prompt": "Kuva receives an IMF loan on condition that it cuts government spending and removes food subsidies. Explain how these conditions could harm development in Kuva.",
+      "marking_points": [
+        "Cuts in government spending may reduce provision of education, health care and infrastructure [1]",
+        "Removing food subsidies raises food prices, reducing the real income of the poor and worsening nutrition [1]",
+        "Lower aggregate demand can cause unemployment and increase poverty and inequality in the short run [1]"
+      ],
+      "model_answer_note": "A full answer explains at least two harmful effects on well-being, linking each condition to an impact on the poor or on human capital.",
+      "hints": [
+        "Think about who relies most on public services and subsidised food.",
+        "Take each condition in turn and follow its effect on living standards and aggregate demand."
+      ],
+      "targets": "IMF conditionality and its social costs"
+    },
+    {
+      "id": "u20-mcq-15",
+      "format": "mcq",
+      "section": "20.3",
+      "concepts": [
+        "c20-market-oriented-policies"
+      ],
+      "command_term": "calculate",
+      "marks": 1,
+      "prompt": "Tarn imports a machine with a world price of 40 zeds. As part of trade liberalisation, Tarn cuts its tariff on the machine from 25% to 10%. By how much does the domestic price of the imported machine fall?",
+      "options": [
+        {
+          "id": "a",
+          "text": "15 zeds",
+          "misconception": "This treats the 15 percentage point cut in the tariff as a fall of 15 zeds."
+        },
+        {
+          "id": "b",
+          "text": "10 zeds",
+          "misconception": "This is the whole of the original tariff (50 − 40), not the change."
+        },
+        {
+          "id": "c",
+          "text": "6 zeds",
+          "misconception": null
+        },
+        {
+          "id": "d",
+          "text": "4 zeds",
+          "misconception": "This is the size of the new tariff, not the fall in price."
+        }
+      ],
+      "answer": "c",
+      "hints": [
+        "The tariff is a percentage of the world price.",
+        "Find the domestic price under each tariff rate, then compare them."
+      ],
+      "targets": "Effect of tariff reduction on domestic prices"
+    },
+    {
+      "id": "u20-sa-14",
+      "format": "short_answer",
+      "section": "20.9",
+      "concepts": [
+        "c20-market-oriented-policies",
+        "c20-interventionist-policy"
+      ],
+      "command_term": "distinguish",
+      "marks": 2,
+      "prompt": "Distinguish between market-oriented policies and interventionist policies for growth and development.",
+      "marking_points": [
+        "Market-oriented policies reduce the role of government and increase competition, e.g. privatisation, deregulation or trade liberalisation [1]",
+        "Interventionist policies increase the role of government to correct market failures, e.g. public provision of education, health or infrastructure [1]"
+      ],
+      "model_answer_note": "A full answer contrasts the role of the state in each approach, ideally with one example of each.",
+      "hints": [
+        "The difference lies in who allocates resources.",
+        "Describe each approach separately, with one example each."
+      ],
+      "targets": "Role of the state in each approach"
+    },
+    {
+      "id": "u20-sa-15",
+      "format": "short_answer",
+      "section": "20.5",
+      "concepts": [
+        "c20-foreign-direct-investment",
+        "c20-multinational-corporation"
+      ],
+      "command_term": "explain",
+      "marks": 4,
+      "prompt": "Explain two benefits that inward foreign direct investment can bring to a developing country such as Kuva.",
+      "marking_points": [
+        "FDI adds to capital investment where domestic savings are low, increasing productive capacity [1]",
+        "which raises output and creates jobs, increasing incomes and tax revenue [1]",
+        "MNCs bring new technology, management skills and training for local workers [1]",
+        "which raises human capital and productivity, and can spread to local suppliers [1]"
+      ],
+      "model_answer_note": "Two distinct benefits, each identified and explained with a clear link to growth or development (2 marks each).",
+      "hints": [
+        "Think about the savings gap and about what an MNC brings besides money.",
+        "For each benefit, name it and then follow its effect on output, jobs or skills."
+      ],
+      "targets": "Benefits of inward FDI"
+    }
+  ]
+}

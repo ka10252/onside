@@ -1,0 +1,1148 @@
+{
+  "unit": 16,
+  "title": "Exchange rates and the balance of payments",
+  "questions": [
+    {
+      "id": "u16-mcq-01",
+      "format": "mcq",
+      "section": "16.1",
+      "concepts": [
+        "c16-floating"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Which statement describes a floating exchange rate system?",
+      "options": [
+        {
+          "id": "a",
+          "text": "The government sets the exchange rate and changes it once a year",
+          "misconception": "A rate set by the government is a fixed system, even if it is reviewed."
+        },
+        {
+          "id": "b",
+          "text": "The exchange rate is set by demand for and supply of the currency, without central bank intervention",
+          "misconception": null
+        },
+        {
+          "id": "c",
+          "text": "The central bank lets the rate move but steps in often to keep it within a band",
+          "misconception": "Regular intervention within a band describes a managed system."
+        },
+        {
+          "id": "d",
+          "text": "The exchange rate is set equal to the value of gold held by the central bank",
+          "misconception": "Linking a currency to gold is a type of fixed system."
+        }
+      ],
+      "answer": "b",
+      "hints": [
+        "Compare who decides the exchange rate in each type of system.",
+        "Rule out every option where the government or central bank plays a role in setting the rate."
+      ],
+      "targets": "Floating vs fixed vs managed"
+    },
+    {
+      "id": "u16-sa-01",
+      "format": "short_answer",
+      "section": "16.1",
+      "concepts": [
+        "c16-remittances"
+      ],
+      "command_term": "define",
+      "marks": 2,
+      "prompt": "Define the term remittances.",
+      "marking_points": [
+        "Money / income sent by people working in another country [1]",
+        "back to their home country (usually to their families) [1]"
+      ],
+      "model_answer_note": "Both who sends the money and where it goes are needed for 2 marks.",
+      "hints": [
+        "Think about migrant workers and their families.",
+        "Say who sends the money, where they earn it, and where it goes."
+      ],
+      "targets": "Remittances definition (asked twice)"
+    },
+    {
+      "id": "u16-mcq-02",
+      "format": "mcq",
+      "section": "16.4",
+      "concepts": [
+        "c16-bop",
+        "c16-financial-account",
+        "c16-portfolio"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "A resident of Veld buys shares in a company in Kuva. Where is this recorded in Veld's balance of payments?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Current account, as an import of services",
+          "misconception": "Buying shares is a financial transaction, not a purchase of a service."
+        },
+        {
+          "id": "b",
+          "text": "Capital account, as a capital transfer",
+          "misconception": "Capital transfers are one-way payments such as debt forgiveness, not share purchases."
+        },
+        {
+          "id": "c",
+          "text": "Financial account, as portfolio investment",
+          "misconception": null
+        },
+        {
+          "id": "d",
+          "text": "Financial account, as foreign direct investment",
+          "misconception": "Buying shares without gaining control of a productive facility is not FDI."
+        }
+      ],
+      "answer": "c",
+      "hints": [
+        "Think about which account records the buying and selling of financial assets.",
+        "Decide first which account, then whether the purchase gives control over a firm's operations."
+      ],
+      "targets": "Classifying portfolio investment"
+    },
+    {
+      "id": "u16-mcq-03",
+      "format": "mcq",
+      "section": "16.4",
+      "concepts": [
+        "c16-remittances",
+        "c16-current-account"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Workers from Veld who live in Tarn send part of their wages to their families in Veld. How is this recorded in Veld's balance of payments?",
+      "options": [
+        {
+          "id": "a",
+          "text": "As a credit in current transfers in the current account",
+          "misconception": null
+        },
+        {
+          "id": "b",
+          "text": "As a debit in current transfers in the current account",
+          "misconception": "Money flowing into Veld is a credit, not a debit."
+        },
+        {
+          "id": "c",
+          "text": "As a credit in the financial account",
+          "misconception": "These payments are not investments, so they are not recorded in the financial account."
+        },
+        {
+          "id": "d",
+          "text": "As an export of services in the current account",
+          "misconception": "The workers' families are not selling a service in return."
+        }
+      ],
+      "answer": "a",
+      "hints": [
+        "Identify the type of flow and the direction of the money.",
+        "Pick the account and part of it first, then decide whether money coming into Veld is a credit or a debit."
+      ],
+      "targets": "Remittances in the BoP"
+    },
+    {
+      "id": "u16-mcq-04",
+      "format": "mcq",
+      "section": "16.1",
+      "concepts": [
+        "c16-supply-factors",
+        "c16-fdi"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Which change is most likely to increase the supply of the veld on the foreign exchange market?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Foreign tourists spend more on holidays in Veld",
+          "misconception": "Tourist spending raises demand for the veld, not supply."
+        },
+        {
+          "id": "b",
+          "text": "Interest rates in Veld rise relative to other countries",
+          "misconception": "Higher relative rates attract funds into Veld, raising demand for the veld."
+        },
+        {
+          "id": "c",
+          "text": "Workers abroad send more money home to Veld",
+          "misconception": "Inflows of money raise demand for the veld."
+        },
+        {
+          "id": "d",
+          "text": "Firms from Veld build more factories in other countries",
+          "misconception": null
+        }
+      ],
+      "answer": "d",
+      "hints": [
+        "The veld is supplied when people in Veld need foreign currency.",
+        "For each option, ask whether money is flowing into or out of Veld."
+      ],
+      "targets": "Supply-side cause of currency change: outward FDI"
+    },
+    {
+      "id": "u16-mcq-05",
+      "format": "mcq",
+      "section": "16.1",
+      "concepts": [
+        "c16-appreciation",
+        "c16-depreciation"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Table 1 shows the exchange rate of the zed against the US dollar. Which statement is correct?",
+      "table": {
+        "caption": "Table 1: Value of the zed",
+        "columns": [
+          "Month",
+          "US$ per zed"
+        ],
+        "rows": [
+          [
+            "January",
+            "0.50"
+          ],
+          [
+            "February",
+            "0.55"
+          ],
+          [
+            "March",
+            "0.52"
+          ],
+          [
+            "April",
+            "0.52"
+          ]
+        ]
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": "The zed appreciated between February and March",
+          "misconception": "The dollar value of the zed fell over those months."
+        },
+        {
+          "id": "b",
+          "text": "The zed depreciated between February and March",
+          "misconception": null
+        },
+        {
+          "id": "c",
+          "text": "The US dollar depreciated against the zed between February and March",
+          "misconception": "If the zed buys fewer dollars, the dollar has become stronger, not weaker."
+        },
+        {
+          "id": "d",
+          "text": "The zed depreciated between January and February",
+          "misconception": "The zed buys more dollars in February than in January."
+        }
+      ],
+      "answer": "b",
+      "hints": [
+        "The table shows how many dollars one zed buys.",
+        "For each pair of months, ask whether one zed buys more or fewer dollars."
+      ],
+      "targets": "Reading appreciation / depreciation from data"
+    },
+    {
+      "id": "u16-mcq-06",
+      "format": "mcq",
+      "section": "16.1",
+      "concepts": [
+        "c16-fx-calcs"
+      ],
+      "command_term": "calculate",
+      "marks": 1,
+      "prompt": "A hotel room in Rudd costs 3 000 rupa per night. The exchange rate is US$1 = 60 rupa. What is the price of the room in US dollars?",
+      "options": [
+        {
+          "id": "a",
+          "text": "US$50",
+          "misconception": null
+        },
+        {
+          "id": "b",
+          "text": "US$180 000",
+          "misconception": "This multiplies by the exchange rate instead of dividing."
+        },
+        {
+          "id": "c",
+          "text": "US$0.02",
+          "misconception": "This divides the exchange rate by the price instead of the other way round."
+        },
+        {
+          "id": "d",
+          "text": "US$500",
+          "misconception": "This is a place-value slip in the division."
+        }
+      ],
+      "answer": "a",
+      "hints": [
+        "You are converting rupa into dollars using the exchange rate.",
+        "Ask how many 60-rupa blocks fit into the rupa price; each block is one dollar."
+      ],
+      "targets": "Price conversion"
+    },
+    {
+      "id": "u16-sa-02",
+      "format": "short_answer",
+      "section": "16.2",
+      "concepts": [
+        "c16-consequences",
+        "c16-depreciation"
+      ],
+      "command_term": "outline",
+      "marks": 2,
+      "prompt": "Outline one way a depreciation of the veld could lower living standards in Veld.",
+      "marking_points": [
+        "Imports become more expensive in veld [1]",
+        "so the cost of living rises / real incomes fall, especially where Veld imports essentials such as food or fuel (or through cost-push inflation) [1]"
+      ],
+      "model_answer_note": "The answer must link the price effect of the depreciation to lower real incomes or a higher cost of living.",
+      "hints": [
+        "Think about what happens to the domestic price of goods Veld buys from abroad.",
+        "Link that price change to what households can afford with the same income."
+      ],
+      "targets": "Depreciation and living standards"
+    },
+    {
+      "id": "u16-sa-03",
+      "format": "short_answer",
+      "section": "16.1",
+      "concepts": [
+        "c16-fx-calcs"
+      ],
+      "command_term": "calculate",
+      "marks": 2,
+      "prompt": "Table 2 shows data for Veld. Calculate the value of Veld's GDP in US dollars.",
+      "table": {
+        "caption": "Table 2: Veld, 2024",
+        "columns": [
+          "Item",
+          "Value"
+        ],
+        "rows": [
+          [
+            "GDP",
+            "900 billion veld"
+          ],
+          [
+            "Exchange rate",
+            "US$1 = 12 veld"
+          ]
+        ]
+      },
+      "marking_points": [
+        "Working: 900 billion / 12 [1]",
+        "= US$75 billion [1]"
+      ],
+      "model_answer_note": "Correct working and US$75 billion earns 2; a correct answer without units or working earns 1.",
+      "hints": [
+        "Use the exchange rate in Table 2 to convert from veld to dollars.",
+        "Each dollar costs a fixed number of veld, so work out how many dollars the GDP figure is worth."
+      ],
+      "targets": "Currency conversion of output"
+    },
+    {
+      "id": "u16-mcq-07",
+      "format": "mcq",
+      "section": "16.1",
+      "concepts": [
+        "c16-demand-factors",
+        "c16-supply-factors"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Inflation in Veld rises well above the rate in its trading partners. On a diagram of the market for the veld, what is most likely to happen?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Demand for the veld shifts right and the exchange rate rises",
+          "misconception": "Higher inflation makes Veld's exports less attractive, so demand does not rise."
+        },
+        {
+          "id": "b",
+          "text": "Supply of the veld shifts left and the exchange rate rises",
+          "misconception": "Veld residents buy more imports, so supply rises rather than falls."
+        },
+        {
+          "id": "c",
+          "text": "Demand for the veld shifts left, supply shifts right, and the exchange rate falls",
+          "misconception": null
+        },
+        {
+          "id": "d",
+          "text": "There is a movement along the demand curve with no shift",
+          "misconception": "A change in relative inflation is a non-price factor, so the curves shift."
+        }
+      ],
+      "answer": "c",
+      "hints": [
+        "Think about relative prices of Veld's exports and of imports into Veld.",
+        "Decide what happens to foreign spending on Veld goods and Veld spending on foreign goods, then turn each into a shift of a currency curve."
+      ],
+      "targets": "Relative inflation: which curve shifts"
+    },
+    {
+      "id": "u16-sa-04",
+      "format": "short_answer",
+      "section": "16.1",
+      "concepts": [
+        "c16-fx-calcs",
+        "c16-depreciation"
+      ],
+      "command_term": "calculate",
+      "marks": 3,
+      "prompt": "Table 3 shows the exchange rate of the zed before a depreciation. The zed then depreciates by 12% against the bola. (a) Calculate the new value of the zed in bola. (b) A good made in Bola costs 44 bola. Calculate its price in zeds after the depreciation.",
+      "table": {
+        "caption": "Table 3: Exchange rate before the depreciation",
+        "columns": [
+          "Currency",
+          "Value"
+        ],
+        "rows": [
+          [
+            "1 zed",
+            "2.50 bola"
+          ]
+        ]
+      },
+      "marking_points": [
+        "(a) 2.50 × (1 − 0.12) [1]",
+        "(a) = 2.20 bola per zed [1]",
+        "(b) 44 / 2.20 = 20 zeds [1]"
+      ],
+      "model_answer_note": "Full marks need the new rate of 2.20 bola with working and a price of 20 zeds; follow through in (b) if (a) is wrong.",
+      "hints": [
+        "For (a), a fall of a percentage means the new value is a fraction of the old one; for (b), use your answer to (a).",
+        "Take the percentage off the old value, then divide the bola price by the number of bola one zed buys."
+      ],
+      "targets": "Applying a percentage depreciation"
+    },
+    {
+      "id": "u16-mcq-08",
+      "format": "mcq",
+      "section": "16.2",
+      "concepts": [
+        "c16-consequences",
+        "c16-depreciation"
+      ],
+      "command_term": "explain",
+      "marks": 1,
+      "prompt": "Veld's currency depreciates, but its current account deficit gets worse for several months before it improves. What is the most likely reason?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Depreciation makes Veld's exports more expensive abroad",
+          "misconception": "Depreciation makes exports cheaper abroad."
+        },
+        {
+          "id": "b",
+          "text": "Foreign investors move funds into Veld",
+          "misconception": "Financial inflows are recorded in the financial account, not the current account."
+        },
+        {
+          "id": "c",
+          "text": "Demand for exports and imports is price inelastic in the short run",
+          "misconception": null
+        },
+        {
+          "id": "d",
+          "text": "The prices of imports into Veld fall after the depreciation",
+          "misconception": "Depreciation makes imports dearer in the domestic currency."
+        }
+      ],
+      "answer": "c",
+      "hints": [
+        "This pattern is the J-curve effect.",
+        "Think about how quickly buyers change the quantities they buy when prices change, and what happens to spending on imports meanwhile."
+      ],
+      "targets": "J-curve and short-run elasticity"
+    },
+    {
+      "id": "u16-sa-05",
+      "format": "short_answer",
+      "section": "16.4",
+      "concepts": [
+        "c16-current-account"
+      ],
+      "command_term": "calculate",
+      "marks": 3,
+      "prompt": "Table 4 shows parts of Kuva's current account. Calculate the change in Kuva's current account balance between 2023 and 2024.",
+      "table": {
+        "caption": "Table 4: Kuva's current account (US$ billion)",
+        "columns": [
+          "Item",
+          "2023",
+          "2024"
+        ],
+        "rows": [
+          [
+            "Balance of trade in goods",
+            "−12",
+            "−8"
+          ],
+          [
+            "Balance of trade in services",
+            "+5",
+            "+3"
+          ],
+          [
+            "Net income",
+            "−4",
+            "−6"
+          ],
+          [
+            "Net current transfers",
+            "+2",
+            "+4"
+          ]
+        ]
+      },
+      "marking_points": [
+        "2023: −12 + 5 − 4 + 2 = −9 [1]",
+        "2024: −8 + 3 − 6 + 4 = −7 [1]",
+        "Change = +2 (the deficit narrows by US$2 billion) [1]"
+      ],
+      "model_answer_note": "Full marks need both balances with working and a change of +2, with the direction made clear.",
+      "hints": [
+        "The current account is the sum of the four rows in Table 4.",
+        "Add the rows for each year, keeping the signs, then take the earlier year from the later year."
+      ],
+      "targets": "Current account balance change"
+    },
+    {
+      "id": "u16-mcq-09",
+      "format": "mcq",
+      "section": "16.2",
+      "concepts": [
+        "c16-consequences",
+        "c16-appreciation"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "The currency of Kuva appreciates strongly. Which outcome is most likely in Kuva?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Exports rise because they become cheaper for foreign buyers",
+          "misconception": "An appreciation makes exports dearer for foreign buyers."
+        },
+        {
+          "id": "b",
+          "text": "The cost of imported raw materials rises",
+          "misconception": "An appreciation makes imports cheaper in the domestic currency."
+        },
+        {
+          "id": "c",
+          "text": "Aggregate demand rises because net exports increase",
+          "misconception": "Net exports tend to fall after an appreciation."
+        },
+        {
+          "id": "d",
+          "text": "Inflation falls as imported goods and inputs become cheaper",
+          "misconception": null
+        }
+      ],
+      "answer": "d",
+      "hints": [
+        "Think about the prices of exports abroad and of imports at home after the currency rises.",
+        "Follow the effect on net exports and on firms' costs, then on the price level."
+      ],
+      "targets": "Consequences of appreciation"
+    },
+    {
+      "id": "u16-sa-06",
+      "format": "short_answer",
+      "section": "16.4",
+      "concepts": [
+        "c16-current-account"
+      ],
+      "command_term": "calculate",
+      "marks": 2,
+      "prompt": "Table 5 shows some of Veld's international transactions. Calculate Veld's balance of trade in goods and state whether it is a surplus or a deficit.",
+      "table": {
+        "caption": "Table 5: Veld's international transactions (US$ billion)",
+        "columns": [
+          "Item",
+          "Value"
+        ],
+        "rows": [
+          [
+            "Exports of coffee",
+            "30"
+          ],
+          [
+            "Exports of cars",
+            "50"
+          ],
+          [
+            "Spending by foreign tourists in Veld",
+            "20"
+          ],
+          [
+            "Imports of machinery",
+            "70"
+          ],
+          [
+            "Imports of fuel",
+            "25"
+          ]
+        ]
+      },
+      "marking_points": [
+        "Working: (30 + 50) − (70 + 25) [1]",
+        "= −US$15 billion, a deficit [1]"
+      ],
+      "model_answer_note": "Full marks need the correct figure and the word deficit; including tourism in the calculation earns 0 for the result.",
+      "hints": [
+        "Use only the rows that are physical goods.",
+        "Add the goods exports, add the goods imports, then take one total from the other."
+      ],
+      "targets": "Balance of trade in goods; goods vs services"
+    },
+    {
+      "id": "u16-mcq-10",
+      "format": "mcq",
+      "section": "16.3",
+      "concepts": [
+        "c16-fixed",
+        "c16-intervention"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Rudd fixes its currency against the US dollar. Strong demand for Rudd's exports is pushing the currency above the fixed rate. What could the central bank do to keep the fixed rate?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Raise interest rates",
+          "misconception": "Higher rates would attract more funds and push the currency even higher."
+        },
+        {
+          "id": "b",
+          "text": "Buy its own currency using foreign currency reserves",
+          "misconception": "Buying its own currency increases demand for it and pushes it higher."
+        },
+        {
+          "id": "c",
+          "text": "Sell its own currency and buy foreign currency",
+          "misconception": null
+        },
+        {
+          "id": "d",
+          "text": "Place quotas on imports",
+          "misconception": "Fewer imports reduce the supply of the currency and push it higher."
+        }
+      ],
+      "answer": "c",
+      "hints": [
+        "Think about which curve the central bank must shift to bring the rate back down.",
+        "For each option, decide whether it adds to demand for, or supply of, Rudd's currency."
+      ],
+      "targets": "Preventing appreciation under a peg"
+    },
+    {
+      "id": "u16-sa-07",
+      "format": "short_answer",
+      "section": "16.2",
+      "concepts": [
+        "c16-consequences",
+        "c16-appreciation",
+        "c16-current-account"
+      ],
+      "command_term": "explain",
+      "marks": 3,
+      "prompt": "Explain how an appreciation of the zed is likely to affect Zedland's current account balance.",
+      "marking_points": [
+        "Zedland's exports become more expensive for foreigners, so export volumes fall [1]",
+        "Imports become cheaper in zeds, so import volumes rise [1]",
+        "Net exports fall, so the current account balance worsens (a surplus shrinks or a deficit grows), assuming demand is price elastic enough [1]"
+      ],
+      "model_answer_note": "A full answer explains the price effect on both exports and imports and ends with the direction of change in the current account.",
+      "hints": [
+        "Think about what happens to the price of Zedland's goods in foreign currency, and to foreign goods in zeds.",
+        "Follow each price change through to quantities, then to net exports and the current account."
+      ],
+      "targets": "Consequences of appreciation for the current account"
+    },
+    {
+      "id": "u16-mcq-11",
+      "format": "mcq",
+      "section": "16.3",
+      "concepts": [
+        "c16-managed"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Which best describes a managed exchange rate system?",
+      "options": [
+        {
+          "id": "a",
+          "text": "The rate mostly floats, but the central bank steps in from time to time to smooth large movements",
+          "misconception": null
+        },
+        {
+          "id": "b",
+          "text": "The rate is set by the central bank and never allowed to change",
+          "misconception": "This describes a strictly fixed system."
+        },
+        {
+          "id": "c",
+          "text": "The rate is set only by demand and supply, with no intervention at all",
+          "misconception": "This describes a pure floating system."
+        },
+        {
+          "id": "d",
+          "text": "The country uses another country's currency instead of its own",
+          "misconception": "Using another currency means there is no exchange rate of its own to manage."
+        }
+      ],
+      "answer": "a",
+      "hints": [
+        "This system sits between fully fixed and fully floating.",
+        "Look for the option in which both the market and the central bank play a part."
+      ],
+      "targets": "Managed exchange rates"
+    },
+    {
+      "id": "u16-mcq-12",
+      "format": "mcq",
+      "section": "16.4",
+      "concepts": [
+        "c16-current-account"
+      ],
+      "command_term": "calculate",
+      "marks": 1,
+      "prompt": "Table 6 shows parts of Tarn's current account. What is Tarn's balance of trade in services?",
+      "table": {
+        "caption": "Table 6: Tarn's current account items (US$ billion)",
+        "columns": [
+          "Item",
+          "Value"
+        ],
+        "rows": [
+          [
+            "Exports of goods",
+            "80"
+          ],
+          [
+            "Imports of goods",
+            "95"
+          ],
+          [
+            "Exports of services",
+            "40"
+          ],
+          [
+            "Imports of services",
+            "25"
+          ],
+          [
+            "Net income",
+            "−6"
+          ],
+          [
+            "Net current transfers",
+            "+4"
+          ]
+        ]
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": "+US$65 billion",
+          "misconception": "This adds service exports and imports instead of subtracting."
+        },
+        {
+          "id": "b",
+          "text": "−US$15 billion",
+          "misconception": "This takes exports away from imports, reversing the sign."
+        },
+        {
+          "id": "c",
+          "text": "−US$2 billion",
+          "misconception": "This is the whole current account balance, not the services balance."
+        },
+        {
+          "id": "d",
+          "text": "+US$15 billion",
+          "misconception": null
+        }
+      ],
+      "answer": "d",
+      "hints": [
+        "Use only the two service rows in Table 6.",
+        "Take service imports away from service exports."
+      ],
+      "targets": "Balance of trade in services"
+    },
+    {
+      "id": "u16-sa-08",
+      "format": "short_answer",
+      "section": "16.1",
+      "concepts": [
+        "c16-remittances",
+        "c16-demand-factors",
+        "c16-appreciation"
+      ],
+      "command_term": "explain",
+      "marks": 3,
+      "prompt": "With reference to an exchange rate diagram for the kuvar, explain how a large rise in remittances from Kuvan workers abroad is likely to affect the value of the kuvar.",
+      "marking_points": [
+        "The money sent home must be converted into kuvars, so demand for the kuvar rises [1]",
+        "On the diagram the demand curve for kuvars shifts to the right, with the exchange rate (foreign currency per kuvar) on the vertical axis [1]",
+        "The equilibrium exchange rate rises, so the kuvar appreciates [1]"
+      ],
+      "model_answer_note": "A full answer names the curve that shifts and its direction, describes the diagram correctly, and states the effect on the kuvar.",
+      "hints": [
+        "Think about what happens when the money reaches Kuva and has to be spent there.",
+        "Decide which curve moves and which way, then read off the new equilibrium rate."
+      ],
+      "targets": "Remittances and currency value (diagram)"
+    },
+    {
+      "id": "u16-mcq-13",
+      "format": "mcq",
+      "section": "16.2",
+      "concepts": [
+        "c16-fx-calcs",
+        "c16-consequences"
+      ],
+      "command_term": "calculate",
+      "marks": 1,
+      "prompt": "A firm in Veld imports a machine priced at US$2 000. Table 7 shows the exchange rate before and after a change. By how much does the cost of the machine in veld change?",
+      "table": {
+        "caption": "Table 7: Exchange rate",
+        "columns": [
+          "Date",
+          "Rate"
+        ],
+        "rows": [
+          [
+            "Before",
+            "US$1 = 5 veld"
+          ],
+          [
+            "After",
+            "US$1 = 6 veld"
+          ]
+        ]
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": "It falls by 2 000 veld",
+          "misconception": "More veld per dollar means imports cost more in veld, not less."
+        },
+        {
+          "id": "b",
+          "text": "It rises by 2 000 veld",
+          "misconception": null
+        },
+        {
+          "id": "c",
+          "text": "It rises by 333 veld",
+          "misconception": "This divides the dollar price by the new rate instead of multiplying."
+        },
+        {
+          "id": "d",
+          "text": "It rises by 12 000 veld",
+          "misconception": "This is the new cost of the machine, not the change."
+        }
+      ],
+      "answer": "b",
+      "hints": [
+        "Convert the dollar price into veld at each exchange rate in Table 7.",
+        "Multiply the dollar price by each rate, then find the difference."
+      ],
+      "targets": "Import cost after depreciation"
+    },
+    {
+      "id": "u16-sa-09",
+      "format": "short_answer",
+      "section": "16.3",
+      "concepts": [
+        "c16-fixed",
+        "c16-intervention"
+      ],
+      "command_term": "explain",
+      "marks": 3,
+      "prompt": "The ostra is fixed against the US dollar and is under downward pressure. Explain how raising interest rates could help the central bank of Ostra keep the fixed rate.",
+      "marking_points": [
+        "Higher interest rates in Ostra raise the return on Ostran deposits and bonds relative to other countries [1]",
+        "So foreign financial capital flows in (and less flows out), raising demand for the ostra / reducing its supply [1]",
+        "This pushes the ostra back up towards the fixed rate without the central bank having to use as much of its reserves [1]"
+      ],
+      "model_answer_note": "A full answer links higher rates to financial flows, to demand or supply of the ostra, and back to the fixed rate.",
+      "hints": [
+        "Think about what savers and investors look for when they decide where to hold money.",
+        "Follow the chain from interest rates to financial flows to the currency market, then compare the result with the fixed rate."
+      ],
+      "targets": "Interest rates as a tool to defend a peg"
+    },
+    {
+      "id": "u16-mcq-14",
+      "format": "mcq",
+      "section": "16.3",
+      "concepts": [
+        "c16-devaluation",
+        "c16-depreciation"
+      ],
+      "command_term": "distinguish",
+      "marks": 1,
+      "prompt": "What is the difference between a devaluation and a depreciation of a currency?",
+      "options": [
+        {
+          "id": "a",
+          "text": "A devaluation is a fall in value; a depreciation is a rise in value",
+          "misconception": "Both are falls in value; the difference is how the fall happens."
+        },
+        {
+          "id": "b",
+          "text": "A devaluation happens in a floating system; a depreciation happens in a fixed system",
+          "misconception": "This reverses the two systems."
+        },
+        {
+          "id": "c",
+          "text": "A devaluation affects only exports; a depreciation affects only imports",
+          "misconception": "Both change the prices of exports and imports."
+        },
+        {
+          "id": "d",
+          "text": "A devaluation is a government decision to lower a fixed rate; a depreciation is caused by market forces in a floating system",
+          "misconception": null
+        }
+      ],
+      "answer": "d",
+      "hints": [
+        "Think about who causes the change in each case.",
+        "Match each term to an exchange rate system and to the decision maker."
+      ],
+      "targets": "Devaluation vs depreciation"
+    },
+    {
+      "id": "u16-sa-10",
+      "format": "short_answer",
+      "section": "16.3",
+      "concepts": [
+        "c16-fixed",
+        "c16-managed"
+      ],
+      "command_term": "distinguish",
+      "marks": 2,
+      "prompt": "Distinguish between a fixed exchange rate system and a managed exchange rate system.",
+      "marking_points": [
+        "In a fixed system the central bank / government sets the exchange rate at a chosen level and intervenes to hold it there [1]",
+        "In a managed system the rate is mainly set by market forces, and the central bank intervenes only at times to limit large swings (or keep it within a band) [1]"
+      ],
+      "model_answer_note": "One mark for each system described accurately, with the difference in how often and why the central bank intervenes made clear.",
+      "hints": [
+        "Compare how much the market and how much the central bank decides the rate in each system.",
+        "Describe one system, then the other, using the same points of comparison."
+      ],
+      "targets": "Fixed vs managed"
+    },
+    {
+      "id": "u16-sa-11",
+      "format": "short_answer",
+      "section": "16.3",
+      "concepts": [
+        "c16-fixed",
+        "c16-intervention",
+        "c16-fx-calcs"
+      ],
+      "command_term": "calculate",
+      "marks": 3,
+      "prompt": "Veld fixes its currency at US$1 = 4 veld. Table 8 shows the market for the veld at the fixed rate. Calculate (a) the amount of US dollar reserves the central bank must spend each month to keep the fixed rate, and (b) how many months its reserves will last.",
+      "table": {
+        "caption": "Table 8: Market for the veld at the fixed rate (per month)",
+        "columns": [
+          "Item",
+          "Value"
+        ],
+        "rows": [
+          [
+            "Quantity of veld demanded",
+            "500 million veld"
+          ],
+          [
+            "Quantity of veld supplied",
+            "620 million veld"
+          ],
+          [
+            "Central bank's US dollar reserves",
+            "US$150 million"
+          ]
+        ]
+      },
+      "marking_points": [
+        "(a) Excess supply = 620 − 500 = 120 million veld per month [1]",
+        "(a) Reserves needed = 120 million / 4 = US$30 million per month [1]",
+        "(b) 150 / 30 = 5 months [1]"
+      ],
+      "model_answer_note": "Full marks need the excess supply, the conversion to US$30 million and 5 months; follow through in (b) from an incorrect (a).",
+      "hints": [
+        "The central bank must buy up the gap between supply and demand at the fixed rate.",
+        "Find the gap in veld, convert it into dollars at the fixed rate, then compare it with the reserves available."
+      ],
+      "targets": "Using reserves to support a peg"
+    },
+    {
+      "id": "u16-mcq-15",
+      "format": "mcq",
+      "section": "16.3",
+      "concepts": [
+        "c16-overvalued",
+        "c16-speculation",
+        "c16-intervention"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Veld's fixed currency is widely seen as overvalued, and investors expect a devaluation soon. What is most likely to happen?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Financial capital leaves Veld and the central bank uses up reserves to defend the rate",
+          "misconception": null
+        },
+        {
+          "id": "b",
+          "text": "Investors buy more veld, so the central bank's reserves rise",
+          "misconception": "Investors expecting a fall in value sell the currency rather than buy it."
+        },
+        {
+          "id": "c",
+          "text": "Veld's current account moves into surplus because its exports are cheap",
+          "misconception": "An overvalued currency makes exports expensive."
+        },
+        {
+          "id": "d",
+          "text": "The central bank lowers interest rates to attract investors",
+          "misconception": "Lower rates would drive funds out, not attract them."
+        }
+      ],
+      "answer": "a",
+      "hints": [
+        "Think about how people holding veld assets react when they expect the veld to lose value.",
+        "Follow what they do with their money, what that does to supply of the veld, and what the central bank must then do."
+      ],
+      "targets": "Capital flight and overvaluation"
+    },
+    {
+      "id": "u16-sa-12",
+      "format": "short_answer",
+      "section": "16.2",
+      "concepts": [
+        "c16-consequences",
+        "c16-fx-calcs",
+        "c16-depreciation"
+      ],
+      "command_term": "calculate",
+      "marks": 2,
+      "prompt": "The government of Tarn owes US$10 billion to foreign lenders. Table 9 shows the exchange rate before and after the tarn depreciates. Calculate the change in the value of this debt in tarns.",
+      "table": {
+        "caption": "Table 9: Exchange rate",
+        "columns": [
+          "Date",
+          "Rate"
+        ],
+        "rows": [
+          [
+            "Before",
+            "US$1 = 8 tarns"
+          ],
+          [
+            "After",
+            "US$1 = 10 tarns"
+          ]
+        ]
+      },
+      "marking_points": [
+        "Working: 10 × 8 = 80 billion tarns and 10 × 10 = 100 billion tarns [1]",
+        "Change = +20 billion tarns (a rise of 25%) [1]"
+      ],
+      "model_answer_note": "Full marks need both values and the rise of 20 billion tarns; stating only that the debt burden rises earns 0.",
+      "hints": [
+        "Convert the dollar debt into tarns at each rate in Table 9.",
+        "Multiply the debt by each rate, then take the first value from the second."
+      ],
+      "targets": "Depreciation and foreign debt"
+    },
+    {
+      "id": "u16-sa-13",
+      "format": "short_answer",
+      "section": "16.4",
+      "concepts": [
+        "c16-interdependence",
+        "c16-current-account",
+        "c16-financial-account"
+      ],
+      "command_term": "explain",
+      "marks": 3,
+      "prompt": "Explain why a country with a current account deficit must have a surplus on its capital and financial accounts combined.",
+      "marking_points": [
+        "The balance of payments records all transactions, so total credits equal total debits and the accounts sum to zero [1]",
+        "A current account deficit means the country spends more foreign currency on imports (and outflows) than it earns [1]",
+        "This spending must be paid for by net inflows of capital, e.g. borrowing, FDI or portfolio inflows, or running down reserves, which appear as a capital plus financial account surplus [1]"
+      ],
+      "model_answer_note": "A full answer uses the rule that the accounts balance and explains how the deficit is financed by inflows.",
+      "hints": [
+        "Think about the rule that the balance of payments as a whole always follows.",
+        "Ask where the extra foreign currency to pay for the deficit comes from, and which accounts record those flows."
+      ],
+      "targets": "Interdependence of the accounts"
+    },
+    {
+      "id": "u16-sa-14",
+      "format": "short_answer",
+      "section": "16.1",
+      "concepts": [
+        "c16-speculation",
+        "c16-demand-factors",
+        "c16-appreciation"
+      ],
+      "command_term": "explain",
+      "marks": 3,
+      "prompt": "Speculators come to believe that the veld will appreciate soon. Explain how this belief could itself cause the veld to appreciate.",
+      "marking_points": [
+        "Speculators buy veld now in order to sell later at a higher value / make a profit [1]",
+        "This raises demand for the veld (demand curve shifts right) [1]",
+        "So the exchange rate rises, and the expectation becomes self-fulfilling [1]"
+      ],
+      "model_answer_note": "A full answer explains the speculators' motive, the shift in demand for the veld, and the resulting rise in its value.",
+      "hints": [
+        "Think about what someone who expects a currency to gain value will do today.",
+        "Follow that action to the currency market and then to the equilibrium rate."
+      ],
+      "targets": "Speculation as a cause of appreciation"
+    },
+    {
+      "id": "u16-sa-15",
+      "format": "short_answer",
+      "section": "16.4",
+      "concepts": [
+        "c16-fdi",
+        "c16-financial-account",
+        "c16-demand-factors"
+      ],
+      "command_term": "explain",
+      "marks": 3,
+      "prompt": "A foreign car maker builds a large factory in Veld. Explain how this is recorded in Veld's balance of payments and how it is likely to affect the value of the veld.",
+      "marking_points": [
+        "It is foreign direct investment, recorded as a credit / inflow in the financial account [1]",
+        "The car maker must buy veld to pay for the factory, so demand for the veld rises [1]",
+        "The veld appreciates (if the rate floats) [1]"
+      ],
+      "model_answer_note": "A full answer names the account and the type of flow, and links the purchase of veld to a rise in its value.",
+      "hints": [
+        "Decide what type of investment building a factory is.",
+        "Place it in an account, then think about which currency the firm needs to pay for the factory."
+      ],
+      "targets": "FDI in the BoP and currency value"
+    }
+  ]
+}

@@ -1,0 +1,2514 @@
+{
+  "meta": {
+    "status": "draft — Jin to confirm",
+    "hierarchy": "Part → Unit (chapter) → Section → Concept",
+    "concepts_source": "bold \"Term: definition\" lines in Jin's unit notes (.docx)",
+    "notes": [
+      "Unit numbers follow Jin's notes (chapters 1–20). Chapter 1 (Introduction to economics) placed under Micro for now — placement to confirm.",
+      "Concepts were auto-extracted from 'Term: definition' lines. Units marked concept_extraction='thin' need a manual pass (formatting in those notes hid the terms).",
+      "hl_only is taken from '(HL)' in section titles; sections without the tag may still contain HL content.",
+      "Section numbers missing from the notes: 13.5, 15.3 (numbering jumps), and chapter 19 stops partway through 19.2."
+    ]
+  },
+  "parts": [
+    {
+      "part": "Micro",
+      "units": [
+        {
+          "id": "ch1",
+          "number": 1,
+          "title": "Introduction to economics",
+          "sections": [
+            {
+              "id": "1.0",
+              "title": "Introduction to economics",
+              "hl_only": false,
+              "concepts": [
+                {
+                  "term": "Economics",
+                  "definition_from_notes": "The study of choices leading to the best possible use of scarce resources in order to best satisfy unlimited human needs and wants."
+                },
+                {
+                  "term": "Microeconomics",
+                  "definition_from_notes": "We examine the behaviour of individual decision-making units in the economy. The two main groups of decision-makers we study are consumers and firms. Microeconomics is concerned with how these decision-makers behave, how they make choices, what are the consequences of their decisions and how their i"
+                },
+                {
+                  "term": "Macroeconomics",
+                  "definition_from_notes": "We examine the economy as a whole to obtain a broad or overall picture as a whole to obtain a broad or overall picture of the economy. Macroeconomics uses the sum of consumer behaviours and the sum of firm behaviours and total income and output, employment, and price level of the entire economy."
+                },
+                {
+                  "term": "Scarcity",
+                  "definition_from_notes": "- The situation in which available resources, or factors of production, are finite, whereas wants are infinite. There are not enough resources to produce everything that human beings need and want."
+                },
+                {
+                  "term": "Efficiency",
+                  "definition_from_notes": "- making the best possible use of scarce resources to avoid resource waste"
+                },
+                {
+                  "term": "allocative efficiency",
+                  "definition_from_notes": "scarce resources are used to produce the goods and services that mostly satisfy society’s needs and wants"
+                },
+                {
+                  "term": "Economic well-being",
+                  "definition_from_notes": "- levels of prosperity, economic satisfaction, and standards of living among the members of a society"
+                },
+                {
+                  "term": "Sustainability",
+                  "definition_from_notes": "- the long-term maintenance or viability of any particular activity or policy"
+                },
+                {
+                  "term": "Change",
+                  "definition_from_notes": "- we can distinguish between the idea of change in economic theory and in real world, change in situation and evaluate them"
+                },
+                {
+                  "term": "Interdependence",
+                  "definition_from_notes": "- the idea that economic decision-makers interact with and depend on each other (individuals, communities, nations)"
+                },
+                {
+                  "term": "Intervention",
+                  "definition_from_notes": "- government becomes involved with the workings of markets to achieve goals as equity, sustainability, economic well-being, efficient"
+                },
+                {
+                  "term": "Land",
+                  "definition_from_notes": "all natural resources under and above land"
+                },
+                {
+                  "term": "Labour",
+                  "definition_from_notes": "physical and mental effort people contribute to production of goods and services"
+                },
+                {
+                  "term": "Capital",
+                  "definition_from_notes": "physical capital – a man made factor of production used to produce goods and services (e.g. machinery, tools, buildings)"
+                },
+                {
+                  "term": "Entrepreneurship",
+                  "definition_from_notes": "ability to innovate by developing new ways of doing things"
+                },
+                {
+                  "term": "Physical capital",
+                  "definition_from_notes": "one of the four factors of production consisting of man-made inputs that provide a stream of future benefits in the form of the ability to produce greater quantities of output: physical capital is used to produce more goods and services in the future"
+                },
+                {
+                  "term": "Human capital",
+                  "definition_from_notes": "skills, abilities and knowledge acquired by people, as well as good levels of health"
+                },
+                {
+                  "term": "Natural capital",
+                  "definition_from_notes": "environmental capital, including everything that is included in land plush additional natural resources that occur naturally in the environment such as the air, biodiversity, soil quality, etc."
+                },
+                {
+                  "term": "Financial capital",
+                  "definition_from_notes": "investments in financial instruments, like stocks and bonds, or the funds that are used to buy financial instruments"
+                },
+                {
+                  "term": "Opportunity cost",
+                  "definition_from_notes": "the value of the next best alternative that must be given up or satisfied in order to obtain something else"
+                },
+                {
+                  "term": "Free good",
+                  "definition_from_notes": "any good that is not scarce, and therefore has a zero opportunity cost. Since it is not limited by scarcity, it includes anything that can be obtained without sacrificing something else"
+                },
+                {
+                  "term": "Economic good",
+                  "definition_from_notes": "any good that is scarce, either because it is a naturally-occurring scarce resource, or because it is produced by scarce resources"
+                },
+                {
+                  "term": "Resource allocation",
+                  "definition_from_notes": "assigning available resources, or factors of production, to specific uses chosen among many possible alternatives, and involves answering the what/how much to produce and how to produce question"
+                },
+                {
+                  "term": "Distribution of income",
+                  "definition_from_notes": "to answer for whom to produce question, we concern with how much output different individuals or different groups in the population receive"
+                },
+                {
+                  "term": "Resource ownership",
+                  "definition_from_notes": "public or private sector"
+                },
+                {
+                  "term": "Price rationing",
+                  "definition_from_notes": "economic decisions are made on the basis of prices of goods, services and resources that have been determined in markets"
+                },
+                {
+                  "term": "Non-price rationing",
+                  "definition_from_notes": "decisions are made by use of methods that have nothing to do with prices determined in markets"
+                },
+                {
+                  "term": "Economic growth",
+                  "definition_from_notes": "increase in the quantity of output produced in an economy over a period of time"
+                },
+                {
+                  "term": "This model demonstrates an important principle",
+                  "definition_from_notes": "the income flow involving the money that goes from firms to households is equal to the expenditure flow from households to firms, which is the money that households spend to buy things from firms."
+                },
+                {
+                  "term": "Financial sector",
+                  "definition_from_notes": "Saving and investment"
+                },
+                {
+                  "term": "Saving",
+                  "definition_from_notes": "is the part of consumer income that is not spent but rather is saved"
+                },
+                {
+                  "term": "Investment",
+                  "definition_from_notes": "is spending by firms for the production of capital goods, which is one of the four factors of production"
+                },
+                {
+                  "term": "Global market sector",
+                  "definition_from_notes": "Imports and exports"
+                },
+                {
+                  "term": "Imports",
+                  "definition_from_notes": "are goods and services produced in other countries and purchased by domestic buyers"
+                }
+              ],
+              "source_files": [
+                "unit1. intro to econs"
+              ]
+            }
+          ],
+          "concept_count": 34,
+          "concept_extraction": "ok",
+          "label_from_sections": "Introduction to economics",
+          "placement": "to confirm"
+        },
+        {
+          "id": "ch2",
+          "number": 2,
+          "title": "Competitive markets: demand and supply",
+          "sections": [
+            {
+              "id": "2.1",
+              "title": "Introduction to competitive markets",
+              "hl_only": false,
+              "concepts": [
+                {
+                  "term": "Market",
+                  "definition_from_notes": "include any kind of arrangement where buyers and sellers of goods, services or resources are linked together to carry out an exchange"
+                }
+              ],
+              "source_files": [
+                "unit2.2 demand"
+              ]
+            },
+            {
+              "id": "2.2",
+              "title": "Demand",
+              "hl_only": false,
+              "concepts": [
+                {
+                  "term": "Demand",
+                  "definition_from_notes": "the various quantities of a good or service the consumer is willing and able to buy at different possible prices during a particular time period, ceteris paribus"
+                },
+                {
+                  "term": "Ceteris paribus",
+                  "definition_from_notes": "all things other than price that can affect how much the consumer is willing and able to buy are assumed to be constant and unchanging"
+                },
+                {
+                  "term": "Market demand",
+                  "definition_from_notes": "the total quantities in the market for the good consumers are willing and able to buy at different prices"
+                },
+                {
+                  "term": "Normal goods",
+                  "definition_from_notes": "the demand increases in response to an increase in consumer income"
+                },
+                {
+                  "term": "Inferior goods",
+                  "definition_from_notes": "the demand decreases in response to an increase in consumer income"
+                },
+                {
+                  "term": "Substitute goods",
+                  "definition_from_notes": "goods that satisfy similar needs; two goods that can be used alternatively"
+                },
+                {
+                  "term": "Complementary goods",
+                  "definition_from_notes": "goods that tend to be used together; an object used in combination with another product or service"
+                },
+                {
+                  "term": "Utility",
+                  "definition_from_notes": "the satisfaction that consumers gain from consuming something"
+                },
+                {
+                  "term": "Total utility",
+                  "definition_from_notes": "total satisfaction that consumers get from consuming something"
+                },
+                {
+                  "term": "Marginal utility",
+                  "definition_from_notes": "extra satisfaction that consumers receive from consuming one more unit of a good"
+                }
+              ],
+              "source_files": [
+                "unit2.2 demand"
+              ]
+            },
+            {
+              "id": "2.3",
+              "title": "Supply",
+              "hl_only": false,
+              "concepts": [
+                {
+                  "term": "Supply",
+                  "definition_from_notes": "the various quantities of a good or service a firm is willing and able to produce and supply to the market for sale at different possible prices during a particular time period, ceteris paribus"
+                },
+                {
+                  "term": "Market supply",
+                  "definition_from_notes": "the total quantities of a good that firms are willing and able to supply in the market at different possible prices"
+                },
+                {
+                  "term": "Competitive supply",
+                  "definition_from_notes": "two or more products refers to production of one or the other by a firm; the goods compete for the use of the same resources and producing more of one means producing less of the other"
+                },
+                {
+                  "term": "Joint supply",
+                  "definition_from_notes": "two or more products refers to production of goods that are derived from a single product, so that it is not possible to produce more of one without producing more of the other"
+                },
+                {
+                  "term": "Short run",
+                  "definition_from_notes": "a time period during which at least one input is fixed and cannot be changed by the firm; can hire more labor, increase materials, tools, and equipment, but cannot easily change the size of buildings, factories, and heavy machinery"
+                },
+                {
+                  "term": "Long run",
+                  "definition_from_notes": "a time period when all inputs can be changed; build new buildings and factories and buy more heavy machinery"
+                },
+                {
+                  "term": "Fixed cost",
+                  "definition_from_notes": "a cost that does not change with an increase or decrease in the amount of goods or services produced or sold"
+                },
+                {
+                  "term": "Variable cost",
+                  "definition_from_notes": "any expenses that change based on how much a company produces and sells"
+                },
+                {
+                  "term": "Total product",
+                  "definition_from_notes": "the total quantity of output produced by the firm"
+                },
+                {
+                  "term": "Marginal product",
+                  "definition_from_notes": "the extra or additional output produced by one additional unit of a variable input, assume to be labor; how much output increases as labor increases by one worker"
+                },
+                {
+                  "term": "Total cost",
+                  "definition_from_notes": "all costs of production incurred by a firm"
+                },
+                {
+                  "term": "Marginal cost",
+                  "definition_from_notes": "the extra or additional cost of producing one more unit of output; how much total costs increase if there is an increase in output by one unit"
+                }
+              ],
+              "source_files": [
+                "unit2.3 supply"
+              ]
+            },
+            {
+              "id": "2.4",
+              "title": "Competitive market equilibrium: demand and supply",
+              "hl_only": false,
+              "concepts": [
+                {
+                  "term": "Equilibrium",
+                  "definition_from_notes": "a state of balance between different forces, such that there is no tendency to change"
+                },
+                {
+                  "term": "Market equilibrium",
+                  "definition_from_notes": "quantity demanded is equal to quantity supplied (Qd=Qs); the forces of supply and demand are in balance, and there is no tendency for the price to change"
+                },
+                {
+                  "term": "Market disequilibrium",
+                  "definition_from_notes": "is the price at which the demand and supply quantities are not equal."
+                },
+                {
+                  "term": "Excess supply (surplus)",
+                  "definition_from_notes": "the quantity supplied is greater than quantity demanded"
+                },
+                {
+                  "term": "Excess demand (shortage)",
+                  "definition_from_notes": "the quantity demanded is greater that quantity supplied"
+                },
+                {
+                  "term": "Free goods",
+                  "definition_from_notes": "goods that are not subject to the condition of scarcity and have a zero-opportunity cost; the quantity supplied is greater than the quantity demanded when the price is zero"
+                },
+                {
+                  "term": "Economic goods",
+                  "definition_from_notes": "goods that are subject to scarcity and have an opportunity cost greater than zero; the quantity supplied is smaller than quantity demanded when the price is zero"
+                }
+              ],
+              "source_files": [
+                "unit2.4 competitve markets-demand and supply"
+              ]
+            },
+            {
+              "id": "2.5",
+              "title": "The role of the price mechanism and market efficiency",
+              "hl_only": false,
+              "concepts": [
+                {
+                  "term": "Price mechanism",
+                  "definition_from_notes": "price determined by the forces of supply and demand in competitive markets"
+                },
+                {
+                  "term": "Rationing",
+                  "definition_from_notes": "a method of apportioning or parceling out goods and services among consumers or households"
+                },
+                {
+                  "term": "Price rationing",
+                  "definition_from_notes": "is simply the market mechanism at work, known as Adam Smith’s invisible hand of the market, which coordinates the countless buying and selling decisions of decision-making units in an economy without any central authority."
+                },
+                {
+                  "term": "Marginal benefit",
+                  "definition_from_notes": "a maximum amount a consumer is willing to pay for an additional good or service"
+                },
+                {
+                  "term": "Marginal cost",
+                  "definition_from_notes": "the extra cost of producing one more unit of output"
+                },
+                {
+                  "term": "Allocative efficiency",
+                  "definition_from_notes": "producing the quantity of goods mostly wanted by society; allocates resources so that the society gets the most benefits from consumption"
+                },
+                {
+                  "term": "Consumer surplus",
+                  "definition_from_notes": "the highest price consumers are willing to pay for a good minus the price actually paid; the area under the demand curve and below the price paid by the consumer; the benefit consumers receive when they pay a price below what they are willing to pay"
+                },
+                {
+                  "term": "Producer surplus",
+                  "definition_from_notes": "the price received by firms for selling their good minus the lowest price that they are willing to accept to produce the good; the area above the firms’ supply curve and below the price received by the firm, up to the quantity produced; the benefit producers receive when they receive a price above t"
+                },
+                {
+                  "term": "Social surplus",
+                  "definition_from_notes": "the sum of consumer surplus and producer surplus"
+                }
+              ],
+              "source_files": [
+                "unit2.5 the role of the price mechanism and market efficiency"
+              ]
+            },
+            {
+              "id": "2.6",
+              "title": "Critique of the maximizing behavior of consumers and producers (HL)",
+              "hl_only": true,
+              "concepts": [
+                {
+                  "term": "Rules of thumb",
+                  "definition_from_notes": "guidelines based on experience and common sense, simplifying complicated decisions that would have to be based on the complex consideration of ever possible choice"
+                },
+                {
+                  "term": "Anchoring",
+                  "definition_from_notes": "the use of irrelevant information to make decision; often occurs due to its being the first piece of information that the consumer happens to come across"
+                },
+                {
+                  "term": "Framing",
+                  "definition_from_notes": "how choices are presented to decision-makers"
+                },
+                {
+                  "term": "Availability",
+                  "definition_from_notes": "information that is most recently available, which people tend to rely on more heavily, though there is no reason to expect that his information is any more reliable than other information that was available at an earlier time"
+                },
+                {
+                  "term": "Bounded rationality",
+                  "definition_from_notes": "the idea that consumers are rational only within limits, as consumer rationality is limited by consumers’ insufficient information, the costliness of obtaining information, and the limitations of the human mind to process large amounts of information; it is about consumers satisfice rather than maxi"
+                },
+                {
+                  "term": "Bounded self-control",
+                  "definition_from_notes": "people in reality exercise self-control only within limits; often do not have the self-control that would be required of them to make rational decisions"
+                },
+                {
+                  "term": "Bounded selfishness",
+                  "definition_from_notes": "the idea that people are selfish only within limits, the assumption of self-interested behaviour underlying the maximization principle cannot explain the numerous accounts of selfless behaviour and willingness to contribute to the public good even at the cost of reduced personal welfare"
+                },
+                {
+                  "term": "Imperfect information",
+                  "definition_from_notes": "consumers do not and cannot possible have full access to information; unable to maximize utility as they make choices based on faulty and incomplete information"
+                },
+                {
+                  "term": "Nudge theory",
+                  "definition_from_notes": "a method designed to influence consumers’ choices in a predictable wat, without offering financial incentives or imposing sanctions and without limiting choice; influence people to behave in socially desirable ways, but without imposing any constraints on their behaviour and by maintain freedom of c"
+                },
+                {
+                  "term": "Choice architecture",
+                  "definition_from_notes": "the design of particular ways or environments in which people make choices; it is based on the idea that consumers make decisions in a particular context and that choices of decision-makers are influenced by how options are presented to them."
+                },
+                {
+                  "term": "Default choice",
+                  "definition_from_notes": "a choice that is made by default, doing the option that results when one does not do anything; people often make choices by default due to habit or lack of interest in taking a deliberate action"
+                },
+                {
+                  "term": "Restricted choice",
+                  "definition_from_notes": "a choice that is limited by the government or other authority"
+                },
+                {
+                  "term": "Mandated choice",
+                  "definition_from_notes": "a choice between alternative that is made mandatory by the government or other authority"
+                },
+                {
+                  "term": "Market share",
+                  "definition_from_notes": "the percentage of total sales in a market that is earned by a single firm"
+                }
+              ],
+              "source_files": [
+                "unit2.6 critique of maximizing behavior of consumers and producers"
+              ]
+            }
+          ],
+          "concept_count": 53,
+          "concept_extraction": "ok"
+        },
+        {
+          "id": "ch3",
+          "number": 3,
+          "title": "Elasticities",
+          "sections": [
+            {
+              "id": "3.1",
+              "title": "Price elasticity of demand (PED)",
+              "hl_only": false,
+              "concepts": [
+                {
+                  "term": "Price elasticity of demand (PED)",
+                  "definition_from_notes": "is a measure of the responsiveness of the quantity of a good demanded to changes in its price."
+                },
+                {
+                  "term": "Price elastic demand",
+                  "definition_from_notes": "quantity demanded is highly responsive to a change in price; small change in price results in large change in quantity demanded"
+                },
+                {
+                  "term": "Price inelastic demand",
+                  "definition_from_notes": "quantity demanded is not very responsive; large change in price results in small change in quantity demanded"
+                },
+                {
+                  "term": "Necessities",
+                  "definition_from_notes": "goods or services we consider to be essential or necessary in our lives"
+                },
+                {
+                  "term": "Luxuries",
+                  "definition_from_notes": "not necessary or essential"
+                },
+                {
+                  "term": "Total revenue",
+                  "definition_from_notes": "the amount of money received by firms when they sell a good or service; TR=P×Q"
+                },
+                {
+                  "term": "Indirect tax",
+                  "definition_from_notes": "a tax that can be passed on to another individual or entity; it is generally imposed on suppliers or manufacturers who pass it onto the final consumer."
+                },
+                {
+                  "term": "Primary commodities",
+                  "definition_from_notes": "goods arising directly from the use of natural resources, or the factor of production ‘land’; include agricultural, fishing and forestry products, extractive industries"
+                },
+                {
+                  "term": "Manufactured products",
+                  "definition_from_notes": "goods produced by labour usually working together with capital as well as raw materials"
+                }
+              ],
+              "source_files": [
+                "unit3.1 Price elasticity of demand (PED)"
+              ]
+            },
+            {
+              "id": "3.2",
+              "title": "Income elasticity of demand (YED)",
+              "hl_only": false,
+              "concepts": [
+                {
+                  "term": "Income elasticity of demand (YED)",
+                  "definition_from_notes": "is a measure of the responsiveness of demand to changes in income, and involves demand curve shifts. It provides information on the direction of change of demand given a change in income (increase or decrease_ and the size of the change (size of demand curve shifts)."
+                }
+              ],
+              "source_files": [
+                "unit3.2 income elasticity of demand (YED"
+              ]
+            },
+            {
+              "id": "3.3",
+              "title": "Price elasticity of supply (PES)",
+              "hl_only": false,
+              "concepts": [
+                {
+                  "term": "Price elastic supply",
+                  "definition_from_notes": "a relatively large responsiveness of quantity supplied"
+                },
+                {
+                  "term": "Price inelastic supply",
+                  "definition_from_notes": "a relatively small responsiveness"
+                }
+              ],
+              "source_files": [
+                "unit3.3 price elasticity of supply (PES)"
+              ]
+            }
+          ],
+          "concept_count": 12,
+          "concept_extraction": "ok"
+        },
+        {
+          "id": "ch4",
+          "number": 4,
+          "title": "Government intervention in microeconomics",
+          "sections": [
+            {
+              "id": "4.1",
+              "title": "Government intervention in markets",
+              "hl_only": false,
+              "concepts": [
+                {
+                  "term": "Market failure",
+                  "definition_from_notes": "the failure of the market to achieve allocative efficiency"
+                }
+              ],
+              "source_files": [
+                "unit4.1 government intervention in markets"
+              ]
+            },
+            {
+              "id": "4.2",
+              "title": "Price controls",
+              "hl_only": false,
+              "concepts": [
+                {
+                  "term": "Price controls",
+                  "definition_from_notes": "refers to the setting of minimum or maximum prices by the government so that prices are unable to adjust to their equilibrium level determined by demand and supply. Price controls result in market disequilibrium, shortages and surpluses."
+                },
+                {
+                  "term": "Rationing",
+                  "definition_from_notes": "a method of dividing up something among possible users"
+                },
+                {
+                  "term": "Price rationing",
+                  "definition_from_notes": "the good is rationed among users according to who buys it"
+                },
+                {
+                  "term": "Welfare loss (deadweight loss)",
+                  "definition_from_notes": "social surplus or welfare benefits that are lost to society because resources are not allocated efficiently."
+                }
+              ],
+              "source_files": [
+                "unit4.2 price controls"
+              ]
+            },
+            {
+              "id": "4.3",
+              "title": "Indirect taxes",
+              "hl_only": false,
+              "concepts": [
+                {
+                  "term": "Indirect taxes",
+                  "definition_from_notes": "are imposed on spending to buy goods and services. They are paid partly by consumers but are paid to the government by producers (firms)."
+                },
+                {
+                  "term": "Specific tax",
+                  "definition_from_notes": "a fixed amount of tax per unit of the good or service sold"
+                },
+                {
+                  "term": "Ad valorem tax",
+                  "definition_from_notes": "a fixed percentage of the price of the good or service, the amount of tax increases as the price of the good or service increases"
+                }
+              ],
+              "source_files": [
+                "unit4.3 indirect taxes"
+              ]
+            },
+            {
+              "id": "4.4",
+              "title": "Subsidies",
+              "hl_only": false,
+              "concepts": [],
+              "source_files": [
+                "unit4.4 subsidies"
+              ]
+            }
+          ],
+          "concept_count": 8,
+          "concept_extraction": "thin"
+        },
+        {
+          "id": "ch5",
+          "number": 5,
+          "title": "Market failure and socially undesirable outcomes I",
+          "sections": [
+            {
+              "id": "5.1",
+              "title": "The meaning of common pool resources",
+              "hl_only": false,
+              "concepts": [
+                {
+                  "term": "Common pool resources",
+                  "definition_from_notes": "resources that are not owned by anyone, do not have a price and are available for anyone to use without payment or any other restriction"
+                },
+                {
+                  "term": "Excludable",
+                  "definition_from_notes": "it is possible to exclude people from using the good; exclusion is usually achieved by charging a price for the good"
+                },
+                {
+                  "term": "Non-excludable",
+                  "definition_from_notes": "it is not possible to exclude someone from using a good or resource"
+                },
+                {
+                  "term": "Sustainability",
+                  "definition_from_notes": "the use of resources in ways that do no result in fewer or lower quality resources for future generations"
+                },
+                {
+                  "term": "Non-renewable resources",
+                  "definition_from_notes": "resources that do not last indefinitely, because they have a finite supply"
+                },
+                {
+                  "term": "Renewable resources",
+                  "definition_from_notes": "resources that can last indefinitely if they are managed properly (not overused) because they are reproduced over relatively short periods of time by natural processes"
+                }
+              ],
+              "source_files": [
+                "unit5.1 the meaning of common pool resources"
+              ]
+            },
+            {
+              "id": "5.2",
+              "title": "Market failure and externalities: diverging private and social benefits and costs",
+              "hl_only": false,
+              "concepts": [
+                {
+                  "term": "Market failure",
+                  "definition_from_notes": "refers to the failure of the market to allocate resources efficiently. Market failure results in allocative inefficiency, where too much or too little of goods or services are produced and consumed from the point of view of what is socially most desirable."
+                },
+                {
+                  "term": "Externality",
+                  "definition_from_notes": "occurs when the actions of consumers or producers give rise to negative or positive side-effects on other people who are not part of these actions (third parties), and whose interests are not taken into consideration."
+                },
+                {
+                  "term": "Positive externality",
+                  "definition_from_notes": "external (spillover) benefits"
+                },
+                {
+                  "term": "Negative externality",
+                  "definition_from_notes": "external (spillover) costs"
+                },
+                {
+                  "term": "Marginal private benefit (MPB)",
+                  "definition_from_notes": "benefits to consumers from consuming one more unit of a good"
+                },
+                {
+                  "term": "Marginal social benefit (MSB)",
+                  "definition_from_notes": "benefits to society from consuming one more unit of a good"
+                },
+                {
+                  "term": "Marginal private cost (MSC)",
+                  "definition_from_notes": "costs to producers of producing one more unit of a good"
+                },
+                {
+                  "term": "Marginal social cost (MSC)",
+                  "definition_from_notes": "costs to society of producing one more unit of a good"
+                }
+              ],
+              "source_files": [
+                "unit5.2 market failure and externalities"
+              ]
+            },
+            {
+              "id": "5.3",
+              "title": "Negative production externalities",
+              "hl_only": false,
+              "concepts": [
+                {
+                  "term": "Negative production externalities",
+                  "definition_from_notes": "external costs created by producers; a person’s production on good affects other third parties negatively"
+                },
+                {
+                  "term": "External cost",
+                  "definition_from_notes": "the vertical difference between MSC and MPC (MSC = private cost + external cost)"
+                },
+                {
+                  "term": "Height",
+                  "definition_from_notes": "MSC – MPC       Width: Qm – Qopt"
+                },
+                {
+                  "term": "Carbon tax",
+                  "definition_from_notes": "a tax per unit of carbon emissions of fossil fuels; the more carbon emitted, the higher the tax"
+                },
+                {
+                  "term": "Tradable permits",
+                  "definition_from_notes": "a policy involving permits to pollute issued to firms by a government or an international body"
+                },
+                {
+                  "term": "Collective self-governance",
+                  "definition_from_notes": "is a solution to the use of common pool resources where the users take control of the resources and use them in a sustainable way. It is an approach to manage resources undertaken by communities of resource users by themselves, because they realize that it is in their own best interests to work coll"
+                }
+              ],
+              "source_files": [
+                "unit5.3 negative production externalities"
+              ]
+            },
+            {
+              "id": "5.4",
+              "title": "Negative consumption externalities",
+              "hl_only": false,
+              "concepts": [
+                {
+                  "term": "Negative consumption externalities",
+                  "definition_from_notes": "external costs created by consumers; a person’s consumption on good affects other third parties negatively"
+                },
+                {
+                  "term": "Demerit goods",
+                  "definition_from_notes": "goods that are considered to be undesirable for consumers, but which are overprovided by the market"
+                }
+              ],
+              "source_files": [
+                "unit5.4 negative consumption elasticities"
+              ]
+            }
+          ],
+          "concept_count": 22,
+          "concept_extraction": "ok"
+        },
+        {
+          "id": "ch6",
+          "number": 6,
+          "title": "Market failure and socially undesirable outcomes II",
+          "sections": [
+            {
+              "id": "6.1",
+              "title": "Positive production externalities",
+              "hl_only": false,
+              "concepts": [
+                {
+                  "term": "Positive production externalities",
+                  "definition_from_notes": "external benefits created by producers; a person’s production on good affects other third parties positively"
+                }
+              ],
+              "source_files": [
+                "unit6.1 positive production externalities"
+              ]
+            },
+            {
+              "id": "6.2",
+              "title": "Positive consumption externalities",
+              "hl_only": false,
+              "concepts": [
+                {
+                  "term": "Positive consumption externalities",
+                  "definition_from_notes": "external benefits created by consumers; a person’s consumption on good affects other third parties positively"
+                },
+                {
+                  "term": "Merit goods",
+                  "definition_from_notes": "goods that are held to be desirable for consumers, but which are underprovided by the market"
+                }
+              ],
+              "source_files": [
+                "unit6.2 positive consumption externalities"
+              ]
+            },
+            {
+              "id": "6.3",
+              "title": "Market failure and public goods",
+              "hl_only": false,
+              "concepts": [
+                {
+                  "term": "Public goods",
+                  "definition_from_notes": "socially desirable goods not produced by private firms because it is not possible to charge a price"
+                },
+                {
+                  "term": "Non-rivalrous",
+                  "definition_from_notes": "its consumption by one person does not reduce consumption by someone else"
+                },
+                {
+                  "term": "Non-excludable",
+                  "definition_from_notes": "it is not possible to exclude someone from using the good"
+                },
+                {
+                  "term": "Free rider problem",
+                  "definition_from_notes": "Public goods illustrate the free rider problem, occurring when people can enjoy the use of a good without paying for it. The free rider problem arises from non-excludability: people cannot be excluded from using the good. Public goods are a type of market failure because, due to the free rider probl"
+                },
+                {
+                  "term": "Private goods",
+                  "definition_from_notes": "goods with or without positive or negative externalities sold for a price; merit goods and demerit goods (ex: computers, books, clothes)"
+                },
+                {
+                  "term": "Quasi-public goods",
+                  "definition_from_notes": "goods that do not fall neatly into the other three categories; often have large positive externalities so may be provided by the government (ex: uncrowded toll roads, museums, public swimming pools that charge entrance fees)"
+                },
+                {
+                  "term": "Common pool resources",
+                  "definition_from_notes": "natural resources that are not owned by anyone, not sold in markets and not having a price; their lack of a price makes them subject to overuse, depletion, and degradation"
+                }
+              ],
+              "source_files": [
+                "unit6.3 market failure and public goods"
+              ]
+            },
+            {
+              "id": "6.4",
+              "title": "Asymmetric information (HL)",
+              "hl_only": true,
+              "concepts": [
+                {
+                  "term": "Asymmetric information",
+                  "definition_from_notes": "situations where buyers and sellers do not have equal access to information"
+                },
+                {
+                  "term": "Adverse selection",
+                  "definition_from_notes": "refers to situations where one part in a transaction has more information about the quality of the product being sold than the other party."
+                }
+              ],
+              "source_files": [
+                "unit6.4 asymmetric information"
+              ]
+            },
+            {
+              "id": "6.5",
+              "title": "Equity in the distribution of income and wealth (HL)",
+              "hl_only": true,
+              "concepts": [
+                {
+                  "term": "Equity",
+                  "definition_from_notes": "being fair and just"
+                },
+                {
+                  "term": "Equality",
+                  "definition_from_notes": "the state of being equal with respect to something"
+                },
+                {
+                  "term": "Income equality",
+                  "definition_from_notes": "everyone in a society receives the same amount of income"
+                },
+                {
+                  "term": "Income",
+                  "definition_from_notes": "the flow of money that is received by the owners of the factors of production"
+                },
+                {
+                  "term": "Wealth",
+                  "definition_from_notes": "the money or things of value that people own, such as saving deposits (money saved in a bank); stocks in the stock market; bonds; land, houses and other property; valuable paintings or jewelry, and so on; minus debt to banks or other financial institutions"
+                }
+              ],
+              "source_files": [
+                "unit6.5 equity in the distribution of income and wealth"
+              ]
+            }
+          ],
+          "concept_count": 17,
+          "concept_extraction": "ok"
+        },
+        {
+          "id": "ch7",
+          "number": 7,
+          "title": "Market failure and socially undesirable outcomes III (HL)",
+          "sections": [
+            {
+              "id": "7.1",
+              "title": "Introduction to firms, industries and market structures",
+              "hl_only": false,
+              "concepts": [
+                {
+                  "term": "Market power",
+                  "definition_from_notes": "is the extent to which each individual firm in the industry is able to control the price at which it sells its product."
+                },
+                {
+                  "term": "Perfect competition",
+                  "definition_from_notes": "firms have no ability to control the price of their products such firms have zero market power"
+                },
+                {
+                  "term": "Monopoly",
+                  "definition_from_notes": "there is single firm in the market; this firm has the greatest ability to control the price of its product, and therefore the greatest amount of market power"
+                },
+                {
+                  "term": "Imperfect competition",
+                  "definition_from_notes": "firms face some competition but also have market power"
+                },
+                {
+                  "term": "Product differentiation",
+                  "definition_from_notes": "how similar or different are the goods or services produces, meaning that the products can be made different form each other, or not identical"
+                },
+                {
+                  "term": "Barriers to entry",
+                  "definition_from_notes": "how easy or difficult it is for new firms to enter the industry and begin producing; these include anything that prevents a firm from entering an industry and beginning production; no barriers to entry into an industry is called free entry"
+                }
+              ],
+              "source_files": [
+                "unit7.1 introduction to firms, industries and market structures"
+              ]
+            },
+            {
+              "id": "7.2",
+              "title": "Profit maximization by the rational producer",
+              "hl_only": false,
+              "concepts": [
+                {
+                  "term": "Revenue",
+                  "definition_from_notes": "the payment firms receive when they sell the goods and services they produce"
+                },
+                {
+                  "term": "Total revenue (TR)",
+                  "definition_from_notes": "obtained by multiplying the price at which a good is sold (P) by the number of units of the good sold (Q)"
+                },
+                {
+                  "term": "Average revenue (AR)",
+                  "definition_from_notes": "revenue per unit of output sold, or total revenue (TR) divided by units of output (Q)"
+                },
+                {
+                  "term": "Marginal revenue (MR)",
+                  "definition_from_notes": "the additional revenue arising from the sale of an additional unit of output"
+                },
+                {
+                  "term": "Cost of production",
+                  "definition_from_notes": "include money payments to buy resources plus anything else given up by a firm for the use of resources (land, labor, capital, entrepreneurship)"
+                },
+                {
+                  "term": "Explicit cost",
+                  "definition_from_notes": "payments made by a firm to outsiders to acquire resources for use in production"
+                },
+                {
+                  "term": "Implicit cost",
+                  "definition_from_notes": "the sacrificed income arising from the use of self-owned resources by a firm"
+                },
+                {
+                  "term": "Economies of scale",
+                  "definition_from_notes": "decreases in average costs of production over the long run as a firm increases all its factors of production; they explain the downward sloping portion"
+                },
+                {
+                  "term": "Specialization of labor",
+                  "definition_from_notes": "As the scale of production increases, more workers must be employed, allowing for greater labor specialization. Each worker specializes in performing tasks that make use of skills, interests and talents, thus increasing efficiency and allowing output to be produced at a lower average cost"
+                },
+                {
+                  "term": "Specialization of management",
+                  "definition_from_notes": "larger scales of production allow for more managers to be employed, each of whom can be specialized in a particular area (such as production, sales, finance, and so on), again resulting in greater efficiency and lower average cost"
+                },
+                {
+                  "term": "Bulk buying of inputs (factors of production)",
+                  "definition_from_notes": "as quantities of inputs purchased increase, the price per unit drops"
+                },
+                {
+                  "term": "Financing economies",
+                  "definition_from_notes": "larger firms may have lower interest rates, thus contributing to lower costs per unit of output"
+                },
+                {
+                  "term": "Diseconomies of scale",
+                  "definition_from_notes": "increases in the average costs of production in the long run as a firm increases its output by increasing all its inputs; they explain the upward sloping portion"
+                },
+                {
+                  "term": "Co-ordination and monitoring difficulties",
+                  "definition_from_notes": "as a firm grows larger, its management may run into difficulties of co-ordination, organization, co-operation and monitoring. The result involves growing inefficiencies causing average costs to increase as the firm expands."
+                },
+                {
+                  "term": "Communication difficulties",
+                  "definition_from_notes": "a larger firm size may lead to difficulties in communication between various component parts of the firm, resulting in inefficiencies and higher average costs"
+                },
+                {
+                  "term": "Poor worker motivation",
+                  "definition_from_notes": "if workers begin to lose their motivation, to feel bored and to care little about their work, they become less efficient, resulting in higher average costs"
+                },
+                {
+                  "term": "Profit maximization",
+                  "definition_from_notes": "determining the level of output that the firm should produce to make profit as large as possible"
+                },
+                {
+                  "term": "Abnormal profit",
+                  "definition_from_notes": "positive profit; TR > TC"
+                },
+                {
+                  "term": "Normal profit",
+                  "definition_from_notes": "zero profit; TR = TC"
+                },
+                {
+                  "term": "Loss",
+                  "definition_from_notes": "negative profit; TR < TC"
+                }
+              ],
+              "source_files": [
+                "unit7.2 profit maximization by the rational producer"
+              ]
+            },
+            {
+              "id": "7.3",
+              "title": "Perfect competition",
+              "hl_only": false,
+              "concepts": [],
+              "source_files": [
+                "unit7.3 perfect competition"
+              ]
+            },
+            {
+              "id": "7.4",
+              "title": "Monopoly",
+              "hl_only": false,
+              "concepts": [
+                {
+                  "term": "Natural monopoly",
+                  "definition_from_notes": "firms that have economies of scale so large that they can produce for an entire market and still not exhaust their economies of scale"
+                },
+                {
+                  "term": "Branding",
+                  "definition_from_notes": "the creation by a firm of a unique image and name of a product (through advertising campaigns that try to influence consumer tastes and establish consumer loyalty)"
+                },
+                {
+                  "term": "Patent",
+                  "definition_from_notes": "rights given by the government to a firm that has developed a new product or invention to be its sole producer for a specific period of time (ex: new pharmaceutical products)"
+                },
+                {
+                  "term": "Licenses",
+                  "definition_from_notes": "granted by governments for particular professions or particular industries (ex: operate radio or television stations, enter professions)"
+                },
+                {
+                  "term": "Copyrights",
+                  "definition_from_notes": "guarantee that an author has the sole rights to print, publish, and sell copyrighted works"
+                }
+              ],
+              "source_files": [
+                "unit7.4 monopoly"
+              ]
+            },
+            {
+              "id": "7.5",
+              "title": "Monopolistic competition",
+              "hl_only": false,
+              "concepts": [
+                {
+                  "term": "Price competition",
+                  "definition_from_notes": "occurs when a firm lowers its price to attract customers away from rival firms, thus increasing sales at the expense of other firms. Non-price competition occurs when firms use methods other than price reductions to attract customers from rivals. (product differentiation, advertising and branding)"
+                }
+              ],
+              "source_files": [
+                "unit7.5 monopolistic competition"
+              ]
+            },
+            {
+              "id": "7.6",
+              "title": "Oligopoly",
+              "hl_only": false,
+              "concepts": [
+                {
+                  "term": "Strategic behavior",
+                  "definition_from_notes": "is based on plans of action that take into account rivals’ possible course of action. Firms planning their strategies make great efforts to guess the actions and reactions of their rivals in order to formulate their own strategy."
+                },
+                {
+                  "term": "Collusion",
+                  "definition_from_notes": "refers to an agreement between firms to limit competition between them, usually by fixing price and therefore lowering quantity produced. By colluding to limit competition, they reduce uncertainties resulting from not knowing how rivals will behave, and maximize profits for the industry as a whole."
+                },
+                {
+                  "term": "Collusive oligopoly",
+                  "definition_from_notes": "refers to situations where firms agree to collude, which means they form an agreement between themselves to limit competition, increase market power and increase profits. The most common form of collusion involves agreements to fix prices such as by holding prices constant at some level, raising pri"
+                }
+              ],
+              "source_files": [
+                "unit7.6 oligopoly"
+              ]
+            },
+            {
+              "id": "7.7",
+              "title": "Government intervention in response to abuse of market power",
+              "hl_only": false,
+              "concepts": [
+                {
+                  "term": "Abuse of market power",
+                  "definition_from_notes": "situations where firms engage in activities that result in reduced competition"
+                },
+                {
+                  "term": "Merger",
+                  "definition_from_notes": "an agreement between two or more firms to join together and become a single firm"
+                },
+                {
+                  "term": "Fines",
+                  "definition_from_notes": "are often imposed if a government agency responsible for investigating anti-competitive behavior discovers some wrongdoing. Firms often get their lawyers to calculate whether breaking the law or complying with the law is more costly."
+                }
+              ],
+              "source_files": [
+                "unit7.7 government intervention in response to abuse of market power"
+              ]
+            }
+          ],
+          "concept_count": 38,
+          "concept_extraction": "ok"
+        }
+      ]
+    },
+    {
+      "part": "Macro",
+      "units": [
+        {
+          "id": "ch8",
+          "number": 8,
+          "title": "The level of overall economic activity",
+          "sections": [
+            {
+              "id": "8.1",
+              "title": "Economic activity",
+              "hl_only": false,
+              "concepts": [],
+              "source_files": [
+                "unit8.1 economic activity"
+              ]
+            },
+            {
+              "id": "8.2",
+              "title": "Measures of economic activity",
+              "hl_only": false,
+              "concepts": [
+                {
+                  "term": "National output",
+                  "definition_from_notes": "aggregate output, total output"
+                },
+                {
+                  "term": "Consumption spending (C)",
+                  "definition_from_notes": "includes all purchases by households on final goods and services in a year"
+                },
+                {
+                  "term": "Investment spending (I)",
+                  "definition_from_notes": "includes spending by firms on capital goods (buildings, machinery, equipment); includes spending on new construction"
+                },
+                {
+                  "term": "Net exports (X-M)",
+                  "definition_from_notes": "refers to the value of all exports(X) minus imports(M)"
+                },
+                {
+                  "term": "Exports",
+                  "definition_from_notes": "goods and services produced within the country and so must be included in the measurement of aggregate output"
+                },
+                {
+                  "term": "Imports",
+                  "definition_from_notes": "domestic spending on goods and services that have been produced in other countries"
+                },
+                {
+                  "term": "Nominal value",
+                  "definition_from_notes": "money value, or value measured in terms of prices that prevail at the time of measurement"
+                },
+                {
+                  "term": "Real value",
+                  "definition_from_notes": "a measure of value that takes into account changes in prices over time; eliminated the influence of price changes and give an indication of how actual output produced has changed"
+                },
+                {
+                  "term": "Per capita",
+                  "definition_from_notes": "takes the total value and divides this by the total population of a country"
+                }
+              ],
+              "source_files": [
+                "unit8.2 measure of economic activity"
+              ]
+            },
+            {
+              "id": "8.3",
+              "title": "Calculations based on national income accounting",
+              "hl_only": false,
+              "concepts": [
+                {
+                  "term": "Price index",
+                  "definition_from_notes": "a measure of average prices in one period relative to average prices in a base year"
+                },
+                {
+                  "term": "Price deflator",
+                  "definition_from_notes": "a price index commonly used to convert nominal GDP to real GDP"
+                }
+              ],
+              "source_files": [
+                "unit8.3 calculations based on national income accounting"
+              ]
+            },
+            {
+              "id": "8.4",
+              "title": "The business cycle",
+              "hl_only": false,
+              "concepts": [
+                {
+                  "term": "Expansion",
+                  "definition_from_notes": "positive growth in real GDP; upward slope; employment of resources increases and the general price level of the economy rises more rapidly (inflation)"
+                },
+                {
+                  "term": "Peak",
+                  "definition_from_notes": "the cycle’s maximum real GDP; unemployment of resources has fallen substantially, general price level may be rising quite rapidly, the economy experiencing inflation"
+                },
+                {
+                  "term": "Contraction",
+                  "definition_from_notes": "the real GDP begins to fall after the peak; downward slope; recession; growing unemployment of resources"
+                },
+                {
+                  "term": "Trough",
+                  "definition_from_notes": "the cycle’s minimum level of GDP; the end of the contraction; widespread unemployment"
+                },
+                {
+                  "term": "Long-term growth trend",
+                  "definition_from_notes": "average growth over long periods of time"
+                },
+                {
+                  "term": "Potential output",
+                  "definition_from_notes": "the output represented by the long-term growth trend"
+                }
+              ],
+              "source_files": [
+                "unit8.4 the business cycle"
+              ]
+            },
+            {
+              "id": "8.5",
+              "title": "National income statistics and alternative measures",
+              "hl_only": false,
+              "concepts": [
+                {
+                  "term": "Included dimensions are",
+                  "definition_from_notes": "real GDP per capita, social support, healthy life expectancy, freedom to make life choices, generosity, perceptions of corruption."
+                },
+                {
+                  "term": "Life expectancy",
+                  "definition_from_notes": "is the average number of years a person expects to live, based on United Nations data."
+                },
+                {
+                  "term": "Well-being",
+                  "definition_from_notes": "is taken to be a population's satisfaction measured by data collected by the Gallup Word Poll"
+                },
+                {
+                  "term": "Ecological footprint",
+                  "definition_from_notes": "is the impact on the environment of each individual in a society on average. It is measured as the amount of land needed to provide for all their requirements and the amount of land needed to absorb their CO2 emissions. The higher the ecological footprint, the lower the HPI."
+                }
+              ],
+              "source_files": [
+                "unit8.5 national income statistics and alternative measures "
+              ]
+            }
+          ],
+          "concept_count": 21,
+          "concept_extraction": "ok"
+        },
+        {
+          "id": "ch9",
+          "number": 9,
+          "title": "Aggregate demand and aggregate supply",
+          "sections": [
+            {
+              "id": "9.1",
+              "title": "Aggregate demand and the aggregate demand curve",
+              "hl_only": false,
+              "concepts": [
+                {
+                  "term": "Aggregate demand",
+                  "definition_from_notes": "the total quantity of aggregate output, or real GDP, that all buyers in an economy want to buy at different possible price levels, ceteris paribus"
+                },
+                {
+                  "term": "Aggregate demand curve",
+                  "definition_from_notes": "shows the relationship between the aggregate output buyers want to buy, or real GDP demanded, and the economy’s price level, ceteris paribus"
+                },
+                {
+                  "term": "Aggregate demand consists demand of",
+                  "definition_from_notes": "consumers (C), business (I), government (g), and net exports (X-M)"
+                },
+                {
+                  "term": "Wealth",
+                  "definition_from_notes": "the value of assets that people own, such as savings in their bank accounts, houses, stocks and bonds, jewelry, works of art, and so on; minus debt to banks or other financial institutions"
+                },
+                {
+                  "term": "Indebtedness",
+                  "definition_from_notes": "how much money people owe from borrowing in the past"
+                },
+                {
+                  "term": "Changes in economic priorities",
+                  "definition_from_notes": "deliberate efforts to influence aggregate demand"
+                },
+                {
+                  "term": "Exchange rate",
+                  "definition_from_notes": "the price of one country’s currency in terms of another country’s currency"
+                },
+                {
+                  "term": "Trade protection",
+                  "definition_from_notes": "restrictions to free international trade often imposed by government"
+                }
+              ],
+              "source_files": [
+                "unit9.1 aggregate demand and the aggregate demand curve"
+              ]
+            },
+            {
+              "id": "9.2",
+              "title": "Short-run aggregate supply and short-run equilibrium in the AD-AS model",
+              "hl_only": false,
+              "concepts": [
+                {
+                  "term": "Aggregate supply",
+                  "definition_from_notes": "the total quantity of goods and services produced in an economy (real GDP) over a particular time period at different price levels"
+                },
+                {
+                  "term": "Short-run aggregate supply curve (SRAS)",
+                  "definition_from_notes": "the relationship between the price level and the quantity of real output (real GDP) produced by firms when resource prices (especially wages) do not change"
+                },
+                {
+                  "term": "Non-labor resources",
+                  "definition_from_notes": "price of oil, equipment, capital goods, land inputs"
+                },
+                {
+                  "term": "Supply shocks",
+                  "definition_from_notes": "events that have a sudden and strong impact on short-run aggregate supply; war, violent conflict, unfavorable weather conditions"
+                }
+              ],
+              "source_files": [
+                "unit9.2 short-run aggregate supply and short-run equilibrium in the AD-AS model"
+              ]
+            },
+            {
+              "id": "9.3",
+              "title": "Long-run aggregate supply and long-run equilibrium in the monetarist/new classical model",
+              "hl_only": false,
+              "concepts": [
+                {
+                  "term": "Natural rate of unemployment",
+                  "definition_from_notes": "the unemployment that exists when the economy is producing its full employment output"
+                }
+              ],
+              "source_files": [
+                "unit9.3 long-run aggregate supply and long-run equilibrium in the monetarist:new classical model"
+              ]
+            },
+            {
+              "id": "9.4",
+              "title": "Aggregate supply and equilibrium in the Keynesian model",
+              "hl_only": false,
+              "concepts": [
+                {
+                  "term": "Horizontal part",
+                  "definition_from_notes": "Keynesian idea that wages and prices do not move downward"
+                }
+              ],
+              "source_files": [
+                "unit9.4 aggregate supply and equilibrium in the keynesian model"
+              ]
+            },
+            {
+              "id": "9.5",
+              "title": "Shifting aggregate supply curves over the long term",
+              "hl_only": false,
+              "concepts": [],
+              "source_files": [
+                "unit9.5 shifting aggregate supply curves over the long term"
+              ]
+            },
+            {
+              "id": "9.6",
+              "title": "Implications of the Keynesian model and the monetarist/ new classical model",
+              "hl_only": false,
+              "concepts": [],
+              "source_files": [
+                "unit9.6 implications of the Keynesian model and the monetarist: new classical model"
+              ]
+            }
+          ],
+          "concept_count": 14,
+          "concept_extraction": "ok"
+        },
+        {
+          "id": "ch10",
+          "number": 10,
+          "title": "Macroeconomic objectives 1: low unemployment, low and stable rate of inflation",
+          "sections": [
+            {
+              "id": "10.1",
+              "title": "Low unemployment",
+              "hl_only": false,
+              "concepts": [
+                {
+                  "term": "Unemployment",
+                  "definition_from_notes": "people of working age (16~64) who are actively looking for a job who are not employed"
+                },
+                {
+                  "term": "Underemployment",
+                  "definition_from_notes": "people of working age with part-time jobs when they would rather work full time, or with jobs that do not make full use of their skills and education (ex: people who work fewer hours per week than they would like, or trained individuals – unrelated to their profession)"
+                },
+                {
+                  "term": "Labor force",
+                  "definition_from_notes": "the number of people who are employed plus the number of people of working age who are unemployed (not working but seeking work)"
+                },
+                {
+                  "term": "Discouraged workers",
+                  "definition_from_notes": "who are unemployed workers who gave up looking for a job because, after trying unsuccessfully to find work for some time, they became discouraged and stopped searching"
+                },
+                {
+                  "term": "Unemployment has the following economic costs",
+                  "definition_from_notes": "- A loss of real output (real GDP)"
+                },
+                {
+                  "term": "Labor market rigidities",
+                  "definition_from_notes": "factors preventing the forces of supply and demand from operating in the labor market"
+                }
+              ],
+              "source_files": [
+                "unit10.1 low unemployment"
+              ]
+            },
+            {
+              "id": "10.2",
+              "title": "Low and stable rate of inflation",
+              "hl_only": false,
+              "concepts": [
+                {
+                  "term": "Inflation",
+                  "definition_from_notes": "sustained increase in the general price level (an average of prices of goods and services in the entire economy)"
+                },
+                {
+                  "term": "Deflation",
+                  "definition_from_notes": "a sustained decrease in the general price level"
+                },
+                {
+                  "term": "Change in the rate of inflation",
+                  "definition_from_notes": "change in how fast the price level is increasing"
+                },
+                {
+                  "term": "Disinflation",
+                  "definition_from_notes": "inflation occurs at a lower rate"
+                },
+                {
+                  "term": "Price index",
+                  "definition_from_notes": "a measure of average prices in one period relative to average prices in a reference period called a based period"
+                },
+                {
+                  "term": "Consumer Price Index (CPI)",
+                  "definition_from_notes": "a measure of the cost of living, or the cost of goods and services purchased by the typical household in an economy; creates a hypothetical basket containing thousands of goods and services that are consumed by the typical household in the course of a year"
+                },
+                {
+                  "term": "Basket",
+                  "definition_from_notes": "calculated by multiplying price times quantity for each good and service in the basket and adding up to obtain the total value of the basket"
+                },
+                {
+                  "term": "Weighted price index",
+                  "definition_from_notes": "a price index that weights the various goods and services according to their relative importance in consumer spending"
+                },
+                {
+                  "term": "Stagflation",
+                  "definition_from_notes": "results in a higher price level and a decrease in real GDP, increase in unemployment"
+                },
+                {
+                  "term": "Purchasing power",
+                  "definition_from_notes": "the quantity of goods and services that can be bought with money"
+                },
+                {
+                  "term": "Hyperinflation",
+                  "definition_from_notes": "very high rates of inflation; occurring when the price level increases by more than 50% per month"
+                },
+                {
+                  "term": "Deferred consumption",
+                  "definition_from_notes": "consumers postpone spending"
+                }
+              ],
+              "source_files": [
+                "unit10.2 low and stable rate of inflation"
+              ]
+            },
+            {
+              "id": "10.3",
+              "title": "Exploring the relationship between unemployment and inflation",
+              "hl_only": false,
+              "concepts": [
+                {
+                  "term": "Stagflation",
+                  "definition_from_notes": "a term coined at the time to refer to the new phenomenon of stagnation with unemployment and inflation simultaneously"
+                }
+              ],
+              "source_files": [
+                "unit10.3 exploring the relationship between unemployment and inflation"
+              ]
+            }
+          ],
+          "concept_count": 19,
+          "concept_extraction": "ok"
+        },
+        {
+          "id": "ch11",
+          "number": 11,
+          "title": "Macroeconomic objectives II: Economic growth, sustainable level of debt",
+          "sections": [
+            {
+              "id": "11.1",
+              "title": "Economic growth",
+              "hl_only": false,
+              "concepts": [
+                {
+                  "term": "Economic growth",
+                  "definition_from_notes": "refers to an increase in real GDP, or the real quantity of goods and services produced over a period of time, and is usually expressed as:"
+                },
+                {
+                  "term": "Real GDP per capita",
+                  "definition_from_notes": "is a better indicator of the standard of living of a population, since it measures the amount of real GDP corresponding to each person on average."
+                },
+                {
+                  "term": "Physical capital",
+                  "definition_from_notes": "capital goods results from investments or spending to produce machines, equipment, roads, etc."
+                },
+                {
+                  "term": "Human capital",
+                  "definition_from_notes": "the skills, abilities, knowledge and levels of health of workers; human capital results from investments, or spending on education, training, provision of health care services, clean water supplies, good nutrition, and generally anything that affects levels of education and health"
+                },
+                {
+                  "term": "Natural capital",
+                  "definition_from_notes": "everything that traditionally falls within ‘land’ or ‘natural resources’; it includes everything under the land plus everything on the land plus a country’s overall natural environment and ecosystem"
+                },
+                {
+                  "term": "Ecological resources",
+                  "definition_from_notes": "soil quality, rivers, clean air, biodiversity, the ozone layer"
+                },
+                {
+                  "term": "Productivity",
+                  "definition_from_notes": "the quantity of output produced for each hour of work of the working population"
+                },
+                {
+                  "term": "Improvement in productivity",
+                  "definition_from_notes": "workers become more productive; the quantity of output produced in an hour of work increases"
+                },
+                {
+                  "term": "Living standards",
+                  "definition_from_notes": "levels of income, wealth and consumption of goods and services, including health care and education"
+                }
+              ],
+              "source_files": [
+                "unit11.1 economic growth"
+              ]
+            },
+            {
+              "id": "11.2",
+              "title": "Sustainable level of government debt (HL only)",
+              "hl_only": true,
+              "concepts": [
+                {
+                  "term": "Government budget",
+                  "definition_from_notes": "a type of plan of a country’s revenues and expenditures over a period of time; mostly coming from taxes"
+                },
+                {
+                  "term": "Balanced budget",
+                  "definition_from_notes": "if tax revenues are equal to government expenditures over that period"
+                },
+                {
+                  "term": "Budget deficit",
+                  "definition_from_notes": "if expenditure are larger than tax revenues"
+                },
+                {
+                  "term": "Budget surplus",
+                  "definition_from_notes": "if expenditures are smaller than tax revenues"
+                },
+                {
+                  "term": "Governments have to provide",
+                  "definition_from_notes": "health care, education, infrastructure, defense, pay salaried to their employees and make transfer payments"
+                },
+                {
+                  "term": "Government debt",
+                  "definition_from_notes": "the government’s accumulation of deficits minus surpluses"
+                },
+                {
+                  "term": "Sustainable debt",
+                  "definition_from_notes": "a level of debt where the borrowing government has enough revenues to meet its debt obligations (payment of interest and repayment of the borrowed amount) without accumulating arrears (overdue debt payments) while also allowing economic growth to continue at an acceptable level"
+                },
+                {
+                  "term": "Bond",
+                  "definition_from_notes": "a certificate that promises to pay interest at various intervals until a certain date when the money is repaid to the bond holder"
+                },
+                {
+                  "term": "Lender",
+                  "definition_from_notes": "holder of the bond (individuals, firms, banks, any type of organization)"
+                },
+                {
+                  "term": "Borrower",
+                  "definition_from_notes": "issuer of the bond (government)"
+                },
+                {
+                  "term": "Debt-to-GDP ratio",
+                  "definition_from_notes": "measure the size of a country’s government debt as a share of GDP of the borrowing country (bigger the number, the more debt they have)"
+                },
+                {
+                  "term": "Debt servicing",
+                  "definition_from_notes": "the payments that must be made in order to repay the principal (the amount of the loan) plus interest payments"
+                },
+                {
+                  "term": "Credit rating",
+                  "definition_from_notes": "an assessment of the ability of a borrower to pay back loans, usually carried out by agencies that are qualified to do this"
+                },
+                {
+                  "term": "There is a point where the level of debt cannot be sustained",
+                  "definition_from_notes": "new debt requires higher debt service payments, require more foreign borrowing, more debt servicing payments."
+                }
+              ],
+              "source_files": [
+                "unit11.1 economic growth",
+                "unit11.2 sustainable level of government debt"
+              ]
+            },
+            {
+              "id": "11.3",
+              "title": "Potential conflict between macroeconomic objectives",
+              "hl_only": false,
+              "concepts": [],
+              "source_files": [
+                "unit11.3 potential conflict between macroeconomic objectives "
+              ]
+            }
+          ],
+          "concept_count": 23,
+          "concept_extraction": "ok"
+        },
+        {
+          "id": "ch12",
+          "number": 12,
+          "title": "Economics of inequality and poverty",
+          "sections": [
+            {
+              "id": "12.1",
+              "title": "Inequality",
+              "hl_only": false,
+              "concepts": [
+                {
+                  "term": "Equity",
+                  "definition_from_notes": "involves fairness; normative concept as different people have different ideas and beliefs about what is fair"
+                },
+                {
+                  "term": "Equality",
+                  "definition_from_notes": "the idea of being the same; something may be equal or unequal on the basis of some measure"
+                },
+                {
+                  "term": "Wealth",
+                  "definition_from_notes": "refers to the money, assets or things of value that people own, such as savings deposits; stocks in the stock market; bonds; land, houses and other property; valuable paintings or jewelry"
+                },
+                {
+                  "term": "Economic inequality",
+                  "definition_from_notes": "the degree that people in a population differ in their ability to satisfy their economic needs; inequality in living conditions that arise due to monetary factors"
+                },
+                {
+                  "term": "Income inequality",
+                  "definition_from_notes": "arises from differences in how evenly income is distributed in a population"
+                },
+                {
+                  "term": "Income",
+                  "definition_from_notes": "the money that people receive from their employment as well as other sources including interest from savings accounts and holdings of bonds, dividends from shares in the stock market, rents form property that is owned and rented out, pensions or government benefits"
+                },
+                {
+                  "term": "Wealth inequality",
+                  "definition_from_notes": "arises form differences in the amount of wealth people own, which as noted above refers to the money or things of monetary value including savings, stocks, land, houses, and more"
+                },
+                {
+                  "term": "Quantile",
+                  "definition_from_notes": "a 20% portion of a country’s population; we divide a population into five quintiles, ranging from the lowest (the poorest 20% of the population) to the highest (the richest 20%)"
+                },
+                {
+                  "term": "Decile",
+                  "definition_from_notes": "10% portions of the population (population divided into 10 groups)"
+                },
+                {
+                  "term": "Lorenz curve",
+                  "definition_from_notes": "used to show the degree of income inequality in an economy; actual relationship between percentages of the population and the shares of income they receive"
+                }
+              ],
+              "source_files": [
+                "unit12.1 inequality"
+              ]
+            },
+            {
+              "id": "12.2",
+              "title": "Poverty",
+              "hl_only": false,
+              "concepts": [
+                {
+                  "term": "Poverty",
+                  "definition_from_notes": "an inability to satisfy minimum consumption needs"
+                },
+                {
+                  "term": "Absolute poverty",
+                  "definition_from_notes": "a situation where a person or family does not have enough income to meet basic human needs"
+                },
+                {
+                  "term": "Poverty line",
+                  "definition_from_notes": "an income level that is considered minimally sufficient to sustain a family in terms of food, housing, clothing, medical needs and so on"
+                },
+                {
+                  "term": "Relative poverty",
+                  "definition_from_notes": "a concept that compares the income of individuals or households in a society with median incomes"
+                },
+                {
+                  "term": "Minimum income standards (MIS)",
+                  "definition_from_notes": "the method consists of ongoing research on what people in a population believe are the essentials for a minimum acceptable standard of living that allows people to participate in society – budget for a basket of goods including numerous essential items like food, clothing, housing, childcare, fuel c"
+                },
+                {
+                  "term": "Multidimensional Poverty Index (MPI)",
+                  "definition_from_notes": "measures poverty in three dimensions: health, education and living standards"
+                }
+              ],
+              "source_files": [
+                "unit12.2 poverty"
+              ]
+            },
+            {
+              "id": "12.3",
+              "title": "Causes of economic inequality and poverty",
+              "hl_only": false,
+              "concepts": [
+                {
+                  "term": "Opportunity",
+                  "definition_from_notes": "a set of circumstances that makes it possible for someone to do something"
+                },
+                {
+                  "term": "Economic inequality",
+                  "definition_from_notes": "inequalities in standards of living that arise from monetary factors like income and wealth"
+                },
+                {
+                  "term": "Inequality of opportunity",
+                  "definition_from_notes": "inequalities in potential outcomes in standards of living that arise from circumstances that are beyond one’s control"
+                },
+                {
+                  "term": "Human capital",
+                  "definition_from_notes": "the skills, education and good health that people possess"
+                },
+                {
+                  "term": "Globalization",
+                  "definition_from_notes": "economic integration on a global scale, involving increasing interconnectedness throughout the world"
+                }
+              ],
+              "source_files": [
+                "unit12.2 poverty"
+              ]
+            },
+            {
+              "id": "12.4",
+              "title": "The impact of income and wealth inequality",
+              "hl_only": false,
+              "concepts": [],
+              "source_files": [
+                "unit12.2 poverty"
+              ]
+            },
+            {
+              "id": "12.5",
+              "title": "Policies to reduce income and wealth inequalities and poverty",
+              "hl_only": false,
+              "concepts": [
+                {
+                  "term": "Proportional tax",
+                  "definition_from_notes": "as income increases, the fraction of income paid as taxes remain constant; there is a constant tax rate"
+                },
+                {
+                  "term": "Progressive taxation",
+                  "definition_from_notes": "as income increases, the fraction of income paid as taxes increases, there is an increasing tax rate"
+                },
+                {
+                  "term": "Regressive taxation",
+                  "definition_from_notes": "as income increases, the fraction of income paid as taxes decreases; there is a decreasing tax rate"
+                },
+                {
+                  "term": "Marginal tax rate",
+                  "definition_from_notes": "tax rate paid on additional income, or on the last amount of tax paid, expressed as a percentage"
+                },
+                {
+                  "term": "Average tax rate",
+                  "definition_from_notes": "tax paid divided by total income, also expressed as a percentage"
+                }
+              ],
+              "source_files": [
+                "unit12.2 poverty"
+              ]
+            }
+          ],
+          "concept_count": 26,
+          "concept_extraction": "ok"
+        },
+        {
+          "id": "ch13",
+          "number": 13,
+          "title": "Demand-side and supply-side policies",
+          "sections": [
+            {
+              "id": "13.1",
+              "title": "Introduction to macroeconomic policies",
+              "hl_only": false,
+              "concepts": [],
+              "source_files": [
+                "unit13"
+              ]
+            },
+            {
+              "id": "13.2",
+              "title": "Demand and management and monetary policy",
+              "hl_only": false,
+              "concepts": [
+                {
+                  "term": "Monetary policy",
+                  "definition_from_notes": "carried out by the central bank of each country"
+                },
+                {
+                  "term": "Commercial bank",
+                  "definition_from_notes": "financial institutions (private or public) whose main functions are"
+                },
+                {
+                  "term": "Central bank",
+                  "definition_from_notes": "a government financial institution with several important responsibilities:"
+                },
+                {
+                  "term": "Inflation targeting",
+                  "definition_from_notes": "the public announcement of medium-term numerical targets for inflation with an institutional commitment by the monetary authority to achieve these targets; many countries pursue inflation targeting between 1.5% and 2.5%"
+                },
+                {
+                  "term": "Interest",
+                  "definition_from_notes": "a payment for the loan in addition to repaying the principal"
+                },
+                {
+                  "term": "Money",
+                  "definition_from_notes": "anything is acceptable as payment for goods and services (currency and check accounts)"
+                },
+                {
+                  "term": "Minimum reserve requirement (required reserve ratio)",
+                  "definition_from_notes": "a legally determined fraction of total deposits"
+                },
+                {
+                  "term": "Minimum lending rate",
+                  "definition_from_notes": "an interest rate central bank charge to commercial banks when central bank lend money to commercial banks"
+                },
+                {
+                  "term": "Quantitative easing",
+                  "definition_from_notes": "similar to buying bonds in open market operations but on a larger scale, involving more types of financial assets ad larger quantities"
+                },
+                {
+                  "term": "Nominal interest rate",
+                  "definition_from_notes": "the market rate that prevails at any moment in time (current interest rate)"
+                },
+                {
+                  "term": "Real interest rate",
+                  "definition_from_notes": "the interest rate that has been corrected for inflation"
+                }
+              ],
+              "source_files": [
+                "unit13"
+              ]
+            },
+            {
+              "id": "13.3",
+              "title": "Demand management and fiscal policy",
+              "hl_only": false,
+              "concepts": [
+                {
+                  "term": "Fiscal policy",
+                  "definition_from_notes": "Manipulations by the government of its own expenditures and taxes to influence the level of aggregate demand"
+                },
+                {
+                  "term": "Sustainable debt",
+                  "definition_from_notes": "a level of debt where a borrowing government can meet its present and future debt obligations without accumulating overdue debt payments"
+                }
+              ],
+              "source_files": [
+                "unit13"
+              ]
+            },
+            {
+              "id": "13.4",
+              "title": "The Keynesian multiplier (HL)",
+              "hl_only": true,
+              "concepts": [
+                {
+                  "term": "Keynesian multiplier",
+                  "definition_from_notes": "the change in real GDP divided by the initial change in expenditure"
+                },
+                {
+                  "term": "Leakages",
+                  "definition_from_notes": "saving, tax, import"
+                },
+                {
+                  "term": "Marginal propensity to consume (MPC)",
+                  "definition_from_notes": "the fraction of additional income that households spend on consumption of domestically produced goods and services"
+                },
+                {
+                  "term": "Marginal propensity to save (MPS)",
+                  "definition_from_notes": "fraction of additional income saved"
+                },
+                {
+                  "term": "Marginal propensity to tax (MPT)",
+                  "definition_from_notes": "fraction of additional income taxed"
+                },
+                {
+                  "term": "Marginal propensity to import (MPM)",
+                  "definition_from_notes": "fraction of additional income spend on imported goods and services"
+                },
+                {
+                  "term": "Autonomous spending",
+                  "definition_from_notes": "it has not been caused by a change in income"
+                },
+                {
+                  "term": "Induced spending",
+                  "definition_from_notes": "spending caused by changes in income"
+                }
+              ],
+              "source_files": [
+                "unit13"
+              ]
+            },
+            {
+              "id": "13.6",
+              "title": "Supply-side policies",
+              "hl_only": false,
+              "concepts": [
+                {
+                  "term": "Privatization",
+                  "definition_from_notes": "a transfer of ownership of a firm from the public to the private sector"
+                },
+                {
+                  "term": "Deregulation",
+                  "definition_from_notes": "elimination or reduction of government regulation of private sector activities"
+                },
+                {
+                  "term": "Labor union",
+                  "definition_from_notes": "an association of workers in a particular profession, whose objective is to improve working conditions and defend rights of workers, representing its members in negotiations with employers"
+                },
+                {
+                  "term": "Taxes on capital gains",
+                  "definition_from_notes": "taxes on profits from financial investments or from buying and selling real estate"
+                },
+                {
+                  "term": "Investment in human capital",
+                  "definition_from_notes": "education and health services"
+                },
+                {
+                  "term": "Investment in new technology",
+                  "definition_from_notes": "research and development"
+                },
+                {
+                  "term": "Research and development",
+                  "definition_from_notes": "the fundamental activity behind the development of new technologies, resulting in new or improved capital goods"
+                },
+                {
+                  "term": "Infrastructure",
+                  "definition_from_notes": "a type of physical capital resulting in investment; includes power, telecommunications, roads, dams, urban transport, ports airports, irrigation systems, etc."
+                },
+                {
+                  "term": "Infant industries",
+                  "definition_from_notes": "newly emerging industries in developing countries which sometimes receive government support in the form of grants, subsidies, tax exemptions, and tariffs or other forms of protection against exports"
+                },
+                {
+                  "term": "Vested interests",
+                  "definition_from_notes": "strong personal interest in something"
+                }
+              ],
+              "source_files": [
+                "unit13"
+              ]
+            }
+          ],
+          "concept_count": 31,
+          "concept_extraction": "ok"
+        }
+      ]
+    },
+    {
+      "part": "Global economy",
+      "units": [
+        {
+          "id": "ch14",
+          "number": 14,
+          "title": "International trade: Part I",
+          "sections": [
+            {
+              "id": "14.1",
+              "title": "The benefits of international trade",
+              "hl_only": false,
+              "concepts": [
+                {
+                  "term": "Free trade",
+                  "definition_from_notes": "the absence of government intervention of any kind in international trade, so that trade takes place without any restrictions between individuals, firms or governments of different countries"
+                },
+                {
+                  "term": "Specialization",
+                  "definition_from_notes": "occurs when an individual, firm or country concentrates production on one or a few goods and services"
+                }
+              ],
+              "source_files": [
+                "unit14"
+              ]
+            },
+            {
+              "id": "14.2",
+              "title": "Free trade: absolute and comparative advantage (HL only)",
+              "hl_only": true,
+              "concepts": [
+                {
+                  "term": "Absolute advantage",
+                  "definition_from_notes": "the ability of one country to produce a good using fewer resources than another country; a country has an absolute advantage in a good if with the same quantity of resources it can produce more of the good than another country"
+                },
+                {
+                  "term": "Comparative advantage",
+                  "definition_from_notes": "the situation where one country has a lower opportunity cost in the production of a good than another country"
+                },
+                {
+                  "term": "Opportunity cost",
+                  "definition_from_notes": "the next best alternative that must be sacrificed in order to obtain something"
+                }
+              ],
+              "source_files": [
+                "unit14"
+              ]
+            },
+            {
+              "id": "14.3",
+              "title": "Types of trade protection: restrictions on free trade",
+              "hl_only": false,
+              "concepts": [
+                {
+                  "term": "Trade protection",
+                  "definition_from_notes": "government intervention in international trade through the imposition of trade restrictions to prevent the free entry of imports into a country"
+                }
+              ],
+              "source_files": [
+                "unit14"
+              ]
+            }
+          ],
+          "concept_count": 6,
+          "concept_extraction": "thin"
+        },
+        {
+          "id": "ch15",
+          "number": 15,
+          "title": "International trade: Part II",
+          "sections": [
+            {
+              "id": "15.1",
+              "title": "Arguments for and against trade protection",
+              "hl_only": false,
+              "concepts": [
+                {
+                  "term": "Anti-dumping argument",
+                  "definition_from_notes": "if a country suspects that a trading partner is practicing dumping, it should have the right to impose tariffs or quotas in order to limit imports of the subsidized, or dumped good"
+                }
+              ],
+              "source_files": [
+                "unit15"
+              ]
+            },
+            {
+              "id": "15.2",
+              "title": "Economic integration: trading blocs",
+              "hl_only": false,
+              "concepts": [
+                {
+                  "term": "Economic integration",
+                  "definition_from_notes": "economic co-operation between countries and co-ordination of their economic policies, leading to increased economic links between them"
+                },
+                {
+                  "term": "Better use of factors of production",
+                  "definition_from_notes": "improved resource allocation and greater employment opportunities"
+                }
+              ],
+              "source_files": [
+                "unit15"
+              ]
+            },
+            {
+              "id": "15.4",
+              "title": "World Trade Organization",
+              "hl_only": false,
+              "concepts": [
+                {
+                  "term": "World Trade Organization",
+                  "definition_from_notes": "an organization for liberalizing trade"
+                }
+              ],
+              "source_files": [
+                "unit15"
+              ]
+            }
+          ],
+          "concept_count": 4,
+          "concept_extraction": "thin"
+        },
+        {
+          "id": "ch16",
+          "number": 16,
+          "title": "Exchange rates and the balance of payments",
+          "sections": [
+            {
+              "id": "16.1",
+              "title": "Floating exchange rates",
+              "hl_only": false,
+              "concepts": [
+                {
+                  "term": "Exchange rate",
+                  "definition_from_notes": "the value of one currency expressed in terms of another"
+                },
+                {
+                  "term": "Number of dollars per euro",
+                  "definition_from_notes": "1.5 dollars = 1 euro (value of 1 euro is 1.5 dollars)"
+                },
+                {
+                  "term": "Number of euros per dollar",
+                  "definition_from_notes": "0.67 euro = 1 dollar (value of 1 dollar is 0.67 euro)"
+                },
+                {
+                  "term": "Floating exchange rate system",
+                  "definition_from_notes": "exchange rates are determined by market forces, or the forces of demand and supply, with no government or central bank intervention in the foreign exchange market"
+                },
+                {
+                  "term": "Appreciation",
+                  "definition_from_notes": "an increase in the value of a currency in a floating exchange rate system"
+                },
+                {
+                  "term": "Depreciation",
+                  "definition_from_notes": "a fall in the value of a currency in a floating exchange rate system"
+                },
+                {
+                  "term": "Foreign direct investment",
+                  "definition_from_notes": "investment by multinational corporations in productive facilities"
+                },
+                {
+                  "term": "Portfolio investment",
+                  "definition_from_notes": "financial investments, such as purchase of stocks and bonds"
+                },
+                {
+                  "term": "Remittances",
+                  "definition_from_notes": "a transfer of money from one country to another, in most cases by foreign workers who send money from their earnings in the country of residence to their family in their home country"
+                },
+                {
+                  "term": "Currency speculation",
+                  "definition_from_notes": "buying and selling currencies to make a profit from changes in exchange rates"
+                },
+                {
+                  "term": "January",
+                  "definition_from_notes": "$1.22 = 1 bople  December: $1.69  1 bople"
+                }
+              ],
+              "source_files": [
+                "unit16"
+              ]
+            },
+            {
+              "id": "16.2",
+              "title": "Consequences of changes in exchange rates: an evaluation",
+              "hl_only": false,
+              "concepts": [],
+              "source_files": [
+                "unit16"
+              ]
+            },
+            {
+              "id": "16.3",
+              "title": "Government intervention",
+              "hl_only": false,
+              "concepts": [
+                {
+                  "term": "Devaluation",
+                  "definition_from_notes": "the government may lower the currency value if it is higher than what can be maintained through intervention"
+                },
+                {
+                  "term": "Revaluation",
+                  "definition_from_notes": "the government may set a new higher value if the currency has a lower value than can be maintained by intervention"
+                },
+                {
+                  "term": "Managed exchange rates",
+                  "definition_from_notes": "is between the two extremes of floating exchange rates and fixed exchange rates. Exchange rates are for the most part free to float to their market levels over long periods of time; however, central banks periodically intervene to stabilize them over the short term."
+                },
+                {
+                  "term": "Overvalued currency",
+                  "definition_from_notes": "a value that is too high relative to its equilibrium free market value"
+                },
+                {
+                  "term": "Undervalued currency",
+                  "definition_from_notes": "a value too low relative to its equilibrium free market value"
+                }
+              ],
+              "source_files": [
+                "unit16"
+              ]
+            },
+            {
+              "id": "16.4",
+              "title": "The balance of payments",
+              "hl_only": false,
+              "concepts": [
+                {
+                  "term": "Capital transfers",
+                  "definition_from_notes": "inflows minus outflows for such things as debt forgiveness, non-life insurance claims, and investment grants"
+                }
+              ],
+              "source_files": [
+                "unit16"
+              ]
+            }
+          ],
+          "concept_count": 17,
+          "concept_extraction": "ok"
+        },
+        {
+          "id": "ch17",
+          "number": 17,
+          "title": null,
+          "sections": [
+            {
+              "id": "17.1",
+              "title": "How the current account and the financial account are related to exchange rates",
+              "hl_only": false,
+              "concepts": [],
+              "source_files": [
+                "unit17"
+              ]
+            },
+            {
+              "id": "17.2",
+              "title": "Comparing and contrasting exchange rate systems",
+              "hl_only": false,
+              "concepts": [],
+              "source_files": [
+                "unit17"
+              ]
+            },
+            {
+              "id": "17.3",
+              "title": "Evaluating monetary union",
+              "hl_only": false,
+              "concepts": [
+                {
+                  "term": "Price transparency",
+                  "definition_from_notes": "the ability of consumers and firms to compare prices in all the countries that have adopted a common currency without having to make exchange rate calculations and conversions"
+                },
+                {
+                  "term": "Inward investment",
+                  "definition_from_notes": "investments from outsiders towards the member countries with a common currency"
+                }
+              ],
+              "source_files": [
+                "unit17"
+              ]
+            },
+            {
+              "id": "17.4",
+              "title": "Understanding current account deficits and surpluses",
+              "hl_only": false,
+              "concepts": [
+                {
+                  "term": "Credit rating",
+                  "definition_from_notes": "how likely they are to repay their loans in full and on time"
+                },
+                {
+                  "term": "Financial account deficit",
+                  "definition_from_notes": "funds are laving the country, resulting in a risk of insufficient domestic investment, limiting economic growth prospects"
+                }
+              ],
+              "source_files": [
+                "unit17"
+              ]
+            }
+          ],
+          "concept_count": 4,
+          "concept_extraction": "thin",
+          "label_from_sections": "How the current account and the financial account are related to exchange rates / Comparing and contrasting exchange rate systems / Evaluating monetary union"
+        }
+      ]
+    },
+    {
+      "part": "Economic development",
+      "units": [
+        {
+          "id": "ch18",
+          "number": 18,
+          "title": null,
+          "sections": [
+            {
+              "id": "18.1",
+              "title": "Sustainable development",
+              "hl_only": false,
+              "concepts": [
+                {
+                  "term": "Sustainable development",
+                  "definition_from_notes": "is 'development that meets the needs of the present without compromising the ability of future generations to meet their own needs'. It means that societies should pursue economic growth that does not deplete or degrade natural resources, so that future generations will not have fewer or lower-quali"
+                }
+              ],
+              "source_files": [
+                "unit18"
+              ]
+            },
+            {
+              "id": "18.2",
+              "title": "Measuring development",
+              "hl_only": false,
+              "concepts": [
+                {
+                  "term": "Economic development",
+                  "definition_from_notes": "is defined as a process where increases in real per capita output and incomes are accompanied by improvements in standards of living of the population and reductions in poverty, increased access to goods and services that satisfy basic needs (including food, shelter, health care, education, sanitati"
+                },
+                {
+                  "term": "Life sustenance",
+                  "definition_from_notes": "refers to access to basic services (merit goods) such as education and health care services, as well as satisfaction of basic needs like food, clothing and shelter."
+                },
+                {
+                  "term": "Human development",
+                  "definition_from_notes": "is a process of expanding human freedoms: the freedom to satisfy hunger; to be adequately fed; to be free of preventable illnesses; to have adequate clothing and shelter; to have access to clean water and sanitation; to be able to read, write and receive an appropriate education; to be knowledgeable"
+                },
+                {
+                  "term": "Income poverty",
+                  "definition_from_notes": "occurs when income falls below a nationally or internationally determined poverty line."
+                },
+                {
+                  "term": "Infant mortality",
+                  "definition_from_notes": "refers to the number of infant deaths from the time of birth until the age of one, per 1000 live births."
+                },
+                {
+                  "term": "Maternal mortality",
+                  "definition_from_notes": "refers to the number of women who die per year as a result of pregnancy-related causes, per 100000 live births."
+                }
+              ],
+              "source_files": [
+                "unit18"
+              ]
+            }
+          ],
+          "concept_count": 7,
+          "concept_extraction": "thin",
+          "label_from_sections": "Sustainable development / Measuring development"
+        },
+        {
+          "id": "ch19",
+          "number": 19,
+          "title": null,
+          "sections": [
+            {
+              "id": "19.1",
+              "title": "Poverty cycles",
+              "hl_only": false,
+              "concepts": [],
+              "source_files": [
+                "unit19"
+              ]
+            },
+            {
+              "id": "19.2",
+              "title": "Economic barriers",
+              "hl_only": false,
+              "concepts": [],
+              "source_files": [
+                "unit19"
+              ]
+            }
+          ],
+          "concept_count": 0,
+          "concept_extraction": "thin",
+          "label_from_sections": "Poverty cycles / Economic barriers"
+        },
+        {
+          "id": "ch20",
+          "number": 20,
+          "title": null,
+          "sections": [
+            {
+              "id": "20.1",
+              "title": "International trade strategies",
+              "hl_only": false,
+              "concepts": [],
+              "source_files": [
+                "unit20"
+              ]
+            },
+            {
+              "id": "20.2",
+              "title": "Diversification and social enterprise",
+              "hl_only": false,
+              "concepts": [
+                {
+                  "term": "Diversification",
+                  "definition_from_notes": "a reallocation of resources into new activities that broaden the range of goods or services produced"
+                }
+              ],
+              "source_files": [
+                "unit20"
+              ]
+            },
+            {
+              "id": "20.3",
+              "title": "Market-based policies",
+              "hl_only": false,
+              "concepts": [],
+              "source_files": [
+                "unit20"
+              ]
+            },
+            {
+              "id": "20.4",
+              "title": "Interventionist policies",
+              "hl_only": false,
+              "concepts": [],
+              "source_files": [
+                "unit20"
+              ]
+            },
+            {
+              "id": "20.5",
+              "title": "Foreign direct investment and multinational corporations (MNCs)",
+              "hl_only": false,
+              "concepts": [
+                {
+                  "term": "Foreign direct investment",
+                  "definition_from_notes": "investment by firms based in one country in productive activities in another country with control of at least 10 percent of the firm in the host country"
+                },
+                {
+                  "term": "Multinational corporation",
+                  "definition_from_notes": "firms that undertakes foreign direct investment, and operates in more than one country"
+                }
+              ],
+              "source_files": [
+                "unit20"
+              ]
+            },
+            {
+              "id": "20.6",
+              "title": "Foreign aid",
+              "hl_only": false,
+              "concepts": [
+                {
+                  "term": "HIPC",
+                  "definition_from_notes": "initiative intended to provide debt relief to some highly indebted poor countries by cancelling a portion of their external debts"
+                }
+              ],
+              "source_files": [
+                "unit20"
+              ]
+            },
+            {
+              "id": "20.7",
+              "title": "Multilateral development assistance",
+              "hl_only": false,
+              "concepts": [
+                {
+                  "term": "Multilateral development assistance",
+                  "definition_from_notes": "lending to developing countries on non-concessional terms, in other words with rates of interest and repayment periods determined in the market"
+                },
+                {
+                  "term": "World bank",
+                  "definition_from_notes": "a development assistance organization that extends long-term loans to developing country governments for the purpose of promoting economic development and structural change"
+                },
+                {
+                  "term": "IMF",
+                  "definition_from_notes": "a multilateral financial institution that was established jointly with the World Bank in 1944 with the original purpose of lending to countries experiencing balance of rates that existed at the time"
+                }
+              ],
+              "source_files": [
+                "unit20"
+              ]
+            },
+            {
+              "id": "20.8",
+              "title": "Institutional change",
+              "hl_only": false,
+              "concepts": [
+                {
+                  "term": "Microfinance",
+                  "definition_from_notes": "credit in small amounts to people who do not ordinarily have access to credit"
+                },
+                {
+                  "term": "Mobile banking",
+                  "definition_from_notes": "the use of mobile telephones to receive or send money and to pay bills"
+                }
+              ],
+              "source_files": [
+                "unit20"
+              ]
+            },
+            {
+              "id": "20.9",
+              "title": "Strengths and limitations of government intervention versus market-oriented approaches",
+              "hl_only": false,
+              "concepts": [
+                {
+                  "term": "Market-oriented policies",
+                  "definition_from_notes": "- Policies encouraging competition (deregulation, privatisation, anti-monopoly regulation)"
+                },
+                {
+                  "term": "Interventionist policy",
+                  "definition_from_notes": "- Government intervention in markets intended to correct market deficiencies and create an environment in which markets can work more effectively"
+                }
+              ],
+              "source_files": [
+                "unit20"
+              ]
+            }
+          ],
+          "concept_count": 11,
+          "concept_extraction": "thin",
+          "label_from_sections": "International trade strategies / Diversification and social enterprise / Market-based policies"
+        }
+      ]
+    }
+  ]
+}

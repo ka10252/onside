@@ -1,0 +1,650 @@
+{
+  "unit": 6,
+  "title": "Market failure and socially undesirable outcomes II",
+  "questions": [
+    {
+      "id": "u6-mcq-01",
+      "format": "mcq",
+      "section": "6.3",
+      "concepts": ["c6-public-goods", "c6-non-rivalrous", "c6-non-excludable"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Which of the following is the best example of a public good in the town of Kel?",
+      "hints": [
+        "Test each option against two features: can non-payers be kept out, and does one person's use reduce what others get?",
+        "The public good is the one that passes both tests."
+      ],
+      "targets": "Recognising a pure public good",
+      "options": [
+        {"id": "a", "text": "Seats at Kel's football stadium", "misconception": "People without tickets can be kept out, and a seat used by one fan cannot be used by another."},
+        {"id": "b", "text": "Treatment at Kel's hospital", "misconception": "Health care is usually treated as a merit good; patients can be excluded and treatment is rivalrous."},
+        {"id": "c", "text": "Street lighting in Kel's town centre", "misconception": null},
+        {"id": "d", "text": "Fish in the river that runs through Kel", "misconception": "Fish are non-excludable but rivalrous, so they are a common pool resource, not a public good."}
+      ],
+      "answer": "c"
+    },
+    {
+      "id": "u6-mcq-02",
+      "format": "mcq",
+      "section": "6.3",
+      "concepts": ["c6-non-rivalrous"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "A good is described as non-rivalrous. This means that:",
+      "hints": [
+        "Rivalry is about what happens to other people's use when one person uses the good.",
+        "Be careful not to confuse this with whether people can be kept from using the good."
+      ],
+      "targets": "Non-rivalry vs non-excludability",
+      "options": [
+        {"id": "a", "text": "one person's consumption does not reduce the amount available to others", "misconception": null},
+        {"id": "b", "text": "it is impossible to prevent people who do not pay from using it", "misconception": "This describes non-excludability, a different feature."},
+        {"id": "c", "text": "no firms compete with each other to supply it", "misconception": "Rivalry here refers to consumption, not to competition between firms."},
+        {"id": "d", "text": "it is provided free of charge by the government", "misconception": "How a good is paid for does not decide whether it is rivalrous."}
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u6-sa-01",
+      "format": "short_answer",
+      "section": "6.2",
+      "concepts": ["c6-merit-goods"],
+      "command_term": "define",
+      "marks": 2,
+      "prompt": "Define the term merit goods.",
+      "hints": [
+        "Think about how society judges these goods and what the free market does with them.",
+        "Cover two ideas: whether the goods are seen as good for consumers, and whether the market produces too much or too little."
+      ],
+      "targets": "Merit good: desirable for consumers and underprovided by the market",
+      "marking_points": [
+        "Goods considered desirable (beneficial) for consumers [1]",
+        "which are underprovided / underconsumed by the free market [1]"
+      ],
+      "model_answer_note": "A full-mark answer gives both the judgement that the good is desirable and its underprovision by the market. An example such as education alone earns no marks."
+    },
+    {
+      "id": "u6-mcq-03",
+      "format": "mcq",
+      "section": "6.2",
+      "concepts": ["c6-positive-consumption-externalities"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "When people in Veld get vaccinated against flu, others around them are less likely to catch it. On a diagram of the vaccination market, how is this shown?",
+      "hints": [
+        "This effect comes from consumers, so look at the benefit side of the market.",
+        "Decide whether society gains more or less than the person vaccinated from each extra dose."
+      ],
+      "targets": "Positive consumption externality = MSB above MPB",
+      "options": [
+        {"id": "a", "text": "The MSC curve lies below the MPC curve", "misconception": "This shows a positive production externality, but the benefit here comes from people using vaccines."},
+        {"id": "b", "text": "The MSB curve lies below the MPB curve", "misconception": "MSB below MPB shows external costs from consumption, not benefits."},
+        {"id": "c", "text": "The MSC curve lies above the MPC curve", "misconception": "This shows a negative production externality, which involves harm from producers."},
+        {"id": "d", "text": "The MSB curve lies above the MPB curve", "misconception": null}
+      ],
+      "answer": "d"
+    },
+    {
+      "id": "u6-sa-02",
+      "format": "short_answer",
+      "section": "6.3",
+      "concepts": ["c6-public-goods", "c6-non-rivalrous", "c6-non-excludable"],
+      "command_term": "define",
+      "marks": 2,
+      "prompt": "Define the term public goods.",
+      "hints": [
+        "Think about the two characteristics economists use to classify goods.",
+        "Cover both characteristics and link them to whether private firms will supply the good."
+      ],
+      "targets": "Public goods: non-rivalrous and non-excludable, so not supplied by private firms",
+      "marking_points": [
+        "Goods that are non-rivalrous and non-excludable [1]",
+        "so private firms do not produce them because they cannot charge a price [1]"
+      ],
+      "model_answer_note": "A full-mark answer names both characteristics and links them to the market not providing the good. 'Goods provided by the government' alone earns no marks."
+    },
+    {
+      "id": "u6-mcq-04",
+      "format": "mcq",
+      "section": "6.1",
+      "concepts": ["c6-positive-production-externalities"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "A software firm in Kuva trains its workers, and many of them later move to other firms, taking their skills with them. How would this be shown on a diagram?",
+      "hints": [
+        "The side-effect comes from a producer's activity, so look at the cost curves.",
+        "If third parties gain, think about whether society's cost of each unit is higher or lower than the firm's cost."
+      ],
+      "targets": "Positive production externality = MSC below MPC",
+      "options": [
+        {"id": "a", "text": "MSB lies above MPB", "misconception": "The benefit arises from how the firm produces, not from people consuming its software."},
+        {"id": "b", "text": "MSC lies below MPC", "misconception": null},
+        {"id": "c", "text": "MSC lies above MPC", "misconception": "This would show harm to third parties, but here other firms gain."},
+        {"id": "d", "text": "MSB lies below MPB", "misconception": "This shows a negative consumption externality, which is unrelated to training."}
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "u6-sa-03",
+      "format": "short_answer",
+      "section": "6.4",
+      "concepts": ["c6-asymmetric-information"],
+      "command_term": "define",
+      "marks": 2,
+      "prompt": "Define the term asymmetric information.",
+      "hints": [
+        "Think about the two parties in a transaction.",
+        "Cover who the parties are and what is unequal between them."
+      ],
+      "targets": "Unequal access to information between buyers and sellers",
+      "marking_points": [
+        "A situation in which buyers and sellers (the parties to a transaction) [1]",
+        "do not have equal access to information (one side knows more than the other) [1]"
+      ],
+      "model_answer_note": "A full-mark answer identifies both parties and the imbalance in information. An example such as a used car seller may support but does not replace the definition."
+    },
+    {
+      "id": "u6-mcq-05",
+      "format": "mcq",
+      "section": "6.3",
+      "concepts": ["c6-public-goods", "c6-private-goods", "c6-common-pool-resources", "c6-quasi-public-goods"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Table 1 classifies four goods in Veld. Which good is a public good?",
+      "table": {
+        "caption": "Table 1: Characteristics of four goods",
+        "columns": ["Good", "Rivalrous?", "Excludable?"],
+        "rows": [["W", "Yes", "Yes"], ["X", "No", "No"], ["Y", "Yes", "No"], ["Z", "No", "Yes"]]
+      },
+      "hints": [
+        "Match each row to a category using both columns together.",
+        "A public good must meet a specific answer in each of the two columns."
+      ],
+      "targets": "Classifying goods by rivalry and excludability",
+      "options": [
+        {"id": "a", "text": "Good X", "misconception": null},
+        {"id": "b", "text": "Good W", "misconception": "A rivalrous and excludable good is a private good."},
+        {"id": "c", "text": "Good Y", "misconception": "A rivalrous but non-excludable good is a common pool resource."},
+        {"id": "d", "text": "Good Z", "misconception": "A good that is non-rivalrous but excludable, like an uncrowded toll road, is a quasi-public good."}
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u6-sa-04",
+      "format": "short_answer",
+      "section": "6.2",
+      "concepts": ["c6-positive-consumption-externalities", "c6-merit-goods"],
+      "command_term": "calculate",
+      "marks": 3,
+      "prompt": "Table 2 shows the market for flu vaccinations in Kuva. Production creates no externalities, so MPC = MSC. Calculate the market quantity, the socially optimal quantity and the welfare loss.",
+      "table": {
+        "caption": "Table 2: Flu vaccination market in Kuva (values in zeds per dose)",
+        "columns": ["Quantity (thousand doses)", "MPB", "MSB", "MPC = MSC"],
+        "rows": [["10", "14", "18", "6"], ["20", "12", "16", "8"], ["30", "10", "14", "10"], ["40", "8", "12", "12"], ["50", "6", "10", "14"]]
+      },
+      "hints": [
+        "The market settles where MPB = MPC and the social optimum is where MSB = MSC. The welfare loss triangle has height MSB - MPB and width Qopt - Qm.",
+        "Find the two quantities, measure the height at the market quantity, then take half of height times width. Watch the units: quantity is in thousands."
+      ],
+      "targets": "Welfare loss from underconsumption of a merit good, with units in thousands",
+      "marking_points": [
+        "Market quantity (MPB = MPC = Z10) = 30 000 doses [1]",
+        "Socially optimal quantity (MSB = MSC = Z12) = 40 000 doses [1]",
+        "Welfare loss = 1/2 x (14 - 10) x (40 000 - 30 000) = Z20 000 [1]"
+      ],
+      "model_answer_note": "A full-mark answer identifies 30 000 and 40 000 doses and shows the triangle working to reach Z20 000. Accept 'Z20 thousand'; an answer of Z20 without units of thousands loses the last mark."
+    },
+    {
+      "id": "u6-mcq-06",
+      "format": "mcq",
+      "section": "6.2",
+      "concepts": ["c6-merit-goods", "c6-positive-consumption-externalities"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "The government of Veld gives producers a subsidy for each music lesson given to children, a merit good. On a positive consumption externality diagram, what is the intended effect?",
+      "hints": [
+        "A subsidy paid to producers changes their costs, so think about which curve moves.",
+        "Follow the shift through to the price and the quantity, and compare the new quantity with Qopt."
+      ],
+      "targets": "Subsidy shifts supply right, lowers price, raises quantity towards Qopt",
+      "options": [
+        {"id": "a", "text": "The MPB curve shifts right, so price and quantity both rise towards the optimum", "misconception": "A subsidy to producers lowers their costs; it does not directly change consumers' benefit."},
+        {"id": "b", "text": "The MSB curve shifts left towards the MPB curve", "misconception": "The subsidy does not reduce the benefit to society; it changes the quantity produced."},
+        {"id": "c", "text": "The supply (MPC) curve shifts right, price falls and quantity rises towards the optimum", "misconception": null},
+        {"id": "d", "text": "The supply (MPC) curve shifts left, price rises and quantity falls", "misconception": "This is the effect of a tax, not a subsidy."}
+      ],
+      "answer": "c"
+    },
+    {
+      "id": "u6-sa-05",
+      "format": "short_answer",
+      "section": "6.3",
+      "concepts": ["c6-free-rider-problem", "c6-non-excludable"],
+      "command_term": "outline",
+      "marks": 2,
+      "prompt": "Outline the free rider problem.",
+      "hints": [
+        "Link your answer to the characteristic that stops sellers from keeping non-payers out.",
+        "Say what people choose to do as a result, and what that means for firms trying to sell the good."
+      ],
+      "targets": "Free riding from non-excludability and its effect on private provision",
+      "marking_points": [
+        "Because a good is non-excludable, people can use it without paying for it [1]",
+        "so firms cannot earn revenue and the good is not provided (or underprovided) by the market [1]"
+      ],
+      "model_answer_note": "A full-mark answer links non-excludability to people enjoying the good without paying and to the market's failure to provide it."
+    },
+    {
+      "id": "u6-mcq-07",
+      "format": "mcq",
+      "section": "6.4",
+      "concepts": ["c6-adverse-selection", "c6-asymmetric-information"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Which of the following is the clearest example of adverse selection?",
+      "hints": [
+        "Look for a transaction where one party knows more about the quality of the product than the other.",
+        "Check which option involves hidden quality at the moment of the sale."
+      ],
+      "targets": "Recognising adverse selection",
+      "options": [
+        {"id": "a", "text": "A shop in Kuva raises prices when demand increases before a holiday", "misconception": "This is a normal price response to demand, with no hidden information."},
+        {"id": "b", "text": "A seller of a used car in Kuva knows about engine faults that the buyer cannot see", "misconception": null},
+        {"id": "c", "text": "A factory in Kuva pollutes a river and harms fishers downstream", "misconception": "This is a negative externality, not a problem of unequal information about quality."},
+        {"id": "d", "text": "People in Kuva enjoy a fireworks display without buying a ticket", "misconception": "This is the free rider problem linked to public goods."}
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "u6-sa-06",
+      "format": "short_answer",
+      "section": "6.5",
+      "concepts": ["c6-equity", "c6-equality"],
+      "command_term": "distinguish",
+      "marks": 2,
+      "prompt": "Distinguish between equity and equality in the distribution of income.",
+      "hints": [
+        "One term is about fairness and the other is about sameness.",
+        "Explain each term in the context of income, then show that one does not necessarily mean the other."
+      ],
+      "targets": "Equity (fairness, a value judgement) vs equality (same amount)",
+      "marking_points": [
+        "Equity means a fair or just distribution of income, which is a value judgement [1]",
+        "Equality means everyone receives the same income, so an equitable distribution need not be equal [1]"
+      ],
+      "model_answer_note": "A full-mark answer explains both terms and makes clear that fairness and sameness are different ideas."
+    },
+    {
+      "id": "u6-mcq-08",
+      "format": "mcq",
+      "section": "6.5",
+      "concepts": ["c6-income", "c6-wealth"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Mira lives in Veld. Which of the following is part of Mira's wealth rather than her income?",
+      "hints": [
+        "Income is a flow received over a period; wealth is something owned at a point in time.",
+        "Check each option for whether it is money coming in or an asset she holds."
+      ],
+      "targets": "Income (flow) vs wealth (stock)",
+      "options": [
+        {"id": "a", "text": "Her monthly salary from a bank", "misconception": "A salary is a flow of payment for labour, so it is income."},
+        {"id": "b", "text": "The rent she receives each month from a tenant", "misconception": "Rent is a flow received by the owner of land or property, so it is income."},
+        {"id": "c", "text": "The interest paid to her each year on her savings", "misconception": "Interest is a flow earned from capital, so it is income, even though the savings themselves are wealth."},
+        {"id": "d", "text": "The shares she owns in a Veld company", "misconception": null}
+      ],
+      "answer": "d"
+    },
+    {
+      "id": "u6-sa-07",
+      "format": "short_answer",
+      "section": "6.1",
+      "concepts": ["c6-positive-production-externalities"],
+      "command_term": "calculate",
+      "marks": 2,
+      "prompt": "A firm in Veld carries out research that other firms can copy freely. Using Table 3, calculate (a) the external benefit per unit and (b) the total external benefit at the current output.",
+      "table": {
+        "caption": "Table 3: Data for the firm at its current output",
+        "columns": ["Measure", "Value"],
+        "rows": [["Current output", "200 units"], ["MPC per unit", "Z15"], ["MSC per unit", "Z11"]]
+      },
+      "hints": [
+        "With a positive production externality, the external benefit is the gap between the two cost figures.",
+        "Find the gap per unit first, then scale it up by the output."
+      ],
+      "targets": "External benefit = MPC - MSC for a positive production externality",
+      "marking_points": [
+        "External benefit per unit = MPC - MSC = 15 - 11 = Z4 [1]",
+        "Total external benefit = 4 x 200 = Z800 [1]"
+      ],
+      "model_answer_note": "A full-mark answer shows the subtraction in the correct order and the multiplication, with units. Own-figure rule applies to part (b)."
+    },
+    {
+      "id": "u6-mcq-09",
+      "format": "mcq",
+      "section": "6.1",
+      "concepts": ["c6-positive-production-externalities"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "A diagram shows a market with MSC below MPC, and MPB = MSB. Qm is where MPB = MPC and Qopt is where MSB = MSC. Which statement is correct?",
+      "hints": [
+        "Compare where the demand curve meets the higher cost curve and where it meets the lower cost curve.",
+        "A lower cost curve meets a downward-sloping demand curve further to the right and at a lower price."
+      ],
+      "targets": "Underallocation with a positive production externality",
+      "options": [
+        {"id": "a", "text": "Qm is less than Qopt, so too little is produced", "misconception": null},
+        {"id": "b", "text": "Qm is greater than Qopt, so too much is produced", "misconception": "This is the outcome for a negative externality, where costs to society are higher than private costs."},
+        {"id": "c", "text": "Qm equals Qopt, because MPB equals MSB", "misconception": "Equal benefit curves are not enough; the cost curves differ, so the two quantities differ."},
+        {"id": "d", "text": "Qm is less than Qopt, so the market price is too low", "misconception": "The quantity comparison is right, but the market price is above the socially optimal price, not below it."}
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u6-sa-08",
+      "format": "short_answer",
+      "section": "6.3",
+      "concepts": ["c6-public-goods", "c6-free-rider-problem", "c6-non-excludable"],
+      "command_term": "explain",
+      "marks": 3,
+      "prompt": "Veld's coastline needs a lighthouse to guide ships. Explain why the free market is unlikely to provide the lighthouse.",
+      "hints": [
+        "Use the two characteristics of public goods and the free rider problem.",
+        "Build a chain: what ship owners can do, what that means for a firm's revenue, and what the firm decides."
+      ],
+      "targets": "Public good -> free riding -> no revenue -> missing market",
+      "marking_points": [
+        "The lighthouse is non-excludable: ships that do not pay cannot be stopped from using its light [1]",
+        "So ship owners have an incentive to free ride, and a private firm cannot earn enough revenue [1]",
+        "Therefore no firm will supply it (a missing market), even though it is socially desirable [1]"
+      ],
+      "model_answer_note": "A full-mark answer applies non-excludability to the lighthouse, explains free riding and concludes that the market fails to provide it. Mentioning non-rivalry is good but not required."
+    },
+    {
+      "id": "u6-mcq-10",
+      "format": "mcq",
+      "section": "6.5",
+      "concepts": ["c6-income", "c6-equality"],
+      "command_term": "calculate",
+      "marks": 1,
+      "prompt": "Table 4 shows the share of total income received by each fifth of households in Kuva. The income of the richest 20% is how many times the income of the poorest 20%?",
+      "table": {
+        "caption": "Table 4: Distribution of income in Kuva",
+        "columns": ["Household group", "Share of total income (%)"],
+        "rows": [["Poorest 20%", "5"], ["Second 20%", "10"], ["Middle 20%", "15"], ["Fourth 20%", "20"], ["Richest 20%", "50"]]
+      },
+      "hints": [
+        "Use only the first and last rows.",
+        "The question asks for a ratio, so divide rather than subtract."
+      ],
+      "targets": "Reading an income distribution table as a ratio",
+      "options": [
+        {"id": "a", "text": "45 times", "misconception": "This is the difference in percentage points, not how many times larger one share is."},
+        {"id": "b", "text": "5 times", "misconception": "This confuses the poorest group's share with the ratio."},
+        {"id": "c", "text": "10 times", "misconception": null},
+        {"id": "d", "text": "2.5 times", "misconception": "This compares the richest group with the fourth group rather than with the poorest group."}
+      ],
+      "answer": "c"
+    },
+    {
+      "id": "u6-sa-09",
+      "format": "short_answer",
+      "section": "6.4",
+      "concepts": ["c6-asymmetric-information", "c6-adverse-selection"],
+      "command_term": "explain",
+      "marks": 3,
+      "prompt": "Explain why asymmetric information in the market for used cars in Kuva may lead to market failure.",
+      "hints": [
+        "Think about who knows the true quality of a used car and how the other party responds.",
+        "Follow the chain from buyers' uncertainty to the price they will pay, to which sellers stay in the market."
+      ],
+      "targets": "Adverse selection chain leading to too few good-quality transactions",
+      "marking_points": [
+        "Sellers know more about the car's quality than buyers (adverse selection) [1]",
+        "Buyers cannot tell good cars from bad ones, so they are only willing to pay an average price [1]",
+        "Owners of good cars withdraw, so fewer good cars are traded than is socially optimal and resources are misallocated [1]"
+      ],
+      "model_answer_note": "A full-mark answer explains the information gap, buyers' response through price and the result that too few good-quality cars are traded."
+    },
+    {
+      "id": "u6-mcq-11",
+      "format": "mcq",
+      "section": "6.4",
+      "concepts": ["c6-asymmetric-information"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "The government of Veld requires all doctors to pass exams and hold a licence before they can treat patients. Which market failure is this policy mainly designed to reduce?",
+      "hints": [
+        "Think about what a patient can and cannot judge about a doctor before treatment.",
+        "Ask which market failure a licence helps with by giving patients a signal."
+      ],
+      "targets": "Licensing as a response to asymmetric information",
+      "options": [
+        {"id": "a", "text": "A negative production externality", "misconception": "Licensing is not aimed at harm to third parties outside the transaction."},
+        {"id": "b", "text": "The free rider problem", "misconception": "Medical treatment is excludable, so patients cannot free ride on it."},
+        {"id": "c", "text": "Overuse of a common pool resource", "misconception": "Doctors' services are not an unowned natural resource."},
+        {"id": "d", "text": "Asymmetric information", "misconception": null}
+      ],
+      "answer": "d"
+    },
+    {
+      "id": "u6-sa-10",
+      "format": "short_answer",
+      "section": "6.2",
+      "concepts": ["c6-positive-consumption-externalities"],
+      "command_term": "calculate",
+      "marks": 3,
+      "prompt": "To cut road traffic, Kuva subsidises rail tickets. Using Table 5, calculate (a) the percentage increase in rail trips and (b) the weekly cost of the subsidy to the government.",
+      "table": {
+        "caption": "Table 5: Rail travel in Kuva",
+        "columns": ["Item", "Value"],
+        "rows": [["Rail trips per week before subsidy", "10 000"], ["Rail trips per week after subsidy", "12 000"], ["Subsidy per trip", "Z3"]]
+      },
+      "hints": [
+        "Percentage change = (change / original value) x 100. The subsidy is paid on every trip made after it is introduced.",
+        "Find the change in trips first, then the percentage; for the cost, multiply the subsidy by the right number of trips."
+      ],
+      "targets": "Percentage change and subsidy cost using the post-subsidy quantity",
+      "marking_points": [
+        "Increase in trips = 12 000 - 10 000 = 2 000 [1]",
+        "Percentage increase = (2 000 / 10 000) x 100 = 20% [1]",
+        "Weekly subsidy cost = 3 x 12 000 = Z36 000 [1]"
+      ],
+      "model_answer_note": "A full-mark answer shows the 20% working and uses the post-subsidy quantity for a cost of Z36 000. Using 10 000 trips (Z30 000) is a common error."
+    },
+    {
+      "id": "u6-mcq-12",
+      "format": "mcq",
+      "section": "6.1",
+      "concepts": ["c6-positive-production-externalities"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Table 6 shows data for a beekeeping firm in Veld whose bees pollinate nearby orchards. The firm produces at the market quantity. Which statement is correct?",
+      "table": {
+        "caption": "Table 6: Beekeeping firm at the market quantity (zeds per jar of honey)",
+        "columns": ["MPB", "MSB", "MPC", "MSC"],
+        "rows": [["20", "20", "20", "14"]]
+      },
+      "hints": [
+        "Compare the two benefit figures and then the two cost figures to find where the externality is.",
+        "At the market quantity, check whether society's benefit is above or below society's cost, and what that says about output."
+      ],
+      "targets": "Reading a positive production externality and underproduction from data",
+      "options": [
+        {"id": "a", "text": "There is a positive consumption externality of Z6 per jar, and output is too high", "misconception": "The benefit figures are equal, so the externality is on the cost side, and MSB above MSC means output is too low."},
+        {"id": "b", "text": "There is a positive production externality of Z6 per jar, and output is below the social optimum", "misconception": null},
+        {"id": "c", "text": "There is a negative production externality of Z6 per jar, and output is too high", "misconception": "MSC is below MPC, so third parties gain rather than lose."},
+        {"id": "d", "text": "There is no externality, because MPB equals MPC", "misconception": "MPB = MPC only shows the market equilibrium; the gap between MPC and MSC shows an externality."}
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "u6-sa-11",
+      "format": "short_answer",
+      "section": "6.3",
+      "concepts": ["c6-public-goods", "c6-merit-goods", "c6-non-excludable", "c6-non-rivalrous"],
+      "command_term": "distinguish",
+      "marks": 2,
+      "prompt": "Distinguish between a public good and a merit good.",
+      "hints": [
+        "One category is defined by rivalry and excludability; the other by a judgement about what is good for consumers.",
+        "Explain each type, and point out what the market does in each case."
+      ],
+      "targets": "Public goods (not provided at all) vs merit goods (provided but underprovided)",
+      "marking_points": [
+        "A public good is non-rivalrous and non-excludable, so the free market does not provide it at all [1]",
+        "A merit good is rivalrous and excludable and judged desirable for consumers, so the market provides it but in too small a quantity [1]"
+      ],
+      "model_answer_note": "A full-mark answer contrasts the characteristics and makes clear that public goods are not provided while merit goods are underprovided."
+    },
+    {
+      "id": "u6-mcq-13",
+      "format": "mcq",
+      "section": "6.3",
+      "concepts": ["c6-quasi-public-goods"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Which of the following is the best example of a quasi-public good?",
+      "hints": [
+        "A quasi-public good does not fit neatly into the other categories of goods.",
+        "Look for a good that is non-rivalrous in normal use but where it is possible to charge for entry."
+      ],
+      "targets": "Recognising a quasi-public good",
+      "options": [
+        {"id": "a", "text": "National defence in Veld", "misconception": "Defence is both non-rivalrous and non-excludable, so it is a pure public good."},
+        {"id": "b", "text": "Apples sold at a market in Veld", "misconception": "Apples are rivalrous and excludable, so they are a private good."},
+        {"id": "c", "text": "An uncrowded museum in Veld that charges an entrance fee", "misconception": null},
+        {"id": "d", "text": "Wild fish in the seas around Veld", "misconception": "Wild fish are rivalrous and non-excludable, so they are a common pool resource."}
+      ],
+      "answer": "c"
+    },
+    {
+      "id": "u6-sa-12",
+      "format": "short_answer",
+      "section": "6.1",
+      "concepts": ["c6-positive-production-externalities"],
+      "command_term": "explain",
+      "marks": 4,
+      "prompt": "A tech firm in Kuva invests in research, and other firms benefit from the new ideas without paying. Using a positive production externality diagram, explain why the free market leads to market failure. (Describe what your labelled diagram would show.)",
+      "hints": [
+        "Your diagram needs MPB = MSB, MPC and MSC, with Qm, Qopt and the welfare loss marked.",
+        "Say where the MSC curve lies and why, where the firm chooses to produce, where society would prefer it to produce, and what area shows the loss."
+      ],
+      "targets": "Full diagram explanation of a positive production externality",
+      "marking_points": [
+        "Research creates external benefits for other firms, so MSC lies below MPC [1]",
+        "The firm ignores these benefits and produces where MPB = MPC at Qm [1]",
+        "The social optimum is where MSB = MSC at Qopt, so Qm < Qopt: too little is produced (underallocation) [1]",
+        "This creates a welfare loss shown by the triangle between MSB and MSC from Qm to Qopt [1]"
+      ],
+      "model_answer_note": "A full-mark answer describes a correctly labelled diagram with MSC below MPC, compares Qm with Qopt and identifies the welfare loss triangle."
+    },
+    {
+      "id": "u6-mcq-14",
+      "format": "mcq",
+      "section": "6.5",
+      "concepts": ["c6-income", "c6-equality"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Which of the following would most likely increase income inequality in Veld?",
+      "hints": [
+        "Think about which groups' incomes change in each option and in which direction.",
+        "Inequality rises when the gap between higher and lower incomes widens."
+      ],
+      "targets": "Causes of income inequality vs policies that reduce it",
+      "options": [
+        {"id": "a", "text": "Wages of highly skilled workers rise while wages of low-skilled workers stay the same", "misconception": null},
+        {"id": "b", "text": "Income tax rates on high earners are raised", "misconception": "Higher tax on high earners narrows the gap in after-tax income."},
+        {"id": "c", "text": "Unemployment benefits are increased", "misconception": "Higher transfer payments raise incomes at the bottom and reduce inequality."},
+        {"id": "d", "text": "University education is made free for all students", "misconception": "Wider access to education tends to reduce inequality over time by raising the skills of lower-income groups."}
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u6-sa-13",
+      "format": "short_answer",
+      "section": "6.2",
+      "concepts": ["c6-merit-goods", "c6-positive-consumption-externalities"],
+      "command_term": "explain",
+      "marks": 4,
+      "prompt": "Using a positive consumption externality diagram, explain why the free market underprovides secondary education in Kuva. (Describe what your labelled diagram would show.)",
+      "hints": [
+        "Your diagram needs MPC = MSC, MPB and MSB, with Qm, Qopt and the welfare loss marked.",
+        "Say who else gains when a student is educated, which benefit curve lies higher, where the market settles and where society would prefer it to be."
+      ],
+      "targets": "Full diagram explanation of education as a merit good with external benefits",
+      "marking_points": [
+        "Education creates external benefits for third parties (e.g. a more productive workforce, lower crime), so MSB lies above MPB [1]",
+        "Students and families consider only private benefits, so the market settles where MPB = MPC at Qm [1]",
+        "The social optimum is where MSB = MSC at Qopt, so Qm < Qopt: education is underconsumed [1]",
+        "This creates a welfare loss shown by the triangle between MSB and MSC from Qm to Qopt [1]"
+      ],
+      "model_answer_note": "A full-mark answer describes a correctly labelled diagram with MSB above MPB, gives a relevant external benefit, compares Qm with Qopt and identifies the welfare loss triangle."
+    },
+    {
+      "id": "u6-mcq-15",
+      "format": "mcq",
+      "section": "6.3",
+      "concepts": ["c6-public-goods", "c6-free-rider-problem"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "The government of Kuva pays for flood barriers that protect a whole town. What is the main economic reason for government provision rather than private provision?",
+      "hints": [
+        "Consider whether a private firm could make residents pay for protection.",
+        "Link the characteristics of the flood barrier to a problem that stops firms from earning revenue."
+      ],
+      "targets": "Government provision of public goods due to free riding",
+      "options": [
+        {"id": "a", "text": "Private firms would charge too high a price for flood barriers", "misconception": "The problem is not a high price; firms cannot charge a price at all, because protection cannot be withheld from non-payers."},
+        {"id": "b", "text": "Flood barriers are a merit good that residents undervalue", "misconception": "Flood barriers protect everyone at once and cannot be sold to individuals, so they are a public good rather than a merit good."},
+        {"id": "c", "text": "The government can build flood barriers more cheaply than firms", "misconception": "Lower cost is not the reason; even an efficient firm could not earn revenue from the barriers."},
+        {"id": "d", "text": "Residents can benefit without paying, so a private firm could not earn enough revenue", "misconception": null}
+      ],
+      "answer": "d"
+    },
+    {
+      "id": "u6-sa-14",
+      "format": "short_answer",
+      "section": "6.5",
+      "concepts": ["c6-wealth", "c6-income"],
+      "command_term": "calculate",
+      "marks": 2,
+      "prompt": "Table 7 shows information about Jonas, who lives in Veld. Calculate Jonas's wealth.",
+      "table": {
+        "caption": "Table 7: Jonas's finances",
+        "columns": ["Item", "Value (zeds)"],
+        "rows": [["House", "300 000"], ["Bank savings", "20 000"], ["Shares", "30 000"], ["Mortgage owed to the bank", "150 000"], ["Annual salary", "40 000"]]
+      },
+      "hints": [
+        "Wealth is a stock of what is owned minus what is owed; not every row belongs in the calculation.",
+        "Add up the assets, then subtract the debt. Decide whether the salary is a stock or a flow."
+      ],
+      "targets": "Wealth = assets - debts; excluding income (a flow)",
+      "marking_points": [
+        "Assets = 300 000 + 20 000 + 30 000 = Z350 000, excluding the salary because it is income [1]",
+        "Wealth = 350 000 - 150 000 = Z200 000 [1]"
+      ],
+      "model_answer_note": "A full-mark answer excludes the salary, subtracts the mortgage and reaches Z200 000. Including the salary (Z240 000) loses the first mark."
+    },
+    {
+      "id": "u6-sa-15",
+      "format": "short_answer",
+      "section": "6.4",
+      "concepts": ["c6-asymmetric-information", "c6-adverse-selection"],
+      "command_term": "explain",
+      "marks": 3,
+      "prompt": "Explain how government regulation could reduce the market failure caused by asymmetric information in Kuva's used car market.",
+      "hints": [
+        "Think of a rule that forces the better-informed party to share what it knows, or that sets a minimum standard.",
+        "Name the rule, say what it changes for buyers, and link that to the number of good-quality cars traded."
+      ],
+      "targets": "Regulation (disclosure, inspections, warranties) narrowing the information gap",
+      "marking_points": [
+        "Identifies a suitable regulation, e.g. requiring sellers to disclose a car's history or pass an inspection, or to offer a warranty [1]",
+        "This gives buyers more information about quality, reducing the information gap between buyers and sellers [1]",
+        "Buyers are willing to pay more for cars they trust, so more good-quality cars are traded and the allocation of resources improves [1]"
+      ],
+      "model_answer_note": "A full-mark answer names a specific regulation and explains how it narrows the information gap and leads to more good-quality cars being traded."
+    }
+  ]
+}

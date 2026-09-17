@@ -1,0 +1,678 @@
+{
+  "unit": 13,
+  "title": "Demand-side and supply-side policies",
+  "questions": [
+    {
+      "id": "u13-mcq-01",
+      "format": "mcq",
+      "section": "13.1",
+      "concepts": [],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Which of the following best describes the main aim of demand-side policies?",
+      "hints": [
+        "Think about which curve on an AD/AS diagram demand-side policies act on.",
+        "Separate policies that change total spending in the short run from policies that change the economy's productive capacity."
+      ],
+      "targets": "Purpose of demand-side policies vs supply-side policies",
+      "options": [
+        { "id": "a", "text": "To increase long-run aggregate supply by improving the quantity and quality of factors of production", "misconception": "This describes supply-side policies, which shift LRAS rather than aggregate demand." },
+        { "id": "b", "text": "To shift aggregate demand in order to reduce fluctuations in output, unemployment and the price level", "misconception": null },
+        { "id": "c", "text": "To set the prices of individual goods directly so that inflation stays low", "misconception": "Price controls act on single markets and are not a macroeconomic demand-side policy." },
+        { "id": "d", "text": "To lower the natural rate of unemployment through labour market reforms", "misconception": "Labour market reforms work on the supply side of the economy, not on aggregate demand." }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "u13-mcq-02",
+      "format": "mcq",
+      "section": "13.1",
+      "concepts": ["c13-monetary-policy", "c13-fiscal-policy", "c13-central-bank"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Which option correctly matches each demand-side policy with the body that usually carries it out?",
+      "hints": [
+        "Recall which institution controls interest rates and the money supply, and which controls the government budget.",
+        "Match the tools (interest rates, bonds, reserves vs spending and taxes) to the body that uses them."
+      ],
+      "targets": "Who conducts monetary vs fiscal policy",
+      "options": [
+        { "id": "a", "text": "Monetary policy: the government's finance ministry; fiscal policy: the central bank", "misconception": "The two bodies are swapped: the central bank runs monetary policy and the government runs fiscal policy." },
+        { "id": "b", "text": "Monetary policy: commercial banks; fiscal policy: the government", "misconception": "Commercial banks lend money and are affected by monetary policy, but they do not set it." },
+        { "id": "c", "text": "Monetary policy and fiscal policy: both the central bank", "misconception": "The central bank does not decide government spending or tax rates." },
+        { "id": "d", "text": "Monetary policy: the central bank; fiscal policy: the government", "misconception": null }
+      ],
+      "answer": "d"
+    },
+    {
+      "id": "u13-sa-01",
+      "format": "short_answer",
+      "section": "13.3",
+      "concepts": ["c13-fiscal-policy"],
+      "command_term": "define",
+      "marks": 2,
+      "prompt": "Define the term fiscal policy.",
+      "hints": [
+        "This policy is run by the government through its budget, not by the central bank.",
+        "Name the instruments involved, then say what macroeconomic variable they are meant to influence."
+      ],
+      "targets": "Precise definition: instruments plus aim",
+      "marking_points": [
+        "Use of government spending and/or taxation [1]",
+        "to influence the level of aggregate demand (and so output, employment and the price level) [1]"
+      ],
+      "model_answer_note": "A full-mark answer names both government spending and taxation as the tools and links them to influencing aggregate demand or macroeconomic objectives."
+    },
+    {
+      "id": "u13-sa-02",
+      "format": "short_answer",
+      "section": "13.1",
+      "concepts": [],
+      "command_term": "distinguish",
+      "marks": 2,
+      "prompt": "Distinguish between demand-side policies and supply-side policies.",
+      "hints": [
+        "Think about which curve each type of policy shifts on an AD/AS diagram.",
+        "For each type, state what it targets and whether its main effect is in the short run or the long run."
+      ],
+      "targets": "AD focus vs LRAS / productive capacity focus",
+      "marking_points": [
+        "Demand-side policies (fiscal and monetary) change aggregate demand, mainly to stabilise output and prices in the short run [1]",
+        "Supply-side policies aim to increase LRAS / potential output by improving the quantity, quality or efficiency of resources in the long run [1]"
+      ],
+      "model_answer_note": "Both policy types must be addressed, with a clear contrast between shifting AD and shifting LRAS; one-sided answers get 1 mark at most."
+    },
+    {
+      "id": "u13-mcq-03",
+      "format": "mcq",
+      "section": "13.6",
+      "concepts": ["c13-labor-union", "c13-deregulation"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "The government of Veld wants to use a market-based supply-side policy. Which of the following would it choose?",
+      "hints": [
+        "Market-based supply-side policies rely on letting markets work more freely rather than on direct government provision.",
+        "Rule out options that involve extra government spending, then rule out options that are not supply-side at all."
+      ],
+      "targets": "Market-based vs interventionist supply-side policies",
+      "options": [
+        { "id": "a", "text": "Government-funded training courses for unemployed workers", "misconception": "Training funded by the government is an interventionist supply-side policy." },
+        { "id": "b", "text": "Higher public spending on new ports and railways", "misconception": "Public investment in infrastructure is an interventionist supply-side policy." },
+        { "id": "c", "text": "Laws that reduce the power of labour unions to raise wages", "misconception": null },
+        { "id": "d", "text": "A cut in the central bank's interest rate", "misconception": "An interest rate cut is monetary policy, a demand-side policy." }
+      ],
+      "answer": "c"
+    },
+    {
+      "id": "u13-sa-03",
+      "format": "short_answer",
+      "section": "13.2",
+      "concepts": ["c13-real-interest-rate", "c13-nominal-interest-rate"],
+      "command_term": "define",
+      "marks": 2,
+      "prompt": "Define the term real interest rate.",
+      "hints": [
+        "Start from the interest rate you would see advertised by a bank.",
+        "Say what adjustment is made to that rate and why it matters for purchasing power."
+      ],
+      "targets": "Nominal rate adjusted for inflation",
+      "marking_points": [
+        "The nominal (market) interest rate [1]",
+        "adjusted for inflation, i.e. nominal interest rate minus the rate of inflation [1]"
+      ],
+      "model_answer_note": "A full-mark answer refers to the nominal rate and to the inflation adjustment; the formula alone, clearly stated, is acceptable."
+    },
+    {
+      "id": "u13-mcq-04",
+      "format": "mcq",
+      "section": "13.3",
+      "concepts": ["c13-fiscal-policy"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Which of the following is an example of expansionary fiscal policy?",
+      "hints": [
+        "Check two things for each option: is it fiscal policy, and does it raise aggregate demand?",
+        "Fiscal policy uses the government budget; expansionary policy increases total spending."
+      ],
+      "targets": "Recognising expansionary fiscal policy",
+      "options": [
+        { "id": "a", "text": "The central bank cuts its base interest rate", "misconception": "This is expansionary, but it is monetary policy run by the central bank, not fiscal policy." },
+        { "id": "b", "text": "The government raises income tax rates", "misconception": "Higher taxes reduce disposable income and AD, so this is contractionary fiscal policy." },
+        { "id": "c", "text": "The government sells a state-owned railway to private investors", "misconception": "Privatisation is a supply-side policy, not a change in the budget meant to shift AD." },
+        { "id": "d", "text": "The government cuts income tax rates", "misconception": null }
+      ],
+      "answer": "d"
+    },
+    {
+      "id": "u13-sa-04",
+      "format": "short_answer",
+      "section": "13.3",
+      "concepts": [],
+      "command_term": "define",
+      "marks": 2,
+      "prompt": "Define the term budget deficit.",
+      "hints": [
+        "Compare the two sides of the government budget: money going out and money coming in.",
+        "State which side is larger and over what time period the comparison is made."
+      ],
+      "targets": "Spending exceeds revenue over a period",
+      "marking_points": [
+        "Government expenditure is greater than government (tax) revenue [1]",
+        "over a given period of time, usually one year [1]"
+      ],
+      "model_answer_note": "Full marks need the correct direction (spending above revenue) and a time period; confusing deficit with debt earns 0 for the first point."
+    },
+    {
+      "id": "u13-mcq-05",
+      "format": "mcq",
+      "section": "13.2",
+      "concepts": ["c13-real-interest-rate", "c13-nominal-interest-rate"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Table 1 shows data for Veld. In which year was the real interest rate highest?",
+      "table": {
+        "caption": "Table 1: Interest and inflation rates in Veld",
+        "columns": ["Year", "Nominal interest rate (%)", "Inflation rate (%)"],
+        "rows": [
+          ["2022", "3.0", "1.0"],
+          ["2023", "5.5", "6.0"],
+          ["2024", "5.0", "2.5"],
+          ["2025", "4.0", "3.0"]
+        ]
+      },
+      "hints": [
+        "Use the relationship between the nominal interest rate, inflation and the real interest rate.",
+        "Work out the real rate for every year first, then compare the four results."
+      ],
+      "targets": "Real interest rate from data; not the same as the highest nominal rate",
+      "options": [
+        { "id": "a", "text": "2022", "misconception": "Tempting because inflation was lowest, but the nominal rate was also low, so the real rate is not the highest." },
+        { "id": "b", "text": "2023", "misconception": "Tempting because the nominal rate was highest, but inflation was even higher, so the real rate was negative." },
+        { "id": "c", "text": "2024", "misconception": null },
+        { "id": "d", "text": "2025", "misconception": "Tempting as the most recent year, but inflation takes away most of the nominal rate, leaving a small real rate." }
+      ],
+      "answer": "c"
+    },
+    {
+      "id": "u13-sa-05",
+      "format": "short_answer",
+      "section": "13.2",
+      "concepts": ["c13-real-interest-rate", "c13-nominal-interest-rate"],
+      "command_term": "calculate",
+      "marks": 3,
+      "prompt": "Using the data in Table 2, calculate the real interest rate in Kuva in 2024 and in 2025, and the change in the real interest rate between the two years in percentage points.",
+      "table": {
+        "caption": "Table 2: Interest and inflation rates in Kuva",
+        "columns": ["Year", "Nominal interest rate (%)", "Inflation rate (%)"],
+        "rows": [
+          ["2024", "3.0", "5.0"],
+          ["2025", "6.0", "4.5"]
+        ]
+      },
+      "hints": [
+        "Use the formula linking the real interest rate to the nominal interest rate and the inflation rate.",
+        "Apply the formula to each year separately, keeping the sign, then subtract the earlier result from the later one."
+      ],
+      "targets": "Real interest rate calculation including a negative value; change in percentage points",
+      "marking_points": [
+        "2024: 3.0% − 5.0% = −2.0% [1]",
+        "2025: 6.0% − 4.5% = 1.5% [1]",
+        "Change: 1.5 − (−2.0) = +3.5 percentage points [1]"
+      ],
+      "model_answer_note": "Full marks need both real rates with correct signs and a change of +3.5 percentage points; allow follow-through on the change if one real rate is wrong."
+    },
+    {
+      "id": "u13-mcq-06",
+      "format": "mcq",
+      "section": "13.2",
+      "concepts": ["c13-monetary-policy", "c13-central-bank", "c13-commercial-bank"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "The central bank of Veld wants to increase aggregate demand. Which action is consistent with this aim?",
+      "hints": [
+        "Think about open market operations, the minimum lending rate and the reserve requirement.",
+        "For each option, ask whether commercial banks end up with more or less money to lend."
+      ],
+      "targets": "Direction of monetary policy tools",
+      "options": [
+        { "id": "a", "text": "Buying government bonds from commercial banks", "misconception": null },
+        { "id": "b", "text": "Raising the minimum lending rate", "misconception": "A higher rate makes borrowing more expensive and reduces AD; it is contractionary." },
+        { "id": "c", "text": "Raising the minimum reserve requirement", "misconception": "Banks must keep more deposits as reserves, so lending falls; it is contractionary." },
+        { "id": "d", "text": "Selling government bonds to commercial banks", "misconception": "Selling bonds takes money out of the banking system, reducing the money supply." }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u13-sa-06",
+      "format": "short_answer",
+      "section": "13.6",
+      "concepts": ["c13-infrastructure"],
+      "command_term": "define",
+      "marks": 2,
+      "prompt": "Define the term infrastructure.",
+      "hints": [
+        "Think about the factor of production this belongs to and who usually provides it.",
+        "Say what kind of capital it is and what role it plays for the rest of the economy, with an example."
+      ],
+      "targets": "Physical capital supporting economic activity",
+      "marking_points": [
+        "A type of physical capital, often provided or funded by the government [1]",
+        "that provides essential services supporting economic activity, e.g. roads, ports, power or telecommunications networks [1]"
+      ],
+      "model_answer_note": "A full-mark answer identifies infrastructure as physical capital and gives its supporting role with at least one valid example."
+    },
+    {
+      "id": "u13-mcq-07",
+      "format": "mcq",
+      "section": "13.4",
+      "concepts": ["c13-keynesian-multiplier", "c13-leakages", "c13-marginal-propensity-to-save-mps", "c13-marginal-propensity-to-tax-mpt", "c13-marginal-propensity-to-import-mpm"],
+      "command_term": "calculate",
+      "marks": 1,
+      "prompt": "Table 3 shows data for the economy of Veld. What is the value of the Keynesian multiplier?",
+      "table": {
+        "caption": "Table 3: Marginal propensities in Veld",
+        "columns": ["Marginal propensity", "Value"],
+        "rows": [
+          ["Marginal propensity to save (MPS)", "0.10"],
+          ["Marginal propensity to tax (MPT)", "0.15"],
+          ["Marginal propensity to import (MPM)", "0.25"]
+        ]
+      },
+      "hints": [
+        "Use the multiplier formula based on all leakages from the circular flow.",
+        "Add the three leakage propensities, then use that total in the formula."
+      ],
+      "targets": "Multiplier = 1 / (MPS + MPT + MPM)",
+      "options": [
+        { "id": "a", "text": "0.5", "misconception": "This is the total of the leakages, not its reciprocal." },
+        { "id": "b", "text": "10", "misconception": "This uses only the MPS and ignores taxes and imports as leakages." },
+        { "id": "c", "text": "4", "misconception": "This uses only the MPM and ignores saving and taxes." },
+        { "id": "d", "text": "2", "misconception": null }
+      ],
+      "answer": "d"
+    },
+    {
+      "id": "u13-sa-07",
+      "format": "short_answer",
+      "section": "13.4",
+      "concepts": ["c13-marginal-propensity-to-consume-mpc"],
+      "command_term": "define",
+      "marks": 2,
+      "prompt": "Define the term marginal propensity to consume (MPC).",
+      "hints": [
+        "The word 'marginal' tells you the definition is about a change, not a total.",
+        "Say what the numerator and denominator of this ratio are and what kind of goods the spending is on."
+      ],
+      "targets": "Fraction of extra income spent on domestic output",
+      "marking_points": [
+        "The fraction (proportion) of additional income [1]",
+        "that households spend on consumption of domestically produced goods and services [1]"
+      ],
+      "model_answer_note": "Full marks need the idea of additional (not total) income and spending on consumption; the formula ΔC/ΔY with a clear explanation is acceptable."
+    },
+    {
+      "id": "u13-mcq-08",
+      "format": "mcq",
+      "section": "13.2",
+      "concepts": ["c13-monetary-policy", "c13-money", "c13-interest"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "A money market diagram has the interest rate on the vertical axis and a vertical money supply curve. The central bank of Kuva sells large amounts of government bonds. Which change would the diagram show?",
+      "hints": [
+        "Decide which curve is controlled by the central bank on a money market diagram.",
+        "Work out whether selling bonds adds money to or removes money from the economy, then read off the new equilibrium."
+      ],
+      "targets": "Money supply shift and new equilibrium interest rate",
+      "options": [
+        { "id": "a", "text": "The money demand curve shifts right and the interest rate rises", "misconception": "Bond sales change the supply of money, not the demand for money." },
+        { "id": "b", "text": "The money supply curve shifts left and the interest rate rises", "misconception": null },
+        { "id": "c", "text": "The money supply curve shifts right and the interest rate falls", "misconception": "This is the effect of buying bonds, which injects money into the economy." },
+        { "id": "d", "text": "The money supply curve shifts left and the interest rate falls", "misconception": "The shift is correct, but a smaller money supply with unchanged demand raises the interest rate." }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "u13-sa-08",
+      "format": "short_answer",
+      "section": "13.2",
+      "concepts": ["c13-minimum-reserve-requirement-required-reserve-rat", "c13-commercial-bank", "c13-interest"],
+      "command_term": "explain",
+      "marks": 3,
+      "prompt": "The central bank of Veld raises the minimum reserve requirement. Explain how this is likely to affect interest rates in Veld.",
+      "hints": [
+        "Think about what commercial banks can do with the deposits they do not have to hold as reserves.",
+        "Follow the chain: reserves held, money available for loans, money supply, then the price of borrowing."
+      ],
+      "targets": "Reserve requirement → bank lending → money supply → interest rate",
+      "marking_points": [
+        "Commercial banks must hold a larger share of deposits as reserves [1]",
+        "so they have less money to lend and the money supply falls [1]",
+        "the reduced supply of credit/money pushes interest rates up [1]"
+      ],
+      "model_answer_note": "A full-mark answer gives the complete chain from higher reserves to less lending/lower money supply to higher interest rates."
+    },
+    {
+      "id": "u13-mcq-09",
+      "format": "mcq",
+      "section": "13.3",
+      "concepts": ["c13-fiscal-policy"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Veld enters a recession and the government makes no new policy decisions. Which change happens automatically and helps to stabilise aggregate demand?",
+      "hints": [
+        "Think about automatic stabilisers built into the tax and benefit system.",
+        "Consider what happens to incomes and jobs in a recession, and how tax receipts and welfare payments respond without any new law."
+      ],
+      "targets": "Automatic stabilisers vs discretionary policy",
+      "options": [
+        { "id": "a", "text": "Tax revenues fall and spending on unemployment benefits rises", "misconception": null },
+        { "id": "b", "text": "The central bank cuts interest rates", "misconception": "This is a deliberate monetary policy decision, not an automatic feature of the government budget." },
+        { "id": "c", "text": "Tax revenues rise and spending on unemployment benefits falls", "misconception": "This is what happens in a boom, when incomes and employment rise." },
+        { "id": "d", "text": "The government announces a new road-building programme", "misconception": "A new spending programme is discretionary fiscal policy, requiring a government decision." }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u13-sa-09",
+      "format": "short_answer",
+      "section": "13.4",
+      "concepts": ["c13-autonomous-spending", "c13-induced-spending"],
+      "command_term": "distinguish",
+      "marks": 2,
+      "prompt": "Distinguish between autonomous spending and induced spending.",
+      "hints": [
+        "Think about the multiplier process: the first injection of spending versus the later rounds.",
+        "For each type, say whether it depends on the level of national income, and give a brief example."
+      ],
+      "targets": "Independent of income vs caused by changes in income",
+      "marking_points": [
+        "Autonomous spending does not depend on the level of income, e.g. a government decision to build a school [1]",
+        "Induced spending is caused by a change in income, e.g. extra consumption when household incomes rise [1]"
+      ],
+      "model_answer_note": "Both terms must be explained with a clear contrast about the role of income; examples support but do not replace the contrast."
+    },
+    {
+      "id": "u13-mcq-10",
+      "format": "mcq",
+      "section": "13.3",
+      "concepts": ["c13-fiscal-policy"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Kuva is in a deep recession. On a Keynesian AD/AS diagram, the economy is on the flat (horizontal) section of the aggregate supply curve. The government increases its spending. What would the diagram show?",
+      "hints": [
+        "Decide which curve government spending shifts, and look at the shape of the AS curve where the economy is.",
+        "On a flat section, think about whether firms need higher prices to supply more output when there is lots of spare capacity."
+      ],
+      "targets": "Fiscal policy closing a recessionary gap on the Keynesian AS curve",
+      "options": [
+        { "id": "a", "text": "The Keynesian AS curve shifts right, raising real GDP", "misconception": "Government spending is a component of AD, so it shifts AD, not the AS curve." },
+        { "id": "b", "text": "AD shifts right, the price level rises and real GDP stays the same", "misconception": "This happens on the vertical section, at full employment, not in a deep recession." },
+        { "id": "c", "text": "AD shifts right, real GDP rises and the price level stays roughly the same", "misconception": null },
+        { "id": "d", "text": "LRAS shifts right, real GDP rises and the price level falls", "misconception": "This is the effect of a supply-side policy, not an increase in government spending." }
+      ],
+      "answer": "c"
+    },
+    {
+      "id": "u13-sa-10",
+      "format": "short_answer",
+      "section": "13.4",
+      "concepts": ["c13-keynesian-multiplier", "c13-leakages", "c13-marginal-propensity-to-save-mps", "c13-marginal-propensity-to-tax-mpt", "c13-marginal-propensity-to-import-mpm"],
+      "command_term": "calculate",
+      "marks": 3,
+      "prompt": "Using the data in Table 4, calculate the value of the Keynesian multiplier in Veld and the total change in real GDP if the government increases its spending by 30 billion zeds.",
+      "table": {
+        "caption": "Table 4: Marginal propensities in Veld",
+        "columns": ["Marginal propensity", "Value"],
+        "rows": [
+          ["Marginal propensity to save (MPS)", "0.15"],
+          ["Marginal propensity to tax (MPT)", "0.20"],
+          ["Marginal propensity to import (MPM)", "0.15"]
+        ]
+      },
+      "hints": [
+        "Use the multiplier formula based on all three leakages, then the link between the multiplier and the change in GDP.",
+        "Add the leakages, take the reciprocal to get the multiplier, then multiply it by the initial change in spending."
+      ],
+      "targets": "Multiplier from leakages and its effect on GDP",
+      "marking_points": [
+        "Total leakages = 0.15 + 0.20 + 0.15 = 0.5 [1]",
+        "Multiplier = 1 / 0.5 = 2 [1]",
+        "Change in real GDP = 2 × 30 = 60 billion zeds [1]"
+      ],
+      "model_answer_note": "Full marks need the multiplier of 2 and a GDP change of 60 billion zeds with units; allow follow-through on the GDP change from an incorrect multiplier."
+    },
+    {
+      "id": "u13-mcq-11",
+      "format": "mcq",
+      "section": "13.4",
+      "concepts": ["c13-keynesian-multiplier", "c13-leakages", "c13-marginal-propensity-to-save-mps"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Which of the following would increase the size of the Keynesian multiplier in Kuva?",
+      "hints": [
+        "The size of the multiplier depends on how much of each extra zed leaks out of the circular flow.",
+        "For each option, decide whether leakages get bigger, get smaller, or whether the option changes spending rather than the multiplier."
+      ],
+      "targets": "Determinants of the multiplier's size",
+      "options": [
+        { "id": "a", "text": "Households spend a larger share of extra income on imports", "misconception": "A higher MPM is a bigger leakage, so the multiplier becomes smaller." },
+        { "id": "b", "text": "The government raises income tax rates", "misconception": "A higher MPT is a bigger leakage, so the multiplier becomes smaller." },
+        { "id": "c", "text": "Households save a smaller share of extra income", "misconception": null },
+        { "id": "d", "text": "Firms increase autonomous investment", "misconception": "This is a new injection that the multiplier acts on; it does not change the multiplier's value." }
+      ],
+      "answer": "c"
+    },
+    {
+      "id": "u13-sa-11",
+      "format": "short_answer",
+      "section": "13.2",
+      "concepts": ["c13-monetary-policy", "c13-interest", "c13-inflation-targeting"],
+      "command_term": "explain",
+      "marks": 4,
+      "prompt": "Inflation in Kuva is well above the central bank's target. Explain, with reference to an AD/AS diagram, how an increase in interest rates could reduce inflation.",
+      "hints": [
+        "Think about the components of aggregate demand that are most sensitive to the cost of borrowing.",
+        "Link the interest rate to borrowing, then to those components, then to the AD curve, then to the price level on the diagram."
+      ],
+      "targets": "Contractionary monetary policy transmission to AD and the price level",
+      "marking_points": [
+        "Higher interest rates raise the cost of borrowing (and the reward for saving) [1]",
+        "so consumption and investment spending fall [1]",
+        "the AD curve shifts to the left [1]",
+        "reducing the average price level / rate of inflation (with a possible fall in real GDP) [1]"
+      ],
+      "model_answer_note": "A full-mark answer traces the full chain from higher rates to lower C and I, a leftward AD shift and a lower price level or inflation rate."
+    },
+    {
+      "id": "u13-mcq-12",
+      "format": "mcq",
+      "section": "13.6",
+      "concepts": [],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "The government of Veld cuts the tax rate on company profits. According to supply-side analysis, what is the most likely long-run effect?",
+      "hints": [
+        "Think about how the after-tax return on investment affects firms' decisions about capital.",
+        "Link more investment to the quantity of capital in the economy, then to potential output."
+      ],
+      "targets": "Corporate tax cut → investment → LRAS",
+      "options": [
+        { "id": "a", "text": "LRAS shifts right, because higher after-tax profits encourage investment in capital", "misconception": null },
+        { "id": "b", "text": "Only AD shifts right; LRAS does not change", "misconception": "Investment adds to AD, but the extra capital it creates also raises productive capacity in the long run." },
+        { "id": "c", "text": "LRAS shifts left, because the government collects less tax revenue", "misconception": "Lower tax revenue affects the budget, not the economy's productive capacity directly." },
+        { "id": "d", "text": "SRAS shifts left, because firms' costs of production rise", "misconception": "A tax on profits is not a production cost, and a cut in it does not raise costs." }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u13-sa-12",
+      "format": "short_answer",
+      "section": "13.3",
+      "concepts": ["c13-fiscal-policy", "c13-interest"],
+      "command_term": "explain",
+      "marks": 3,
+      "prompt": "The government of Kuva increases its spending and pays for it by borrowing. Explain how this could lead to crowding out.",
+      "hints": [
+        "Think about the market for loanable funds and who competes for the money available.",
+        "Follow the chain: government borrowing, interest rates, then private spending decisions."
+      ],
+      "targets": "Government borrowing → higher interest rates → lower private investment",
+      "marking_points": [
+        "Government borrowing increases the demand for loanable funds [1]",
+        "which pushes up interest rates [1]",
+        "so private investment (and interest-sensitive consumption) falls, offsetting part of the rise in AD [1]"
+      ],
+      "model_answer_note": "A full-mark answer links extra government borrowing to higher interest rates and to reduced private spending that offsets the fiscal stimulus."
+    },
+    {
+      "id": "u13-mcq-13",
+      "format": "mcq",
+      "section": "13.6",
+      "concepts": ["c13-investment-in-human-capital"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Many coal miners in Veld lost their jobs when the country's mines closed, and the new jobs being created are in software. Which government policy is most likely to reduce this type of unemployment?",
+      "hints": [
+        "First identify the type of unemployment described in the scenario.",
+        "Choose the policy that tackles the cause of this type of unemployment rather than a shortage of spending."
+      ],
+      "targets": "Interventionist supply-side policy for structural unemployment",
+      "options": [
+        { "id": "a", "text": "Cutting interest rates to raise aggregate demand", "misconception": "Higher AD helps cyclical unemployment but does not give miners the skills for software jobs." },
+        { "id": "b", "text": "Funding retraining courses in digital skills", "misconception": null },
+        { "id": "c", "text": "Raising unemployment benefits", "misconception": "Higher benefits support incomes but do not close the skills gap and may reduce the incentive to search for work." },
+        { "id": "d", "text": "Raising the minimum wage", "misconception": "A higher minimum wage raises labour costs and does not fix the mismatch of skills." }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "u13-sa-13",
+      "format": "short_answer",
+      "section": "13.6",
+      "concepts": ["c13-labor-union", "c13-deregulation"],
+      "command_term": "explain",
+      "marks": 3,
+      "prompt": "Explain how reducing the power of labour unions in Veld could lower the natural rate of unemployment.",
+      "hints": [
+        "Think about a labour market diagram and how unions can influence the wage.",
+        "Link union power to wages and flexibility, then to firms' hiring decisions and the economy's long-run position."
+      ],
+      "targets": "Market-based supply-side policy and the natural rate of unemployment",
+      "marking_points": [
+        "Strong unions may push wages above the market-clearing level, creating unemployment [1]",
+        "weaker unions make wages and working practices more flexible, lowering labour costs [1]",
+        "so firms hire more workers, lowering the natural rate of unemployment / shifting LRAS right [1]"
+      ],
+      "model_answer_note": "Full marks need the wage-above-equilibrium problem, the link to more flexible or lower labour costs, and the resulting rise in employment."
+    },
+    {
+      "id": "u13-mcq-14",
+      "format": "mcq",
+      "section": "13.2",
+      "concepts": ["c13-real-interest-rate", "c13-nominal-interest-rate"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Table 5 shows data for Kuva. The central bank kept its nominal interest rate unchanged while inflation rose. Which statement is correct?",
+      "table": {
+        "caption": "Table 5: Interest and inflation rates in Kuva",
+        "columns": ["Year", "Nominal interest rate (%)", "Inflation rate (%)"],
+        "rows": [
+          ["2024", "2.0", "1.0"],
+          ["2025", "2.0", "5.0"]
+        ]
+      },
+      "hints": [
+        "Use the real interest rate, not the nominal rate, to judge the true cost of borrowing.",
+        "Find the real rate in each year, then think about what the change means for the value of repayments."
+      ],
+      "targets": "Holding nominal rates while inflation rises lowers real rates and loosens policy",
+      "options": [
+        { "id": "a", "text": "The real interest rate fell from 1.0% to −3.0%, making borrowing more attractive", "misconception": null },
+        { "id": "b", "text": "The real interest rate stayed at 2.0%, because the nominal rate did not change", "misconception": "This ignores inflation; the real rate changes when inflation changes even if the nominal rate is fixed." },
+        { "id": "c", "text": "The real interest rate rose from 3.0% to 7.0%, making borrowing less attractive", "misconception": "This adds inflation to the nominal rate instead of subtracting it." },
+        { "id": "d", "text": "The real interest rate fell from 1.0% to −3.0%, making borrowing less attractive", "misconception": "The figures are right, but a lower real rate reduces the real cost of borrowing, so borrowing becomes more attractive." }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u13-sa-14",
+      "format": "short_answer",
+      "section": "13.4",
+      "concepts": ["c13-keynesian-multiplier", "c13-leakages"],
+      "command_term": "calculate",
+      "marks": 3,
+      "prompt": "Veld has a recessionary gap. Using the data in Table 6, calculate the increase in government spending needed to close the gap.",
+      "table": {
+        "caption": "Table 6: Economic data for Veld",
+        "columns": ["Indicator", "Value"],
+        "rows": [
+          ["Recessionary gap (billion zeds)", "80"],
+          ["Marginal propensity to save (MPS)", "0.10"],
+          ["Marginal propensity to tax (MPT)", "0.10"],
+          ["Marginal propensity to import (MPM)", "0.05"]
+        ]
+      },
+      "hints": [
+        "Use the multiplier formula and the link between the multiplier, the change in spending and the change in GDP.",
+        "Find the multiplier from the leakages first, then work backwards from the change in GDP that is needed."
+      ],
+      "targets": "Using the multiplier in reverse to size a fiscal stimulus",
+      "marking_points": [
+        "Total leakages = 0.10 + 0.10 + 0.05 = 0.25 [1]",
+        "Multiplier = 1 / 0.25 = 4 [1]",
+        "Required increase in government spending = 80 ÷ 4 = 20 billion zeds [1]"
+      ],
+      "model_answer_note": "Full marks need the multiplier of 4 and an answer of 20 billion zeds; a student who multiplies 80 by 4 should lose the final mark."
+    },
+    {
+      "id": "u13-mcq-15",
+      "format": "mcq",
+      "section": "13.3",
+      "concepts": ["c13-fiscal-policy"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Table 7 shows the government budget of Veld. Which statement is correct?",
+      "table": {
+        "caption": "Table 7: Government budget of Veld (billion zeds)",
+        "columns": ["Year", "Government spending", "Tax revenue"],
+        "rows": [
+          ["2024", "120", "100"],
+          ["2025", "110", "115"]
+        ]
+      },
+      "hints": [
+        "Compare spending with tax revenue in each year to find the budget balance.",
+        "Then decide whether the move between the two years adds to or takes away from aggregate demand."
+      ],
+      "targets": "Reading a budget balance and identifying the fiscal stance",
+      "options": [
+        { "id": "a", "text": "The budget deficit increased from 20 billion to 25 billion zeds", "misconception": "When tax revenue exceeds spending the government has a surplus, not a larger deficit." },
+        { "id": "b", "text": "The budget moved from a deficit of 20 billion to a surplus of 5 billion zeds, a contractionary stance", "misconception": null },
+        { "id": "c", "text": "The budget moved from a surplus of 20 billion to a deficit of 5 billion zeds, an expansionary stance", "misconception": "The signs are reversed: spending above revenue is a deficit, not a surplus." },
+        { "id": "d", "text": "The budget moved from a deficit of 20 billion to a surplus of 5 billion zeds, an expansionary stance", "misconception": "The balances are right, but lower spending and higher taxes reduce AD, which is contractionary." }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "u13-sa-15",
+      "format": "short_answer",
+      "section": "13.6",
+      "concepts": ["c13-infrastructure", "c13-fiscal-policy"],
+      "command_term": "explain",
+      "marks": 4,
+      "prompt": "The government of Kuva spends heavily on new roads and power stations. Explain, with reference to an AD/AS diagram, how this policy could affect both aggregate demand and long-run aggregate supply.",
+      "hints": [
+        "This is an interventionist supply-side policy that also appears in the government budget, so think about two curves.",
+        "First deal with the short-run effect of the spending itself, then with what the finished roads and power stations do for firms over time."
+      ],
+      "targets": "Dual effect of infrastructure spending on AD and LRAS",
+      "marking_points": [
+        "Government spending is a component of AD, so AD shifts right in the short run [1]",
+        "the new infrastructure increases the quantity of physical capital in the economy [1]",
+        "which lowers firms' costs / raises productivity [1]",
+        "so LRAS shifts right, increasing potential output [1]"
+      ],
+      "model_answer_note": "A full-mark answer covers both the AD shift from the spending and the LRAS shift from higher capacity and productivity, with the mechanism for each."
+    }
+  ]
+}

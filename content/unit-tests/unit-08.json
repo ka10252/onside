@@ -1,0 +1,1235 @@
+{
+  "unit": 8,
+  "title": "The level of overall economic activity",
+  "questions": [
+    {
+      "id": "u8-mcq-01",
+      "format": "mcq",
+      "section": "8.1",
+      "concepts": [],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "In a simple two-sector circular flow model, what do households provide to firms, and what do they receive in return?",
+      "hints": [
+        "Use the circular flow of income with its factor (resource) market and product market.",
+        "Follow the flows from households to firms in the factor market, and then the flow that comes back."
+      ],
+      "targets": "Real and money flows in the two-sector circular flow",
+      "options": [
+        {
+          "id": "a",
+          "text": "Factors of production, in exchange for incomes such as wages, rent, interest and profit",
+          "misconception": null
+        },
+        {
+          "id": "b",
+          "text": "Goods and services, in exchange for consumer spending",
+          "misconception": "Goods and services do flow in the model, but firms provide them to households, not the other way round."
+        },
+        {
+          "id": "c",
+          "text": "Consumer spending, in exchange for factors of production",
+          "misconception": "Households do spend, but spending buys goods and services, not factors of production."
+        },
+        {
+          "id": "d",
+          "text": "Savings, in exchange for investment goods",
+          "misconception": "Saving and investment appear in the wider model, but they are not part of the simple two-sector flow."
+        }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u8-sa-01",
+      "format": "short_answer",
+      "section": "8.1",
+      "concepts": [],
+      "command_term": "distinguish",
+      "marks": 2,
+      "prompt": "Distinguish between a leakage and an injection in the circular flow of income, giving one example of each.",
+      "hints": [
+        "Use the open-economy circular flow model with the financial, government and foreign sectors.",
+        "For each term, describe what it does to the size of the flow of spending and name one matching example."
+      ],
+      "targets": "Leakages vs injections with examples",
+      "marking_points": [
+        "A leakage (withdrawal) is income taken out of the circular flow and not spent on domestic output, e.g. saving, taxes or imports [1]",
+        "An injection is spending added to the circular flow that does not come from household consumption, e.g. investment, government spending or exports [1]"
+      ],
+      "model_answer_note": "A full-mark answer contrasts money leaving the flow with money entering it, with a correct example of each."
+    },
+    {
+      "id": "u8-mcq-02",
+      "format": "mcq",
+      "section": "8.1",
+      "concepts": [
+        "c8-exports"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Which of the following is an injection into Veld's circular flow of income?",
+      "hints": [
+        "Use the three leakages and three injections of the open-economy circular flow.",
+        "Ask whether each flow removes money from, or adds money to, spending on Veld's output."
+      ],
+      "targets": "Classifying injections and leakages",
+      "options": [
+        {
+          "id": "a",
+          "text": "Saving by Veld's households",
+          "misconception": "Saved money goes to banks, but it is income that is not spent, so it is a leakage."
+        },
+        {
+          "id": "b",
+          "text": "Taxes paid to Veld's government",
+          "misconception": "The government later spends, but paying tax removes income from the flow."
+        },
+        {
+          "id": "c",
+          "text": "Spending by Veld's households on imports",
+          "misconception": "This is spending, but the money goes to producers abroad, so it leaks out."
+        },
+        {
+          "id": "d",
+          "text": "Spending by foreigners on Veld's exports",
+          "misconception": null
+        }
+      ],
+      "answer": "d"
+    },
+    {
+      "id": "u8-sa-02",
+      "format": "short_answer",
+      "section": "8.1",
+      "concepts": [
+        "c8-consumption-spending-c",
+        "c8-investment-spending-i"
+      ],
+      "command_term": "explain",
+      "marks": 3,
+      "prompt": "Households in Veld decide to save a larger share of their income. Using the circular flow model, explain how this could affect the level of economic activity.",
+      "hints": [
+        "Use leakages and injections, and the condition for the circular flow to stay the same size.",
+        "Trace what happens to spending, then to firms' output and incomes, and consider whether any injection could offset the change."
+      ],
+      "targets": "Effect of a rise in a leakage on the circular flow",
+      "marking_points": [
+        "Saving is a leakage from the circular flow [1]",
+        "Higher saving means less consumption spending on domestic output, so firms' revenues fall [1]",
+        "Unless injections such as investment rise by the same amount, output, income and employment fall (the flow shrinks) [1]"
+      ],
+      "model_answer_note": "A full-mark answer identifies saving as a leakage, links it to lower consumption and output, and notes the offset from injections."
+    },
+    {
+      "id": "u8-sa-03",
+      "format": "short_answer",
+      "section": "8.2",
+      "concepts": [
+        "c8-national-output"
+      ],
+      "command_term": "define",
+      "marks": 2,
+      "prompt": "Define the term gross domestic product (GDP).",
+      "hints": [
+        "Think about how the size of a country's national output is measured.",
+        "Your answer needs to cover what is counted, where it is produced, and over what period."
+      ],
+      "targets": "Precise definition of GDP",
+      "marking_points": [
+        "The total market value of all final goods and services [1]",
+        "produced within a country's borders in a given time period, usually one year [1]"
+      ],
+      "model_answer_note": "A full-mark answer mentions the value of final goods and services, production within the country, and a time period."
+    },
+    {
+      "id": "u8-mcq-03",
+      "format": "mcq",
+      "section": "8.2",
+      "concepts": [
+        "c8-investment-spending-i",
+        "c8-consumption-spending-c"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Which of the following would be included in Kuva's GDP?",
+      "hints": [
+        "Use the expenditure approach and what counts as spending on final goods and services produced this year.",
+        "For each option, ask whether any new output has been produced in this period."
+      ],
+      "targets": "What counts in GDP",
+      "options": [
+        {
+          "id": "a",
+          "text": "A household buys a second-hand car from a neighbour",
+          "misconception": "Money is spent, but the car was already counted in the year it was produced."
+        },
+        {
+          "id": "b",
+          "text": "The government pays pensions to retired people",
+          "misconception": "Government spending is part of GDP, but pensions are transfer payments with no output in return."
+        },
+        {
+          "id": "c",
+          "text": "A Kuva firm buys new machinery made in Kuva",
+          "misconception": null
+        },
+        {
+          "id": "d",
+          "text": "A resident buys shares in a Kuva company",
+          "misconception": "It sounds like investment, but buying shares is a financial transaction, not spending on new capital goods."
+        }
+      ],
+      "answer": "c"
+    },
+    {
+      "id": "u8-mcq-04",
+      "format": "mcq",
+      "section": "8.2",
+      "concepts": [
+        "c8-nominal-value",
+        "c8-real-value"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Why do economists use real GDP rather than nominal GDP when comparing a country's output over time?",
+      "hints": [
+        "Use the difference between nominal value and real value.",
+        "Think about what could make nominal GDP rise even when the quantity of output has not changed."
+      ],
+      "targets": "Purpose of real values",
+      "options": [
+        {
+          "id": "a",
+          "text": "Real GDP includes the value of intermediate goods",
+          "misconception": "It sounds more complete, but neither measure counts intermediate goods."
+        },
+        {
+          "id": "b",
+          "text": "Real GDP removes the effect of changes in the price level",
+          "misconception": null
+        },
+        {
+          "id": "c",
+          "text": "Real GDP divides output by the population",
+          "misconception": "This describes a per capita figure, which is a different adjustment."
+        },
+        {
+          "id": "d",
+          "text": "Real GDP is measured in the prices of the current year",
+          "misconception": "Using current prices is exactly what makes a figure nominal."
+        }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "u8-sa-04",
+      "format": "short_answer",
+      "section": "8.2",
+      "concepts": [
+        "c8-national-output"
+      ],
+      "command_term": "distinguish",
+      "marks": 2,
+      "prompt": "Distinguish between gross domestic product (GDP) and gross national income (GNI).",
+      "hints": [
+        "Compare the two measures in terms of where production happens versus who owns the factors of production.",
+        "State what each measure counts, and show how one can be found from the other."
+      ],
+      "targets": "GDP vs GNI: location vs ownership",
+      "marking_points": [
+        "GDP measures the value of output produced within a country's borders, whoever owns the factors of production [1]",
+        "GNI measures the income earned by a country's residents wherever they produce it, i.e. GDP plus net income from abroad [1]"
+      ],
+      "model_answer_note": "A full-mark answer contrasts domestic location (GDP) with residents' income (GNI) and links them through net income from abroad."
+    },
+    {
+      "id": "u8-mcq-05",
+      "format": "mcq",
+      "section": "8.2",
+      "concepts": [
+        "c8-per-capita",
+        "c8-real-value"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "In Tarn, real GDP rises by 3% in a year while the population rises by 5%. What happens to real GDP per capita?",
+      "hints": [
+        "Use the per capita measure: a total divided by the population.",
+        "Compare how fast the top of the fraction grows with how fast the bottom grows."
+      ],
+      "targets": "Population growth and GDP per capita",
+      "options": [
+        {
+          "id": "a",
+          "text": "It falls",
+          "misconception": null
+        },
+        {
+          "id": "b",
+          "text": "It rises by 3%",
+          "misconception": "Real GDP rose by 3%, but that output is now shared among more people."
+        },
+        {
+          "id": "c",
+          "text": "It rises by 8%",
+          "misconception": "This adds the two growth rates, but population growth reduces output per person."
+        },
+        {
+          "id": "d",
+          "text": "It stays the same, because real GDP rose",
+          "misconception": "Both totals rose, but at different rates, so output per person changes."
+        }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u8-sa-05",
+      "format": "short_answer",
+      "section": "8.3",
+      "concepts": [
+        "c8-consumption-spending-c",
+        "c8-investment-spending-i",
+        "c8-net-exports-x-m",
+        "c8-exports",
+        "c8-imports"
+      ],
+      "command_term": "calculate",
+      "marks": 2,
+      "prompt": "Using Table 1, calculate Veld's GDP using the expenditure method.",
+      "hints": [
+        "Use the expenditure formula, and check which rows are spending on output.",
+        "Add the domestic spending components, then add net exports; leave out any item that is not spending on output."
+      ],
+      "targets": "Expenditure method, ignoring a distractor item",
+      "table": {
+        "caption": "Table 1: Economic data for Veld, 2025",
+        "columns": [
+          "Item",
+          "Value (billion zed)"
+        ],
+        "rows": [
+          [
+            "Consumption",
+            "400"
+          ],
+          [
+            "Investment",
+            "120"
+          ],
+          [
+            "Government spending",
+            "150"
+          ],
+          [
+            "Exports",
+            "90"
+          ],
+          [
+            "Imports",
+            "110"
+          ],
+          [
+            "Household saving",
+            "60"
+          ]
+        ]
+      },
+      "marking_points": [
+        "GDP = C + I + G + (X − M) = 400 + 120 + 150 + (90 − 110) [1]",
+        "= 650 billion zed [1]"
+      ],
+      "model_answer_note": "A full-mark answer uses C + I + G + (X − M), excludes household saving, and reaches 650 billion zed."
+    },
+    {
+      "id": "u8-mcq-06",
+      "format": "mcq",
+      "section": "8.3",
+      "concepts": [
+        "c8-imports",
+        "c8-net-exports-x-m"
+      ],
+      "command_term": "calculate",
+      "marks": 1,
+      "prompt": "Using Table 2, what was the value of Kuva's imports?",
+      "hints": [
+        "Use GDP = C + I + G + (X − M) and rearrange it.",
+        "Add the known spending items including exports, then compare that total with GDP."
+      ],
+      "targets": "Finding a missing component of expenditure GDP",
+      "table": {
+        "caption": "Table 2: National income data for Kuva, 2025",
+        "columns": [
+          "Item",
+          "Value (billion zed)"
+        ],
+        "rows": [
+          [
+            "GDP",
+            "800"
+          ],
+          [
+            "Consumption",
+            "500"
+          ],
+          [
+            "Investment",
+            "100"
+          ],
+          [
+            "Government spending",
+            "150"
+          ],
+          [
+            "Exports",
+            "120"
+          ]
+        ]
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": "870 billion zed",
+          "misconception": "This is C + I + G + X before imports are subtracted, not the value of imports."
+        },
+        {
+          "id": "b",
+          "text": "120 billion zed",
+          "misconception": "This is the export figure; imports are not given and must be calculated."
+        },
+        {
+          "id": "c",
+          "text": "50 billion zed",
+          "misconception": "800 − 500 − 100 − 150 = 50 gives net exports (X − M), not imports."
+        },
+        {
+          "id": "d",
+          "text": "70 billion zed",
+          "misconception": null
+        }
+      ],
+      "answer": "d"
+    },
+    {
+      "id": "u8-sa-06",
+      "format": "short_answer",
+      "section": "8.3",
+      "concepts": [
+        "c8-national-output"
+      ],
+      "command_term": "calculate",
+      "marks": 3,
+      "prompt": "Using Table 3, calculate Tarn's net income from abroad and its gross national income (GNI).",
+      "hints": [
+        "Use the link between GDP and GNI through net income from abroad.",
+        "First find the difference between income flowing in and income flowing out, then adjust GDP by that amount, watching the sign."
+      ],
+      "targets": "Net income from abroad and GNI",
+      "table": {
+        "caption": "Table 3: Income data for Tarn, 2025",
+        "columns": [
+          "Item",
+          "Value (million zed)"
+        ],
+        "rows": [
+          [
+            "GDP",
+            "900"
+          ],
+          [
+            "Income earned abroad by Tarn's residents",
+            "60"
+          ],
+          [
+            "Income earned in Tarn by foreign-owned factors and sent abroad",
+            "85"
+          ]
+        ]
+      },
+      "marking_points": [
+        "Net income from abroad = 60 − 85 = −25 million zed [1]",
+        "GNI = GDP + net income from abroad = 900 + (−25) [1]",
+        "= 875 million zed [1]"
+      ],
+      "model_answer_note": "A full-mark answer finds a negative net income from abroad of 25 million zed and a GNI of 875 million zed."
+    },
+    {
+      "id": "u8-mcq-07",
+      "format": "mcq",
+      "section": "8.3",
+      "concepts": [
+        "c8-price-deflator",
+        "c8-price-index",
+        "c8-nominal-value",
+        "c8-real-value"
+      ],
+      "command_term": "calculate",
+      "marks": 1,
+      "prompt": "Using Table 4, what is Veld's GDP deflator for 2025 (base year = 100)?",
+      "hints": [
+        "Use the relationship between nominal GDP, real GDP and the price deflator.",
+        "Divide the figures in the correct order and express the result with the base year set at 100."
+      ],
+      "targets": "Calculating the GDP deflator",
+      "table": {
+        "caption": "Table 4: GDP of Veld, 2025",
+        "columns": [
+          "Measure",
+          "Value (billion zed)"
+        ],
+        "rows": [
+          [
+            "Nominal GDP",
+            "660"
+          ],
+          [
+            "Real GDP (base year prices)",
+            "600"
+          ]
+        ]
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": "90.9",
+          "misconception": "This divides real GDP by nominal GDP, which is the wrong way round."
+        },
+        {
+          "id": "b",
+          "text": "110",
+          "misconception": null
+        },
+        {
+          "id": "c",
+          "text": "60",
+          "misconception": "This is the difference between nominal and real GDP, not an index number."
+        },
+        {
+          "id": "d",
+          "text": "1.1",
+          "misconception": "The ratio is right, but a price index is expressed with the base year equal to 100."
+        }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "u8-sa-07",
+      "format": "short_answer",
+      "section": "8.3",
+      "concepts": [
+        "c8-nominal-value",
+        "c8-real-value",
+        "c8-price-deflator"
+      ],
+      "command_term": "calculate",
+      "marks": 3,
+      "prompt": "Using Table 5, calculate (i) Kuva's real GDP in 2025 and (ii) the real GDP growth rate between 2024 and 2025.",
+      "hints": [
+        "Use the deflator to turn nominal GDP into real GDP, then use the percentage change formula.",
+        "In the base year real and nominal GDP are equal; compare the two real figures and divide the change by the earlier year's value."
+      ],
+      "targets": "Real GDP from a deflator and real growth rate",
+      "table": {
+        "caption": "Table 5: GDP data for Kuva",
+        "columns": [
+          "Year",
+          "Nominal GDP (billion zed)",
+          "GDP deflator (2024 = 100)"
+        ],
+        "rows": [
+          [
+            "2024",
+            "1,000",
+            "100"
+          ],
+          [
+            "2025",
+            "1,320",
+            "110"
+          ]
+        ]
+      },
+      "marking_points": [
+        "(i) Real GDP = (1,320 ÷ 110) × 100 [1]",
+        "= 1,200 billion zed [1]",
+        "(ii) Growth = (1,200 − 1,000) ÷ 1,000 × 100 = 20% [1]"
+      ],
+      "model_answer_note": "A full-mark answer converts 2025 GDP to 1,200 billion zed in 2024 prices and finds real growth of 20%."
+    },
+    {
+      "id": "u8-mcq-08",
+      "format": "mcq",
+      "section": "8.3",
+      "concepts": [
+        "c8-price-deflator",
+        "c8-price-index"
+      ],
+      "command_term": "calculate",
+      "marks": 1,
+      "prompt": "Tarn's GDP deflator rose from 125 in 2024 to 150 in 2025. By how much did the average price level rise?",
+      "hints": [
+        "Use the percentage change formula applied to the two index numbers.",
+        "Find the change in the index, then divide by the value in the earlier year."
+      ],
+      "targets": "Percentage change between two index numbers",
+      "options": [
+        {
+          "id": "a",
+          "text": "25%",
+          "misconception": "The index rose by 25 points, but a percentage change must be divided by the starting value."
+        },
+        {
+          "id": "b",
+          "text": "50%",
+          "misconception": "150 is 50 above the base of 100, but that compares with the base year, not with 2024."
+        },
+        {
+          "id": "c",
+          "text": "20%",
+          "misconception": null
+        },
+        {
+          "id": "d",
+          "text": "16.7%",
+          "misconception": "This divides the change by the new value (150) instead of the starting value (125)."
+        }
+      ],
+      "answer": "c"
+    },
+    {
+      "id": "u8-sa-08",
+      "format": "short_answer",
+      "section": "8.3",
+      "concepts": [
+        "c8-real-value",
+        "c8-per-capita",
+        "c8-price-deflator"
+      ],
+      "command_term": "calculate",
+      "marks": 3,
+      "prompt": "Using Table 6, calculate Veld's real GDP per capita in 2025.",
+      "hints": [
+        "You need two steps: remove the effect of prices, then share output across the population.",
+        "Convert nominal GDP to real GDP with the deflator first, then divide by population, keeping the millions consistent."
+      ],
+      "targets": "Real GDP per capita in two steps",
+      "table": {
+        "caption": "Table 6: Data for Veld, 2025",
+        "columns": [
+          "Indicator",
+          "Value"
+        ],
+        "rows": [
+          [
+            "Nominal GDP",
+            "4,800 million zed"
+          ],
+          [
+            "GDP deflator (base year = 100)",
+            "120"
+          ],
+          [
+            "Population",
+            "8 million"
+          ]
+        ]
+      },
+      "marking_points": [
+        "Real GDP = (4,800 ÷ 120) × 100 = 4,000 million zed [1]",
+        "Real GDP per capita = 4,000 million ÷ 8 million [1]",
+        "= 500 zed per person [1]"
+      ],
+      "model_answer_note": "A full-mark answer deflates GDP to 4,000 million zed and divides by 8 million to get 500 zed per person."
+    },
+    {
+      "id": "u8-sa-09",
+      "format": "short_answer",
+      "section": "8.3",
+      "concepts": [
+        "c8-per-capita",
+        "c8-nominal-value"
+      ],
+      "command_term": "calculate",
+      "marks": 2,
+      "prompt": "Using Table 7, calculate Kuva's total nominal GDP in 2025.",
+      "hints": [
+        "Use the per capita formula and rearrange it to find the total.",
+        "Combine the two figures and take care with the millions in the population."
+      ],
+      "targets": "Total GDP from a per capita figure",
+      "table": {
+        "caption": "Table 7: Data for Kuva, 2025",
+        "columns": [
+          "Indicator",
+          "Value"
+        ],
+        "rows": [
+          [
+            "Nominal GDP per capita",
+            "2,500 zed"
+          ],
+          [
+            "Population",
+            "12 million"
+          ]
+        ]
+      },
+      "marking_points": [
+        "GDP = GDP per capita × population = 2,500 × 12 million [1]",
+        "= 30,000 million zed (30 billion zed) [1]"
+      ],
+      "model_answer_note": "A full-mark answer multiplies per capita GDP by population to get 30,000 million (30 billion) zed."
+    },
+    {
+      "id": "u8-mcq-09",
+      "format": "mcq",
+      "section": "8.3",
+      "concepts": [
+        "c8-real-value"
+      ],
+      "command_term": "calculate",
+      "marks": 1,
+      "prompt": "Using Table 8, what was Tarn's rate of economic growth in 2025?",
+      "hints": [
+        "Use the percentage change formula for real GDP between two consecutive years.",
+        "Take the change from the previous year and divide by the previous year's value."
+      ],
+      "targets": "Annual real GDP growth rate",
+      "table": {
+        "caption": "Table 8: Real GDP of Tarn",
+        "columns": [
+          "Year",
+          "Real GDP (billion zed)"
+        ],
+        "rows": [
+          [
+            "2023",
+            "400"
+          ],
+          [
+            "2024",
+            "420"
+          ],
+          [
+            "2025",
+            "441"
+          ]
+        ]
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": "5%",
+          "misconception": null
+        },
+        {
+          "id": "b",
+          "text": "10.25%",
+          "misconception": "This is growth over two years (2023 to 2025), not growth in 2025."
+        },
+        {
+          "id": "c",
+          "text": "21%",
+          "misconception": "Real GDP rose by 21 billion zed, but that is the absolute change, not a percentage."
+        },
+        {
+          "id": "d",
+          "text": "4.8%",
+          "misconception": "This divides the change by the 2025 value instead of the 2024 value."
+        }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u8-sa-10",
+      "format": "short_answer",
+      "section": "8.3",
+      "concepts": [
+        "c8-real-value",
+        "c8-per-capita"
+      ],
+      "command_term": "calculate",
+      "marks": 3,
+      "prompt": "Using Table 9, calculate the percentage change in Veld's real GDP per capita between Year 1 and Year 2.",
+      "hints": [
+        "Use real GDP per capita for each year and the percentage change formula.",
+        "Work out output per person in each year first, then compare the two figures using the earlier year as the base."
+      ],
+      "targets": "Growth in real GDP per capita when population also grows",
+      "table": {
+        "caption": "Table 9: Data for Veld",
+        "columns": [
+          "Year",
+          "Real GDP (million zed)",
+          "Population (million)"
+        ],
+        "rows": [
+          [
+            "Year 1",
+            "500",
+            "10"
+          ],
+          [
+            "Year 2",
+            "572",
+            "11"
+          ]
+        ]
+      },
+      "marking_points": [
+        "Year 1 real GDP per capita = 500 ÷ 10 = 50 zed [1]",
+        "Year 2 real GDP per capita = 572 ÷ 11 = 52 zed [1]",
+        "Change = (52 − 50) ÷ 50 × 100 = 4% [1]"
+      ],
+      "model_answer_note": "A full-mark answer finds per capita values of 50 and 52 zed and a 4% rise (lower than the 14.4% rise in total real GDP)."
+    },
+    {
+      "id": "u8-mcq-10",
+      "format": "mcq",
+      "section": "8.4",
+      "concepts": [
+        "c8-contraction",
+        "c8-expansion",
+        "c8-peak",
+        "c8-trough"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "In Kuva, real GDP has been falling for several months and unemployment is rising. Which phase of the business cycle is Kuva most likely in?",
+      "hints": [
+        "Use the four phases of the business cycle.",
+        "Match the direction of real GDP and unemployment in the scenario with the phase that has the same features."
+      ],
+      "targets": "Identifying business cycle phases",
+      "options": [
+        {
+          "id": "a",
+          "text": "Expansion",
+          "misconception": "The economy is changing, but in an expansion real GDP rises and unemployment falls."
+        },
+        {
+          "id": "b",
+          "text": "Peak",
+          "misconception": "A peak comes just before a fall, but at the peak real GDP is at its highest, not falling."
+        },
+        {
+          "id": "c",
+          "text": "Contraction",
+          "misconception": null
+        },
+        {
+          "id": "d",
+          "text": "Trough",
+          "misconception": "Unemployment is high near a trough, but the trough is the lowest point where the fall ends, not a period of continued falling."
+        }
+      ],
+      "answer": "c"
+    },
+    {
+      "id": "u8-sa-11",
+      "format": "short_answer",
+      "section": "8.4",
+      "concepts": [
+        "c8-contraction"
+      ],
+      "command_term": "define",
+      "marks": 2,
+      "prompt": "Define the term recession.",
+      "hints": [
+        "This term is linked to the contraction phase of the business cycle.",
+        "Your definition needs to say what happens to output and for how long."
+      ],
+      "targets": "Precise definition of recession",
+      "marking_points": [
+        "A fall in real GDP [1]",
+        "for at least two consecutive quarters (six months) [1]"
+      ],
+      "model_answer_note": "A full-mark answer refers to falling real GDP (not just slower growth) over at least two consecutive quarters."
+    },
+    {
+      "id": "u8-mcq-11",
+      "format": "mcq",
+      "section": "8.4",
+      "concepts": [
+        "c8-potential-output",
+        "c8-long-term-growth-trend",
+        "c8-peak"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Veld's actual real GDP is above its potential output. Which of the following is most likely?",
+      "hints": [
+        "Use the business cycle diagram with the long-term growth trend (potential output).",
+        "Think about what producing beyond normal capacity means for the use of labour and for prices."
+      ],
+      "targets": "Positive output gap",
+      "options": [
+        {
+          "id": "a",
+          "text": "There is a deflationary (recessionary) gap and high unemployment",
+          "misconception": "Output gaps are linked to unemployment, but this gap occurs when output is below potential."
+        },
+        {
+          "id": "b",
+          "text": "There is an inflationary gap, with unemployment below its natural rate and upward pressure on prices",
+          "misconception": null
+        },
+        {
+          "id": "c",
+          "text": "The long-term growth trend has shifted downwards",
+          "misconception": "Actual and potential output differ, but the trend reflects long-run capacity, not short-run fluctuations."
+        },
+        {
+          "id": "d",
+          "text": "The economy is at a trough",
+          "misconception": "A trough is a turning point, but there actual output is well below potential."
+        }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "u8-mcq-12",
+      "format": "mcq",
+      "section": "8.4",
+      "concepts": [
+        "c8-trough",
+        "c8-contraction"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Using Table 10, at the end of which quarter was Tarn's real GDP at its lowest level (the trough)?",
+      "hints": [
+        "A growth rate shows the direction in which real GDP is moving, not its level.",
+        "Find the last quarter in which real GDP fell before it began to rise again."
+      ],
+      "targets": "Reading a trough from growth-rate data",
+      "table": {
+        "caption": "Table 10: Quarterly real GDP growth in Tarn",
+        "columns": [
+          "Quarter",
+          "Real GDP growth (%)"
+        ],
+        "rows": [
+          [
+            "Q1",
+            "1.2"
+          ],
+          [
+            "Q2",
+            "0.4"
+          ],
+          [
+            "Q3",
+            "−0.5"
+          ],
+          [
+            "Q4",
+            "−0.8"
+          ],
+          [
+            "Q5",
+            "0.3"
+          ],
+          [
+            "Q6",
+            "0.9"
+          ]
+        ]
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": "Q2",
+          "misconception": "Growth slowed sharply in Q2, but real GDP was still rising."
+        },
+        {
+          "id": "b",
+          "text": "Q3",
+          "misconception": "Growth first turned negative in Q3, but real GDP kept falling in Q4."
+        },
+        {
+          "id": "c",
+          "text": "Q5",
+          "misconception": "Growth turned positive in Q5, which means real GDP had already started to rise."
+        },
+        {
+          "id": "d",
+          "text": "Q4",
+          "misconception": null
+        }
+      ],
+      "answer": "d"
+    },
+    {
+      "id": "u8-sa-12",
+      "format": "short_answer",
+      "section": "8.4",
+      "concepts": [
+        "c8-potential-output",
+        "c8-long-term-growth-trend",
+        "c8-contraction",
+        "c8-trough"
+      ],
+      "command_term": "explain",
+      "marks": 3,
+      "prompt": "On a business cycle diagram, real GDP in Kuva is shown below the long-term growth trend line. Explain what this shows about Kuva's economy.",
+      "hints": [
+        "The trend line on this diagram represents potential output.",
+        "Compare actual with potential output, then consider what that means for the use of labour and other resources, and for prices."
+      ],
+      "targets": "Negative output gap on the business cycle diagram",
+      "marking_points": [
+        "Actual output is below potential output, so there is a negative (deflationary/recessionary) output gap [1]",
+        "Resources are not fully used, so unemployment is above its natural rate [1]",
+        "The economy is likely in a contraction or near a trough, with little upward pressure on the price level [1]"
+      ],
+      "model_answer_note": "A full-mark answer names the negative output gap, links it to unemployed resources, and places the economy in the contraction/trough part of the cycle."
+    },
+    {
+      "id": "u8-mcq-13",
+      "format": "mcq",
+      "section": "8.5",
+      "concepts": [
+        "c8-per-capita"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Why are GDP per capita figures often converted using purchasing power parity (PPP) exchange rates when comparing countries?",
+      "hints": [
+        "Think about purchasing power parity and what a market exchange rate does and does not reflect.",
+        "Consider why the same income, converted at market exchange rates, might buy far more in one country than in another."
+      ],
+      "targets": "Rationale for PPP adjustment",
+      "options": [
+        {
+          "id": "a",
+          "text": "To allow for differences in the cost of living, so that each figure reflects what incomes can actually buy",
+          "misconception": null
+        },
+        {
+          "id": "b",
+          "text": "To remove the effect of inflation over time within each country",
+          "misconception": "This is an adjustment, but it is what converting nominal to real values does."
+        },
+        {
+          "id": "c",
+          "text": "To include the value of non-marketed output such as housework",
+          "misconception": "GDP does miss this output, but PPP does not add anything to measured output."
+        },
+        {
+          "id": "d",
+          "text": "To divide output by the size of each country's population",
+          "misconception": "This is the per capita adjustment, which is made before any PPP conversion."
+        }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u8-sa-13",
+      "format": "short_answer",
+      "section": "8.5",
+      "concepts": [],
+      "command_term": "define",
+      "marks": 2,
+      "prompt": "Define the term informal economy.",
+      "hints": [
+        "This term matters when judging how accurate official GDP figures are.",
+        "A full definition covers what kind of activity it is and how it relates to official records."
+      ],
+      "targets": "Precise definition of the informal economy",
+      "marking_points": [
+        "Economic activity (legal or illegal) that is not registered, regulated or taxed by the government [1]",
+        "so it is not recorded in official national income statistics such as GDP [1]"
+      ],
+      "model_answer_note": "A full-mark answer describes unregistered, untaxed activity and states that it is left out of official GDP."
+    },
+    {
+      "id": "u8-sa-14",
+      "format": "short_answer",
+      "section": "8.5",
+      "concepts": [
+        "c8-per-capita",
+        "c8-well-being",
+        "c8-life-expectancy",
+        "c8-ecological-footprint"
+      ],
+      "command_term": "explain",
+      "marks": 4,
+      "prompt": "Explain two reasons why GDP per capita may not be an accurate measure of well-being in a country such as Veld.",
+      "hints": [
+        "Consider what GDP per capita counts and what it leaves out.",
+        "For each reason, name the limitation and then show how GDP per capita could change without well-being changing in the same way."
+      ],
+      "targets": "Limitations of GDP per capita as a well-being measure",
+      "marking_points": [
+        "First limitation identified, e.g. GDP per capita says nothing about how income is distributed [1]",
+        "Explained, e.g. average income can rise while most people's incomes stay the same, so many are not better off [1]",
+        "Second limitation identified, e.g. GDP ignores environmental damage, non-marketed output, leisure or product quality [1]",
+        "Explained, e.g. output that pollutes raises GDP while harming health and quality of life [1]"
+      ],
+      "model_answer_note": "A full-mark answer gives two different limitations and, for each, explains how GDP per capita and well-being can move apart."
+    },
+    {
+      "id": "u8-mcq-14",
+      "format": "mcq",
+      "section": "8.5",
+      "concepts": [
+        "c8-life-expectancy",
+        "c8-ecological-footprint",
+        "c8-per-capita"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Which statement is supported by the data in Table 11?",
+      "hints": [
+        "Read each column carefully and note which figures are per person rather than totals.",
+        "Check each statement against the numbers, and reject any that needs information the table does not give."
+      ],
+      "targets": "Interpreting multiple development indicators",
+      "table": {
+        "caption": "Table 11: Selected indicators for three countries, 2025",
+        "columns": [
+          "Country",
+          "GNI per capita (PPP US$)",
+          "Life expectancy (years)",
+          "Ecological footprint (global hectares per person)"
+        ],
+        "rows": [
+          [
+            "Veld",
+            "40,000",
+            "80",
+            "7.0"
+          ],
+          [
+            "Kuva",
+            "12,000",
+            "78",
+            "2.0"
+          ],
+          [
+            "Tarn",
+            "25,000",
+            "70",
+            "4.0"
+          ]
+        ]
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": "Kuva must have the lowest well-being because it has the lowest income per person",
+          "misconception": "Income matters, but Kuva has high life expectancy and a small footprint, so well-being cannot be judged from income alone."
+        },
+        {
+          "id": "b",
+          "text": "Veld has the highest income per person but also the largest environmental impact per person",
+          "misconception": null
+        },
+        {
+          "id": "c",
+          "text": "Tarn has a higher life expectancy than Kuva",
+          "misconception": "This misreads the table: Tarn's life expectancy (70) is lower than Kuva's (78)."
+        },
+        {
+          "id": "d",
+          "text": "Veld has the largest total national income of the three countries",
+          "misconception": "Veld's per capita figure is highest, but total income also depends on population, which is not given."
+        }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "u8-sa-15",
+      "format": "short_answer",
+      "section": "8.5",
+      "concepts": [
+        "c8-life-expectancy",
+        "c8-well-being",
+        "c8-ecological-footprint"
+      ],
+      "command_term": "explain",
+      "marks": 3,
+      "prompt": "Using Table 11, explain why Kuva might rank above Veld on the Happy Planet Index (HPI) even though its GNI per capita is much lower.",
+      "hints": [
+        "Use the components of the Happy Planet Index and how they are combined.",
+        "Compare the two countries on each component shown in the table, and note which component pulls the index down as it rises."
+      ],
+      "targets": "How the HPI differs from income-based rankings",
+      "table": {
+        "caption": "Table 11: Selected indicators for three countries, 2025",
+        "columns": [
+          "Country",
+          "GNI per capita (PPP US$)",
+          "Life expectancy (years)",
+          "Ecological footprint (global hectares per person)"
+        ],
+        "rows": [
+          [
+            "Veld",
+            "40,000",
+            "80",
+            "7.0"
+          ],
+          [
+            "Kuva",
+            "12,000",
+            "78",
+            "2.0"
+          ],
+          [
+            "Tarn",
+            "25,000",
+            "70",
+            "4.0"
+          ]
+        ]
+      },
+      "marking_points": [
+        "The HPI combines well-being and life expectancy and adjusts for ecological footprint; income is not directly included [1]",
+        "Kuva's life expectancy (78 years) is close to Veld's (80 years) [1]",
+        "Kuva's ecological footprint (2.0) is much smaller than Veld's (7.0), so it achieves similar outcomes with far less environmental impact, which raises its HPI [1]"
+      ],
+      "model_answer_note": "A full-mark answer explains that income is not in the HPI and uses the life expectancy and footprint data to show Kuva's advantage."
+    },
+    {
+      "id": "u8-mcq-15",
+      "format": "mcq",
+      "section": "8.5",
+      "concepts": [
+        "c8-well-being",
+        "c8-ecological-footprint"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Which of the following would raise Veld's measured GDP but could reduce the well-being of its people?",
+      "hints": [
+        "Think about what is counted in GDP and which effects on people it ignores.",
+        "For each option, first ask whether measured GDP rises, then ask whether people could be worse off."
+      ],
+      "targets": "GDP rising while well-being falls",
+      "options": [
+        {
+          "id": "a",
+          "text": "More people doing unpaid volunteer work",
+          "misconception": "This changes how people use their time, but unpaid work is not counted in GDP."
+        },
+        {
+          "id": "b",
+          "text": "Workers choosing to take more leisure time",
+          "misconception": "This affects well-being, but more leisure usually lowers measured output rather than raising it."
+        },
+        {
+          "id": "c",
+          "text": "A new factory increases output but also increases air pollution",
+          "misconception": null
+        },
+        {
+          "id": "d",
+          "text": "Mobile phones improve in quality while their prices stay the same",
+          "misconception": "This is a change in goods, but GDP does not capture quality improvements at unchanged prices, and people are better off."
+        }
+      ],
+      "answer": "c"
+    }
+  ]
+}

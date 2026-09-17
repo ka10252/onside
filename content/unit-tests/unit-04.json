@@ -1,0 +1,1099 @@
+{
+  "unit": 4,
+  "title": "Government intervention in microeconomics",
+  "questions": [
+    {
+      "id": "u4-mcq-01",
+      "format": "mcq",
+      "section": "4.1",
+      "concepts": [],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Which of the following is NOT a form of government intervention in a market?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Setting a maximum rent for flats",
+          "misconception": "A maximum rent is a price control, which is a form of intervention."
+        },
+        {
+          "id": "b",
+          "text": "Placing a tax on each packet of cigarettes",
+          "misconception": "An indirect tax is a form of intervention."
+        },
+        {
+          "id": "c",
+          "text": "Paying farmers a fixed sum for each tonne of rice produced",
+          "misconception": "A per-unit payment to producers is a subsidy, which is a form of intervention."
+        },
+        {
+          "id": "d",
+          "text": "A fall in consumer spending during a recession",
+          "misconception": null
+        }
+      ],
+      "answer": "d",
+      "hints": [
+        "Recall the main tools governments use to change market outcomes.",
+        "For each option, ask who is taking the action and whether it is a deliberate policy."
+      ],
+      "targets": "Forms of government intervention"
+    },
+    {
+      "id": "u4-sa-01",
+      "format": "short_answer",
+      "section": "4.2",
+      "concepts": [
+        "c4-price-controls"
+      ],
+      "command_term": "define",
+      "marks": 2,
+      "prompt": "Define a maximum price (price ceiling).",
+      "marking_points": [
+        "A price set by the government that the market price is not allowed to rise above [1]",
+        "It is set below the equilibrium price [1]"
+      ],
+      "model_answer_note": "A full answer says the government sets a legal upper limit on price and that it is set below equilibrium (usually to make a good more affordable).",
+      "hints": [
+        "Think about the type of price control that is meant to protect consumers.",
+        "Say who sets it, which way the price is prevented from moving, and where it sits relative to equilibrium."
+      ],
+      "targets": "Precise definition of a price ceiling, including its position below equilibrium"
+    },
+    {
+      "id": "u4-mcq-02",
+      "format": "mcq",
+      "section": "4.1",
+      "concepts": [
+        "c4-market-failure"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Economists say that market failure occurs when:",
+      "options": [
+        {
+          "id": "a",
+          "text": "a government sets prices in a market",
+          "misconception": "This describes government intervention, not a failure of the free market itself."
+        },
+        {
+          "id": "b",
+          "text": "free markets fail to allocate resources efficiently, so allocative efficiency is not achieved",
+          "misconception": null
+        },
+        {
+          "id": "c",
+          "text": "firms in a market make losses",
+          "misconception": "Losses alone do not mean that resources are allocated inefficiently."
+        },
+        {
+          "id": "d",
+          "text": "prices in a market rise quickly",
+          "misconception": "Rising prices are normal market signals, not in themselves a sign of market failure."
+        }
+      ],
+      "answer": "b",
+      "hints": [
+        "Think about the type of efficiency economists use to judge whether a market works well for society.",
+        "Rule out options that describe normal price signals, firm performance or government actions."
+      ],
+      "targets": "Meaning of market failure"
+    },
+    {
+      "id": "u4-sa-02",
+      "format": "short_answer",
+      "section": "4.3",
+      "concepts": [
+        "c4-specific-tax",
+        "c4-ad-valorem-tax"
+      ],
+      "command_term": "distinguish",
+      "marks": 2,
+      "prompt": "Distinguish between a specific tax and an ad valorem tax.",
+      "marking_points": [
+        "A specific tax is a fixed amount of money per unit sold [1]",
+        "An ad valorem tax is a percentage of the price, so the tax per unit rises as the price rises [1]"
+      ],
+      "model_answer_note": "Both taxes described, making clear that one is a fixed sum per unit and the other a percentage of price.",
+      "hints": [
+        "Compare how the amount of tax per unit is set in each case.",
+        "For each tax, say whether the amount of tax per unit depends on the price of the good."
+      ],
+      "targets": "Specific vs ad valorem taxes"
+    },
+    {
+      "id": "u4-mcq-03",
+      "format": "mcq",
+      "section": "4.2",
+      "concepts": [
+        "c4-price-controls"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "The government of Kuva sets a maximum price for bread that is above the current equilibrium price. What is the effect on the bread market?",
+      "options": [
+        {
+          "id": "a",
+          "text": "A shortage of bread",
+          "misconception": "A shortage arises only when a maximum price is set below equilibrium."
+        },
+        {
+          "id": "b",
+          "text": "A surplus of bread",
+          "misconception": "A surplus comes from a minimum price above equilibrium, not a maximum price."
+        },
+        {
+          "id": "c",
+          "text": "No change in price or quantity",
+          "misconception": null
+        },
+        {
+          "id": "d",
+          "text": "The price of bread rises to the maximum price",
+          "misconception": "A maximum price only limits how high price may go; nothing pushes the price above equilibrium."
+        }
+      ],
+      "answer": "c",
+      "hints": [
+        "Compare the level of the maximum price with the equilibrium price on a demand and supply diagram.",
+        "Ask whether this legal limit stops the market from reaching its equilibrium."
+      ],
+      "targets": "When a price ceiling is binding"
+    },
+    {
+      "id": "u4-sa-03",
+      "format": "short_answer",
+      "section": "4.3",
+      "concepts": [
+        "c4-ad-valorem-tax",
+        "c4-indirect-taxes"
+      ],
+      "command_term": "calculate",
+      "marks": 3,
+      "prompt": "Veld charges VAT, an ad valorem tax, at 20% of the pre-tax price. Table 1 shows the prices consumers pay, including VAT. Calculate the amount of VAT paid on each item.",
+      "table": {
+        "caption": "Table 1: Prices paid in Veld, including VAT",
+        "columns": [
+          "Item",
+          "Price paid including VAT (zeds)"
+        ],
+        "rows": [
+          [
+            "Headphones",
+            "60.00"
+          ],
+          [
+            "Phone charger",
+            "18.00"
+          ]
+        ]
+      },
+      "marking_points": [
+        "Pre-tax price of headphones = 60 ÷ 1.2 = 50 zeds [1]",
+        "VAT on headphones = 60 − 50 = 10 zeds [1]",
+        "Pre-tax price of charger = 18 ÷ 1.2 = 15 zeds, so VAT on charger = 18 − 15 = 3 zeds [1]"
+      ],
+      "model_answer_note": "VAT of 10 zeds and 3 zeds, found by dividing the price paid by 1.2; taking 20% of the price paid (12 and 3.60) earns no marks for those items.",
+      "hints": [
+        "The price paid equals the pre-tax price plus 20% of the pre-tax price.",
+        "Work back from the price paid to the pre-tax price, then subtract to find the tax."
+      ],
+      "targets": "Ad valorem tax calculation from a tax-inclusive price (common error: 20% of the price paid)"
+    },
+    {
+      "id": "u4-mcq-04",
+      "format": "mcq",
+      "section": "4.4",
+      "concepts": [],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "The government of Veld pays bus companies a per-unit subsidy. What does this change look like on a demand and supply diagram for bus travel?",
+      "options": [
+        {
+          "id": "a",
+          "text": "The demand curve shifts to the right",
+          "misconception": "A subsidy to producers lowers their costs, so it affects supply rather than demand."
+        },
+        {
+          "id": "b",
+          "text": "The supply curve shifts vertically downwards by the amount of the subsidy",
+          "misconception": null
+        },
+        {
+          "id": "c",
+          "text": "The supply curve shifts vertically upwards by the amount of the subsidy",
+          "misconception": "An upward shift of supply shows an indirect tax, which raises costs."
+        },
+        {
+          "id": "d",
+          "text": "There is a movement along the supply curve to a higher quantity",
+          "misconception": "The subsidy changes costs at every quantity, so the whole curve shifts."
+        }
+      ],
+      "answer": "b",
+      "hints": [
+        "Think about how a subsidy affects firms' costs of production.",
+        "Decide which curve moves, and whether lower costs move it up or down."
+      ],
+      "targets": "Showing a subsidy on a diagram"
+    },
+    {
+      "id": "u4-sa-04",
+      "format": "short_answer",
+      "section": "4.2",
+      "concepts": [
+        "c4-price-controls"
+      ],
+      "command_term": "calculate",
+      "marks": 2,
+      "prompt": "Table 2 shows the monthly market for rental flats in Kuva City. The government sets a maximum rent of 600 zeds per month. Calculate the resulting shortage of flats.",
+      "table": {
+        "caption": "Table 2: Market for rental flats in Kuva City",
+        "columns": [
+          "Rent (zeds per month)",
+          "Quantity demanded (flats)",
+          "Quantity supplied (flats)"
+        ],
+        "rows": [
+          [
+            "600",
+            "6,500",
+            "4,000"
+          ],
+          [
+            "800",
+            "5,000",
+            "5,000"
+          ],
+          [
+            "1,000",
+            "3,500",
+            "6,000"
+          ]
+        ]
+      },
+      "marking_points": [
+        "At a rent of 600 zeds, quantity demanded = 6,500 flats and quantity supplied = 4,000 flats [1]",
+        "Shortage = 6,500 − 4,000 = 2,500 flats [1]"
+      ],
+      "model_answer_note": "Correct quantities read at the maximum rent and a shortage of 2,500 flats.",
+      "hints": [
+        "Find the row of the table where the maximum rent applies.",
+        "Compare quantity demanded with quantity supplied at that rent and find the gap."
+      ],
+      "targets": "Shortage from a price ceiling using a schedule"
+    },
+    {
+      "id": "u4-mcq-05",
+      "format": "mcq",
+      "section": "4.3",
+      "concepts": [
+        "c4-indirect-taxes",
+        "c4-specific-tax"
+      ],
+      "command_term": "calculate",
+      "marks": 1,
+      "prompt": "Veld places a specific tax on sugary drinks. Using Table 3, what is the government's tax revenue per week?",
+      "table": {
+        "caption": "Table 3: Market for sugary drinks in Veld (per week)",
+        "columns": [
+          "Situation",
+          "Price paid by consumers (zeds)",
+          "Price received by producers (zeds)",
+          "Bottles sold"
+        ],
+        "rows": [
+          [
+            "No tax",
+            "4.00",
+            "4.00",
+            "100,000"
+          ],
+          [
+            "With tax",
+            "5.50",
+            "3.50",
+            "80,000"
+          ]
+        ]
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": "120,000 zeds",
+          "misconception": "This counts only the part of the tax paid by consumers."
+        },
+        {
+          "id": "b",
+          "text": "200,000 zeds",
+          "misconception": "This uses the quantity sold before the tax instead of after it."
+        },
+        {
+          "id": "c",
+          "text": "440,000 zeds",
+          "misconception": "This is consumer spending after the tax, not tax revenue."
+        },
+        {
+          "id": "d",
+          "text": "160,000 zeds",
+          "misconception": null
+        }
+      ],
+      "answer": "d",
+      "hints": [
+        "Find the tax per unit from the gap between the two prices after the tax.",
+        "Multiply the tax per unit by the correct quantity."
+      ],
+      "targets": "Tax revenue from a table; using the after-tax quantity"
+    },
+    {
+      "id": "u4-sa-05",
+      "format": "short_answer",
+      "section": "4.1",
+      "concepts": [
+        "c4-market-failure"
+      ],
+      "command_term": "explain",
+      "marks": 4,
+      "prompt": "Explain two reasons why a government may intervene in a market.",
+      "marking_points": [
+        "First reason identified, e.g. to correct market failure [1]",
+        "Explanation, e.g. a free market overproduces a demerit good, so a tax reduces output towards the efficient level [1]",
+        "Second reason identified, e.g. to promote equity or support low-income households [1]",
+        "Explanation, e.g. a maximum price or subsidy makes essential goods more affordable [1]"
+      ],
+      "model_answer_note": "Two distinct reasons, each explained with a link to an intervention; also accept raising government revenue or supporting firms/producers (e.g. farmers' incomes).",
+      "hints": [
+        "Think about what free markets may fail to deliver for society.",
+        "For each reason, name the aim and give an example of an intervention that achieves it."
+      ],
+      "targets": "Reasons for intervention: efficiency, equity, revenue, support for firms"
+    },
+    {
+      "id": "u4-mcq-06",
+      "format": "mcq",
+      "section": "4.2",
+      "concepts": [
+        "c4-price-controls"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Veld sets a minimum price for wheat above the equilibrium price. Which outcome is most likely?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Excess supply of wheat",
+          "misconception": null
+        },
+        {
+          "id": "b",
+          "text": "Excess demand for wheat",
+          "misconception": "Excess demand comes from a maximum price set below equilibrium."
+        },
+        {
+          "id": "c",
+          "text": "The price of wheat falls back to equilibrium",
+          "misconception": "The price is legally not allowed to fall below the minimum price."
+        },
+        {
+          "id": "d",
+          "text": "Farmers supply less wheat",
+          "misconception": "A higher guaranteed price encourages farmers to supply more, not less."
+        }
+      ],
+      "answer": "a",
+      "hints": [
+        "Draw the minimum price as a horizontal line above equilibrium on a demand and supply diagram.",
+        "Read off quantity demanded and quantity supplied at that price and compare them."
+      ],
+      "targets": "Price floor and excess supply"
+    },
+    {
+      "id": "u4-sa-06",
+      "format": "short_answer",
+      "section": "4.3",
+      "concepts": [
+        "c4-indirect-taxes",
+        "c4-specific-tax"
+      ],
+      "command_term": "calculate",
+      "marks": 3,
+      "prompt": "Kuva places a specific tax on cigarettes. Table 4 shows the market before and after the tax. Calculate (i) the government's tax revenue per week and (ii) the amount of that tax paid by consumers and the amount paid by producers.",
+      "table": {
+        "caption": "Table 4: Market for cigarettes in Kuva (per week)",
+        "columns": [
+          "Situation",
+          "Price paid by consumers (zeds per pack)",
+          "Price received by producers (zeds per pack)",
+          "Packs sold"
+        ],
+        "rows": [
+          [
+            "No tax",
+            "6.00",
+            "6.00",
+            "50,000"
+          ],
+          [
+            "With tax",
+            "8.00",
+            "5.00",
+            "45,000"
+          ]
+        ]
+      },
+      "marking_points": [
+        "Tax per pack = 8.00 − 5.00 = 3 zeds, so tax revenue = 3 × 45,000 = 135,000 zeds [1]",
+        "Paid by consumers = (8.00 − 6.00) × 45,000 = 90,000 zeds [1]",
+        "Paid by producers = (6.00 − 5.00) × 45,000 = 45,000 zeds [1]"
+      ],
+      "model_answer_note": "Revenue of 135,000 zeds and a correct split of 90,000 (consumers) and 45,000 (producers), using the after-tax quantity.",
+      "hints": [
+        "Use the gap between the consumer and producer prices, and compare each price with the no-tax price.",
+        "Multiply each per-unit amount by the quantity sold after the tax."
+      ],
+      "targets": "Tax revenue and tax incidence calculation"
+    },
+    {
+      "id": "u4-mcq-07",
+      "format": "mcq",
+      "section": "4.3",
+      "concepts": [
+        "c4-indirect-taxes",
+        "c4-specific-tax"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "The government of Kuva places a specific tax of 1 zed on every litre of petrol. Which change would be shown on a demand and supply diagram?",
+      "options": [
+        {
+          "id": "a",
+          "text": "The supply curve shifts vertically upwards by 1 zed at every quantity, parallel to the original",
+          "misconception": null
+        },
+        {
+          "id": "b",
+          "text": "The supply curve shifts upwards, with the gap between the curves widening as price rises",
+          "misconception": "A widening gap shows an ad valorem tax, where the tax grows with the price."
+        },
+        {
+          "id": "c",
+          "text": "The demand curve shifts to the left",
+          "misconception": "The tax is collected from producers and raises their costs, so the supply curve moves."
+        },
+        {
+          "id": "d",
+          "text": "The supply curve shifts vertically downwards by 1 zed",
+          "misconception": "A downward shift of supply shows a subsidy, not a tax."
+        }
+      ],
+      "answer": "a",
+      "hints": [
+        "Think about which curve a tax collected from producers affects, and whether the tax per litre changes with price.",
+        "Decide the direction of the shift, then whether the vertical distance between the old and new curves stays the same."
+      ],
+      "targets": "Diagram for a specific tax vs ad valorem tax vs subsidy"
+    },
+    {
+      "id": "u4-sa-07",
+      "format": "short_answer",
+      "section": "4.2",
+      "concepts": [
+        "c4-price-controls",
+        "c4-rationing",
+        "c4-price-rationing"
+      ],
+      "command_term": "explain",
+      "marks": 3,
+      "prompt": "The government of Veld sets a maximum price for bread below the equilibrium price. Explain why price can no longer ration bread, and outline one other way bread may be shared out.",
+      "marking_points": [
+        "At the maximum price, quantity demanded is greater than quantity supplied, and the price is not allowed to rise to remove this shortage [1]",
+        "so price no longer decides which buyers get the bread [1]",
+        "Another method, e.g. queues (first come, first served), ration coupons, or sellers choosing favoured customers [1]"
+      ],
+      "model_answer_note": "A full answer links the ceiling to a shortage that price cannot clear and names one non-price method of allocation.",
+      "hints": [
+        "Think about the role price plays in deciding who gets a good in a free market.",
+        "Explain what the legal limit stops the price from doing when there is a shortage, then think of another way sellers could decide who gets the bread."
+      ],
+      "targets": "Price rationing vs non-price rationing under a ceiling"
+    },
+    {
+      "id": "u4-mcq-08",
+      "format": "mcq",
+      "section": "4.4",
+      "concepts": [],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "A per-unit subsidy of 10 zeds is given to producers of electric scooters in Kuva. The demand curve slopes downwards and the supply curve slopes upwards. Which outcome is most likely?",
+      "options": [
+        {
+          "id": "a",
+          "text": "The price paid by consumers falls by exactly 10 zeds",
+          "misconception": "Part of the subsidy goes to producers as a higher price received, so the consumer price falls by less."
+        },
+        {
+          "id": "b",
+          "text": "The price paid by consumers rises",
+          "misconception": "The subsidy shifts supply to the right, which lowers the price consumers pay."
+        },
+        {
+          "id": "c",
+          "text": "The price paid by consumers falls by less than 10 zeds, and the quantity sold rises",
+          "misconception": null
+        },
+        {
+          "id": "d",
+          "text": "The quantity sold falls because producers receive a higher price",
+          "misconception": "Producers receive more per unit and so supply more; quantity rises."
+        }
+      ],
+      "answer": "c",
+      "hints": [
+        "Use a diagram with the supply curve shifted downwards by the subsidy.",
+        "Compare the new consumer price with the old price and with the size of the subsidy, then check the change in quantity."
+      ],
+      "targets": "Subsidy effects on consumer price and quantity"
+    },
+    {
+      "id": "u4-sa-08",
+      "format": "short_answer",
+      "section": "4.3",
+      "concepts": [
+        "c4-indirect-taxes",
+        "c4-specific-tax",
+        "c4-welfare-loss-deadweight-loss"
+      ],
+      "command_term": "calculate",
+      "marks": 2,
+      "prompt": "Veld places a specific tax on plastic bottles. Table 5 shows the market before and after the tax. Assuming straight-line demand and supply curves, calculate the welfare loss caused by the tax.",
+      "table": {
+        "caption": "Table 5: Market for plastic bottles in Veld (per week)",
+        "columns": [
+          "Situation",
+          "Price paid by consumers (zeds)",
+          "Price received by producers (zeds)",
+          "Bottles sold"
+        ],
+        "rows": [
+          [
+            "No tax",
+            "3.00",
+            "3.00",
+            "60,000"
+          ],
+          [
+            "With tax",
+            "4.00",
+            "2.50",
+            "50,000"
+          ]
+        ]
+      },
+      "marking_points": [
+        "Welfare loss = ½ × tax per unit (4.00 − 2.50 = 1.50 zeds) × fall in quantity (60,000 − 50,000 = 10,000) [1]",
+        "= ½ × 1.50 × 10,000 = 7,500 zeds [1]"
+      ],
+      "model_answer_note": "Correct triangle set-up using the tax per unit and the fall in quantity, giving 7,500 zeds.",
+      "hints": [
+        "The welfare loss is a triangle on the diagram between the demand and supply curves.",
+        "Its height is the gap between the two after-tax prices and its base is the change in quantity; use the area of a triangle."
+      ],
+      "targets": "Deadweight loss of a tax"
+    },
+    {
+      "id": "u4-mcq-09",
+      "format": "mcq",
+      "section": "4.2",
+      "concepts": [
+        "c4-price-controls"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Kuva sets a minimum price for milk above the equilibrium price. Compared with the free market, what happens to consumer surplus?",
+      "options": [
+        {
+          "id": "a",
+          "text": "It rises, because farmers produce more milk",
+          "misconception": "Farmers produce more, but consumers pay a higher price and buy less."
+        },
+        {
+          "id": "b",
+          "text": "It stays the same, because consumers still buy milk",
+          "misconception": "Consumers buy less at a higher price, so their surplus changes."
+        },
+        {
+          "id": "c",
+          "text": "It rises, because the government buys the surplus milk",
+          "misconception": "Government purchases of the surplus do not lower the price consumers pay."
+        },
+        {
+          "id": "d",
+          "text": "It falls, because consumers pay a higher price and buy less",
+          "misconception": null
+        }
+      ],
+      "answer": "d",
+      "hints": [
+        "Consumer surplus is the area below the demand curve and above the price paid, up to the quantity bought.",
+        "Compare this area at the free-market price with the area at the minimum price."
+      ],
+      "targets": "Price floor and consumer surplus"
+    },
+    {
+      "id": "u4-sa-09",
+      "format": "short_answer",
+      "section": "4.4",
+      "concepts": [],
+      "command_term": "calculate",
+      "marks": 3,
+      "prompt": "Veld gives producers of solar panels a per-unit subsidy. Table 6 shows the market before and after the subsidy. Calculate (i) the total cost of the subsidy to the government and (ii) the amount of the subsidy per unit that goes to consumers.",
+      "table": {
+        "caption": "Table 6: Market for solar panels in Veld (per month)",
+        "columns": [
+          "Situation",
+          "Price paid by consumers (zeds)",
+          "Price received by producers (zeds)",
+          "Panels sold"
+        ],
+        "rows": [
+          [
+            "No subsidy",
+            "500",
+            "500",
+            "1,000"
+          ],
+          [
+            "With subsidy",
+            "440",
+            "540",
+            "1,200"
+          ]
+        ]
+      },
+      "marking_points": [
+        "Subsidy per unit = 540 − 440 = 100 zeds [1]",
+        "Cost to government = 100 × 1,200 = 120,000 zeds [1]",
+        "Consumers gain 500 − 440 = 60 zeds per unit [1]"
+      ],
+      "model_answer_note": "Subsidy per unit of 100 zeds, a total cost of 120,000 zeds using the new quantity, and a consumer gain of 60 zeds per panel.",
+      "hints": [
+        "Use the gap between the price producers receive and the price consumers pay after the subsidy.",
+        "Multiply the per-unit subsidy by the new quantity, then compare the new consumer price with the old price."
+      ],
+      "targets": "Subsidy cost and who gains"
+    },
+    {
+      "id": "u4-mcq-10",
+      "format": "mcq",
+      "section": "4.3",
+      "concepts": [
+        "c4-indirect-taxes"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "The burden (incidence) of an indirect tax falls mainly on consumers when:",
+      "options": [
+        {
+          "id": "a",
+          "text": "demand is more price inelastic than supply",
+          "misconception": null
+        },
+        {
+          "id": "b",
+          "text": "demand is more price elastic than supply",
+          "misconception": "When consumers can easily cut back, producers end up bearing more of the tax."
+        },
+        {
+          "id": "c",
+          "text": "supply is perfectly price inelastic",
+          "misconception": "With perfectly inelastic supply, producers bear the whole tax."
+        },
+        {
+          "id": "d",
+          "text": "the tax is an ad valorem tax rather than a specific tax",
+          "misconception": "The type of tax does not decide who bears it; the elasticities do."
+        }
+      ],
+      "answer": "a",
+      "hints": [
+        "Use PED and PES to think about how the tax is shared between buyers and sellers.",
+        "Picture a steep demand curve and then a flat one, and compare how much the consumer price rises in each case."
+      ],
+      "targets": "Tax incidence and elasticity"
+    },
+    {
+      "id": "u4-sa-10",
+      "format": "short_answer",
+      "section": "4.2",
+      "concepts": [
+        "c4-price-controls"
+      ],
+      "command_term": "explain",
+      "marks": 4,
+      "prompt": "The government of Kuva sets a minimum wage above the equilibrium wage. Using what a labour market diagram would show, explain why this may cause unemployment.",
+      "marking_points": [
+        "The minimum wage is set above the equilibrium wage [1]",
+        "At this higher wage, firms demand fewer workers [1]",
+        "while more people want to work, so the quantity of labour supplied rises [1]",
+        "Labour supplied exceeds labour demanded, and this excess supply of labour is unemployment [1]"
+      ],
+      "model_answer_note": "A full answer describes the wage floor above equilibrium, both quantity responses, and names the excess supply of labour as unemployment.",
+      "hints": [
+        "Use a labour market diagram with the wage on the vertical axis and a minimum wage drawn above equilibrium.",
+        "Compare how many workers firms want to hire and how many people want to work at that wage."
+      ],
+      "targets": "Minimum wage as a price floor in the labour market"
+    },
+    {
+      "id": "u4-mcq-11",
+      "format": "mcq",
+      "section": "4.4",
+      "concepts": [],
+      "command_term": "calculate",
+      "marks": 1,
+      "prompt": "Veld gives dairy farmers a per-unit subsidy on milk. Using Table 7, what is the subsidy per litre?",
+      "table": {
+        "caption": "Table 7: Market for milk in Veld (per week)",
+        "columns": [
+          "Situation",
+          "Price paid by consumers (zeds per litre)",
+          "Price received by producers (zeds per litre)",
+          "Litres sold"
+        ],
+        "rows": [
+          [
+            "No subsidy",
+            "2.00",
+            "2.00",
+            "500,000"
+          ],
+          [
+            "With subsidy",
+            "1.60",
+            "2.20",
+            "560,000"
+          ]
+        ]
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": "0.40 zeds",
+          "misconception": "This is only the fall in the price consumers pay."
+        },
+        {
+          "id": "b",
+          "text": "0.20 zeds",
+          "misconception": "This is only the rise in the price producers receive."
+        },
+        {
+          "id": "c",
+          "text": "0.60 zeds",
+          "misconception": null
+        },
+        {
+          "id": "d",
+          "text": "336,000 zeds",
+          "misconception": "This is the total cost of the subsidy, not the amount per litre."
+        }
+      ],
+      "answer": "c",
+      "hints": [
+        "Compare the price consumers pay with the price producers receive after the subsidy.",
+        "The subsidy per unit is the full gap between those two prices at the new quantity."
+      ],
+      "targets": "Per-unit subsidy from price data"
+    },
+    {
+      "id": "u4-sa-11",
+      "format": "short_answer",
+      "section": "4.3",
+      "concepts": [
+        "c4-indirect-taxes"
+      ],
+      "command_term": "explain",
+      "marks": 3,
+      "prompt": "Explain why an indirect tax on basic food may be regressive.",
+      "marking_points": [
+        "A regressive tax takes a larger percentage of income from low-income earners than from high-income earners [1]",
+        "Low-income households spend a larger share of their income on basic food [1]",
+        "Everyone pays the same tax per unit, so the tax paid is a higher proportion of a poor household's income [1]"
+      ],
+      "model_answer_note": "A full answer states what regressive means and links the larger share of income spent on food by poor households to a higher tax burden relative to income.",
+      "hints": [
+        "Compare the tax paid with the income of the household paying it.",
+        "Think about how much of their income poor and rich households spend on food, then compare the tax each pays as a share of income."
+      ],
+      "targets": "Regressive nature of indirect taxes and equity"
+    },
+    {
+      "id": "u4-mcq-12",
+      "format": "mcq",
+      "section": "4.2",
+      "concepts": [
+        "c4-price-controls",
+        "c4-welfare-loss-deadweight-loss"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "On a demand and supply diagram for rental flats, a maximum rent is set below the equilibrium rent. The quantity of flats supplied falls from the equilibrium quantity (Qe) to a lower quantity (Qs). Which area shows the welfare (deadweight) loss?",
+      "options": [
+        {
+          "id": "a",
+          "text": "The rectangle between the equilibrium rent and the maximum rent, up to Qs",
+          "misconception": "This area is surplus transferred from landlords to tenants, not surplus that is lost."
+        },
+        {
+          "id": "b",
+          "text": "The triangle between the demand and supply curves, from Qs to Qe",
+          "misconception": null
+        },
+        {
+          "id": "c",
+          "text": "The gap between Qs and the quantity demanded at the maximum rent",
+          "misconception": "This gap is the shortage, which is a quantity, not a welfare area."
+        },
+        {
+          "id": "d",
+          "text": "All the consumer surplus above the maximum rent",
+          "misconception": "Tenants who still get flats keep much of that surplus, so it is not all lost."
+        }
+      ],
+      "answer": "b",
+      "hints": [
+        "Welfare loss is surplus that nobody receives because resources are misallocated.",
+        "Identify the units that are no longer traded, then find which area for those units no longer goes to anyone."
+      ],
+      "targets": "Welfare loss of a price ceiling vs surplus transfer"
+    },
+    {
+      "id": "u4-sa-12",
+      "format": "short_answer",
+      "section": "4.4",
+      "concepts": [],
+      "command_term": "explain",
+      "marks": 4,
+      "prompt": "The government of Veld gives rice farmers a per-unit subsidy. Referring to a demand and supply diagram, explain the effects of the subsidy on consumers, producers and the government.",
+      "marking_points": [
+        "The supply curve shifts vertically downwards (to the right) by the amount of the subsidy [1]",
+        "Consumers pay a lower price and buy more rice, so consumer surplus rises [1]",
+        "Producers receive a higher price (market price plus subsidy) and sell more, so their revenue and producer surplus rise [1]",
+        "The government pays the subsidy per unit × the new quantity, which has an opportunity cost for its budget [1]"
+      ],
+      "model_answer_note": "All three stakeholders covered, with the supply shift described and a clear direction of change for each.",
+      "hints": [
+        "Use a diagram with the original supply curve and a new one shifted by the subsidy.",
+        "Work out what happens to the consumer price, the producer price and quantity, then link each to a stakeholder."
+      ],
+      "targets": "Stakeholder effects of a subsidy"
+    },
+    {
+      "id": "u4-mcq-13",
+      "format": "mcq",
+      "section": "4.3",
+      "concepts": [
+        "c4-indirect-taxes",
+        "c4-welfare-loss-deadweight-loss"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "An indirect tax is placed on a good with a downward-sloping demand curve and an upward-sloping supply curve. Which statement is correct?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Consumer surplus falls and producer surplus rises",
+          "misconception": "Producers receive a lower price and sell less, so their surplus falls."
+        },
+        {
+          "id": "b",
+          "text": "Consumer and producer surplus both fall, and all of the lost surplus becomes tax revenue",
+          "misconception": "Part of the lost surplus is a welfare loss that nobody receives."
+        },
+        {
+          "id": "c",
+          "text": "Consumer surplus is unchanged because producers pay the tax to the government",
+          "misconception": "Consumers bear part of the tax through a higher price, so their surplus falls."
+        },
+        {
+          "id": "d",
+          "text": "Consumer surplus and producer surplus both fall",
+          "misconception": null
+        }
+      ],
+      "answer": "d",
+      "hints": [
+        "Compare the price consumers pay and the price producers receive before and after the tax.",
+        "Think about what happens to each surplus area and where the lost surplus goes."
+      ],
+      "targets": "Effect of a tax on consumer and producer surplus"
+    },
+    {
+      "id": "u4-sa-13",
+      "format": "short_answer",
+      "section": "4.3",
+      "concepts": [
+        "c4-indirect-taxes",
+        "c4-specific-tax"
+      ],
+      "command_term": "calculate",
+      "marks": 3,
+      "prompt": "Kuva places a specific tax on coffee pods. Table 8 shows the market before and after the tax. Calculate the change in producers' revenue, after the tax has been paid to the government.",
+      "table": {
+        "caption": "Table 8: Market for coffee pods in Kuva (per month)",
+        "columns": [
+          "Situation",
+          "Price paid by consumers (zeds)",
+          "Price received by producers (zeds)",
+          "Pods sold"
+        ],
+        "rows": [
+          [
+            "No tax",
+            "10",
+            "10",
+            "20,000"
+          ],
+          [
+            "With tax",
+            "12",
+            "9",
+            "16,000"
+          ]
+        ]
+      },
+      "marking_points": [
+        "Producers' revenue before the tax = 10 × 20,000 = 200,000 zeds [1]",
+        "Producers' revenue after the tax = 9 × 16,000 = 144,000 zeds [1]",
+        "Producers' revenue falls by 200,000 − 144,000 = 56,000 zeds [1]"
+      ],
+      "model_answer_note": "Both revenue figures using the price producers keep, and a fall of 56,000 zeds; using the consumer price (12 × 16,000) is the common error.",
+      "hints": [
+        "Use revenue = price × quantity, with the price that producers actually keep.",
+        "Calculate revenue before and after the tax, then find the difference."
+      ],
+      "targets": "Producer revenue net of tax"
+    },
+    {
+      "id": "u4-mcq-14",
+      "format": "mcq",
+      "section": "4.4",
+      "concepts": [],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "The government of Veld removes its per-unit subsidy on petrol. Which outcome is most likely?",
+      "options": [
+        {
+          "id": "a",
+          "text": "The price of petrol rises and government spending falls",
+          "misconception": null
+        },
+        {
+          "id": "b",
+          "text": "The price of petrol falls and government spending falls",
+          "misconception": "Removing the subsidy raises producers' costs, so supply shifts left and price rises."
+        },
+        {
+          "id": "c",
+          "text": "The price of petrol rises and government spending rises",
+          "misconception": "The government no longer pays the subsidy, so its spending falls."
+        },
+        {
+          "id": "d",
+          "text": "The quantity of petrol bought rises",
+          "misconception": "A higher price leads consumers to buy less petrol, not more."
+        }
+      ],
+      "answer": "a",
+      "hints": [
+        "Think about what happens to the supply curve when a subsidy is taken away.",
+        "Then consider the effect on the price consumers pay and on the government's budget."
+      ],
+      "targets": "Effects of removing a subsidy"
+    },
+    {
+      "id": "u4-sa-14",
+      "format": "short_answer",
+      "section": "4.4",
+      "concepts": [
+        "c4-market-failure"
+      ],
+      "command_term": "explain",
+      "marks": 3,
+      "prompt": "Explain why the government of Kuva might subsidise the production of solar panels.",
+      "marking_points": [
+        "Solar panels create external benefits, such as less pollution, that the market does not take into account [1]",
+        "so the free market under-produces them, which is a market failure [1]",
+        "A subsidy lowers production costs, shifting supply to the right, so output rises towards the level best for society [1]"
+      ],
+      "model_answer_note": "A full answer identifies the external benefit, links it to under-production as market failure, and explains how the subsidy raises output.",
+      "hints": [
+        "Think about who benefits from solar power beyond the buyer.",
+        "Link those wider benefits to the quantity a free market produces, then explain how a subsidy changes that quantity."
+      ],
+      "targets": "Subsidies to correct market failure (clean technology)"
+    },
+    {
+      "id": "u4-mcq-15",
+      "format": "mcq",
+      "section": "4.1",
+      "concepts": [
+        "c4-market-failure",
+        "c4-indirect-taxes"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Kuva wants to reduce the consumption of sugary drinks, which are overconsumed, and at the same time raise government revenue. Which intervention best meets both aims?",
+      "options": [
+        {
+          "id": "a",
+          "text": "A subsidy to producers of sugary drinks",
+          "misconception": "A subsidy lowers the price, raising consumption, and it costs the government money."
+        },
+        {
+          "id": "b",
+          "text": "A maximum price on sugary drinks set below equilibrium",
+          "misconception": "A ceiling lowers the price and raises no revenue."
+        },
+        {
+          "id": "c",
+          "text": "An indirect tax on sugary drinks",
+          "misconception": null
+        },
+        {
+          "id": "d",
+          "text": "A minimum price, with the government buying any surplus",
+          "misconception": "Consumption falls, but buying the surplus costs the government money instead of raising it."
+        }
+      ],
+      "answer": "c",
+      "hints": [
+        "Consider how each intervention affects the price consumers pay and the government's budget.",
+        "Check each option against both aims separately."
+      ],
+      "targets": "Choosing an intervention to meet given objectives"
+    },
+    {
+      "id": "u4-sa-15",
+      "format": "short_answer",
+      "section": "4.1",
+      "concepts": [
+        "c4-price-controls"
+      ],
+      "command_term": "suggest",
+      "marks": 3,
+      "prompt": "The government of Veld wants to lower the price of rice for poor households. Suggest why it might choose a subsidy rather than a maximum price.",
+      "marking_points": [
+        "A maximum price below equilibrium reduces quantity supplied and creates a shortage [1]",
+        "A subsidy lowers the price while increasing the quantity supplied, so there is no shortage [1]",
+        "However, the subsidy has a cost to the government budget (opportunity cost), which a maximum price does not [1]"
+      ],
+      "model_answer_note": "A full answer contrasts the shortage from a ceiling with the higher output from a subsidy and notes the budget cost of the subsidy.",
+      "hints": [
+        "Compare what each policy does to the quantity of rice supplied.",
+        "Think about whether each policy leaves enough rice for everyone at the lower price, and what each costs the government."
+      ],
+      "targets": "Price ceilings vs subsidies"
+    }
+  ]
+}

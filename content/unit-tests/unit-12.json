@@ -1,0 +1,1174 @@
+{
+  "unit": 12,
+  "title": "Economics of inequality and poverty",
+  "questions": [
+    {
+      "id": "u12-mcq-01",
+      "format": "mcq",
+      "section": "12.1",
+      "concepts": [
+        "c12-wealth",
+        "c12-income"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Which of the following is an example of wealth rather than income for a household in Veld?",
+      "hints": [
+        "Use the difference between a stock of assets and a flow of money received.",
+        "For each option, ask whether it is something owned at a point in time or something received over a period."
+      ],
+      "targets": "Income (flow) vs wealth (stock)",
+      "options": [
+        {
+          "id": "a",
+          "text": "The monthly salary earned by one of the parents",
+          "misconception": "A salary is a flow of money received from work, which is income."
+        },
+        {
+          "id": "b",
+          "text": "The dividends received each year from shares",
+          "misconception": "Dividends are a flow of payments from owning shares, so they count as income."
+        },
+        {
+          "id": "c",
+          "text": "The house that the family owns",
+          "misconception": null
+        },
+        {
+          "id": "d",
+          "text": "The pension paid each month to a grandparent",
+          "misconception": "A pension is a regular payment received, which is income."
+        }
+      ],
+      "answer": "c"
+    },
+    {
+      "id": "u12-mcq-02",
+      "format": "mcq",
+      "section": "12.1",
+      "concepts": [
+        "c12-equity",
+        "c12-equality"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Which statement is about equity rather than equality?",
+      "hints": [
+        "Equity involves a judgement, while equality can be measured.",
+        "Look for the statement that people could disagree with because it depends on values rather than data."
+      ],
+      "targets": "Normative equity vs measurable equality",
+      "options": [
+        {
+          "id": "a",
+          "text": "It is unfair that the richest 10% of Veld's households receive half of all income",
+          "misconception": null
+        },
+        {
+          "id": "b",
+          "text": "The richest 10% of Veld's households receive half of all income",
+          "misconception": "This is a factual statement about how income is shared, so it concerns equality."
+        },
+        {
+          "id": "c",
+          "text": "Each quintile of Kuva's population receives 20% of total income",
+          "misconception": "This describes a perfectly equal distribution, which is a measurable fact."
+        },
+        {
+          "id": "d",
+          "text": "Veld's Gini coefficient rose from 0.35 to 0.40 over ten years",
+          "misconception": "A change in a measure of distribution is a positive statement about equality."
+        }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u12-sa-01",
+      "format": "short_answer",
+      "section": "12.1",
+      "concepts": [
+        "c12-income",
+        "c12-wealth"
+      ],
+      "command_term": "distinguish",
+      "marks": 2,
+      "prompt": "Distinguish between income and wealth.",
+      "hints": [
+        "One is measured over a period of time and the other at a point in time.",
+        "For each, say what it consists of and give a short example."
+      ],
+      "targets": "Flow vs stock, with examples",
+      "marking_points": [
+        "Income is the flow of money received over a period of time, e.g. wages, interest, rent, dividends or transfer payments [1]",
+        "Wealth is the stock of assets owned at a point in time, e.g. savings, shares, bonds, land or houses [1]"
+      ],
+      "model_answer_note": "A full-mark answer identifies income as a flow received over time and wealth as a stock of assets owned, each with an example."
+    },
+    {
+      "id": "u12-mcq-03",
+      "format": "mcq",
+      "section": "12.1",
+      "concepts": [
+        "c12-lorenz-curve",
+        "c12-income-inequality"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Over ten years, Kuva's Lorenz curve moves further away from the line of perfect equality. What does this show?",
+      "hints": [
+        "Think about the area between the line of equality and the Lorenz curve.",
+        "Decide what happens to that area when the curve moves outward, then link the area to the Gini coefficient."
+      ],
+      "targets": "Direction of Lorenz shift and Gini change",
+      "options": [
+        {
+          "id": "a",
+          "text": "The Gini coefficient fell and income inequality decreased",
+          "misconception": "A curve closer to the line of equality would show this, not one moving away."
+        },
+        {
+          "id": "b",
+          "text": "The Gini coefficient rose and income inequality increased",
+          "misconception": null
+        },
+        {
+          "id": "c",
+          "text": "The Gini coefficient rose and income inequality decreased",
+          "misconception": "A higher Gini coefficient always means more, not less, inequality."
+        },
+        {
+          "id": "d",
+          "text": "Average income in Kuva fell",
+          "misconception": "A Lorenz curve shows shares of income, not the level of average income."
+        }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "u12-sa-02",
+      "format": "short_answer",
+      "section": "12.1",
+      "concepts": [
+        "c12-lorenz-curve",
+        "c12-income-inequality"
+      ],
+      "command_term": "define",
+      "marks": 2,
+      "prompt": "Define the term Gini coefficient.",
+      "hints": [
+        "Your definition should refer to the Lorenz curve diagram.",
+        "Mention how the measure is calculated from the diagram and the range of values it can take."
+      ],
+      "targets": "Gini as a ratio of areas",
+      "marking_points": [
+        "A measure of income inequality calculated as the area between the line of equality and the Lorenz curve divided by the total area under the line of equality [1]",
+        "It ranges from 0 (perfect equality) to 1 (perfect inequality) [1]"
+      ],
+      "model_answer_note": "A full-mark answer gives the ratio of areas from the Lorenz curve diagram and the range from 0 (perfect equality) to 1 (perfect inequality)."
+    },
+    {
+      "id": "u12-mcq-04",
+      "format": "mcq",
+      "section": "12.1",
+      "concepts": [
+        "c12-quantile",
+        "c12-lorenz-curve"
+      ],
+      "command_term": "calculate",
+      "marks": 1,
+      "prompt": "Using Table 1, what share of total income is received by the poorest 60% of Kuva's households?",
+      "hints": [
+        "The poorest 60% of households is made up of more than one quintile.",
+        "Add the income shares of the quintiles, starting from the poorest, until you cover 60% of households."
+      ],
+      "targets": "Cumulative income shares for a Lorenz curve",
+      "table": {
+        "caption": "Table 1: Share of total income by quintile in Kuva",
+        "columns": [
+          "Quintile",
+          "Share of total income (%)"
+        ],
+        "rows": [
+          [
+            "Poorest 20%",
+            "5"
+          ],
+          [
+            "Second 20%",
+            "10"
+          ],
+          [
+            "Third 20%",
+            "15"
+          ],
+          [
+            "Fourth 20%",
+            "25"
+          ],
+          [
+            "Richest 20%",
+            "45"
+          ]
+        ]
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": "15%",
+          "misconception": "This is the share of the third quintile only, not the cumulative share."
+        },
+        {
+          "id": "b",
+          "text": "60%",
+          "misconception": "This is the share of the population, not the share of income it receives."
+        },
+        {
+          "id": "c",
+          "text": "55%",
+          "misconception": "This is the share received by the poorest 80% of households."
+        },
+        {
+          "id": "d",
+          "text": "30%",
+          "misconception": null
+        }
+      ],
+      "answer": "d"
+    },
+    {
+      "id": "u12-sa-03",
+      "format": "short_answer",
+      "section": "12.1",
+      "concepts": [
+        "c12-quantile",
+        "c12-lorenz-curve"
+      ],
+      "command_term": "calculate",
+      "marks": 3,
+      "prompt": "Using Table 2, calculate the cumulative share of income that would be plotted for each quintile on Veld's Lorenz curve. State the share of income received by the poorest 60% of households.",
+      "hints": [
+        "A Lorenz curve plots cumulative shares of population against cumulative shares of income.",
+        "Start with the poorest quintile and keep adding the next quintile's share until you reach the richest."
+      ],
+      "targets": "Building a Lorenz curve from quintile data",
+      "table": {
+        "caption": "Table 2: Share of total income by quintile in Veld",
+        "columns": [
+          "Quintile",
+          "Share of total income (%)"
+        ],
+        "rows": [
+          [
+            "Poorest 20%",
+            "6"
+          ],
+          [
+            "Second 20%",
+            "11"
+          ],
+          [
+            "Third 20%",
+            "16"
+          ],
+          [
+            "Fourth 20%",
+            "22"
+          ],
+          [
+            "Richest 20%",
+            "45"
+          ]
+        ]
+      },
+      "marking_points": [
+        "Shares are added cumulatively from the poorest quintile, e.g. 6 + 11 = 17 [1]",
+        "Cumulative shares: 6%, 17%, 33%, 55%, 100% [1]",
+        "The poorest 60% of households receive 33% of income [1]"
+      ],
+      "model_answer_note": "A full-mark answer shows the cumulative addition, gives all five cumulative figures and states 33% for the poorest 60%."
+    },
+    {
+      "id": "u12-mcq-05",
+      "format": "mcq",
+      "section": "12.1",
+      "concepts": [
+        "c12-income-inequality",
+        "c12-lorenz-curve"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Using Table 3, which country has the most unequal distribution of income?",
+      "hints": [
+        "Recall what a Gini coefficient close to 0 and close to 1 means.",
+        "Compare the four coefficients and link the size of each to how far its Lorenz curve would lie from the line of equality."
+      ],
+      "targets": "Reading the Gini scale",
+      "table": {
+        "caption": "Table 3: Gini coefficients, 2025",
+        "columns": [
+          "Country",
+          "Gini coefficient"
+        ],
+        "rows": [
+          [
+            "Veld",
+            "0.28"
+          ],
+          [
+            "Kuva",
+            "0.45"
+          ],
+          [
+            "Tarn",
+            "0.36"
+          ],
+          [
+            "Oska",
+            "0.52"
+          ]
+        ]
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": "Veld",
+          "misconception": "A lower Gini coefficient means a more equal distribution, not a less equal one."
+        },
+        {
+          "id": "b",
+          "text": "Kuva",
+          "misconception": "Kuva is fairly unequal, but another country has a higher coefficient."
+        },
+        {
+          "id": "c",
+          "text": "Tarn",
+          "misconception": "Tarn is in the middle of the range."
+        },
+        {
+          "id": "d",
+          "text": "Oska",
+          "misconception": null
+        }
+      ],
+      "answer": "d"
+    },
+    {
+      "id": "u12-sa-04",
+      "format": "short_answer",
+      "section": "12.1",
+      "concepts": [
+        "c12-lorenz-curve",
+        "c12-income-inequality"
+      ],
+      "command_term": "explain",
+      "marks": 3,
+      "prompt": "Table 4 shows that Kuva's Gini coefficient changed between 2015 and 2025. Explain how this change would be shown on a Lorenz curve diagram and what it means for income distribution.",
+      "hints": [
+        "Use a Lorenz curve diagram with the line of perfect equality.",
+        "Link the direction of the Gini change to the area between the two lines, then to the position of the curve."
+      ],
+      "targets": "Gini change shown as Lorenz shift",
+      "table": {
+        "caption": "Table 4: Gini coefficient of Kuva",
+        "columns": [
+          "Year",
+          "Gini coefficient"
+        ],
+        "rows": [
+          [
+            "2015",
+            "0.42"
+          ],
+          [
+            "2025",
+            "0.35"
+          ]
+        ]
+      },
+      "marking_points": [
+        "The Lorenz curve for 2025 lies closer to the line of perfect equality than the 2015 curve [1]",
+        "The area between the line of equality and the Lorenz curve is smaller, so the Gini coefficient falls from 0.42 to 0.35 [1]",
+        "Income is more equally distributed / income inequality has fallen [1]"
+      ],
+      "model_answer_note": "A full-mark answer describes the Lorenz curve moving towards the line of equality, links the smaller area to the lower Gini coefficient and concludes that inequality fell."
+    },
+    {
+      "id": "u12-mcq-06",
+      "format": "mcq",
+      "section": "12.2",
+      "concepts": [
+        "c12-absolute-poverty",
+        "c12-relative-poverty"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "A household in Veld earns less than half of the median household income, but it can still afford enough food, housing and clothing to meet its basic needs. This household is:",
+      "hints": [
+        "Check each part of the scenario against the two types of poverty.",
+        "One type compares income with other people in society; the other asks whether basic needs can be met."
+      ],
+      "targets": "Absolute vs relative poverty",
+      "options": [
+        {
+          "id": "a",
+          "text": "in relative poverty but not in absolute poverty",
+          "misconception": null
+        },
+        {
+          "id": "b",
+          "text": "in absolute poverty but not in relative poverty",
+          "misconception": "Absolute poverty means basic needs cannot be met, but this household can meet them."
+        },
+        {
+          "id": "c",
+          "text": "in both absolute and relative poverty",
+          "misconception": "Being able to meet basic needs rules out absolute poverty."
+        },
+        {
+          "id": "d",
+          "text": "in neither absolute nor relative poverty",
+          "misconception": "Income below half the median is a common threshold for relative poverty."
+        }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u12-sa-05",
+      "format": "short_answer",
+      "section": "12.2",
+      "concepts": [
+        "c12-relative-poverty"
+      ],
+      "command_term": "define",
+      "marks": 2,
+      "prompt": "Define the term relative poverty.",
+      "hints": [
+        "Your definition should say what a household's income is compared with.",
+        "Include the kind of threshold that is commonly used."
+      ],
+      "targets": "Precise definition of relative poverty",
+      "marking_points": [
+        "A situation where a household's income is low compared with other households in the same society [1]",
+        "Usually measured as income below a set percentage (e.g. 50% or 60%) of median income [1]"
+      ],
+      "model_answer_note": "A full-mark answer compares income with the rest of society and refers to a threshold based on median income."
+    },
+    {
+      "id": "u12-mcq-07",
+      "format": "mcq",
+      "section": "12.2",
+      "concepts": [
+        "c12-multidimensional-poverty-index-mpi"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "The Multidimensional Poverty Index (MPI) measures poverty using which three dimensions?",
+      "hints": [
+        "The MPI looks at deprivations rather than at money income.",
+        "Think of the non-income areas of life that the index checks at household level."
+      ],
+      "targets": "MPI dimensions vs HDI",
+      "options": [
+        {
+          "id": "a",
+          "text": "Income, wealth and consumption",
+          "misconception": "These are monetary measures, but the MPI was designed to look beyond income."
+        },
+        {
+          "id": "b",
+          "text": "Health, education and living standards",
+          "misconception": null
+        },
+        {
+          "id": "c",
+          "text": "Employment, income and housing",
+          "misconception": "Employment and income are not among the MPI's three dimensions."
+        },
+        {
+          "id": "d",
+          "text": "Income per capita, life expectancy and literacy",
+          "misconception": "This is close to the Human Development Index, which includes income per capita."
+        }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "u12-mcq-08",
+      "format": "mcq",
+      "section": "12.2",
+      "concepts": [
+        "c12-relative-poverty",
+        "c12-poverty-line"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "In Kuva, median household income is 30,000 kuvan dollars and the relative poverty line is set at 60% of median income. Using Table 5, which household is in relative poverty?",
+      "hints": [
+        "Work out the relative poverty line first using the median.",
+        "Compare each household's income with that line, not with the median itself."
+      ],
+      "targets": "Applying a relative poverty threshold",
+      "table": {
+        "caption": "Table 5: Annual income of selected households in Kuva",
+        "columns": [
+          "Household",
+          "Annual income (kuvan dollars)"
+        ],
+        "rows": [
+          [
+            "W",
+            "16,500"
+          ],
+          [
+            "X",
+            "19,500"
+          ],
+          [
+            "Y",
+            "24,000"
+          ],
+          [
+            "Z",
+            "29,000"
+          ]
+        ]
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": "Household X",
+          "misconception": "This household's income is below two-thirds of the median, but not below 60% of it."
+        },
+        {
+          "id": "b",
+          "text": "Household Y",
+          "misconception": "This household's income is below the median, but well above the poverty line."
+        },
+        {
+          "id": "c",
+          "text": "Household W",
+          "misconception": null
+        },
+        {
+          "id": "d",
+          "text": "Household Z",
+          "misconception": "Having an income just below the median does not mean being in relative poverty."
+        }
+      ],
+      "answer": "c"
+    },
+    {
+      "id": "u12-sa-06",
+      "format": "short_answer",
+      "section": "12.2",
+      "concepts": [
+        "c12-relative-poverty",
+        "c12-poverty-line"
+      ],
+      "command_term": "calculate",
+      "marks": 3,
+      "prompt": "In Veld, median household income is 24,000 zed and the relative poverty line is 50% of median income. Using Table 6, calculate the relative poverty line and the percentage of these households that are in relative poverty.",
+      "hints": [
+        "Apply the given percentage to the median income to find the line.",
+        "Compare each household with the line, count those below it and express the count as a percentage of all five households."
+      ],
+      "targets": "Poverty line and poverty rate",
+      "table": {
+        "caption": "Table 6: Annual income of five households in Veld",
+        "columns": [
+          "Household",
+          "Annual income (zed)"
+        ],
+        "rows": [
+          [
+            "A",
+            "10,500"
+          ],
+          [
+            "B",
+            "12,500"
+          ],
+          [
+            "C",
+            "11,800"
+          ],
+          [
+            "D",
+            "15,000"
+          ],
+          [
+            "E",
+            "9,000"
+          ]
+        ]
+      },
+      "marking_points": [
+        "Relative poverty line = 50% × 24,000 = 12,000 zed [1]",
+        "Households A, C and E have incomes below 12,000 zed [1]",
+        "3 / 5 × 100 = 60% of the households are in relative poverty [1]"
+      ],
+      "model_answer_note": "A full-mark answer finds the 12,000 zed line, identifies households A, C and E, and gives 60%."
+    },
+    {
+      "id": "u12-sa-07",
+      "format": "short_answer",
+      "section": "12.2",
+      "concepts": [
+        "c12-multidimensional-poverty-index-mpi",
+        "c12-poverty"
+      ],
+      "command_term": "explain",
+      "marks": 3,
+      "prompt": "Explain why the Multidimensional Poverty Index (MPI) may give a more complete picture of poverty in Kuva than a measure based only on income.",
+      "hints": [
+        "Compare what an income measure captures with what the MPI captures.",
+        "Think of a household with income above a poverty line that still lacks something important, and link this to the MPI's dimensions."
+      ],
+      "targets": "Limits of income-based poverty measures",
+      "marking_points": [
+        "Income measures only show whether money income is below a threshold [1]",
+        "The MPI measures deprivations in health, education and living standards (e.g. nutrition, schooling, clean water, electricity) [1]",
+        "So it can identify households that are poor in ways income does not show, e.g. lacking access to schools or clean water despite some income [1]"
+      ],
+      "model_answer_note": "A full-mark answer contrasts the single income measure with the MPI's three dimensions and explains how the MPI reveals hidden deprivation."
+    },
+    {
+      "id": "u12-mcq-09",
+      "format": "mcq",
+      "section": "12.3",
+      "concepts": [
+        "c12-inequality-of-opportunity",
+        "c12-opportunity"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Which of the following is an example of inequality of opportunity in Veld?",
+      "hints": [
+        "Inequality of opportunity is about circumstances, not choices or results.",
+        "For each option, ask whether the person could have controlled the cause of the difference."
+      ],
+      "targets": "Opportunity vs outcome",
+      "options": [
+        {
+          "id": "a",
+          "text": "Children born in remote villages have no access to a secondary school",
+          "misconception": null
+        },
+        {
+          "id": "b",
+          "text": "Two equally skilled workers earn different amounts because one chooses to work part-time",
+          "misconception": "This difference comes from a personal choice, not from circumstances beyond the worker's control."
+        },
+        {
+          "id": "c",
+          "text": "A successful entrepreneur earns more than an employee in the same industry",
+          "misconception": "A difference in outcomes is not by itself a difference in opportunity."
+        },
+        {
+          "id": "d",
+          "text": "Doctors earn more than shop assistants",
+          "misconception": "A pay gap between occupations describes unequal outcomes, not unequal opportunities."
+        }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u12-mcq-10",
+      "format": "mcq",
+      "section": "12.3",
+      "concepts": [
+        "c12-income-inequality",
+        "c12-human-capital",
+        "c12-globalization"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Which of the following is most likely to widen income inequality in Kuva?",
+      "hints": [
+        "Think about which groups gain and which lose from each change.",
+        "Pick the change that increases incomes at the top more than at the bottom."
+      ],
+      "targets": "Causes of rising inequality",
+      "options": [
+        {
+          "id": "a",
+          "text": "An expansion of free, high-quality public education",
+          "misconception": "Wider access to education usually narrows skill gaps and reduces inequality."
+        },
+        {
+          "id": "b",
+          "text": "A rise in the minimum wage for low-paid workers",
+          "misconception": "A higher minimum wage raises incomes at the bottom of the distribution."
+        },
+        {
+          "id": "c",
+          "text": "Technological change that raises demand for highly skilled workers only",
+          "misconception": null
+        },
+        {
+          "id": "d",
+          "text": "An increase in unemployment benefits",
+          "misconception": "Higher benefits raise the incomes of the poorest households."
+        }
+      ],
+      "answer": "c"
+    },
+    {
+      "id": "u12-sa-08",
+      "format": "short_answer",
+      "section": "12.3",
+      "concepts": [
+        "c12-inequality-of-opportunity",
+        "c12-human-capital",
+        "c12-opportunity"
+      ],
+      "command_term": "explain",
+      "marks": 3,
+      "prompt": "Explain how inequality of opportunity can lead to income inequality in Veld. Use an example in your answer.",
+      "hints": [
+        "Start with a circumstance a person cannot control, such as where they are born.",
+        "Link that circumstance to human capital, then to the jobs and income the person can obtain."
+      ],
+      "targets": "Opportunity to human capital to income chain",
+      "marking_points": [
+        "Some people face circumstances beyond their control, e.g. being born in a poor rural area with weak schools or health care [1]",
+        "They build less human capital (fewer skills, less education, poorer health) [1]",
+        "So they are more likely to end up in low-paid jobs or unemployed, widening the gap in incomes [1]"
+      ],
+      "model_answer_note": "A full-mark answer gives a relevant example of unequal circumstances and links it through human capital to lower earnings."
+    },
+    {
+      "id": "u12-sa-09",
+      "format": "short_answer",
+      "section": "12.3",
+      "concepts": [
+        "c12-globalization",
+        "c12-income-inequality",
+        "c12-human-capital"
+      ],
+      "command_term": "explain",
+      "marks": 4,
+      "prompt": "Explain how globalization and technological change may widen income inequality within Kuva.",
+      "hints": [
+        "Consider which workers gain and which workers lose when trade expands and new technology is adopted.",
+        "Make one link for globalization and one for technology, each ending with an effect on relative incomes."
+      ],
+      "targets": "Two structural causes of inequality",
+      "marking_points": [
+        "Globalization lets firms move low-skilled production to lower-wage countries / face more import competition [1]",
+        "So demand for, and wages of, low-skilled workers in Kuva fall, while firms and skilled workers gain from larger markets [1]",
+        "Technological change automates routine jobs and raises demand for highly skilled workers [1]",
+        "So wages of skilled workers rise relative to low-skilled workers, widening the income gap [1]"
+      ],
+      "model_answer_note": "A full-mark answer explains both causes, each linked to a change in the relative wages of skilled and low-skilled workers."
+    },
+    {
+      "id": "u12-mcq-11",
+      "format": "mcq",
+      "section": "12.4",
+      "concepts": [
+        "c12-income-inequality",
+        "c12-human-capital"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Which of the following is a likely consequence of very high income inequality in Veld?",
+      "hints": [
+        "Think about how income affects a family's ability to invest in its children.",
+        "Link that investment to the chances children have of moving up the income ladder."
+      ],
+      "targets": "Impact of inequality on mobility",
+      "options": [
+        {
+          "id": "a",
+          "text": "Faster growth in consumption, because richer households spend a larger share of their income",
+          "misconception": "Richer households usually spend a smaller share of their income, not a larger one."
+        },
+        {
+          "id": "b",
+          "text": "Lower social mobility, as low-income families cannot afford to invest in education and health",
+          "misconception": null
+        },
+        {
+          "id": "c",
+          "text": "A fall in relative poverty",
+          "misconception": "High inequality usually means more households fall well below median income."
+        },
+        {
+          "id": "d",
+          "text": "More equal access to health care",
+          "misconception": "Unequal incomes tend to create unequal access to services that must be paid for."
+        }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "u12-sa-10",
+      "format": "short_answer",
+      "section": "12.4",
+      "concepts": [
+        "c12-income-inequality",
+        "c12-human-capital"
+      ],
+      "command_term": "explain",
+      "marks": 4,
+      "prompt": "Explain two ways in which high income inequality may reduce economic growth in Kuva.",
+      "hints": [
+        "Consider effects on spending and effects on human capital.",
+        "For each way, state the effect and then link it to real GDP or potential output."
+      ],
+      "targets": "Inequality and growth",
+      "marking_points": [
+        "Way 1, e.g. low-income households cannot afford education and health care [1]",
+        "Explained, e.g. human capital is lower than it could be, reducing productivity and potential output [1]",
+        "Way 2, e.g. income is concentrated among the rich, who spend a smaller share of it / social and political tension rises [1]",
+        "Explained, e.g. consumption and AD grow more slowly, or instability discourages investment, slowing growth [1]"
+      ],
+      "model_answer_note": "A full-mark answer gives two distinct mechanisms, each linked clearly to lower output or slower growth."
+    },
+    {
+      "id": "u12-sa-11",
+      "format": "short_answer",
+      "section": "12.4",
+      "concepts": [
+        "c12-wealth-inequality",
+        "c12-income-inequality",
+        "c12-wealth"
+      ],
+      "command_term": "explain",
+      "marks": 3,
+      "prompt": "Explain how wealth inequality in Veld can make income inequality larger over time.",
+      "hints": [
+        "Think about the types of income that wealth can generate.",
+        "Follow what happens when that income is saved or passed on across generations."
+      ],
+      "targets": "Wealth-income feedback",
+      "marking_points": [
+        "Wealth generates income in the form of interest, dividends and rent [1]",
+        "Wealthy households can save and reinvest this income, adding to their wealth and future income [1]",
+        "Wealth can also be passed to the next generation, so the gap between rich and poor persists and widens [1]"
+      ],
+      "model_answer_note": "A full-mark answer links wealth to property income, then to further accumulation or inheritance that widens the gap over time."
+    },
+    {
+      "id": "u12-mcq-12",
+      "format": "mcq",
+      "section": "12.5",
+      "concepts": [
+        "c12-progressive-taxation",
+        "c12-proportional-tax",
+        "c12-regressive-taxation"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Table 7 shows the income tax paid by three people in Kuva. Which type of tax is this?",
+      "hints": [
+        "Classify taxes by the share of income paid, not by the amount paid.",
+        "Work out tax paid divided by income for each person and see how it changes as income rises."
+      ],
+      "targets": "Classifying taxes by average rate",
+      "table": {
+        "caption": "Table 7: Income and income tax paid in Kuva",
+        "columns": [
+          "Person",
+          "Annual income (kuvan dollars)",
+          "Tax paid (kuvan dollars)"
+        ],
+        "rows": [
+          [
+            "P",
+            "10,000",
+            "1,000"
+          ],
+          [
+            "Q",
+            "20,000",
+            "3,000"
+          ],
+          [
+            "R",
+            "40,000",
+            "8,000"
+          ]
+        ]
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": "A proportional tax",
+          "misconception": "The share of income paid in tax is not constant across the three people."
+        },
+        {
+          "id": "b",
+          "text": "A regressive tax",
+          "misconception": "Higher-income people are not paying a smaller share of their income."
+        },
+        {
+          "id": "c",
+          "text": "A lump-sum tax, because everyone pays a fixed amount",
+          "misconception": "The amount paid differs from person to person."
+        },
+        {
+          "id": "d",
+          "text": "A progressive tax",
+          "misconception": null
+        }
+      ],
+      "answer": "d"
+    },
+    {
+      "id": "u12-sa-12",
+      "format": "short_answer",
+      "section": "12.5",
+      "concepts": [
+        "c12-progressive-taxation"
+      ],
+      "command_term": "define",
+      "marks": 2,
+      "prompt": "Define the term progressive taxation.",
+      "hints": [
+        "Your definition should compare taxpayers with different income levels.",
+        "Consider what happens to the tax burden as income rises, and how that burden is best measured."
+      ],
+      "targets": "Share of income, not amount",
+      "marking_points": [
+        "A tax where the proportion of income paid as tax [1]",
+        "increases as income increases / the average tax rate rises with income [1]"
+      ],
+      "model_answer_note": "A full-mark answer refers to the percentage (not amount) of income paid in tax rising as income rises."
+    },
+    {
+      "id": "u12-mcq-13",
+      "format": "mcq",
+      "section": "12.5",
+      "concepts": [
+        "c12-average-tax-rate",
+        "c12-marginal-tax-rate"
+      ],
+      "command_term": "calculate",
+      "marks": 1,
+      "prompt": "Using the tax bands in Table 8, a worker in Veld has taxable income of 40,000 zed. What is the worker's average tax rate?",
+      "hints": [
+        "Average tax rate = total tax paid ÷ total income × 100.",
+        "Apply each band's rate only to the part of income that falls inside that band, add these amounts, then divide by income."
+      ],
+      "targets": "Average vs marginal tax rate with bands",
+      "table": {
+        "caption": "Table 8: Income tax bands in Veld",
+        "columns": [
+          "Taxable income (zed)",
+          "Tax rate on income in this band"
+        ],
+        "rows": [
+          [
+            "0 – 10,000",
+            "0%"
+          ],
+          [
+            "10,001 – 30,000",
+            "20%"
+          ],
+          [
+            "Above 30,000",
+            "40%"
+          ]
+        ]
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": "20%",
+          "misconception": null
+        },
+        {
+          "id": "b",
+          "text": "40%",
+          "misconception": "This is the marginal tax rate on the last zed earned, not the average rate."
+        },
+        {
+          "id": "c",
+          "text": "30%",
+          "misconception": "This averages the two positive band rates instead of dividing total tax by income."
+        },
+        {
+          "id": "d",
+          "text": "8%",
+          "misconception": "This confuses the amount of tax paid, in thousands of zed, with a percentage."
+        }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u12-sa-13",
+      "format": "short_answer",
+      "section": "12.5",
+      "concepts": [
+        "c12-marginal-tax-rate",
+        "c12-average-tax-rate"
+      ],
+      "command_term": "calculate",
+      "marks": 3,
+      "prompt": "Using Table 9, a worker in Kuva has taxable income of 30,000 kuvan dollars. Calculate the total income tax paid, the worker's average tax rate and the worker's marginal tax rate.",
+      "hints": [
+        "Apply each band's rate only to the income that falls inside that band.",
+        "Add the tax from each band, divide the total by income for the average rate, and look at the band of the last dollar earned for the marginal rate."
+      ],
+      "targets": "Band-by-band tax, average and marginal rates",
+      "table": {
+        "caption": "Table 9: Income tax bands in Kuva",
+        "columns": [
+          "Taxable income (kuvan dollars)",
+          "Tax rate on income in this band"
+        ],
+        "rows": [
+          [
+            "0 – 8,000",
+            "0%"
+          ],
+          [
+            "8,001 – 20,000",
+            "10%"
+          ],
+          [
+            "Above 20,000",
+            "30%"
+          ]
+        ]
+      },
+      "marking_points": [
+        "Tax = (12,000 × 10%) + (10,000 × 30%) = 1,200 + 3,000 [1]",
+        "= 4,200 kuvan dollars [1]",
+        "Average tax rate = 4,200 / 30,000 × 100 = 14%; marginal tax rate = 30% [1]"
+      ],
+      "model_answer_note": "A full-mark answer applies the rates band by band to reach 4,200 kuvan dollars, then gives an average rate of 14% and a marginal rate of 30%."
+    },
+    {
+      "id": "u12-mcq-14",
+      "format": "mcq",
+      "section": "12.5",
+      "concepts": [
+        "c12-regressive-taxation",
+        "c12-income-inequality"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Why do indirect taxes, such as a sales tax on food, tend to increase income inequality?",
+      "hints": [
+        "Compare the tax paid with each household's income, not with the price of the good.",
+        "Think about what share of income poorer and richer households spend on everyday goods."
+      ],
+      "targets": "Indirect taxes as regressive",
+      "options": [
+        {
+          "id": "a",
+          "text": "High-income households pay a larger amount of the tax, which discourages them from working",
+          "misconception": "Indirect taxes are paid on spending, not on work, and paying a larger amount does not make a tax unequalizing."
+        },
+        {
+          "id": "b",
+          "text": "Low-income households spend a larger share of their income on taxed goods, so the tax takes a larger share of their income",
+          "misconception": null
+        },
+        {
+          "id": "c",
+          "text": "The tax rate on the good rises as the buyer's income rises",
+          "misconception": "The rate on a good is the same for every buyer, whatever their income."
+        },
+        {
+          "id": "d",
+          "text": "Indirect taxes are only paid by firms, which then cut the wages of low-paid workers",
+          "misconception": "Much of an indirect tax is passed on to consumers through higher prices."
+        }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "u12-mcq-15",
+      "format": "mcq",
+      "section": "12.5",
+      "concepts": [
+        "c12-lorenz-curve",
+        "c12-income-inequality",
+        "c12-progressive-taxation"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Which policy is most likely to shift Veld's Lorenz curve towards the line of perfect equality?",
+      "hints": [
+        "Look at both sides of each policy: who pays and who benefits.",
+        "Pick the policy whose overall effect raises the income share of the poorest relative to the richest."
+      ],
+      "targets": "Redistribution and the Lorenz curve",
+      "options": [
+        {
+          "id": "a",
+          "text": "Replacing a progressive income tax with a proportional income tax",
+          "misconception": "A flat rate takes a smaller share from high earners than before, so inequality tends to rise."
+        },
+        {
+          "id": "b",
+          "text": "Raising the sales tax on basic food items",
+          "misconception": "A tax on basic goods takes a larger share of income from poorer households."
+        },
+        {
+          "id": "c",
+          "text": "Raising the top marginal income tax rate and using the revenue to increase unemployment benefits",
+          "misconception": null
+        },
+        {
+          "id": "d",
+          "text": "Cutting spending on public schools and hospitals in low-income areas",
+          "misconception": "This reduces services that benefit poorer households most."
+        }
+      ],
+      "answer": "c"
+    },
+    {
+      "id": "u12-sa-14",
+      "format": "short_answer",
+      "section": "12.5",
+      "concepts": [
+        "c12-progressive-taxation",
+        "c12-lorenz-curve",
+        "c12-income-inequality"
+      ],
+      "command_term": "explain",
+      "marks": 4,
+      "prompt": "Explain how a progressive income tax combined with transfer payments can reduce income inequality in Kuva. Refer to a Lorenz curve diagram in your answer.",
+      "hints": [
+        "Think about which households each part of the policy affects most.",
+        "Link the change in disposable incomes to income shares, then describe the shift of the Lorenz curve and the change in the Gini coefficient."
+      ],
+      "targets": "Tax and transfers on the Lorenz curve",
+      "marking_points": [
+        "A progressive tax takes a larger share of income from high-income earners [1]",
+        "Transfer payments (e.g. unemployment benefits, pensions) raise the disposable income of low-income households [1]",
+        "Disposable income becomes more evenly distributed, so the income share of the poorest rises [1]",
+        "The Lorenz curve shifts towards the line of perfect equality and the Gini coefficient falls [1]"
+      ],
+      "model_answer_note": "A full-mark answer explains both parts of the policy and describes the Lorenz curve moving towards the line of equality with a lower Gini coefficient."
+    },
+    {
+      "id": "u12-sa-15",
+      "format": "short_answer",
+      "section": "12.5",
+      "concepts": [
+        "c12-progressive-taxation",
+        "c12-marginal-tax-rate"
+      ],
+      "command_term": "suggest",
+      "marks": 2,
+      "prompt": "The government of Veld plans a large rise in the top marginal income tax rate. Suggest two reasons why this may reduce income inequality by less than expected.",
+      "hints": [
+        "Think about how high earners might respond to the change.",
+        "Consider effects on work, on where income is reported, and on the tax revenue actually collected."
+      ],
+      "targets": "Limits of progressive taxation",
+      "marking_points": [
+        "Reason 1, e.g. high earners may avoid or evade the tax, or move income or residence abroad, so less revenue is collected [1]",
+        "Reason 2, e.g. it may reduce incentives to work or invest, slowing growth and job creation that would help lower-income groups [1]"
+      ],
+      "model_answer_note": "A full-mark answer gives two distinct, plausible reasons such as tax avoidance/capital flight and disincentive effects."
+    }
+  ]
+}

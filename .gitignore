@@ -1,0 +1,33 @@
+# Jin's notes and IB PDFs — never commit
+content/source/*
+!content/source/README.md
+
+# local data (SQLite, uploaded diagram photos)
+/data/
+
+# env files (API keys)
+.env*
+!.env.example
+
+# dependencies / build
+/node_modules
+/.next/
+/out/
+/build
+/coverage
+*.tsbuildinfo
+next-env.d.ts
+
+# misc
+.DS_Store
+*.pem
+npm-debug.log*
+.vercel
+onside-econ-handoff.zip
+
+# browser test screenshots
+.playwright-mcp/
+
+# python env for scripts/
+.venv/
+__pycache__/

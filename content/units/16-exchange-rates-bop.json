@@ -1,0 +1,870 @@
+{
+  "unit": {
+    "id": "ch16",
+    "number": 16,
+    "part": "Global economy",
+    "title": "Exchange rates and the balance of payments",
+    "sections": [
+      {
+        "id": "16.1",
+        "title": "Floating exchange rates"
+      },
+      {
+        "id": "16.2",
+        "title": "Consequences of changes in exchange rates"
+      },
+      {
+        "id": "16.3",
+        "title": "Government intervention (fixed, managed, over/undervalued)"
+      },
+      {
+        "id": "16.4",
+        "title": "The balance of payments"
+      }
+    ],
+    "linked_units": [
+      {
+        "unit": 17,
+        "why": "current account deficits/surpluses, exchange rate systems compared, Marshall-Lerner and J-curve (HL)"
+      },
+      {
+        "unit": 9,
+        "why": "depreciation shown on AD/AS"
+      },
+      {
+        "unit": 13,
+        "why": "interest rates as a tool to defend a currency"
+      }
+    ],
+    "exam_weight": "Highest share of HL marks M22–N25 (10.6%), in all 8 sessions. Exchange rate diagram asked 21 times."
+  },
+  "source": {
+    "concepts": "Jin's notes: unit16.docx",
+    "questions": "original (written for Onside; fictional countries and data)",
+    "status": "draft — Jin to review"
+  },
+  "note_corrections": [
+    {
+      "where": "16.1 Depreciation by decrease in demand",
+      "issue": "Notes say 'more quantity of dollars is traded'. With demand shifting left along an upward-sloping supply curve, the quantity traded falls."
+    },
+    {
+      "where": "16.1 Relative inflation (demand side)",
+      "issue": "Notes say exports rise because 'the currency is less expensive'. The mechanism is that the country's goods become relatively cheaper, which raises foreign demand for its exports and so for its currency."
+    }
+  ],
+  "concepts": [
+    {
+      "id": "c16-exchange-rate",
+      "section": "16.1",
+      "term": "Exchange rate",
+      "definition": "The value of one currency expressed in terms of another."
+    },
+    {
+      "id": "c16-floating",
+      "section": "16.1",
+      "term": "Floating exchange rate system",
+      "definition": "Exchange rates set by demand and supply in the foreign exchange market, with no central bank intervention."
+    },
+    {
+      "id": "c16-appreciation",
+      "section": "16.1",
+      "term": "Appreciation",
+      "definition": "A rise in the value of a currency in a floating system."
+    },
+    {
+      "id": "c16-depreciation",
+      "section": "16.1",
+      "term": "Depreciation",
+      "definition": "A fall in the value of a currency in a floating system."
+    },
+    {
+      "id": "c16-demand-factors",
+      "section": "16.1",
+      "term": "Causes of changes in currency demand",
+      "definition": "Foreign demand for exports (goods, services, tourism), relative inflation, relative growth, inward FDI and portfolio investment, relative interest rates, inward remittances, speculation, central bank buying."
+    },
+    {
+      "id": "c16-supply-factors",
+      "section": "16.1",
+      "term": "Causes of changes in currency supply",
+      "definition": "Domestic demand for imports, relative inflation and growth, outward FDI and portfolio investment, relative interest rates, outward remittances, speculation, central bank selling."
+    },
+    {
+      "id": "c16-portfolio",
+      "section": "16.1",
+      "term": "Portfolio investment",
+      "definition": "Financial investment such as buying stocks and bonds."
+    },
+    {
+      "id": "c16-fdi",
+      "section": "16.1",
+      "term": "Foreign direct investment",
+      "definition": "Investment by multinational corporations in productive facilities."
+    },
+    {
+      "id": "c16-remittances",
+      "section": "16.1",
+      "term": "Remittances",
+      "definition": "Money sent home by workers living and earning abroad."
+    },
+    {
+      "id": "c16-speculation",
+      "section": "16.1",
+      "term": "Currency speculation",
+      "definition": "Buying and selling currencies to profit from expected exchange rate changes."
+    },
+    {
+      "id": "c16-fx-calcs",
+      "section": "16.1",
+      "term": "Exchange rate calculations",
+      "definition": "Converting prices between currencies, finding the inverse rate, and percentage change in a currency's value."
+    },
+    {
+      "id": "c16-consequences",
+      "section": "16.2",
+      "term": "Consequences of exchange rate changes",
+      "definition": "Effects on net exports, demand-pull and cost-push inflation, growth, unemployment, current account, foreign debt and living standards."
+    },
+    {
+      "id": "c16-fixed",
+      "section": "16.3",
+      "term": "Fixed exchange rate system",
+      "definition": "The central bank sets the exchange rate and intervenes to keep it there."
+    },
+    {
+      "id": "c16-intervention",
+      "section": "16.3",
+      "term": "Maintaining a fixed rate",
+      "definition": "Using reserves, changing interest rates, borrowing abroad, limiting imports."
+    },
+    {
+      "id": "c16-devaluation",
+      "section": "16.3",
+      "term": "Devaluation / revaluation",
+      "definition": "A government decision to lower / raise a fixed exchange rate."
+    },
+    {
+      "id": "c16-managed",
+      "section": "16.3",
+      "term": "Managed exchange rate",
+      "definition": "Mostly floating, with periodic central bank intervention to smooth sharp swings; includes pegs within a band."
+    },
+    {
+      "id": "c16-overvalued",
+      "section": "16.3",
+      "term": "Overvalued / undervalued currency",
+      "definition": "A currency held above / below its free-market equilibrium value."
+    },
+    {
+      "id": "c16-bop",
+      "section": "16.4",
+      "term": "Balance of payments",
+      "definition": "A record of all transactions between a country's residents and the rest of the world over a period; credits equal debits."
+    },
+    {
+      "id": "c16-current-account",
+      "section": "16.4",
+      "term": "Current account",
+      "definition": "Balance of trade in goods + balance of trade in services + net income + net current transfers."
+    },
+    {
+      "id": "c16-capital-account",
+      "section": "16.4",
+      "term": "Capital account",
+      "definition": "Capital transfers + transactions in non-produced, non-financial assets."
+    },
+    {
+      "id": "c16-financial-account",
+      "section": "16.4",
+      "term": "Financial account",
+      "definition": "Net FDI + net portfolio investment + reserve assets + official borrowing."
+    },
+    {
+      "id": "c16-interdependence",
+      "section": "16.4",
+      "term": "Interdependence of the accounts",
+      "definition": "The accounts sum to zero, so a current account deficit is matched by a capital plus financial account surplus."
+    }
+  ],
+  "diagram_checklists": [
+    {
+      "id": "dg16-floating-shift",
+      "name": "Exchange rate diagram: floating rate change",
+      "items": [
+        "Vertical axis: price of the currency in another currency (e.g. USD per VLD)",
+        "Horizontal axis: quantity of the currency",
+        "Downward-sloping demand and upward-sloping supply, both labelled",
+        "Initial equilibrium rate and quantity marked (e1, Q1)",
+        "Correct curve shifts in the correct direction, with new curve labelled",
+        "New equilibrium rate marked (e2) and higher/lower than e1 as the cause requires",
+        "Written link: the cause → demand or supply of the currency → appreciation or depreciation"
+      ],
+      "common_errors": [
+        "Shifting demand when the cause works through supply (e.g. imports)",
+        "Axis labelled only 'Price' with no currency pair",
+        "Showing the other currency's market without saying so"
+      ]
+    },
+    {
+      "id": "dg16-fixed-defence",
+      "name": "Exchange rate diagram: defending a fixed rate",
+      "items": [
+        "Axes labelled as for a floating diagram",
+        "Fixed exchange rate shown as a horizontal line and labelled",
+        "Shift that creates pressure (e.g. demand falls) shown and labelled",
+        "Excess supply (or excess demand) at the fixed rate identified",
+        "Central bank action shown: buying its own currency with foreign reserves shifts demand back to the right (for upward pressure the opposite: selling its own currency shifts supply right)",
+        "Rate stays at the fixed level; written link explains the action"
+      ],
+      "common_errors": [
+        "Central bank sells its own currency to stop a fall",
+        "Rate drawn as moving despite intervention",
+        "No mention of reserves or interest rates"
+      ]
+    },
+    {
+      "id": "dg16-depreciation-adas",
+      "name": "AD/AS diagram: effect of depreciation",
+      "items": [
+        "Vertical axis: average price level; horizontal axis: real GDP",
+        "AD shifts right (net exports rise) — and/or SRAS shifts left if imported inputs matter",
+        "New price level and real GDP marked",
+        "Written link: depreciation → exports cheaper, imports dearer → (X−M) rises → AD rises"
+      ],
+      "common_errors": [
+        "Shifting LRAS",
+        "Forgetting cost-push via imported inputs in evaluation"
+      ]
+    }
+  ],
+  "questions": [
+    {
+      "id": "q16-mcq-1",
+      "format": "mcq",
+      "section": "16.1",
+      "concepts": [
+        "c16-demand-factors",
+        "c16-supply-factors"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Country A has a floating exchange rate. Which change is most likely to cause the currency of Country A to appreciate?",
+      "options": [
+        {
+          "id": "a",
+          "text": "The central bank of Country A lowers interest rates relative to other countries.",
+          "misconception": "Lower relative interest rates attract less financial capital, so demand for the currency falls."
+        },
+        {
+          "id": "b",
+          "text": "Inflation in Country A rises faster than in its trading partners.",
+          "misconception": "Higher relative inflation makes exports less competitive, lowering currency demand and raising supply."
+        },
+        {
+          "id": "c",
+          "text": "Multinational firms increase their investment in factories in Country A.",
+          "misconception": null
+        },
+        {
+          "id": "d",
+          "text": "Residents of Country A take more holidays abroad.",
+          "misconception": "Spending abroad is an import of services, which increases the supply of the domestic currency."
+        }
+      ],
+      "answer": "c",
+      "hints": [
+        "Ask which option makes foreigners need more of Country A's currency.",
+        "Inward FDI means foreign firms must buy the currency to pay for buildings and workers. Check what each other option does to demand or supply."
+      ],
+      "targets": "Direction of demand vs supply factors"
+    },
+    {
+      "id": "q16-mcq-2",
+      "format": "mcq",
+      "section": "16.2",
+      "concepts": [
+        "c16-consequences"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "The currency of Country B depreciates sharply. Country B imports most of its oil. Which outcome is most likely?",
+      "options": [
+        {
+          "id": "a",
+          "text": "The value of Country B's foreign-currency debt falls.",
+          "misconception": "Depreciation raises the domestic-currency cost of debt held in foreign currency."
+        },
+        {
+          "id": "b",
+          "text": "Cost-push inflation, as imported inputs become more expensive.",
+          "misconception": null
+        },
+        {
+          "id": "c",
+          "text": "Net exports fall because exports become more expensive abroad.",
+          "misconception": "Depreciation makes exports cheaper abroad."
+        },
+        {
+          "id": "d",
+          "text": "Living standards rise because imports become cheaper.",
+          "misconception": "Imports become more expensive after a depreciation."
+        }
+      ],
+      "answer": "b",
+      "hints": [
+        "Think about what happens to the price of imports in the domestic currency.",
+        "Oil is an input for most firms. Which curve on the AD/AS diagram shifts when input costs rise?"
+      ],
+      "targets": "Cost-push channel of depreciation"
+    },
+    {
+      "id": "q16-mcq-3",
+      "format": "mcq",
+      "section": "16.3",
+      "concepts": [
+        "c16-fixed",
+        "c16-intervention"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Country C fixes its exchange rate. Demand for its exports falls, putting downward pressure on the currency. What should the central bank do to keep the fixed rate?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Sell its own currency and buy foreign currency.",
+          "misconception": "Selling its own currency adds supply and pushes the value down further."
+        },
+        {
+          "id": "b",
+          "text": "Buy its own currency using foreign currency reserves.",
+          "misconception": null
+        },
+        {
+          "id": "c",
+          "text": "Lower domestic interest rates.",
+          "misconception": "Lower rates reduce financial inflows and weaken the currency."
+        },
+        {
+          "id": "d",
+          "text": "Increase government spending.",
+          "misconception": "Higher spending raises incomes and imports, adding currency supply; it does not defend the rate directly."
+        }
+      ],
+      "answer": "b",
+      "hints": [
+        "At the fixed rate there is now excess supply of the currency. What removes it?",
+        "The central bank needs to add demand for its own currency. What does it pay with?"
+      ],
+      "targets": "Direction of central bank intervention"
+    },
+    {
+      "id": "q16-mcq-4",
+      "format": "mcq",
+      "section": "16.4",
+      "concepts": [
+        "c16-interdependence"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Country D has a current account deficit of $20 billion and a capital account balance of zero. Ignoring errors and omissions, its financial account must be:",
+      "options": [
+        {
+          "id": "a",
+          "text": "a deficit of $20 billion",
+          "misconception": "Treats accounts as moving together rather than offsetting."
+        },
+        {
+          "id": "b",
+          "text": "a surplus of $20 billion",
+          "misconception": null
+        },
+        {
+          "id": "c",
+          "text": "zero",
+          "misconception": "Forgets that the whole balance of payments sums to zero."
+        },
+        {
+          "id": "d",
+          "text": "impossible to know without trade data",
+          "misconception": "The identity alone is enough."
+        }
+      ],
+      "answer": "b",
+      "hints": [
+        "All the accounts together must add up to zero.",
+        "Current + capital + financial = 0. Put in the numbers you know."
+      ],
+      "targets": "BoP identity"
+    },
+    {
+      "id": "q16-mcq-5",
+      "format": "mcq",
+      "section": "16.1",
+      "concepts": [
+        "c16-fx-calcs"
+      ],
+      "command_term": "calculate",
+      "marks": 1,
+      "prompt": "If €1 = $1.25, what is the value of $1 in euros?",
+      "options": [
+        {
+          "id": "a",
+          "text": "€0.80",
+          "misconception": null
+        },
+        {
+          "id": "b",
+          "text": "€1.25",
+          "misconception": "Uses the same number without inverting."
+        },
+        {
+          "id": "c",
+          "text": "€0.75",
+          "misconception": "Subtracts 0.25 instead of dividing."
+        },
+        {
+          "id": "d",
+          "text": "€1.20",
+          "misconception": "Guesses a nearby value without calculating."
+        }
+      ],
+      "answer": "a",
+      "hints": [
+        "You need the inverse of the rate.",
+        "Divide 1 by 1.25."
+      ],
+      "targets": "Inverse exchange rate"
+    },
+    {
+      "id": "q16-def-1",
+      "format": "short_answer",
+      "section": "16.1",
+      "concepts": [
+        "c16-portfolio"
+      ],
+      "command_term": "define",
+      "marks": 2,
+      "prompt": "Define the term portfolio investment.",
+      "marking_points": [
+        "Financial investment (e.g. buying shares/stocks or bonds) [1]",
+        "Made across borders / in another country, without control of a productive facility [1]"
+      ],
+      "model_answer_note": "An accurate definition covering both points earns 2; a vague or partly correct one earns 1.",
+      "hints": [
+        "Which account does it belong to, and how is it different from FDI?",
+        "Name what is bought, and say where the investor is."
+      ],
+      "targets": "Asked 3 times in P2 (M24, N25)"
+    },
+    {
+      "id": "q16-def-2",
+      "format": "short_answer",
+      "section": "16.3",
+      "concepts": [
+        "c16-overvalued"
+      ],
+      "command_term": "define",
+      "marks": 2,
+      "prompt": "Define the term overvalued currency.",
+      "marking_points": [
+        "A currency whose exchange rate is higher [1]",
+        "than its free-market equilibrium value (often held there by government or central bank action) [1]"
+      ],
+      "hints": [
+        "Compare the actual rate with what the market alone would set.",
+        "Higher or lower than equilibrium?"
+      ],
+      "targets": "Asked in M23 P3 and N25 P2"
+    },
+    {
+      "id": "q16-calc-1",
+      "format": "calculation",
+      "section": "16.1",
+      "concepts": [
+        "c16-fx-calcs"
+      ],
+      "command_term": "calculate",
+      "marks": 2,
+      "prompt": "In January 1 bola = 2.40 zeds. In December 1 bola = 2.10 zeds. Calculate the percentage change in the value of (i) the bola and (ii) the zed between January and December.",
+      "answer": {
+        "parts": [
+          {
+            "label": "(i)",
+            "value": -12.5,
+            "unit": "%",
+            "tolerance": 0.05,
+            "working": "(2.10 − 2.40) / 2.40 × 100"
+          },
+          {
+            "label": "(ii)",
+            "value": 14.29,
+            "unit": "%",
+            "tolerance": 0.02,
+            "working": "1 zed = 1/2.40 = 0.4167 bola → 1/2.10 = 0.4762 bola; (0.4762 − 0.4167) / 0.4167 × 100"
+          }
+        ]
+      },
+      "marking_points": [
+        "(i) −12.5% with valid working [1]",
+        "(ii) +14.29% (2 d.p.) with valid working [1]"
+      ],
+      "hints": [
+        "Percentage change = (new − old) / old × 100. For the zed, first find the value of 1 zed in bolas.",
+        "The two answers are not the same size. Invert both rates before comparing."
+      ],
+      "targets": "Trap: a 12.5% fall is not a 12.5% rise for the other currency"
+    },
+    {
+      "id": "q16-calc-2",
+      "format": "calculation",
+      "section": "16.2",
+      "concepts": [
+        "c16-fx-calcs",
+        "c16-consequences"
+      ],
+      "command_term": "calculate",
+      "marks": 2,
+      "prompt": "A firm in Kuva sells a machine for 50 000 kuvars (KVR). The exchange rate changes from US$1 = KVR 40 to US$1 = KVR 50. Calculate the change in the US$ price of the machine.",
+      "answer": {
+        "value": -250,
+        "unit": "US$",
+        "tolerance": 0,
+        "working": "50 000 / 40 = 1250; 50 000 / 50 = 1000; 1000 − 1250"
+      },
+      "marking_points": [
+        "Both US$ prices found (1250 and 1000) [1]",
+        "Change = −US$250 (a fall of 20%) [1]"
+      ],
+      "hints": [
+        "Convert the KVR price into US$ at each rate.",
+        "More KVR per dollar means the KVR has depreciated. Should the US$ price go up or down?"
+      ],
+      "targets": "Export prices after depreciation"
+    },
+    {
+      "id": "q16-calc-3",
+      "format": "calculation",
+      "section": "16.4",
+      "concepts": [
+        "c16-current-account",
+        "c16-financial-account",
+        "c16-interdependence"
+      ],
+      "command_term": "calculate",
+      "marks": 4,
+      "prompt": "Balance of payments for Country Lira (US$ billion): exports of goods 120; imports of goods 150; exports of services 45; imports of services 30; net income −8; net current transfers +11; capital account +2; net FDI +15; net portfolio investment −6; official borrowing +3; reserve assets ?. (a) Calculate the current account balance. [2] (b) Calculate the value of reserve assets. [2]",
+      "answer": {
+        "parts": [
+          {
+            "label": "(a)",
+            "value": -12,
+            "unit": "US$ billion",
+            "working": "120 − 150 + 45 − 30 − 8 + 11"
+          },
+          {
+            "label": "(b)",
+            "value": -2,
+            "unit": "US$ billion",
+            "working": "Financial account = −(−12 + 2) = +10; 15 − 6 + 3 + R = 10 → R = −2"
+          }
+        ]
+      },
+      "marking_points": [
+        "(a) valid working [1], −12 [1]",
+        "(b) financial account = +10 or equivalent working [1], reserve assets = −2 [1]"
+      ],
+      "hints": [
+        "List which items belong to the current account and which to the financial account.",
+        "The three accounts sum to zero. Find the financial account first, then solve for the missing item."
+      ],
+      "targets": "Account membership + BoP identity (P2/P3 calc pattern)"
+    },
+    {
+      "id": "q16-diag-1",
+      "format": "diagram",
+      "section": "16.1",
+      "concepts": [
+        "c16-demand-factors"
+      ],
+      "command_term": "explain",
+      "marks": 4,
+      "diagram_checklist": "dg16-floating-shift",
+      "prompt": "Using an exchange rate diagram, explain how a large rise in the number of foreign tourists visiting Veld is likely to affect the value of the veld (VLD).",
+      "marking": {
+        "type": "levels",
+        "levels": [
+          {
+            "marks": "1–2",
+            "descriptor": "Correct diagram OR accurate explanation"
+          },
+          {
+            "marks": "3–4",
+            "descriptor": "Correct diagram AND accurate explanation"
+          }
+        ],
+        "cap": "Incorrect labels: maximum 3",
+        "diagram_must_show": "Demand for VLD shifts right; exchange rate rises from e1 to e2",
+        "explanation_must_include": "Tourism is an export of services; foreign tourists must buy VLD to spend in Veld; demand for VLD rises; the VLD appreciates"
+      },
+      "hints": [
+        "Is spending by foreign tourists an export or an import for Veld? Which curve does that affect?",
+        "Tourists need VLD to pay for hotels. Show that on the demand side and mark the new rate."
+      ],
+      "targets": "Most-asked P2 diagram (floating rate change)"
+    },
+    {
+      "id": "q16-diag-2",
+      "format": "diagram",
+      "section": "16.3",
+      "concepts": [
+        "c16-fixed",
+        "c16-intervention"
+      ],
+      "command_term": "explain",
+      "marks": 4,
+      "diagram_checklist": "dg16-fixed-defence",
+      "prompt": "Using an exchange rate diagram, explain how the central bank of Ostra could maintain its fixed exchange rate after a fall in demand for Ostra's exports.",
+      "marking": {
+        "type": "levels",
+        "levels": [
+          {
+            "marks": "1–2",
+            "descriptor": "Correct diagram OR accurate explanation"
+          },
+          {
+            "marks": "3–4",
+            "descriptor": "Correct diagram AND accurate explanation"
+          }
+        ],
+        "cap": "Incorrect labels: maximum 3",
+        "diagram_must_show": "Fixed rate line; demand shifts left creating excess supply at the fixed rate; central bank buying shifts demand back to restore the fixed rate",
+        "explanation_must_include": "Lower export demand reduces demand for the currency; the central bank uses foreign reserves to buy its currency (or raises interest rates) so demand returns and the rate stays fixed"
+      },
+      "hints": [
+        "What gap appears at the fixed rate after demand falls?",
+        "The central bank must create extra demand for its own currency. What does it use to pay?"
+      ],
+      "targets": "Fixed-rate defence (M23 P3, M25 P2 ×3)"
+    },
+    {
+      "id": "q16-chain-1",
+      "format": "analysis_chain",
+      "section": "16.2",
+      "concepts": [
+        "c16-demand-factors",
+        "c16-consequences"
+      ],
+      "command_term": "explain",
+      "marks": 3,
+      "prompt": "Put the steps in order to show how a rise in interest rates in Country E, relative to other countries, affects its current account. One step does not belong.",
+      "steps": [
+        {
+          "id": "s1",
+          "text": "Interest rates in Country E rise relative to other countries"
+        },
+        {
+          "id": "s2",
+          "text": "Foreign savers move funds into Country E's bank deposits and bonds"
+        },
+        {
+          "id": "s3",
+          "text": "Demand for Country E's currency rises"
+        },
+        {
+          "id": "s4",
+          "text": "Country E's currency appreciates"
+        },
+        {
+          "id": "s5",
+          "text": "Exports become more expensive abroad and imports become cheaper"
+        },
+        {
+          "id": "s6",
+          "text": "Net exports fall and the current account balance worsens"
+        },
+        {
+          "id": "x1",
+          "text": "Foreign demand for Country E's exports rises",
+          "distractor": true
+        }
+      ],
+      "answer": [
+        "s1",
+        "s2",
+        "s3",
+        "s4",
+        "s5",
+        "s6"
+      ],
+      "hints": [
+        "Start with the financial flow, not trade.",
+        "Interest rates change the currency first; the currency then changes trade. One step points the wrong way."
+      ],
+      "targets": "Chain from interest rates to current account"
+    },
+    {
+      "id": "q16-p1a-1",
+      "format": "short_answer",
+      "paper_style": "P1(a)",
+      "section": "16.1",
+      "concepts": [
+        "c16-demand-factors",
+        "c16-supply-factors",
+        "c16-current-account"
+      ],
+      "command_term": "explain",
+      "marks": 10,
+      "prompt": "Explain how a fall in interest rates in a country, relative to its trading partners, is likely to affect its exchange rate and its current account balance.",
+      "marking": {
+        "type": "bands",
+        "rubric": "Jin's DEEDE without evaluation: definitions, explanation of the chain, a labelled exchange rate diagram, clear link to the current account",
+        "key_content": [
+          "Define exchange rate, depreciation, current account",
+          "Lower relative rates reduce the return on deposits and bonds; financial capital flows out",
+          "Demand for the currency falls and/or supply rises",
+          "Exchange rate diagram: D left and/or S right, rate falls e1 → e2",
+          "Depreciation makes exports cheaper and imports dearer; net exports rise; current account improves (after a time lag)"
+        ],
+        "reference": "Compare with the P1 (a) 10-mark bands in any M22–N25 P1 mark scheme"
+      },
+      "plan_prompts": [
+        "Terms to define",
+        "Chain of cause and effect",
+        "Diagram and what shifts",
+        "Link to current account"
+      ],
+      "hints": [
+        "There are two stages: interest rates → currency, then currency → trade.",
+        "Show the capital outflow on the exchange rate diagram, then explain what the new rate does to X and M."
+      ],
+      "targets": "P1 Q3 (a) style"
+    },
+    {
+      "id": "q16-essay-1",
+      "format": "essay",
+      "paper_style": "P1(b)",
+      "section": "16.2",
+      "concepts": [
+        "c16-consequences",
+        "c16-depreciation"
+      ],
+      "command_term": "evaluate",
+      "marks": 15,
+      "prompt": "Using real-world examples, evaluate the effects of a sustained depreciation of a country's currency on different stakeholders.",
+      "marking": {
+        "type": "bands",
+        "rubric": "Jin's DEEDE: define, explain, diagram, example, evaluate",
+        "key_content": [
+          "Exporters: cheaper abroad, more sales and jobs",
+          "Import-competing firms: imports dearer, domestic demand shifts to them",
+          "Consumers: dearer imports, lower real incomes, higher cost of living",
+          "Firms using imported inputs: higher costs, cost-push inflation (SRAS left)",
+          "Government/firms with foreign-currency debt: debt burden rises",
+          "Workers: more jobs in export sectors if AD rises; risk of job losses if cost-push dominates"
+        ],
+        "evaluation_angles": [
+          "Price elasticity of exports and imports (links to Marshall-Lerner, unit 17)",
+          "Short run vs long run (J-curve, unit 17)",
+          "Where the economy is in the business cycle (demand-pull risk near potential output)",
+          "Share of imported inputs in production",
+          "Size of foreign-currency debt"
+        ],
+        "example_suggestions": [
+          "Japanese yen weakness 2022–2024",
+          "Egyptian pound devaluations 2022–2024",
+          "Argentine peso",
+          "UK pound after the 2016 referendum"
+        ],
+        "reference": "Compare with the P1 (b) 15-mark bands in any M22–N25 P1 mark scheme"
+      },
+      "plan_prompts": [
+        "Define depreciation and one more key term",
+        "List at least three stakeholders and the effect on each",
+        "Which diagram (exchange rate or AD/AS) and what it shows",
+        "One real-world example and what happened",
+        "Your judgement: who gains most, who loses most, and what it depends on"
+      ],
+      "hints": [
+        "Group stakeholders into winners and losers before writing.",
+        "For evaluation, ask what the effect depends on: elasticities, time period, imported inputs, foreign debt."
+      ],
+      "targets": "P1 Q3 (b) style; related past essays on appreciation/depreciation consequences"
+    }
+  ],
+  "related_past_items": {
+    "exchange_rate_diagrams": [
+      "M22-P2-HL-1(f)",
+      "M22-P2-HL-2(e)",
+      "N22-P2-HL-1(e)",
+      "N22-P2-HL-2(e)",
+      "M23-P2-HL-2(d)",
+      "M23-P3-HL-2(a)(vi)",
+      "N23-P2-HL-1(e)",
+      "M24-P2-HLSL-TZ1-1(d)",
+      "M24-P2-HLSL-TZ2-1(d)",
+      "M24-P2-HLSL-TZ2-2(e)",
+      "M24-P3-HL-2(a)(vi)",
+      "N24-P2-HLSL-2(e)",
+      "N24-P3-HL-1(a)(iii)",
+      "M25-P2-HLSL-TZ1-1(d)",
+      "M25-P2-HLSL-TZ1-2(e)",
+      "M25-P2-HLSL-TZ2-1(c)",
+      "M25-P2-HLSL-TZ2-2(e)",
+      "M25-P2-HLSL-TZ3-1(f)",
+      "M25-P2-HLSL-TZ3-2(e)",
+      "N25-P2-HLSL-TZ1-1(d)",
+      "N25-P2-HLSL-TZ3-2(c)"
+    ],
+    "definitions": [
+      "M23-P3-HL-2(a)(v)",
+      "M24-P2-HLSL-TZ1-1(a)(ii)",
+      "M24-P2-HLSL-TZ2-2(a)(ii)",
+      "N24-P2-HLSL-1(a)(ii)",
+      "N24-P3-HL-1(a)(i)",
+      "M25-P2-HLSL-TZ3-2(a)(i)",
+      "N25-P2-HLSL-TZ1-1(a)(ii)",
+      "N25-P2-HLSL-TZ1-2(a)(i)",
+      "N25-P2-HLSL-TZ3-1(a)(i)",
+      "N25-P2-HLSL-TZ3-2(a)(ii)"
+    ],
+    "calculations": [
+      "M23-P3-HL-2(a)(iv)",
+      "M23-P3-HL-2(a)(vii)",
+      "N23-P3-HL-2(a)(viii)",
+      "M24-P2-HLSL-TZ1-1(b)(ii)",
+      "M24-P2-HLSL-TZ2-1(b)(ii)",
+      "M24-P3-HL-1(a)(i)",
+      "M24-P3-HL-1(a)(ii)",
+      "N24-P3-HL-1(a)(ii)",
+      "N24-P3-HL-1(a)(v)",
+      "M25-P2-HLSL-TZ2-1(b)(i)",
+      "M25-P2-HLSL-TZ2-1(b)(ii)",
+      "M25-P2-HLSL-TZ3-1(b)(i)",
+      "M25-P2-HLSL-TZ3-1(b)(ii)",
+      "N25-P3-HL-1(a)(vii)",
+      "N25-P3-HL-1(a)(viii)"
+    ],
+    "paper1_essays": [
+      "N23-P1-HL-TZ2-3(a)",
+      "N23-P1-HL-TZ2-3(b)",
+      "N24-P1-HL-TZ1-3(a)",
+      "N24-P1-HL-TZ2-3(a)",
+      "N24-P1-HL-TZ2-3(b)",
+      "M25-P1-HL-TZ1-3(a)",
+      "M25-P1-HL-TZ1-3(b)",
+      "M25-P1-HL-TZ3-3(a)",
+      "M25-P1-HL-TZ3-3(b)"
+    ],
+    "paper2_discuss_15": [
+      "M24-P2-HLSL-TZ1-1(g)",
+      "M24-P2-HLSL-TZ2-1(g)",
+      "N25-P2-HLSL-TZ3-1(g)"
+    ],
+    "paper3_policy": [
+      "M23-P3-HL-2(b)",
+      "N24-P3-HL-1(b)",
+      "N25-P3-HL-1(b)"
+    ]
+  }
+}

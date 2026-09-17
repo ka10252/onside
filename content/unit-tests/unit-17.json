@@ -1,0 +1,684 @@
+{
+  "unit": 17,
+  "title": "Balance of payments and exchange rate systems",
+  "questions": [
+    {
+      "id": "u17-mcq-01",
+      "format": "mcq",
+      "section": "17.1",
+      "concepts": [],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Veld uses a floating exchange rate and its currency is the zed. Foreign buyers sharply increase their purchases of Veld's exported machinery. Ceteris paribus, what is the most likely effect on the market for the zed?",
+      "hints": [
+        "Think about what foreign buyers must do before they can pay Veld's exporters.",
+        "Decide whether this changes demand for or supply of the zed, which way the curve shifts, and what happens to the price of the zed."
+      ],
+      "options": [
+        { "id": "a", "text": "The supply of zed increases and the zed depreciates", "misconception": "Students confuse who is buying the currency: foreigners paying for Veld's exports buy zed, they do not sell it." },
+        { "id": "b", "text": "The demand for zed increases and the zed appreciates", "misconception": null },
+        { "id": "c", "text": "The demand for zed increases and the zed depreciates", "misconception": "The right shift of demand is correctly identified, but a higher demand raises, not lowers, the currency's value." },
+        { "id": "d", "text": "The supply of zed decreases and the zed depreciates", "misconception": "Exports do not affect the supply of zed, and a fall in supply would raise the currency's value anyway." }
+      ],
+      "answer": "b",
+      "targets": "Link between export demand and demand for the domestic currency"
+    },
+    {
+      "id": "u17-sa-01",
+      "format": "short_answer",
+      "section": "17.2",
+      "concepts": [],
+      "command_term": "define",
+      "marks": 2,
+      "prompt": "Define the term fixed exchange rate system.",
+      "hints": [
+        "Think about who decides the value of the currency in this system and what it is set against.",
+        "A full definition says who sets the rate and how it is kept at that level."
+      ],
+      "marking_points": [
+        "The value of the currency is set by the government or central bank against another currency or a basket of currencies [1]",
+        "The rate is maintained by central bank intervention in the foreign exchange market (buying or selling currency, using reserves or interest rates) [1]"
+      ],
+      "model_answer_note": "Full marks need both who sets the rate against what reference, and that the authorities intervene to hold it there.",
+      "targets": "Precise definition of a fixed (pegged) exchange rate"
+    },
+    {
+      "id": "u17-mcq-02",
+      "format": "mcq",
+      "section": "17.2",
+      "concepts": [],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Which of the following best describes a managed exchange rate system?",
+      "hints": [
+        "Compare the role of market forces and the role of the central bank in each system.",
+        "Look for the option where both market forces and occasional official action play a part."
+      ],
+      "options": [
+        { "id": "a", "text": "The exchange rate is set by the government and never changes", "misconception": "This describes a rigidly fixed system, where market forces are not allowed to move the rate." },
+        { "id": "b", "text": "The exchange rate is determined only by the demand for and supply of the currency, with no intervention", "misconception": "This is a freely floating system; it has no role for the central bank." },
+        { "id": "c", "text": "Several countries replace their national currencies with one shared currency", "misconception": "This describes a monetary union, which removes exchange rates between members rather than managing one." },
+        { "id": "d", "text": "The exchange rate floats, but the central bank intervenes from time to time to keep it within a target range", "misconception": null }
+      ],
+      "answer": "d",
+      "targets": "Distinguishing managed float from fixed, floating and monetary union"
+    },
+    {
+      "id": "u17-mcq-03",
+      "format": "mcq",
+      "section": "17.3",
+      "concepts": ["c17-price-transparency"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Veld and Kuva both join a monetary union and adopt the lume as their currency. A Veld shopper can now compare the price of a Kuva bicycle with a Veld bicycle directly. Which benefit of monetary union does this illustrate?",
+      "hints": [
+        "Focus on what the shopper no longer has to do before comparing the two prices.",
+        "Match that change to the benefit of a common currency that is about comparing prices across members."
+      ],
+      "options": [
+        { "id": "a", "text": "Price transparency", "misconception": null },
+        { "id": "b", "text": "Elimination of exchange rate risk", "misconception": "This is also a benefit, but it is about uncertainty over future currency values, not about comparing prices today." },
+        { "id": "c", "text": "Independent monetary policy", "misconception": "Members of a monetary union lose, not gain, the ability to set their own interest rates." },
+        { "id": "d", "text": "Increased foreign exchange reserves", "misconception": "A common currency does not directly raise reserves; the scenario is about consumers comparing prices." }
+      ],
+      "answer": "a",
+      "targets": "Recognising price transparency in context"
+    },
+    {
+      "id": "u17-sa-02",
+      "format": "short_answer",
+      "section": "17.3",
+      "concepts": ["c17-price-transparency"],
+      "command_term": "define",
+      "marks": 2,
+      "prompt": "Define the term price transparency in the context of a monetary union.",
+      "hints": [
+        "Think about what a shopper in one member country can now do more easily than before.",
+        "Your definition should say who benefits, what they can do, and what step is no longer needed."
+      ],
+      "marking_points": [
+        "Consumers and firms can easily compare prices across all member countries [1]",
+        "Because prices are in the same currency, no exchange rate calculations or conversions are needed [1]"
+      ],
+      "model_answer_note": "A full answer mentions comparing prices across member countries and the removal of the need to convert currencies.",
+      "targets": "Definition of price transparency"
+    },
+    {
+      "id": "u17-mcq-04",
+      "format": "mcq",
+      "section": "17.4",
+      "concepts": ["c17-credit-rating"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Which situation is most likely to lead to a downgrade in Kuva's credit rating?",
+      "hints": [
+        "A credit rating reflects how lenders judge a country's ability to repay what it owes.",
+        "Ask which situation makes Kuva's debts grow faster than its ability to pay them back."
+      ],
+      "options": [
+        { "id": "a", "text": "A current account surplus that is used to build up foreign reserves", "misconception": "Building reserves makes a country more able, not less able, to meet its debts." },
+        { "id": "b", "text": "A one-year current account deficit caused by importing capital goods for new factories", "misconception": "A short deficit that raises future productive capacity is not usually a worry for lenders." },
+        { "id": "c", "text": "A current account deficit that persists for many years and is financed by rising foreign borrowing", "misconception": null },
+        { "id": "d", "text": "An appreciation of Kuva's currency caused by higher demand for its exports", "misconception": "Rising export demand strengthens a country's position; it does not make lenders doubt repayment." }
+      ],
+      "answer": "c",
+      "targets": "Persistent deficits, foreign debt and credit rating"
+    },
+    {
+      "id": "u17-sa-03",
+      "format": "short_answer",
+      "section": "17.1",
+      "concepts": [],
+      "command_term": "calculate",
+      "marks": 2,
+      "prompt": "Using the data in Table 1, calculate the balance on Kuva's financial account.",
+      "table": {
+        "caption": "Table 1: Kuva balance of payments, 2025 (K$ billion)",
+        "columns": ["Account", "Balance (K$ billion)"],
+        "rows": [
+          ["Current account", "-12"],
+          ["Capital account", "+2"],
+          ["Net errors and omissions", "0"],
+          ["Financial account", "?"]
+        ]
+      },
+      "hints": [
+        "Use the rule that the accounts of the balance of payments must add up to a fixed total.",
+        "Write the sum of all four balances equal to that total, then rearrange to find the missing value and check its sign."
+      ],
+      "marking_points": [
+        "Working: current + capital + financial + errors and omissions = 0, so financial = 0 - (-12) - 2 - 0 [1]",
+        "Financial account balance = +K$10 billion (a surplus) [1]"
+      ],
+      "model_answer_note": "Full marks need the balancing rule and the correct answer with a positive sign; award 1 mark for 10 without the sign or with the wrong sign if working is correct.",
+      "targets": "Balance of payments must balance; CA deficit matched by financial account surplus"
+    },
+    {
+      "id": "u17-mcq-05",
+      "format": "mcq",
+      "section": "17.1",
+      "concepts": [],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Residents of Veld start buying large amounts of shares in foreign companies. On a diagram of the market for the zed (price of zed on the vertical axis), what change would be shown?",
+      "hints": [
+        "Think about which currency Veld residents need in order to buy foreign shares, and what they give up to get it.",
+        "Decide which curve in the zed market moves, in which direction, and what happens to the equilibrium price."
+      ],
+      "options": [
+        { "id": "a", "text": "The demand curve for zed shifts right and the zed appreciates", "misconception": "Demand for zed comes from foreigners; Veld residents buying abroad are selling zed." },
+        { "id": "b", "text": "The supply curve of zed shifts left and the zed appreciates", "misconception": "More outward investment means more zed offered, so supply shifts right, not left." },
+        { "id": "c", "text": "A movement along the supply curve of zed with no change in the exchange rate", "misconception": "A change in a non-price factor such as investment flows shifts the curve rather than causing a movement along it." },
+        { "id": "d", "text": "The supply curve of zed shifts right and the zed depreciates", "misconception": null }
+      ],
+      "answer": "d",
+      "targets": "Financial account outflows and the supply of the domestic currency"
+    },
+    {
+      "id": "u17-sa-04",
+      "format": "short_answer",
+      "section": "17.1",
+      "concepts": [],
+      "command_term": "explain",
+      "marks": 3,
+      "prompt": "Veld has a floating exchange rate and a large current account deficit. Explain why Veld is likely to have a surplus on its financial account (plus capital account).",
+      "hints": [
+        "Use the idea that every payment to foreigners must be matched by a flow of funds in the balance of payments.",
+        "Trace what foreigners do with the zed they earn from selling to Veld, and where that shows up in the accounts."
+      ],
+      "marking_points": [
+        "A current account deficit means Veld pays out more foreign currency than it earns from exports and income [1]",
+        "This must be financed by net inflows, such as foreigners buying Veld assets (FDI, portfolio investment) or Veld borrowing from abroad [1]",
+        "These inflows are recorded as a surplus on the financial account so that the balance of payments sums to zero [1]"
+      ],
+      "model_answer_note": "A full answer explains the deficit as a net outflow, identifies how it is financed by asset sales or borrowing, and links this to the balancing rule.",
+      "targets": "Current account and financial account are mirror images under a floating rate"
+    },
+    {
+      "id": "u17-mcq-06",
+      "format": "mcq",
+      "section": "17.2",
+      "concepts": [],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Kuva pegs its currency to the US dollar. Speculators start selling Kuva's currency, pushing its value below the peg. Which action could Kuva's central bank take to defend the peg?",
+      "hints": [
+        "The central bank needs to change demand for or supply of its own currency.",
+        "Work out whether the bank should add to demand for its currency or to supply of it, and which option does that."
+      ],
+      "options": [
+        { "id": "a", "text": "Use foreign currency reserves to buy its own currency", "misconception": null },
+        { "id": "b", "text": "Sell its own currency in exchange for US dollars", "misconception": "Selling its own currency adds to supply and pushes the value further below the peg." },
+        { "id": "c", "text": "Cut interest rates to make its currency less attractive", "misconception": "Lower interest rates reduce financial inflows and weaken demand for the currency; a rate rise would help." },
+        { "id": "d", "text": "Remove tariffs on all imports", "misconception": "Cheaper imports raise spending on foreign goods and increase supply of the currency, adding to the downward pressure." }
+      ],
+      "answer": "a",
+      "targets": "Central bank intervention to maintain a fixed rate"
+    },
+    {
+      "id": "u17-sa-05",
+      "format": "short_answer",
+      "section": "17.2",
+      "concepts": [],
+      "command_term": "distinguish",
+      "marks": 2,
+      "prompt": "Distinguish between a depreciation and a devaluation of a currency.",
+      "hints": [
+        "Both describe a fall in a currency's value; the difference lies in the exchange rate system.",
+        "For each term, say which system it belongs to and what causes the fall."
+      ],
+      "marking_points": [
+        "A depreciation is a fall in the value of a currency in a floating system, caused by market forces of demand and supply [1]",
+        "A devaluation is a deliberate lowering of the value of a currency by the government or central bank in a fixed system [1]"
+      ],
+      "model_answer_note": "Full marks need both terms linked to their system and to the cause (market forces versus official decision).",
+      "targets": "Terminology differs between floating and fixed systems"
+    },
+    {
+      "id": "u17-mcq-07",
+      "format": "mcq",
+      "section": "17.2",
+      "concepts": [],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Veld operates a fixed exchange rate system. Using Table 2, which term best describes what happened to the zed in Quarter 4?",
+      "table": {
+        "caption": "Table 2: Official exchange rate of the zed",
+        "columns": ["Quarter", "Zed per US$1"],
+        "rows": [
+          ["Q1", "5.00"],
+          ["Q2", "5.00"],
+          ["Q3", "5.00"],
+          ["Q4", "6.00"],
+          ["Q5", "6.00"]
+        ]
+      },
+      "hints": [
+        "Read the table carefully: it shows how many zed are needed to buy one US dollar.",
+        "Decide whether more zed per dollar means the zed is worth more or less, then choose the term used in a fixed system."
+      ],
+      "options": [
+        { "id": "a", "text": "Revaluation", "misconception": "The number in the table rose, but more zed per dollar means each zed is worth less, not more." },
+        { "id": "b", "text": "Appreciation", "misconception": "This misreads the direction and also uses the floating-system term." },
+        { "id": "c", "text": "Devaluation", "misconception": null },
+        { "id": "d", "text": "Depreciation", "misconception": "The direction is right, but depreciation describes a market-driven fall in a floating system, not an official change to a peg." }
+      ],
+      "answer": "c",
+      "targets": "Reading an exchange rate quoted as domestic currency per foreign unit; fixed-system terminology"
+    },
+    {
+      "id": "u17-sa-06",
+      "format": "short_answer",
+      "section": "17.3",
+      "concepts": ["c17-inward-investment"],
+      "command_term": "explain",
+      "marks": 2,
+      "prompt": "Explain one reason why joining a monetary union may increase inward investment into Kuva.",
+      "hints": [
+        "Think about what a foreign firm worries about when it builds a factory in Kuva to sell across the region.",
+        "Name one feature of a common currency, then link it to the firm's costs or risks and its decision to invest."
+      ],
+      "marking_points": [
+        "Identifies a relevant feature: no exchange rate risk or no currency conversion costs when trading with other members (or access to a large single-currency market) [1]",
+        "Explains that this lowers costs or uncertainty for firms outside the union, so Kuva becomes a more attractive base, raising investment from abroad [1]"
+      ],
+      "model_answer_note": "A full answer names one feature of the common currency and explains the link to foreign firms' investment decisions.",
+      "targets": "Monetary union and inward investment"
+    },
+    {
+      "id": "u17-mcq-08",
+      "format": "mcq",
+      "section": "17.3",
+      "concepts": [],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Which of the following is a cost to Veld of joining a monetary union?",
+      "hints": [
+        "Think about which economic policy tool is handed over to a shared institution.",
+        "Eliminate options that are benefits of a common currency, then check which remaining one is a genuine loss."
+      ],
+      "options": [
+        { "id": "a", "text": "Higher transaction costs when trading with other members", "misconception": "A common currency removes conversion costs between members, so transaction costs fall." },
+        { "id": "b", "text": "Veld can no longer set its own interest rates to suit its own economy", "misconception": null },
+        { "id": "c", "text": "Veld can no longer use fiscal policy", "misconception": "Members keep control of government spending and taxation, although there may be limits on deficits." },
+        { "id": "d", "text": "Greater exchange rate uncertainty with other members", "misconception": "Exchange rates between members disappear, so uncertainty between them is removed." }
+      ],
+      "answer": "b",
+      "targets": "Loss of independent monetary policy"
+    },
+    {
+      "id": "u17-sa-07",
+      "format": "short_answer",
+      "section": "17.4",
+      "concepts": [],
+      "command_term": "calculate",
+      "marks": 3,
+      "prompt": "Using the data in Table 3, calculate Veld's current account balance as a percentage of GDP.",
+      "table": {
+        "caption": "Table 3: Veld economic data, 2025 (zed billion)",
+        "columns": ["Item", "Value (zed billion)"],
+        "rows": [
+          ["GDP", "400"],
+          ["Exports of goods", "80"],
+          ["Imports of goods", "100"],
+          ["Net trade in services", "+4"],
+          ["Net primary income", "-6"],
+          ["Net secondary income", "+2"]
+        ]
+      },
+      "hints": [
+        "Use only the rows that belong to the current account, then compare the result with GDP.",
+        "First find the trade in goods balance, add the three net items, then divide by GDP and multiply by 100."
+      ],
+      "marking_points": [
+        "Current account = (80 - 100) + 4 - 6 + 2 [1]",
+        "Current account balance = -20 zed billion [1]",
+        "-20 / 400 x 100 = -5% of GDP (a deficit of 5%) [1]"
+      ],
+      "model_answer_note": "Full marks need the correct balance with working and the correct negative percentage; follow through if the balance is wrong but the percentage method is right.",
+      "targets": "Current account components and deficit as a share of GDP"
+    },
+    {
+      "id": "u17-mcq-09",
+      "format": "mcq",
+      "section": "17.4",
+      "concepts": [],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Kuva's floating currency depreciated sharply at the start of Year 1. Using Table 4, which statement best explains the pattern in Kuva's current account?",
+      "table": {
+        "caption": "Table 4: Kuva current account balance (K$ billion)",
+        "columns": ["Year", "Current account balance"],
+        "rows": [
+          ["Year 0", "-8"],
+          ["Year 1", "-11"],
+          ["Year 2", "-9"],
+          ["Year 3", "-4"]
+        ]
+      },
+      "hints": [
+        "Look at how the balance first moves and then how it moves later; think of the shape this traces on a graph.",
+        "Consider how quickly buyers of exports and imports respond to new prices in the short run compared with the long run."
+      ],
+      "options": [
+        { "id": "a", "text": "The depreciation made exports more expensive, so the deficit widened", "misconception": "A depreciation makes exports cheaper for foreigners, not more expensive." },
+        { "id": "b", "text": "The Marshall-Lerner condition was never met, so the depreciation had no benefit", "misconception": "If the condition were never met the deficit would not have narrowed in Years 2 and 3." },
+        { "id": "c", "text": "The currency must have appreciated in Year 2, which reduced the deficit", "misconception": "The data give no sign of an appreciation, and an appreciation would tend to widen a deficit." },
+        { "id": "d", "text": "Demand for exports and imports was price inelastic at first, so the deficit worsened before improving as demand became more elastic", "misconception": null }
+      ],
+      "answer": "d",
+      "targets": "J-curve effect (HL)"
+    },
+    {
+      "id": "u17-sa-08",
+      "format": "short_answer",
+      "section": "17.4",
+      "concepts": ["c17-credit-rating"],
+      "command_term": "explain",
+      "marks": 4,
+      "prompt": "Veld has had a current account deficit of about 7% of GDP for ten years. Explain two possible consequences of this persistent deficit for Veld's economy.",
+      "hints": [
+        "Think about how the deficit is financed and what that does to foreign debt, lenders' views and the currency over time.",
+        "For each consequence, state it and then give the chain of cause and effect that leads to it."
+      ],
+      "marking_points": [
+        "First consequence identified, e.g. rising foreign debt and interest payments abroad, or a lower credit rating, or downward pressure on the zed [1]",
+        "Explanation of the first consequence, e.g. a lower credit rating makes borrowing more expensive because lenders doubt repayment [1]",
+        "Second consequence identified, e.g. higher interest rates needed to attract inflows, loss of domestic ownership of assets, or job losses in import-competing industries [1]",
+        "Explanation of the second consequence, e.g. higher interest rates reduce investment and slow growth [1]"
+      ],
+      "model_answer_note": "Two distinct consequences, each with a clear cause-and-effect link to the persistent deficit, earn full marks.",
+      "targets": "Implications of persistent current account deficits"
+    },
+    {
+      "id": "u17-mcq-10",
+      "format": "mcq",
+      "section": "17.4",
+      "concepts": [],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "In Veld, the price elasticity of demand for exports is 0.4 and for imports is 0.3. The zed depreciates. According to the Marshall-Lerner condition, what is the likely effect on Veld's current account deficit?",
+      "hints": [
+        "Recall the Marshall-Lerner condition and the threshold it uses.",
+        "Combine the two elasticities as the condition requires and compare the result with the threshold."
+      ],
+      "options": [
+        { "id": "a", "text": "The deficit is likely to worsen because the sum of the elasticities is less than one", "misconception": null },
+        { "id": "b", "text": "The deficit is likely to narrow because a depreciation always makes exports cheaper", "misconception": "Cheaper exports do not guarantee higher export revenue if demand is inelastic." },
+        { "id": "c", "text": "The deficit is likely to narrow because both elasticities are positive", "misconception": "The condition is about the size of the combined elasticities, not whether they are positive." },
+        { "id": "d", "text": "The deficit is unaffected because elasticities only matter for a fixed exchange rate", "misconception": "Elasticities determine the effect of any change in the exchange rate, in any system." }
+      ],
+      "answer": "a",
+      "targets": "Applying the Marshall-Lerner condition (HL)"
+    },
+    {
+      "id": "u17-sa-09",
+      "format": "short_answer",
+      "section": "17.1",
+      "concepts": [],
+      "command_term": "explain",
+      "marks": 3,
+      "prompt": "A foreign car maker announces a large new factory in Kuva, financed with foreign direct investment. With reference to a diagram of the market for Kuva's currency (price of the currency on the vertical axis), explain the likely effect on Kuva's exchange rate.",
+      "hints": [
+        "Think about what the foreign car maker must buy before it can pay Kuva's builders and workers.",
+        "Describe which curve moves and which way, then state what happens at the new equilibrium."
+      ],
+      "marking_points": [
+        "The foreign firm must buy Kuva's currency to pay for the investment, so demand for the currency rises [1]",
+        "On the diagram, the demand curve shifts to the right [1]",
+        "The equilibrium exchange rate rises, so Kuva's currency appreciates (quantity traded also rises) [1]"
+      ],
+      "model_answer_note": "A full answer links the FDI to higher demand, describes the rightward shift and states the appreciation.",
+      "targets": "Financial account inflows and currency demand"
+    },
+    {
+      "id": "u17-mcq-11",
+      "format": "mcq",
+      "section": "17.1",
+      "concepts": [],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Veld removes a quota that had limited imports of foreign clothing. Ceteris paribus, what is the most likely effect on Veld's current account and on the value of the zed under a floating exchange rate?",
+      "hints": [
+        "Start with what happens to the quantity of clothing imported once the limit is removed.",
+        "Link the change in imports to the current account, then to the supply of zed in the foreign exchange market."
+      ],
+      "options": [
+        { "id": "a", "text": "The current account improves and the zed appreciates", "misconception": "Removing a quota raises imports, which worsens, not improves, the current account." },
+        { "id": "b", "text": "The current account worsens and the zed appreciates", "misconception": "Higher imports mean more zed is sold for foreign currency, which lowers the zed's value." },
+        { "id": "c", "text": "The current account worsens and the zed depreciates", "misconception": null },
+        { "id": "d", "text": "The current account is unchanged because quotas only affect prices", "misconception": "A quota limits quantity, so removing it raises import spending and changes the current account." }
+      ],
+      "answer": "c",
+      "targets": "Trade policy change, current account and currency value"
+    },
+    {
+      "id": "u17-sa-10",
+      "format": "short_answer",
+      "section": "17.2",
+      "concepts": [],
+      "command_term": "calculate",
+      "marks": 3,
+      "prompt": "Kuva's central bank pegs its currency, the kip, at US$0.50 per kip. Using Table 5, calculate the value in US dollars of foreign currency reserves the central bank must use each month to maintain the peg.",
+      "table": {
+        "caption": "Table 5: Monthly market for the kip at the pegged rate of US$0.50 per kip",
+        "columns": ["Item", "Quantity (million kip)"],
+        "rows": [
+          ["Quantity of kip demanded", "420"],
+          ["Quantity of kip supplied", "500"]
+        ]
+      },
+      "hints": [
+        "Compare demand and supply at the pegged rate to see whether there is a surplus or shortage of kip.",
+        "Work out how many kip the central bank must buy to clear the gap, then convert that amount into dollars at the pegged rate."
+      ],
+      "marking_points": [
+        "Excess supply of kip = 500 - 420 = 80 million kip [1]",
+        "The central bank must buy 80 million kip using its reserves [1]",
+        "80 million x US$0.50 = US$40 million of reserves per month [1]"
+      ],
+      "model_answer_note": "Full marks need the excess supply, the recognition that the bank buys it, and the correct dollar value; follow through on a correct conversion of a wrong gap.",
+      "targets": "Mechanics and cost of defending a peg"
+    },
+    {
+      "id": "u17-mcq-12",
+      "format": "mcq",
+      "section": "17.2",
+      "concepts": [],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Which of the following is an advantage of a floating exchange rate system compared with a fixed system?",
+      "hints": [
+        "Think about what the central bank no longer has to worry about when the market sets the rate.",
+        "Check each option: is it true of floating systems, and is it an advantage rather than a drawback?"
+      ],
+      "options": [
+        { "id": "a", "text": "Firms face more certainty about future exchange rates", "misconception": "Certainty is an advantage of fixed systems; floating rates can change daily." },
+        { "id": "b", "text": "Interest rates can be used for domestic goals such as inflation, rather than to defend the currency", "misconception": null },
+        { "id": "c", "text": "The central bank must hold large foreign currency reserves", "misconception": "Large reserves are needed to defend a fixed rate, and holding them is a cost, not an advantage." },
+        { "id": "d", "text": "The exchange rate cannot be affected by speculation", "misconception": "Floating currencies can be strongly affected by speculation." }
+      ],
+      "answer": "b",
+      "targets": "Fixed versus floating: monetary policy independence"
+    },
+    {
+      "id": "u17-sa-11",
+      "format": "short_answer",
+      "section": "17.3",
+      "concepts": [],
+      "command_term": "explain",
+      "marks": 3,
+      "prompt": "Veld is a member of a monetary union. Veld enters a recession while most other members are growing quickly. Explain why membership of the monetary union may make it harder for Veld to recover.",
+      "hints": [
+        "Think about who sets interest rates in a monetary union and whose conditions they are set for.",
+        "Also consider which exchange rate adjustment Veld would normally rely on, and why it is no longer available."
+      ],
+      "marking_points": [
+        "The common central bank sets one interest rate for the whole union, based on average conditions, so it may stay high or rise when Veld needs a cut [1]",
+        "Veld cannot lower interest rates on its own to boost consumption and investment [1]",
+        "Veld cannot let its own currency depreciate to make exports more competitive, so aggregate demand stays weak [1]"
+      ],
+      "model_answer_note": "A full answer explains the one-size-fits-all interest rate and the loss of exchange rate adjustment, both linked to weak demand in Veld.",
+      "targets": "Asymmetric shocks and loss of policy tools"
+    },
+    {
+      "id": "u17-sa-12",
+      "format": "short_answer",
+      "section": "17.3",
+      "concepts": [],
+      "command_term": "explain",
+      "marks": 3,
+      "prompt": "Explain how adopting a common currency may increase trade between the members of a monetary union.",
+      "hints": [
+        "Think about the costs and risks a firm faces today when it sells to a country with a different currency.",
+        "Explain what happens to each cost or risk under a single currency, then link that to the volume of trade."
+      ],
+      "marking_points": [
+        "Transaction costs of converting currencies are removed [1]",
+        "Exchange rate risk between members disappears, so firms are more certain about future revenues and costs [1]",
+        "Lower costs and less uncertainty make exporting to other members more profitable, so trade between members rises [1]"
+      ],
+      "model_answer_note": "Full marks need two distinct mechanisms (costs and risk, or price transparency) and a clear link to more trade.",
+      "targets": "Trade benefits of monetary union"
+    },
+    {
+      "id": "u17-mcq-13",
+      "format": "mcq",
+      "section": "17.3",
+      "concepts": [],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Veld and Kuva share a common currency. The union's central bank sets an interest rate of 3% for all members. Using Table 6, which statement is best supported by the data?",
+      "table": {
+        "caption": "Table 6: Selected data for two members of a monetary union, 2025",
+        "columns": ["Country", "Inflation rate (%)", "Unemployment rate (%)"],
+        "rows": [
+          ["Veld", "6.0", "3.0"],
+          ["Kuva", "0.5", "11.0"]
+        ]
+      },
+      "hints": [
+        "Use the data to decide which country needs higher interest rates and which needs lower ones.",
+        "Compare what each country needs with the single rate the union has set, and remember what members can and cannot do on their own."
+      ],
+      "options": [
+        { "id": "a", "text": "The common interest rate is likely too high for Kuva and too low for Veld", "misconception": null },
+        { "id": "b", "text": "The common interest rate is likely too low for Kuva and too high for Veld", "misconception": "This reverses the needs: Kuva has high unemployment and needs lower rates, while Veld has high inflation and needs higher rates." },
+        { "id": "c", "text": "Kuva should cut its own interest rate to reduce unemployment", "misconception": "Members of a monetary union cannot set their own interest rates." },
+        { "id": "d", "text": "Price transparency is the main cause of Kuva's high unemployment", "misconception": "Nothing in the data links Kuva's unemployment to price transparency; the issue is the shared interest rate." }
+      ],
+      "answer": "a",
+      "targets": "One-size-fits-all monetary policy with divergent economies"
+    },
+    {
+      "id": "u17-mcq-14",
+      "format": "mcq",
+      "section": "17.4",
+      "concepts": [],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Veld's government wants to use fiscal policy to reduce a current account deficit. Which policy is most likely to achieve this in the short run?",
+      "hints": [
+        "Think of an expenditure-reducing policy and how it affects household incomes.",
+        "Follow the chain from the policy to disposable income, to total spending, and then to spending on imports."
+      ],
+      "options": [
+        { "id": "a", "text": "Cutting income taxes to raise consumer spending", "misconception": "Higher disposable income raises spending on imports too, which widens the deficit." },
+        { "id": "b", "text": "Lowering the central bank's interest rate", "misconception": "This is monetary policy, not fiscal policy, and it would raise spending including on imports." },
+        { "id": "c", "text": "Raising income taxes to reduce disposable income", "misconception": null },
+        { "id": "d", "text": "Increasing government spending on imported defence equipment", "misconception": "Buying more imports directly widens the current account deficit." }
+      ],
+      "answer": "c",
+      "targets": "Contractionary fiscal policy as an expenditure-reducing policy"
+    },
+    {
+      "id": "u17-sa-13",
+      "format": "short_answer",
+      "section": "17.4",
+      "concepts": [],
+      "command_term": "calculate",
+      "marks": 2,
+      "prompt": "Using the data in Table 7 and the Marshall-Lerner condition, calculate whether a depreciation of Kuva's currency is likely to improve Kuva's current account balance. Show your working.",
+      "table": {
+        "caption": "Table 7: Estimated price elasticities of demand for Kuva's trade",
+        "columns": ["Item", "Price elasticity of demand (absolute value)"],
+        "rows": [
+          ["Kuva's exports", "0.6"],
+          ["Kuva's imports", "0.8"]
+        ]
+      },
+      "hints": [
+        "Use the Marshall-Lerner condition.",
+        "Combine the two elasticities in the way the condition requires, then compare the total with its threshold to reach your conclusion."
+      ],
+      "marking_points": [
+        "Working: 0.6 + 0.8 = 1.4 [1]",
+        "1.4 is greater than 1, so the condition is met and the depreciation is likely to improve the current account (in the long run) [1]"
+      ],
+      "model_answer_note": "Full marks need the correct sum and the conclusion correctly linked to the threshold of 1.",
+      "targets": "Marshall-Lerner condition with data (HL)"
+    },
+    {
+      "id": "u17-sa-14",
+      "format": "short_answer",
+      "section": "17.4",
+      "concepts": ["c17-financial-account-deficit"],
+      "command_term": "explain",
+      "marks": 3,
+      "prompt": "Kuva has a large, persistent current account surplus and a matching deficit on its financial account. Explain one way in which the financial account deficit may harm Kuva's economy.",
+      "hints": [
+        "Think about where Kuva's savings are going when the financial account is in deficit.",
+        "Link that flow of funds to investment inside Kuva, and then to the economy's future productive capacity."
+      ],
+      "marking_points": [
+        "A financial account deficit means funds are flowing out of Kuva to buy foreign assets [1]",
+        "Less finance is available for investment in Kuva's own capital, such as factories and infrastructure [1]",
+        "Lower domestic investment limits growth in productive capacity (LRAS), reducing long-term growth prospects [1]"
+      ],
+      "model_answer_note": "A full answer links outflows of funds to lower domestic investment and then to weaker long-run growth.",
+      "targets": "Consequences of current account surpluses via the financial account"
+    },
+    {
+      "id": "u17-mcq-15",
+      "format": "mcq",
+      "section": "17.1",
+      "concepts": [],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Kuva's main trading partner, Veld, enters a deep recession. Kuva has a floating exchange rate. Ceteris paribus, what is the most likely effect on Kuva?",
+      "hints": [
+        "Start with what happens to Veld households' and firms' spending, including spending on goods from abroad.",
+        "Trace the effect on Kuva's exports, then on its current account and on demand for Kuva's currency."
+      ],
+      "options": [
+        { "id": "a", "text": "Kuva's exports rise and its currency appreciates", "misconception": "A recession abroad reduces, not raises, demand for Kuva's exports." },
+        { "id": "b", "text": "Kuva's current account balance worsens and its currency depreciates", "misconception": null },
+        { "id": "c", "text": "Kuva's imports from Veld fall sharply, so its current account improves", "misconception": "A recession in Veld mainly cuts Veld's spending, which reduces Kuva's exports rather than Kuva's imports." },
+        { "id": "d", "text": "There is no effect on Kuva because its exchange rate floats", "misconception": "A floating rate does not isolate a country from falling demand in its trading partners." }
+      ],
+      "answer": "b",
+      "targets": "Interdependence through the balance of payments"
+    },
+    {
+      "id": "u17-sa-15",
+      "format": "short_answer",
+      "section": "17.2",
+      "concepts": [],
+      "command_term": "explain",
+      "marks": 4,
+      "prompt": "Explain two reasons why the government of Veld, a small open economy, might choose a fixed exchange rate rather than a floating one.",
+      "hints": [
+        "Think about the needs of firms that trade and invest across borders, and about the government's other macroeconomic goals.",
+        "For each reason, state it and then explain how it benefits Veld's economy."
+      ],
+      "marking_points": [
+        "First reason: greater certainty about the exchange rate [1]",
+        "Explanation: firms can plan trade and investment with less risk, which encourages exports and foreign investment [1]",
+        "Second reason: helps control inflation or avoids speculative volatility [1]",
+        "Explanation: a stable rate keeps import prices stable and disciplines policy makers, which anchors inflation expectations [1]"
+      ],
+      "model_answer_note": "Two distinct reasons, each explained with a clear benefit to Veld, earn full marks.",
+      "targets": "Advantages of fixed exchange rates"
+    }
+  ]
+}

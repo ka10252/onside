@@ -1,0 +1,689 @@
+{
+  "unit": 18,
+  "title": "Sustainable development and measuring development",
+  "questions": [
+    {
+      "id": "u18-mcq-01",
+      "format": "mcq",
+      "section": "18.1",
+      "concepts": ["c18-sustainable-development"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Which of the following best describes sustainable development?",
+      "hints": [
+        "Think about which groups of people the idea of sustainability asks us to consider.",
+        "Eliminate options that focus only on a short-term economic target, then check what the remaining options say about resources."
+      ],
+      "options": [
+        { "id": "a", "text": "Achieving the highest possible rate of economic growth each year", "misconception": "Fast growth can deplete resources; sustainability is about the long-term, not the maximum rate now." },
+        { "id": "b", "text": "Stopping economic growth so that no natural resources are used", "misconception": "Sustainable development still allows growth and resource use, as long as future generations are not harmed." },
+        { "id": "c", "text": "Development that meets present needs without compromising the ability of future generations to meet their own needs", "misconception": null },
+        { "id": "d", "text": "Development that increases GDP per capita while keeping inflation low", "misconception": "This describes macroeconomic goals; it says nothing about resources or future generations." }
+      ],
+      "answer": "c",
+      "targets": "Core meaning of sustainable development"
+    },
+    {
+      "id": "u18-sa-01",
+      "format": "short_answer",
+      "section": "18.1",
+      "concepts": ["c18-sustainable-development"],
+      "command_term": "define",
+      "marks": 2,
+      "prompt": "Define the term sustainable development.",
+      "hints": [
+        "Think about the time horizon that the idea of sustainability asks us to consider.",
+        "A full definition also says what must not happen to the resources that later groups will rely on."
+      ],
+      "marking_points": [
+        "Development that meets the needs of the present generation [1]",
+        "without compromising the ability of future generations to meet their own needs (e.g. by not depleting or degrading natural resources) [1]"
+      ],
+      "model_answer_note": "Full marks need both the present-needs and the future-generations parts; the standard Brundtland wording is acceptable.",
+      "targets": "Definition of sustainable development"
+    },
+    {
+      "id": "u18-mcq-02",
+      "format": "mcq",
+      "section": "18.2",
+      "concepts": ["c18-human-development"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Which of the following is used as an indicator in the Human Development Index (HDI)?",
+      "hints": [
+        "Recall the three dimensions of the HDI: health, knowledge and standard of living.",
+        "Check each option against the specific indicators used for those dimensions, and note which options belong to other indices."
+      ],
+      "options": [
+        { "id": "a", "text": "GDP per capita at market exchange rates", "misconception": "The HDI uses GNI per capita adjusted for purchasing power parity, not GDP at market exchange rates." },
+        { "id": "b", "text": "Mean years of schooling", "misconception": null },
+        { "id": "c", "text": "Infant mortality rate", "misconception": "Infant mortality is a useful single indicator of health, but the HDI measures health with life expectancy at birth." },
+        { "id": "d", "text": "The share of income earned by the richest 10%", "misconception": "Inequality is captured by the inequality-adjusted HDI, not by the HDI itself." }
+      ],
+      "answer": "b",
+      "targets": "HDI components"
+    },
+    {
+      "id": "u18-sa-02",
+      "format": "short_answer",
+      "section": "18.1",
+      "concepts": [],
+      "command_term": "outline",
+      "marks": 2,
+      "prompt": "Outline what is meant by the Sustainable Development Goals (SDGs).",
+      "hints": [
+        "Think about who agreed the goals, how many there are and the deadline set for them.",
+        "Then add a brief statement of what the goals are trying to achieve overall."
+      ],
+      "marking_points": [
+        "A set of 17 goals agreed by United Nations member countries in 2015, to be met by 2030 [1]",
+        "They aim to end poverty and hunger, reduce inequality and protect the environment, balancing economic, social and environmental development [1]"
+      ],
+      "model_answer_note": "A full answer gives the basic facts (UN, 17 goals, 2030 target) and the broad purpose of the goals.",
+      "targets": "Knowledge of the SDGs"
+    },
+    {
+      "id": "u18-mcq-03",
+      "format": "mcq",
+      "section": "18.2",
+      "concepts": ["c18-life-sustenance"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "The government of Kuva wants to improve life sustenance for its population. Which policy most directly achieves this?",
+      "hints": [
+        "Life sustenance is linked to basic needs and basic services.",
+        "Pick the option that most directly gives people access to those needs or services."
+      ],
+      "options": [
+        { "id": "a", "text": "Building free primary health clinics and clean water supplies in rural villages", "misconception": null },
+        { "id": "b", "text": "Cutting the corporate tax rate to attract foreign banks", "misconception": "This may raise investment, but it does not directly give people access to basic needs." },
+        { "id": "c", "text": "Building a new international airport for tourists", "misconception": "Infrastructure for tourism may raise income later, but it is not a direct way to meet basic needs." },
+        { "id": "d", "text": "Raising interest rates to reduce inflation", "misconception": "Stable prices help, but this is a macroeconomic policy, not direct provision of basic needs." }
+      ],
+      "answer": "a",
+      "targets": "Life sustenance as access to basic needs and merit goods"
+    },
+    {
+      "id": "u18-sa-03",
+      "format": "short_answer",
+      "section": "18.2",
+      "concepts": ["c18-infant-mortality"],
+      "command_term": "calculate",
+      "marks": 2,
+      "prompt": "Using the data in Table 1, calculate Veld's infant mortality rate for 2025.",
+      "table": {
+        "caption": "Table 1: Veld population data, 2025",
+        "columns": ["Item", "Number"],
+        "rows": [
+          ["Live births", "24 000"],
+          ["Deaths of children under one year old", "360"],
+          ["Deaths of children aged one to five", "120"]
+        ]
+      },
+      "hints": [
+        "Check which age group the infant mortality rate covers and which rows of the table are relevant.",
+        "Divide the relevant deaths by live births, then scale the result to the base the rate is expressed per."
+      ],
+      "marking_points": [
+        "Working: 360 / 24 000 x 1000 [1]",
+        "Infant mortality rate = 15 per 1000 live births [1]"
+      ],
+      "model_answer_note": "Full marks need the correct rate with the unit 'per 1000 live births'; award 0 for the method if deaths of children aged one to five are included.",
+      "targets": "Infant mortality rate: correct age group and base"
+    },
+    {
+      "id": "u18-mcq-04",
+      "format": "mcq",
+      "section": "18.1",
+      "concepts": [],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Which statement about the United Nations Sustainable Development Goals (SDGs) is correct?",
+      "hints": [
+        "Recall how many goals there are, when they were agreed and their target date.",
+        "Be careful not to confuse the SDGs with the earlier Millennium Development Goals."
+      ],
+      "options": [
+        { "id": "a", "text": "There are 8 goals, which were to be met by 2015", "misconception": "This describes the earlier Millennium Development Goals, which the SDGs replaced." },
+        { "id": "b", "text": "There are 17 goals, to be met by 2050", "misconception": "The number of goals is right but the target date is 2030." },
+        { "id": "c", "text": "They are a legally binding treaty with fines for countries that miss targets", "misconception": "The SDGs are a voluntary global agenda, not an enforceable treaty." },
+        { "id": "d", "text": "There are 17 goals, agreed in 2015, to be met by 2030", "misconception": null }
+      ],
+      "answer": "d",
+      "targets": "Basic facts about the SDGs"
+    },
+    {
+      "id": "u18-sa-04",
+      "format": "short_answer",
+      "section": "18.2",
+      "concepts": [],
+      "command_term": "calculate",
+      "marks": 3,
+      "prompt": "Using the data in Table 2, calculate Kuva's GNI per capita in 2025.",
+      "table": {
+        "caption": "Table 2: Kuva national income data, 2025",
+        "columns": ["Item", "Value"],
+        "rows": [
+          ["GDP", "60 billion zed"],
+          ["Net income from abroad", "-6 billion zed"],
+          ["Population", "9 million"]
+        ]
+      },
+      "hints": [
+        "Use the link between GDP and GNI, then turn the total into a per-person figure.",
+        "Adjust GDP for income flows across the border first, then divide by the population, taking care with billions and millions."
+      ],
+      "marking_points": [
+        "GNI = 60 + (-6) = 54 billion zed [1]",
+        "GNI per capita = 54 000 000 000 / 9 000 000 [1]",
+        "= 6000 zed per person [1]"
+      ],
+      "model_answer_note": "Full marks need the correct GNI, the division by population and the correct per capita figure; follow through if GNI is wrong but the division is right.",
+      "targets": "GDP to GNI adjustment and per capita calculation"
+    },
+    {
+      "id": "u18-mcq-05",
+      "format": "mcq",
+      "section": "18.2",
+      "concepts": ["c18-human-development"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Using Table 3 (a rank of 1 is the best), which country appears to achieve the best human development relative to its income level?",
+      "table": {
+        "caption": "Table 3: GNI per capita rank and HDI rank for four countries",
+        "columns": ["Country", "GNI per capita rank", "HDI rank"],
+        "rows": [
+          ["Tarn", "60", "60"],
+          ["Osk", "20", "22"],
+          ["Veld", "40", "25"],
+          ["Kuva", "30", "45"]
+        ]
+      },
+      "hints": [
+        "Compare each country's two ranks rather than looking at either column on its own.",
+        "Work out the gap between the ranks for each country and think about which direction of gap shows income being turned into development well."
+      ],
+      "options": [
+        { "id": "a", "text": "Tarn", "misconception": "Tarn's ranks are equal, so it does no better than its income would suggest." },
+        { "id": "b", "text": "Osk", "misconception": "Osk has the best HDI rank overall, but its HDI rank is slightly worse than its income rank." },
+        { "id": "c", "text": "Veld", "misconception": null },
+        { "id": "d", "text": "Kuva", "misconception": "Kuva's gap is the same size as Veld's but in the opposite direction: its HDI rank is much worse than its income rank." }
+      ],
+      "answer": "c",
+      "targets": "GNI rank minus HDI rank interpretation"
+    },
+    {
+      "id": "u18-sa-05",
+      "format": "short_answer",
+      "section": "18.1",
+      "concepts": [],
+      "command_term": "define",
+      "marks": 2,
+      "prompt": "Define the term circular economy.",
+      "hints": [
+        "Contrast it with the traditional 'take, make, use, throw away' model of production.",
+        "Your definition should say what happens to materials and products and what the model aims to reduce."
+      ],
+      "marking_points": [
+        "An economic model in which products and materials are kept in use for as long as possible through reuse, repair, sharing, refurbishing and recycling [1]",
+        "so that waste and the use of new natural resources are minimised (a closed loop rather than a linear model) [1]"
+      ],
+      "model_answer_note": "A full answer describes keeping resources in use and the aim of reducing waste or new resource use.",
+      "targets": "Definition of circular economy"
+    },
+    {
+      "id": "u18-mcq-06",
+      "format": "mcq",
+      "section": "18.2",
+      "concepts": ["c18-maternal-mortality"],
+      "command_term": "calculate",
+      "marks": 1,
+      "prompt": "Using Table 4, what is Veld's maternal mortality ratio?",
+      "table": {
+        "caption": "Table 4: Veld health data, 2025",
+        "columns": ["Item", "Number"],
+        "rows": [
+          ["Live births", "60 000"],
+          ["Women who died from pregnancy-related causes", "90"]
+        ]
+      },
+      "hints": [
+        "Recall the base per which maternal mortality is expressed; it is not the same as for infant mortality.",
+        "Divide the deaths by live births and scale to that base."
+      ],
+      "options": [
+        { "id": "a", "text": "15 per 100 000 live births", "misconception": "This comes from scaling by 10 000 instead of 100 000." },
+        { "id": "b", "text": "150 per 100 000 live births", "misconception": null },
+        { "id": "c", "text": "0.15 per 100 000 live births", "misconception": "This comes from scaling by 100 instead of 100 000." },
+        { "id": "d", "text": "1500 per 100 000 live births", "misconception": "This comes from scaling by one million instead of 100 000." }
+      ],
+      "answer": "b",
+      "targets": "Maternal mortality ratio: correct base of 100 000"
+    },
+    {
+      "id": "u18-sa-06",
+      "format": "short_answer",
+      "section": "18.2",
+      "concepts": ["c18-economic-development"],
+      "command_term": "distinguish",
+      "marks": 4,
+      "prompt": "Distinguish between economic growth and economic development.",
+      "hints": [
+        "Think about what each term measures and whether it is a single number or many things at once.",
+        "Describe each term, then explain how one can happen without the other."
+      ],
+      "marking_points": [
+        "Economic growth is an increase in real output (real GDP) over time [1]",
+        "It is quantitative and measured by the percentage change in real GDP or real GDP per capita [1]",
+        "Economic development is a broader process in which rising incomes are accompanied by better living standards, less poverty and wider access to basic needs such as health care and education [1]",
+        "Development is multidimensional, so growth may occur without development if its benefits are unequally shared or harm health and the environment [1]"
+      ],
+      "model_answer_note": "A full answer defines both terms clearly and makes an explicit contrast, such as quantitative versus multidimensional, or growth without development.",
+      "targets": "Growth versus development"
+    },
+    {
+      "id": "u18-mcq-07",
+      "format": "mcq",
+      "section": "18.1",
+      "concepts": ["c18-income-poverty"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Which situation best shows how poverty can lead to unsustainable use of the environment?",
+      "hints": [
+        "Think about the choices people on very low incomes face when they need food, fuel or land today.",
+        "Pick the option where the lack of income itself pushes people to use up a resource faster than it recovers."
+      ],
+      "options": [
+        { "id": "a", "text": "A wealthy country produces high carbon emissions from air travel", "misconception": "This is an environmental problem, but it is caused by high income, not poverty." },
+        { "id": "b", "text": "A large mining company pollutes a river to cut costs", "misconception": "This is a negative externality from a firm, not a result of household poverty." },
+        { "id": "c", "text": "A government invests in solar power for rural schools", "misconception": "This is a sustainable policy response, not an example of poverty causing environmental damage." },
+        { "id": "d", "text": "Low-income farmers with no other fuel source cut down nearby forests for firewood, causing soil erosion", "misconception": null }
+      ],
+      "answer": "d",
+      "targets": "Poverty-environment link"
+    },
+    {
+      "id": "u18-sa-07",
+      "format": "short_answer",
+      "section": "18.2",
+      "concepts": ["c18-human-development"],
+      "command_term": "calculate",
+      "marks": 3,
+      "prompt": "Using Table 5, calculate the percentage loss in human development due to inequality for Veld and for Kuva, and state which country has the more unequal distribution of human development.",
+      "table": {
+        "caption": "Table 5: HDI and inequality-adjusted HDI (IHDI), 2025",
+        "columns": ["Country", "HDI", "IHDI"],
+        "rows": [
+          ["Veld", "0.800", "0.600"],
+          ["Kuva", "0.700", "0.630"]
+        ]
+      },
+      "hints": [
+        "Compare each country's IHDI with its HDI as a percentage of the HDI.",
+        "Find the gap for each country, divide by that country's HDI and multiply by 100; a bigger percentage loss means more inequality."
+      ],
+      "marking_points": [
+        "Veld: (0.800 - 0.600) / 0.800 x 100 = 25% [1]",
+        "Kuva: (0.700 - 0.630) / 0.700 x 100 = 10% [1]",
+        "Veld has the more unequal distribution because its percentage loss is larger [1]"
+      ],
+      "model_answer_note": "Full marks need both percentage losses with working and the correct conclusion; follow through on the conclusion if a calculation is wrong.",
+      "targets": "Interpreting IHDI as an inequality adjustment"
+    },
+    {
+      "id": "u18-mcq-08",
+      "format": "mcq",
+      "section": "18.2",
+      "concepts": [],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "What does the inequality-adjusted Human Development Index (IHDI) measure that the HDI does not?",
+      "hints": [
+        "The HDI uses national averages; think about what an average hides.",
+        "Consider which dimensions the IHDI covers and whether it adds new dimensions or adjusts the existing ones."
+      ],
+      "options": [
+        { "id": "a", "text": "How unequally health, education and income are distributed across the population", "misconception": null },
+        { "id": "b", "text": "Inequality between men and women only", "misconception": "Gender gaps are the focus of the Gender Inequality Index, not the IHDI." },
+        { "id": "c", "text": "Inequality in income only", "misconception": "The IHDI adjusts all three HDI dimensions, not just income." },
+        { "id": "d", "text": "The environmental damage caused by producing national income", "misconception": "Environmental pressures are captured by other measures such as the Happy Planet Index, not the IHDI." }
+      ],
+      "answer": "a",
+      "targets": "IHDI dimensions"
+    },
+    {
+      "id": "u18-sa-08",
+      "format": "short_answer",
+      "section": "18.2",
+      "concepts": ["c18-human-development"],
+      "command_term": "outline",
+      "marks": 3,
+      "prompt": "Outline the three dimensions of the Human Development Index (HDI), giving one indicator used for each.",
+      "hints": [
+        "Think of the HDI as covering health, learning and material living standards.",
+        "For each dimension, name the dimension and then the statistic the United Nations uses to measure it."
+      ],
+      "marking_points": [
+        "A long and healthy life, measured by life expectancy at birth [1]",
+        "Knowledge (education), measured by mean years of schooling or expected years of schooling [1]",
+        "A decent standard of living, measured by GNI per capita (PPP US$) [1]"
+      ],
+      "model_answer_note": "Each mark needs both the dimension and a correct indicator for it.",
+      "targets": "HDI components"
+    },
+    {
+      "id": "u18-mcq-09",
+      "format": "mcq",
+      "section": "18.1",
+      "concepts": [],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Which of the following is the best example of a circular economy approach?",
+      "hints": [
+        "Think about what happens to a product at the end of its first use.",
+        "Pick the option that keeps materials in use instead of turning them into waste."
+      ],
+      "options": [
+        { "id": "a", "text": "A firm sells cheaper phones that are designed to be replaced every year", "misconception": "Short product lives increase waste and new resource use, the opposite of a circular approach." },
+        { "id": "b", "text": "A city builds a larger landfill site for household rubbish", "misconception": "Better waste disposal still follows the linear take-make-dispose model." },
+        { "id": "c", "text": "A firm leases washing machines, then collects, repairs and re-leases them when customers return them", "misconception": null },
+        { "id": "d", "text": "A government subsidises coal to lower electricity prices", "misconception": "This lowers prices but increases use of a non-renewable resource; it is not about reusing materials." }
+      ],
+      "answer": "c",
+      "targets": "Recognising circular economy practices"
+    },
+    {
+      "id": "u18-sa-09",
+      "format": "short_answer",
+      "section": "18.2",
+      "concepts": ["c18-economic-development"],
+      "command_term": "explain",
+      "marks": 4,
+      "prompt": "Explain two limitations of using real GDP per capita as a measure of economic development in Kuva.",
+      "hints": [
+        "Think about what an average income figure leaves out, both about people and about the things that make lives better or worse.",
+        "For each limitation, state it and then explain why it means the figure may give a misleading picture of development."
+      ],
+      "marking_points": [
+        "First limitation identified, e.g. it is an average and ignores how income is distributed [1]",
+        "Explanation, e.g. a few very rich people can raise the average while many remain in poverty, so living standards of most people are overstated [1]",
+        "Second limitation identified, e.g. it ignores non-income dimensions such as health and education, or environmental damage, or the informal economy [1]",
+        "Explanation, e.g. output may rise through activities that pollute or deplete resources, so development and sustainability may worsen even as GDP rises [1]"
+      ],
+      "model_answer_note": "Two distinct limitations, each with a clear explanation of why development could be misjudged, earn full marks.",
+      "targets": "Real GDP per capita as a development measure"
+    },
+    {
+      "id": "u18-mcq-10",
+      "format": "mcq",
+      "section": "18.2",
+      "concepts": [],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Which set of components is used to calculate the Happy Planet Index (HPI)?",
+      "hints": [
+        "The HPI asks how efficiently a country turns its use of the planet's resources into long, happy lives.",
+        "Look for the option that includes an environmental component alongside measures of how well people live."
+      ],
+      "options": [
+        { "id": "a", "text": "GNI per capita, life expectancy and years of schooling", "misconception": "These are the HDI indicators; the HPI does not use income or schooling." },
+        { "id": "b", "text": "Wellbeing, life expectancy and ecological footprint", "misconception": null },
+        { "id": "c", "text": "Health, education and living standards deprivations in households", "misconception": "These are the dimensions of the Multidimensional Poverty Index." },
+        { "id": "d", "text": "Maternal mortality, adolescent births and female labour force participation", "misconception": "These are indicators in the Gender Inequality Index." }
+      ],
+      "answer": "b",
+      "targets": "Happy Planet Index components vs other composite indices"
+    },
+    {
+      "id": "u18-sa-10",
+      "format": "short_answer",
+      "section": "18.2",
+      "concepts": [],
+      "command_term": "define",
+      "marks": 2,
+      "prompt": "Define the term Multidimensional Poverty Index (MPI).",
+      "hints": [
+        "Contrast this index with measuring poverty using income alone.",
+        "Your definition should say what kind of index it is, which areas of life it covers and how people are counted as poor."
+      ],
+      "marking_points": [
+        "A composite index that measures poverty through the deprivations households face in health, education and living standards [1]",
+        "It identifies people as multidimensionally poor if they are deprived in a certain share (at least one third) of the weighted indicators, combining how many are poor with how intensely [1]"
+      ],
+      "model_answer_note": "A full answer states the three dimensions and that the index is based on overlapping deprivations rather than income.",
+      "targets": "MPI definition"
+    },
+    {
+      "id": "u18-mcq-11",
+      "format": "mcq",
+      "section": "18.1",
+      "concepts": ["c18-sustainable-development"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Which of the following is the best example of using natural resources in a sustainable way?",
+      "hints": [
+        "Compare the rate at which each resource is used with the rate at which it can recover.",
+        "Choose the option where the stock of the resource is not being run down for future users."
+      ],
+      "options": [
+        { "id": "a", "text": "Clearing a native forest and exporting all the timber without replanting", "misconception": "This may raise income now, but it destroys the stock for future generations." },
+        { "id": "b", "text": "Pumping groundwater faster than rainfall can refill it", "misconception": "Using a resource faster than it is replaced runs down the stock over time." },
+        { "id": "c", "text": "Draining wetlands to build new housing", "misconception": "This permanently removes natural capital and the services it provides." },
+        { "id": "d", "text": "A logging firm cutting fewer trees each year than grow back across its forest", "misconception": null }
+      ],
+      "answer": "d",
+      "targets": "Sustainable use of renewable resources"
+    },
+    {
+      "id": "u18-sa-11",
+      "format": "short_answer",
+      "section": "18.1",
+      "concepts": ["c18-sustainable-development"],
+      "command_term": "calculate",
+      "marks": 3,
+      "prompt": "Veld's fish stock naturally regenerates by 40 000 tonnes each year. Assume the stock changes each year by the amount regenerated minus the catch. Using Table 6, calculate the total change in Veld's fish stock over 2023 to 2025, and state whether fishing at these levels is sustainable.",
+      "table": {
+        "caption": "Table 6: Veld fish catch",
+        "columns": ["Year", "Catch (tonnes)"],
+        "rows": [
+          ["2023", "35 000"],
+          ["2024", "45 000"],
+          ["2025", "50 000"]
+        ]
+      },
+      "hints": [
+        "Compare total regeneration over the three years with the total catch over the same years.",
+        "Add up both totals, subtract to get the change in the stock, and use its sign to judge sustainability."
+      ],
+      "marking_points": [
+        "Total regeneration = 3 x 40 000 = 120 000 tonnes; total catch = 35 000 + 45 000 + 50 000 = 130 000 tonnes [1]",
+        "Change in stock = 120 000 - 130 000 = -10 000 tonnes (a fall of 10 000 tonnes) [1]",
+        "Not sustainable: the stock is falling and recent catches exceed regeneration, leaving fewer fish for future generations [1]"
+      ],
+      "model_answer_note": "Full marks need both totals, the correct negative change and a justified judgement on sustainability; year-by-year working reaching -10 000 is equally acceptable.",
+      "targets": "Renewable resource depletion with data"
+    },
+    {
+      "id": "u18-mcq-12",
+      "format": "mcq",
+      "section": "18.1",
+      "concepts": ["c18-sustainable-development"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Kuva's recent economic growth comes mainly from exporting timber cut from its native rainforest, which is not being replanted. What is the main threat this poses to sustainable development in Kuva?",
+      "hints": [
+        "Think about what happens to the resource that export income depends on.",
+        "Follow the chain from the forest stock to future output and incomes, and to the environment future generations inherit."
+      ],
+      "options": [
+        { "id": "a", "text": "The forest stock is being run down, so future output, incomes and environmental services will fall", "misconception": null },
+        { "id": "b", "text": "Timber exports will cause Kuva's currency to depreciate", "misconception": "Higher exports increase demand for Kuva's currency, and the exchange rate is not the main sustainability issue." },
+        { "id": "c", "text": "Exporting any product always reduces sustainable development", "misconception": "Exports can support sustainable development if they are based on resources used at a sustainable rate." },
+        { "id": "d", "text": "The timber industry will create too many jobs", "misconception": "Job creation is a benefit; the problem lies in the depletion of the resource." }
+      ],
+      "answer": "a",
+      "targets": "Export sector growth and natural resource depletion"
+    },
+    {
+      "id": "u18-sa-12",
+      "format": "short_answer",
+      "section": "18.1",
+      "concepts": [],
+      "command_term": "explain",
+      "marks": 4,
+      "prompt": "Veld signs a free trade agreement with a large trading partner. Explain one way the agreement could help Veld make progress towards the Sustainable Development Goals (SDGs) and one way it could make progress harder.",
+      "hints": [
+        "Think about effects on incomes and jobs, and effects on resource use and the environment.",
+        "For each side, name a specific effect of the agreement and link it to a named goal such as poverty, decent work or climate action."
+      ],
+      "marking_points": [
+        "Help: wider market access raises exports, output and employment [1]",
+        "Link: higher incomes and jobs reduce poverty and support goals such as no poverty or decent work and economic growth [1]",
+        "Hinder: increased production for export may raise resource depletion, emissions or pollution, or domestic firms may close if they cannot compete [1]",
+        "Link: this works against goals such as climate action or life on land, or raises unemployment and inequality [1]"
+      ],
+      "model_answer_note": "A full answer gives one clearly explained positive and one clearly explained negative effect, each linked to an SDG.",
+      "targets": "Trade agreements and SDGs"
+    },
+    {
+      "id": "u18-mcq-13",
+      "format": "mcq",
+      "section": "18.2",
+      "concepts": ["c18-economic-development"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Using Table 7, which statement is best supported by the data?",
+      "table": {
+        "caption": "Table 7: Selected development indicators, 2025",
+        "columns": ["Country", "GNI per capita (PPP US$)", "Life expectancy (years)", "Mean years of schooling"],
+        "rows": [
+          ["Veld", "12 000", "76", "9.0"],
+          ["Kuva", "30 000", "68", "6.5"]
+        ]
+      },
+      "hints": [
+        "Compare the two countries on each column separately.",
+        "Then ask whether the country with more income also does better on the other two columns."
+      ],
+      "options": [
+        { "id": "a", "text": "Kuva must have a higher HDI because its income is much higher", "misconception": "Income is only one of three HDI dimensions, and Kuva does worse on the other two, so this cannot be concluded." },
+        { "id": "b", "text": "Kuva's higher income has not been matched by better health and education outcomes than Veld's", "misconception": null },
+        { "id": "c", "text": "Veld has a higher GNI per capita than Kuva", "misconception": "This misreads the table: Kuva's GNI per capita is higher." },
+        { "id": "d", "text": "People in Veld are worse off than people in Kuva on every indicator shown", "misconception": "Veld does better on life expectancy and schooling; it is only lower on income." }
+      ],
+      "answer": "b",
+      "targets": "Income versus non-income indicators of development"
+    },
+    {
+      "id": "u18-sa-13",
+      "format": "short_answer",
+      "section": "18.1",
+      "concepts": ["c18-income-poverty", "c18-sustainable-development"],
+      "command_term": "explain",
+      "marks": 3,
+      "prompt": "Explain how reducing income poverty in rural Kuva could help make its development more sustainable.",
+      "hints": [
+        "Think about the choices poor households make about land, fuel and water when they have no alternatives.",
+        "Trace how higher incomes change those choices, and what that does to natural resources for future generations."
+      ],
+      "marking_points": [
+        "Households in income poverty often depend directly on natural resources and may overuse them to survive, e.g. clearing forest or overgrazing [1]",
+        "Higher incomes give access to alternatives such as cleaner fuels, better farming inputs and education, reducing pressure on the environment [1]",
+        "Resources are then used at a rate that allows them to recover, so future generations can still meet their needs [1]"
+      ],
+      "model_answer_note": "A full answer explains why poverty leads to overuse of resources, how higher income reduces this, and links the result to future generations.",
+      "targets": "Poverty and sustainability"
+    },
+    {
+      "id": "u18-mcq-14",
+      "format": "mcq",
+      "section": "18.1",
+      "concepts": ["c18-sustainable-development"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "The SDGs are said to balance three dimensions of sustainable development. Which three?",
+      "hints": [
+        "Think about the different kinds of goals in the SDGs, from ending hunger to protecting oceans to creating jobs.",
+        "Group the goals into broad categories and look for the option that matches all three."
+      ],
+      "options": [
+        { "id": "a", "text": "Fiscal, monetary and supply-side", "misconception": "These are types of government policy, not dimensions of sustainable development." },
+        { "id": "b", "text": "Health, education and income", "misconception": "These are the dimensions of the HDI, not of sustainable development." },
+        { "id": "c", "text": "Economic, social and environmental", "misconception": null },
+        { "id": "d", "text": "Growth, inflation and unemployment", "misconception": "These are macroeconomic objectives, which cover only part of the economic dimension." }
+      ],
+      "answer": "c",
+      "targets": "Three dimensions of sustainable development"
+    },
+    {
+      "id": "u18-sa-14",
+      "format": "short_answer",
+      "section": "18.2",
+      "concepts": [],
+      "command_term": "calculate",
+      "marks": 3,
+      "prompt": "Using Table 8, calculate Veld's real GDP per capita in 2025 in base year prices.",
+      "table": {
+        "caption": "Table 8: Veld data, 2025",
+        "columns": ["Item", "Value"],
+        "rows": [
+          ["Nominal GDP", "880 billion zed"],
+          ["Price index (base year = 100)", "110"],
+          ["Population", "20 million"]
+        ]
+      },
+      "hints": [
+        "First remove the effect of price changes from nominal GDP, then express the result per person.",
+        "Divide by the price index and multiply by 100, then divide by the population, taking care with billions and millions."
+      ],
+      "marking_points": [
+        "Real GDP = 880 / 110 x 100 = 800 billion zed [1]",
+        "Real GDP per capita = 800 000 000 000 / 20 000 000 [1]",
+        "= 40 000 zed per person [1]"
+      ],
+      "model_answer_note": "Full marks need real GDP, the division by population and the correct figure; follow through if real GDP is wrong but the per capita step is right.",
+      "targets": "Nominal to real conversion and per capita measure"
+    },
+    {
+      "id": "u18-mcq-15",
+      "format": "mcq",
+      "section": "18.2",
+      "concepts": ["c18-maternal-mortality"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Which indicator is used in the Gender Inequality Index (GII) to measure reproductive health?",
+      "hints": [
+        "The GII covers reproductive health, empowerment and the labour market.",
+        "Choose the indicator that relates directly to women's health around pregnancy and childbirth."
+      ],
+      "options": [
+        { "id": "a", "text": "Maternal mortality ratio", "misconception": null },
+        { "id": "b", "text": "Share of seats in parliament held by women", "misconception": "This is a GII indicator, but for empowerment, not reproductive health." },
+        { "id": "c", "text": "Infant mortality rate", "misconception": "Infant mortality measures deaths of babies, not women's reproductive health, and it is not part of the GII." },
+        { "id": "d", "text": "Female labour force participation rate", "misconception": "This is a GII indicator, but for the labour market dimension." }
+      ],
+      "answer": "a",
+      "targets": "GII dimensions and indicators"
+    },
+    {
+      "id": "u18-sa-15",
+      "format": "short_answer",
+      "section": "18.1",
+      "concepts": ["c18-sustainable-development"],
+      "command_term": "explain",
+      "marks": 3,
+      "prompt": "Veld's economic growth depends mainly on exporting oil, a non-renewable resource. Explain why this pattern of growth may not be sustainable.",
+      "hints": [
+        "Think about what happens to the resource stock each year it is extracted, and about the side effects of using the resource.",
+        "Link these to Veld's future incomes and to the options left for future generations."
+      ],
+      "marking_points": [
+        "Oil is non-renewable, so every barrel exported reduces the stock available in future [1]",
+        "When reserves run out or become costly to extract, export earnings and growth will fall unless income is reinvested in other capital or sectors [1]",
+        "Burning oil adds to carbon emissions and climate change, harming future generations' ability to meet their needs [1]"
+      ],
+      "model_answer_note": "A full answer explains resource depletion, its effect on future growth, and a wider environmental cost, linked to future generations.",
+      "targets": "Export dependence on non-renewables and sustainability"
+    }
+  ]
+}

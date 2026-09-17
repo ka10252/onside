@@ -1,0 +1,1061 @@
+{
+  "unit": 19,
+  "title": "Barriers to growth and development",
+  "questions": [
+    {
+      "id": "u19-mcq-01",
+      "format": "mcq",
+      "section": "19.1",
+      "concepts": [],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Which sequence best describes the poverty cycle faced by low-income households in Veld?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Low incomes → high savings → high investment → low productivity → low incomes",
+          "misconception": "Poor households cannot save much, so savings are low, not high."
+        },
+        {
+          "id": "b",
+          "text": "Low incomes → low savings → low investment → low productivity → low incomes",
+          "misconception": null
+        },
+        {
+          "id": "c",
+          "text": "Low productivity → high incomes → low savings → low investment → low productivity",
+          "misconception": "Low productivity leads to low incomes, not high incomes."
+        },
+        {
+          "id": "d",
+          "text": "Low investment → high productivity → low incomes → low savings → low investment",
+          "misconception": "Low investment in physical and human capital keeps productivity low, not high."
+        }
+      ],
+      "answer": "b",
+      "hints": [
+        "Think about the four links in the poverty cycle diagram and what each one causes.",
+        "Ask what a household on a very low income can afford to set aside, and what that means for spending on tools, skills and health."
+      ],
+      "targets": "Order of the links in the poverty cycle"
+    },
+    {
+      "id": "u19-sa-01",
+      "format": "short_answer",
+      "section": "19.1",
+      "concepts": [],
+      "command_term": "define",
+      "marks": 2,
+      "prompt": "Define the term \"poverty cycle\".",
+      "marking_points": [
+        "A situation in which low incomes lead to low savings and low investment in physical and human capital [1]",
+        "which keeps productivity and incomes low, so poverty continues from one generation to the next [1]"
+      ],
+      "model_answer_note": "A full answer names the self-reinforcing chain from low income through low savings/investment and shows that it leads back to low income over time.",
+      "hints": [
+        "The term is also called a poverty trap; think about why it is described as a cycle.",
+        "Describe the chain of causes, then say what it leads back to."
+      ],
+      "targets": "Self-reinforcing nature of poverty"
+    },
+    {
+      "id": "u19-mcq-02",
+      "format": "mcq",
+      "section": "19.1",
+      "concepts": [],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "In Kuva, many rural families cannot afford a nutritious diet or basic health care. Within the poverty cycle, what is the most direct effect of this on the economy?",
+      "options": [
+        {
+          "id": "a",
+          "text": "A rise in household savings, as less is spent on food and medicine",
+          "misconception": "Families with very low incomes already spend almost everything on necessities, so savings do not rise."
+        },
+        {
+          "id": "b",
+          "text": "An increase in the price of health care, making hospitals more profitable",
+          "misconception": "This describes a market outcome, not a link in the poverty cycle."
+        },
+        {
+          "id": "c",
+          "text": "Lower labour productivity, as workers are more often ill and less able to work",
+          "misconception": null
+        },
+        {
+          "id": "d",
+          "text": "A fall in the informal economy, as sick workers move into formal jobs",
+          "misconception": "Poor health makes formal employment harder to get, not easier."
+        }
+      ],
+      "answer": "c",
+      "hints": [
+        "Health is part of human capital.",
+        "Consider how a worker's health affects how much they can produce in a day, and what that means for their income."
+      ],
+      "targets": "Health as human capital within the poverty cycle"
+    },
+    {
+      "id": "u19-sa-02",
+      "format": "short_answer",
+      "section": "19.2",
+      "concepts": [],
+      "command_term": "define",
+      "marks": 2,
+      "prompt": "Define the term \"informal economy\".",
+      "marking_points": [
+        "Economic activity that is not registered with or regulated by the government [1]",
+        "so it is not taxed and is not recorded in official statistics such as GDP [1]"
+      ],
+      "model_answer_note": "Full marks need both the lack of official registration/regulation and the consequence that it is untaxed or unrecorded.",
+      "hints": [
+        "Think of a street vendor or a day labourer who has no contract.",
+        "Say what the government does not know about this activity, and what follows for taxes and official data."
+      ],
+      "targets": "Unregistered, untaxed, unrecorded activity"
+    },
+    {
+      "id": "u19-mcq-03",
+      "format": "mcq",
+      "section": "19.2",
+      "concepts": [],
+      "command_term": "define",
+      "marks": 1,
+      "prompt": "Which of the following best describes debt servicing?",
+      "options": [
+        {
+          "id": "a",
+          "text": "The payment of interest and repayment of the principal on borrowed funds",
+          "misconception": null
+        },
+        {
+          "id": "b",
+          "text": "The cancellation of part of a country's external debt by its lenders",
+          "misconception": "This describes debt relief, which reduces debt servicing but is not the same thing."
+        },
+        {
+          "id": "c",
+          "text": "The total value of a country's debt expressed as a percentage of GDP",
+          "misconception": "This is the debt-to-GDP ratio, a measure of the stock of debt, not the payments made on it."
+        },
+        {
+          "id": "d",
+          "text": "New borrowing by a government to finance a budget deficit",
+          "misconception": "This adds to debt; servicing is paying it back."
+        }
+      ],
+      "answer": "a",
+      "hints": [
+        "Separate the stock of debt from the flow of payments made on it.",
+        "Think about the two kinds of payment a borrower makes to a lender each year."
+      ],
+      "targets": "Debt servicing vs debt stock vs debt relief"
+    },
+    {
+      "id": "u19-sa-03",
+      "format": "short_answer",
+      "section": "19.2",
+      "concepts": [],
+      "command_term": "define",
+      "marks": 2,
+      "prompt": "Define the term \"debt servicing\".",
+      "marking_points": [
+        "Payment of interest on borrowed funds [1]",
+        "and repayment of the principal (the original amount borrowed) [1]"
+      ],
+      "model_answer_note": "Both components, interest and principal repayment, must be named for full marks.",
+      "hints": [
+        "This is about a flow of payments, not the size of the debt itself.",
+        "Name the two separate things a borrowing government pays to its lenders."
+      ],
+      "targets": "Two components of debt servicing"
+    },
+    {
+      "id": "u19-sa-04",
+      "format": "short_answer",
+      "section": "19.2",
+      "concepts": [],
+      "command_term": "define",
+      "marks": 2,
+      "prompt": "Define the term \"infrastructure\".",
+      "marking_points": [
+        "Physical capital such as roads, ports, power supply, water and telecommunications [1]",
+        "that supports economic activity and is often provided or funded by the government [1]"
+      ],
+      "model_answer_note": "A full answer gives the idea of large-scale physical facilities (with an example type) and its role in supporting production and trade.",
+      "hints": [
+        "Think of the networks a firm relies on but does not usually build itself.",
+        "Give the kind of capital it is and explain what it makes possible for the rest of the economy."
+      ],
+      "targets": "Infrastructure as supporting physical capital"
+    },
+    {
+      "id": "u19-mcq-04",
+      "format": "mcq",
+      "section": "19.2",
+      "concepts": [],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Table 1 shows the composition of export revenue for Kuva. What percentage of Kuva's export revenue comes from primary commodities?",
+      "table": {
+        "caption": "Table 1: Kuva, share of export revenue by product, 2024",
+        "columns": [
+          "Product",
+          "Share of export revenue (%)"
+        ],
+        "rows": [
+          [
+            "Coffee beans",
+            "45"
+          ],
+          [
+            "Copper ore",
+            "25"
+          ],
+          [
+            "Textiles",
+            "20"
+          ],
+          [
+            "Tourism services",
+            "10"
+          ]
+        ]
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": "45%",
+          "misconception": "This counts only coffee and misses copper, which is also a primary commodity."
+        },
+        {
+          "id": "b",
+          "text": "90%",
+          "misconception": "This wrongly treats textiles as a primary product; textiles are manufactured goods."
+        },
+        {
+          "id": "c",
+          "text": "25%",
+          "misconception": "This counts only copper and misses coffee."
+        },
+        {
+          "id": "d",
+          "text": "70%",
+          "misconception": null
+        }
+      ],
+      "answer": "d",
+      "hints": [
+        "Sort each export into the primary, secondary or tertiary sector.",
+        "Add up only the shares that come from agriculture, mining, fishing or forestry."
+      ],
+      "targets": "Classifying primary vs manufactured exports"
+    },
+    {
+      "id": "u19-mcq-05",
+      "format": "mcq",
+      "section": "19.2",
+      "concepts": [],
+      "command_term": "explain",
+      "marks": 1,
+      "prompt": "Tarn earns 80% of its export revenue from copper. The world price of copper falls by 30% in one year. Which is the most likely consequence for Tarn?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Export revenue rises because demand for copper is price elastic",
+          "misconception": "Demand for primary commodities is usually price inelastic, so a lower price reduces revenue."
+        },
+        {
+          "id": "b",
+          "text": "Export revenue and government tax revenue fall, making it harder to fund planned development spending",
+          "misconception": null
+        },
+        {
+          "id": "c",
+          "text": "Tarn's terms of trade improve because its exports are now cheaper",
+          "misconception": "Lower export prices relative to import prices worsen the terms of trade."
+        },
+        {
+          "id": "d",
+          "text": "Tarn's economy is unaffected because copper producers will switch to other exports immediately",
+          "misconception": "Resources in mining are specific and cannot be moved to other industries quickly."
+        }
+      ],
+      "answer": "b",
+      "hints": [
+        "Think about price elasticity of demand for primary commodities and what it means for revenue.",
+        "Follow the fall in price through to export earnings, then to taxes and government spending plans."
+      ],
+      "targets": "Commodity price volatility and export/tax revenue"
+    },
+    {
+      "id": "u19-sa-05",
+      "format": "short_answer",
+      "section": "19.1",
+      "concepts": [],
+      "command_term": "outline",
+      "marks": 2,
+      "prompt": "Outline how low savings in a low-income country can lead to low labour productivity.",
+      "marking_points": [
+        "Low savings mean few funds are available for investment in physical capital (machinery, tools) or human capital (education, health) [1]",
+        "so workers have less capital and fewer skills to work with, keeping output per worker low [1]"
+      ],
+      "model_answer_note": "A full answer links low savings to low investment and then to low output per worker.",
+      "hints": [
+        "Use the middle links of the poverty cycle diagram.",
+        "Savings are the source of funds for something; say what, and how that affects output per worker."
+      ],
+      "targets": "Savings → investment → productivity link"
+    },
+    {
+      "id": "u19-mcq-06",
+      "format": "mcq",
+      "section": "19.1",
+      "concepts": [],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "The government of Lomar wants to help poor farmers break out of the poverty cycle at the point where low savings prevent investment. Which policy is most directly targeted at this link?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Providing small loans to farmers to buy seeds and tools",
+          "misconception": null
+        },
+        {
+          "id": "b",
+          "text": "Subsidising imported consumer goods such as televisions",
+          "misconception": "This raises consumption, not investment in productive capital."
+        },
+        {
+          "id": "c",
+          "text": "Raising the central bank interest rate to encourage saving",
+          "misconception": "Poor farmers have almost no income left to save, and higher rates make borrowing to invest more expensive."
+        },
+        {
+          "id": "d",
+          "text": "Placing a tax on the sale of farmland",
+          "misconception": "This does not provide funds for investment and may reduce farmers' incomes."
+        }
+      ],
+      "answer": "a",
+      "hints": [
+        "Identify the link between savings and investment in the poverty cycle.",
+        "Ask which policy gives households funds to invest even when they have not been able to save."
+      ],
+      "targets": "Microcredit as an entry point into the poverty cycle"
+    },
+    {
+      "id": "u19-mcq-07",
+      "format": "mcq",
+      "section": "19.2",
+      "concepts": [],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Table 2 shows data for Veld. Which statement about Veld's debt servicing is correct?",
+      "table": {
+        "caption": "Table 2: Veld, export revenue and debt service payments",
+        "columns": [
+          "Year",
+          "Export revenue (zed billion)",
+          "Debt service payments (zed billion)"
+        ],
+        "rows": [
+          [
+            "2023",
+            "50",
+            "10"
+          ],
+          [
+            "2024",
+            "40",
+            "12"
+          ]
+        ]
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": "Debt servicing as a percentage of export revenue fell because export revenue fell",
+          "misconception": "A fall in export revenue with higher debt payments raises the ratio, it does not lower it."
+        },
+        {
+          "id": "b",
+          "text": "Debt servicing as a percentage of export revenue rose from 10% to 12%",
+          "misconception": "This confuses the payment values in billions of zeds with percentages."
+        },
+        {
+          "id": "c",
+          "text": "Debt servicing as a percentage of export revenue rose from 20% to 30%",
+          "misconception": null
+        },
+        {
+          "id": "d",
+          "text": "Debt servicing as a percentage of export revenue rose from 20% to 24%",
+          "misconception": "This divides 2024 debt payments by 2023 export revenue instead of 2024 export revenue."
+        }
+      ],
+      "answer": "c",
+      "hints": [
+        "Use debt service payments divided by export revenue, times 100, for each year.",
+        "Work out the ratio for 2023 and for 2024, then compare them."
+      ],
+      "targets": "Debt service ratio calculation from data"
+    },
+    {
+      "id": "u19-sa-06",
+      "format": "short_answer",
+      "section": "19.2",
+      "concepts": [],
+      "command_term": "calculate",
+      "marks": 3,
+      "prompt": "Using Table 3, calculate Tarn's debt service ratio (debt service payments as a percentage of export revenue) for 2023 and for 2024, and state the change in percentage points.",
+      "table": {
+        "caption": "Table 3: Tarn, export revenue and debt service payments",
+        "columns": [
+          "Year",
+          "Export revenue (zed billion)",
+          "Debt service payments (zed billion)"
+        ],
+        "rows": [
+          [
+            "2023",
+            "60",
+            "9"
+          ],
+          [
+            "2024",
+            "45",
+            "9"
+          ]
+        ]
+      },
+      "marking_points": [
+        "2023: 9 ÷ 60 × 100 = 15% [1]",
+        "2024: 9 ÷ 45 × 100 = 20% [1]",
+        "Change: 20 − 15 = a rise of 5 percentage points [1]"
+      ],
+      "model_answer_note": "Correct working and answers for both years plus the 5 percentage point rise; accept correct answers with working shown.",
+      "hints": [
+        "Use debt service payments divided by export revenue, multiplied by 100.",
+        "Calculate each year separately, then subtract the earlier ratio from the later one."
+      ],
+      "targets": "Debt service ratio and percentage-point change"
+    },
+    {
+      "id": "u19-mcq-08",
+      "format": "mcq",
+      "section": "19.2",
+      "concepts": [],
+      "command_term": "explain",
+      "marks": 1,
+      "prompt": "Which of the following best explains why the terms of trade of countries that mainly export primary commodities tend to worsen over the long run?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Demand for primary commodities is price elastic, so their prices fall when supply rises",
+          "misconception": "Demand for primary commodities is usually price inelastic; elasticity of price explains short-run volatility, not the long-run trend."
+        },
+        {
+          "id": "b",
+          "text": "Supply of primary commodities is perfectly inelastic in the long run",
+          "misconception": "Supply becomes more elastic in the long run, and technology tends to increase it."
+        },
+        {
+          "id": "c",
+          "text": "Developing countries place high tariffs on imported manufactured goods",
+          "misconception": "Tariffs raise domestic prices of imports but do not change the world prices that determine the terms of trade."
+        },
+        {
+          "id": "d",
+          "text": "Demand for primary commodities has a lower income elasticity than demand for manufactured goods",
+          "misconception": null
+        }
+      ],
+      "answer": "d",
+      "hints": [
+        "Think about what happens to demand for different kinds of goods as world incomes rise.",
+        "Compare how fast demand grows for food and raw materials versus manufactured goods, and what this does to their relative prices."
+      ],
+      "targets": "Income elasticity and long-run terms of trade decline"
+    },
+    {
+      "id": "u19-sa-07",
+      "format": "short_answer",
+      "section": "19.2",
+      "concepts": [],
+      "command_term": "calculate",
+      "marks": 2,
+      "prompt": "Using Table 4, calculate the percentage of Kuva's export revenue that comes from primary products.",
+      "table": {
+        "caption": "Table 4: Kuva, export revenue by product, 2024",
+        "columns": [
+          "Product",
+          "Export revenue (zed million)"
+        ],
+        "rows": [
+          [
+            "Cocoa beans",
+            "300"
+          ],
+          [
+            "Gold",
+            "150"
+          ],
+          [
+            "Processed foods",
+            "100"
+          ],
+          [
+            "Call-centre services",
+            "50"
+          ]
+        ]
+      },
+      "marking_points": [
+        "Primary exports = 300 + 150 = 450 (zed million) out of a total of 600 [1]",
+        "450 ÷ 600 × 100 = 75% [1]"
+      ],
+      "model_answer_note": "Correct identification of cocoa and gold as primary products, the correct total and the answer 75%.",
+      "hints": [
+        "Decide which of the products come from agriculture or mining.",
+        "Add their values, find total export revenue, then express one as a percentage of the other."
+      ],
+      "targets": "Identifying primary products; share calculation"
+    },
+    {
+      "id": "u19-sa-08",
+      "format": "short_answer",
+      "section": "19.2",
+      "concepts": [],
+      "command_term": "calculate",
+      "marks": 3,
+      "prompt": "Table 5 shows price indices for Kuva (base year 2015 = 100). Calculate Kuva's terms of trade index for 2025 and explain what the result shows.",
+      "table": {
+        "caption": "Table 5: Kuva, price indices (2015 = 100)",
+        "columns": [
+          "Year",
+          "Index of average export prices",
+          "Index of average import prices"
+        ],
+        "rows": [
+          [
+            "2015",
+            "100",
+            "100"
+          ],
+          [
+            "2025",
+            "80",
+            "125"
+          ]
+        ]
+      },
+      "marking_points": [
+        "Terms of trade = (index of export prices ÷ index of import prices) × 100 [1]",
+        "(80 ÷ 125) × 100 = 64 [1]",
+        "The terms of trade have worsened since 2015: each unit of exports now pays for fewer imports [1]"
+      ],
+      "model_answer_note": "The formula, the value 64 and a correct interpretation that the terms of trade have deteriorated relative to the base year.",
+      "hints": [
+        "Use the terms of trade formula with export prices on top.",
+        "Divide, multiply by 100, then compare the result with the base-year value of 100."
+      ],
+      "targets": "Terms of trade calculation and interpretation"
+    },
+    {
+      "id": "u19-mcq-09",
+      "format": "mcq",
+      "section": "19.2",
+      "concepts": [],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Which of the following is the best example of a weak institution acting as a barrier to growth and development in Veld?",
+      "options": [
+        {
+          "id": "a",
+          "text": "The central bank raises interest rates to reduce inflation",
+          "misconception": "This is normal monetary policy by a functioning institution."
+        },
+        {
+          "id": "b",
+          "text": "Court cases over broken business contracts take years and the outcome often depends on bribes",
+          "misconception": null
+        },
+        {
+          "id": "c",
+          "text": "The government introduces a progressive income tax",
+          "misconception": "A progressive tax is a policy choice and can support development by funding public services."
+        },
+        {
+          "id": "d",
+          "text": "An independent agency is set up to investigate corruption",
+          "misconception": "This would strengthen institutions, not weaken them."
+        }
+      ],
+      "answer": "b",
+      "hints": [
+        "Institutions include the legal system, courts and property rights.",
+        "Ask which situation would make firms unwilling to sign contracts or invest."
+      ],
+      "targets": "Weak rule of law and corruption as a political barrier"
+    },
+    {
+      "id": "u19-sa-09",
+      "format": "short_answer",
+      "section": "19.1",
+      "concepts": [],
+      "command_term": "calculate",
+      "marks": 3,
+      "prompt": "Amara, a farmer in Lomar, takes the microcredit loan shown in Table 6 and uses it to buy a water pump. Calculate the increase in her annual income after subtracting the interest cost for the year.",
+      "table": {
+        "caption": "Table 6: Amara's farm, one year",
+        "columns": [
+          "Item",
+          "Value"
+        ],
+        "rows": [
+          [
+            "Microcredit loan",
+            "200 zeds"
+          ],
+          [
+            "Annual interest rate",
+            "10%"
+          ],
+          [
+            "Value of output before the pump",
+            "500 zeds per year"
+          ],
+          [
+            "Value of output with the pump",
+            "800 zeds per year"
+          ]
+        ]
+      },
+      "marking_points": [
+        "Interest cost = 10% × 200 = 20 zeds [1]",
+        "Increase in output value = 800 − 500 = 300 zeds [1]",
+        "Increase in income after interest = 300 − 20 = 280 zeds [1]"
+      ],
+      "model_answer_note": "Correct interest, correct rise in output value and the final answer of 280 zeds, with working.",
+      "hints": [
+        "You need the interest cost and the change in the value of output.",
+        "Work out the interest from the loan and rate, find the rise in output value, then take one from the other."
+      ],
+      "targets": "Microcredit costs and returns"
+    },
+    {
+      "id": "u19-mcq-10",
+      "format": "mcq",
+      "section": "19.2",
+      "concepts": [],
+      "command_term": "explain",
+      "marks": 1,
+      "prompt": "In Zand, girls receive on average four fewer years of schooling than boys. Which is the most likely way this acts as a barrier to growth and development?",
+      "options": [
+        {
+          "id": "a",
+          "text": "It lowers the quantity and quality of human capital, reducing labour productivity",
+          "misconception": null
+        },
+        {
+          "id": "b",
+          "text": "It raises household savings, because less is spent on girls' education",
+          "misconception": "Any savings are small and are outweighed by the lost productivity and earnings of educated women."
+        },
+        {
+          "id": "c",
+          "text": "It reduces birth rates, lowering the dependency ratio",
+          "misconception": "Less education for women is usually linked to higher, not lower, birth rates."
+        },
+        {
+          "id": "d",
+          "text": "It reduces the size of the informal economy",
+          "misconception": "Women with less education are more likely to work in the informal economy, not less."
+        }
+      ],
+      "answer": "a",
+      "hints": [
+        "Education is an investment in human capital.",
+        "Think about what happens to the skills of half the potential workforce, and the knock-on effects on output and family size."
+      ],
+      "targets": "Gender inequality as a social barrier"
+    },
+    {
+      "id": "u19-sa-10",
+      "format": "short_answer",
+      "section": "19.1",
+      "concepts": [],
+      "command_term": "calculate",
+      "marks": 2,
+      "prompt": "Using Table 7, calculate remittance inflows as a percentage of Lomar's GDP.",
+      "table": {
+        "caption": "Table 7: Lomar, selected data, 2024",
+        "columns": [
+          "Indicator",
+          "Value (zed billion)"
+        ],
+        "rows": [
+          [
+            "Gross domestic product (GDP)",
+            "20"
+          ],
+          [
+            "Remittance inflows",
+            "3"
+          ],
+          [
+            "Foreign aid received",
+            "1"
+          ]
+        ]
+      },
+      "marking_points": [
+        "Remittances ÷ GDP × 100 = 3 ÷ 20 × 100 [1]",
+        "= 15% [1]"
+      ],
+      "model_answer_note": "Correct method and the answer 15%.",
+      "hints": [
+        "Use remittance inflows divided by GDP.",
+        "Make sure both values are in the same units, then multiply by 100."
+      ],
+      "targets": "Size of remittances relative to the economy"
+    },
+    {
+      "id": "u19-mcq-11",
+      "format": "mcq",
+      "section": "19.2",
+      "concepts": [],
+      "command_term": "define",
+      "marks": 1,
+      "prompt": "Which of the following best describes capital flight?",
+      "options": [
+        {
+          "id": "a",
+          "text": "The emigration of highly skilled workers such as doctors and engineers",
+          "misconception": "This is brain drain, a loss of human capital rather than financial capital."
+        },
+        {
+          "id": "b",
+          "text": "Inflows of foreign direct investment into a developing country",
+          "misconception": "FDI is an inflow of capital; capital flight is an outflow."
+        },
+        {
+          "id": "c",
+          "text": "Money sent home by citizens working abroad",
+          "misconception": "These are remittances, which flow into the country."
+        },
+        {
+          "id": "d",
+          "text": "The transfer of financial assets out of a country by its residents, often because of economic or political uncertainty",
+          "misconception": null
+        }
+      ],
+      "answer": "d",
+      "hints": [
+        "Focus on the direction of the flow and who moves it.",
+        "Ask whether it involves people or money, and whether it enters or leaves the country."
+      ],
+      "targets": "Capital flight vs brain drain vs remittances"
+    },
+    {
+      "id": "u19-sa-11",
+      "format": "short_answer",
+      "section": "19.1",
+      "concepts": [],
+      "command_term": "explain",
+      "marks": 4,
+      "prompt": "Explain how providing free primary and secondary education could help a low-income country break the poverty cycle.",
+      "marking_points": [
+        "Free education removes the cost barrier, so children from poor households can attend school [1]",
+        "This raises human capital: literacy, numeracy and skills [1]",
+        "Higher skills increase labour productivity [1]",
+        "Higher productivity leads to higher incomes, allowing more saving and investment, which breaks the cycle [1]"
+      ],
+      "model_answer_note": "A full answer traces the chain from access, to human capital, to productivity, to income, and links it back to savings/investment in the cycle.",
+      "hints": [
+        "Use the poverty cycle diagram and locate where education enters it.",
+        "Start with why poor families might not send children to school, then follow the chain round the cycle."
+      ],
+      "targets": "Education as a way to break the poverty cycle"
+    },
+    {
+      "id": "u19-mcq-12",
+      "format": "mcq",
+      "section": "19.1",
+      "concepts": [],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Foreign aid is used to build irrigation channels in rural Veld. On a poverty cycle diagram, at which point does this aid most directly enter the cycle?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Low incomes",
+          "misconception": "The aid is not given as income to households; it pays for capital projects."
+        },
+        {
+          "id": "b",
+          "text": "Low savings",
+          "misconception": "The aid does not change what households save; it bypasses savings."
+        },
+        {
+          "id": "c",
+          "text": "Low investment",
+          "misconception": null
+        },
+        {
+          "id": "d",
+          "text": "Low productivity",
+          "misconception": "Productivity rises as a result of the project, but the aid enters as spending on capital."
+        }
+      ],
+      "answer": "c",
+      "hints": [
+        "Irrigation channels are a form of capital.",
+        "Ask what kind of spending the aid pays for, and which box on the diagram describes that spending."
+      ],
+      "targets": "Where aid enters the poverty cycle"
+    },
+    {
+      "id": "u19-sa-12",
+      "format": "short_answer",
+      "section": "19.2",
+      "concepts": [],
+      "command_term": "explain",
+      "marks": 4,
+      "prompt": "Explain why heavy dependence on primary commodity exports can be a barrier to economic growth and development.",
+      "marking_points": [
+        "Demand and supply of primary commodities are price inelastic, so shifts in supply or demand cause large price swings [1]",
+        "This makes export earnings and government revenue unstable, which discourages investment and makes planning difficult [1]",
+        "Demand for primary commodities has a low income elasticity, so it grows slowly as world incomes rise [1]",
+        "so the terms of trade tend to worsen over time, reducing the imports a country can buy with its exports [1]"
+      ],
+      "model_answer_note": "Full marks require both the short-run volatility argument (with inelasticity) and the long-run terms of trade argument (with low income elasticity).",
+      "hints": [
+        "Consider price elasticity of demand and supply, and income elasticity of demand, for primary goods.",
+        "Explain one short-run problem and one long-run problem, and link each to growth or development."
+      ],
+      "targets": "Price volatility and declining terms of trade"
+    },
+    {
+      "id": "u19-mcq-13",
+      "format": "mcq",
+      "section": "19.2",
+      "concepts": [],
+      "command_term": "calculate",
+      "marks": 1,
+      "prompt": "Table 8 shows the distribution of income in Zand. The income share of the richest 20% of households is how many times that of the poorest 20%?",
+      "table": {
+        "caption": "Table 8: Zand, share of national income by quintile",
+        "columns": [
+          "Household group",
+          "Share of national income (%)"
+        ],
+        "rows": [
+          [
+            "Poorest 20%",
+            "4"
+          ],
+          [
+            "Second 20%",
+            "8"
+          ],
+          [
+            "Third 20%",
+            "12"
+          ],
+          [
+            "Fourth 20%",
+            "16"
+          ],
+          [
+            "Richest 20%",
+            "60"
+          ]
+        ]
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": "15 times",
+          "misconception": null
+        },
+        {
+          "id": "b",
+          "text": "56 times",
+          "misconception": "This subtracts the two shares (60 − 4) instead of dividing them."
+        },
+        {
+          "id": "c",
+          "text": "4 times",
+          "misconception": "This reads the poorest group's share as the answer."
+        },
+        {
+          "id": "d",
+          "text": "3 times",
+          "misconception": "This divides the richest group's share by the size of the group (20) instead of by the poorest group's share."
+        }
+      ],
+      "answer": "a",
+      "hints": [
+        "Use the top and bottom rows of the table only.",
+        "Divide one share by the other."
+      ],
+      "targets": "Reading income distribution data"
+    },
+    {
+      "id": "u19-sa-13",
+      "format": "short_answer",
+      "section": "19.2",
+      "concepts": [],
+      "command_term": "explain",
+      "marks": 3,
+      "prompt": "Explain how corruption and weak institutions can act as a barrier to economic growth.",
+      "marking_points": [
+        "Bribery and weak enforcement of contracts and property rights raise the cost and risk of doing business [1]",
+        "so domestic and foreign firms invest less (lower FDI and entrepreneurship) [1]",
+        "Public funds are diverted away from infrastructure, education and health, reducing productive capacity [1]"
+      ],
+      "model_answer_note": "A full answer links corruption/weak institutions to lower investment and to the misuse of public funds, both reducing growth.",
+      "hints": [
+        "Think about property rights, the courts and how government money is spent.",
+        "Consider the effect on a firm deciding whether to invest, and the effect on public services."
+      ],
+      "targets": "Political barriers: institutions and corruption"
+    },
+    {
+      "id": "u19-sa-14",
+      "format": "short_answer",
+      "section": "19.2",
+      "concepts": [],
+      "command_term": "distinguish",
+      "marks": 2,
+      "prompt": "Distinguish between capital flight and brain drain.",
+      "marking_points": [
+        "Capital flight is the movement of financial capital (money or assets) out of a country by residents [1]",
+        "Brain drain is the emigration of skilled and educated workers, a loss of human capital [1]"
+      ],
+      "model_answer_note": "A full answer makes clear that one is a loss of financial capital and the other a loss of human capital.",
+      "hints": [
+        "Both are outflows; compare what exactly is leaving the country.",
+        "Define each one separately and show the difference in the type of capital lost."
+      ],
+      "targets": "Financial vs human capital outflows"
+    },
+    {
+      "id": "u19-mcq-14",
+      "format": "mcq",
+      "section": "19.2",
+      "concepts": [],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Which of the following is an example of physical infrastructure?",
+      "options": [
+        {
+          "id": "a",
+          "text": "The machines owned by a private textile firm",
+          "misconception": "These are the firm's own capital goods, not shared networks that serve the whole economy."
+        },
+        {
+          "id": "b",
+          "text": "The number of doctors per 1,000 people",
+          "misconception": "This measures human capital in health, not physical infrastructure."
+        },
+        {
+          "id": "c",
+          "text": "A national electricity grid",
+          "misconception": null
+        },
+        {
+          "id": "d",
+          "text": "The foreign currency reserves held by the central bank",
+          "misconception": "Reserves are financial assets, not physical facilities."
+        }
+      ],
+      "answer": "c",
+      "hints": [
+        "Infrastructure is a type of physical capital.",
+        "Look for the item that is a large network used by many firms and households."
+      ],
+      "targets": "Recognising infrastructure"
+    },
+    {
+      "id": "u19-sa-15",
+      "format": "short_answer",
+      "section": "19.1",
+      "concepts": [],
+      "command_term": "explain",
+      "marks": 3,
+      "prompt": "Explain how a lack of access to banks and credit for rural households in Kuva can keep them in the poverty cycle.",
+      "marking_points": [
+        "Without banks, households cannot borrow to invest because they have no collateral or are too far from formal lenders [1]",
+        "so they cannot buy capital such as tools, seeds or livestock, or pay for education [1]",
+        "keeping productivity and incomes low; they may also rely on informal lenders at very high interest rates [1]"
+      ],
+      "model_answer_note": "A full answer shows how lack of credit blocks investment and keeps incomes low, completing the cycle.",
+      "hints": [
+        "Think about why formal banks are unwilling or unable to lend to the rural poor.",
+        "Follow what happens to investment and then to productivity and income."
+      ],
+      "targets": "Rural finance and the poverty cycle"
+    },
+    {
+      "id": "u19-mcq-15",
+      "format": "mcq",
+      "section": "19.1",
+      "concepts": [],
+      "command_term": "calculate",
+      "marks": 1,
+      "prompt": "Table 9 shows the monthly budget of a typical household in rural Tarn. What is the household's savings rate (savings as a percentage of income)?",
+      "table": {
+        "caption": "Table 9: Typical rural household in Tarn, monthly budget",
+        "columns": [
+          "Item",
+          "Zeds per month"
+        ],
+        "rows": [
+          [
+            "Income",
+            "200"
+          ],
+          [
+            "Spending on food",
+            "120"
+          ],
+          [
+            "Spending on rent, fuel and other goods",
+            "76"
+          ]
+        ]
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": "4%",
+          "misconception": "This gives the amount saved in zeds, not the percentage of income."
+        },
+        {
+          "id": "b",
+          "text": "98%",
+          "misconception": "This is the share of income spent on consumption, not saved."
+        },
+        {
+          "id": "c",
+          "text": "60%",
+          "misconception": "This is the share of income spent on food, not the share saved."
+        },
+        {
+          "id": "d",
+          "text": "2%",
+          "misconception": null
+        }
+      ],
+      "answer": "d",
+      "hints": [
+        "Savings equal income minus consumption.",
+        "Find the amount saved, then divide it by total income and multiply by 100."
+      ],
+      "targets": "Low savings in the poverty cycle; data reading"
+    }
+  ]
+}

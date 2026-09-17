@@ -1,0 +1,1186 @@
+{
+  "unit": 7,
+  "title": "Market power (HL)",
+  "questions": [
+    {
+      "id": "u7-mcq-01",
+      "format": "mcq",
+      "section": "7.1",
+      "concepts": [
+        "c7-market-power",
+        "c7-perfect-competition"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "In which market structure does each individual firm have no ability to influence the price at which it sells its product?",
+      "hints": [
+        "Think about market power and how it changes across the four market structures.",
+        "Ask which structure has so many firms selling identical products that one firm's output cannot change the market price."
+      ],
+      "targets": "Linking market power to the four market structures",
+      "options": [
+        {
+          "id": "a",
+          "text": "Monopoly",
+          "misconception": "Monopoly is the extreme case at the other end: a single firm has the most market power, not the least."
+        },
+        {
+          "id": "b",
+          "text": "Perfect competition",
+          "misconception": null
+        },
+        {
+          "id": "c",
+          "text": "Oligopoly",
+          "misconception": "Oligopoly firms do compete, but a few large firms can each influence price."
+        },
+        {
+          "id": "d",
+          "text": "Monopolistic competition",
+          "misconception": "There are many firms, but differentiated products give each firm a little control over its price."
+        }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "u7-sa-01",
+      "format": "short_answer",
+      "section": "7.1",
+      "concepts": [
+        "c7-market-power"
+      ],
+      "command_term": "define",
+      "marks": 2,
+      "prompt": "Define the term market power.",
+      "hints": [
+        "Link the term to the range of market structures from perfect competition to monopoly.",
+        "Compare what a monopoly can decide about its product that a small wheat farmer cannot, then write the definition in general terms."
+      ],
+      "targets": "Precise definition of market power",
+      "marking_points": [
+        "The ability (extent) of a firm to control or influence [1]",
+        "the price at which it sells its product [1]"
+      ],
+      "model_answer_note": "A full-mark answer says market power is the degree to which an individual firm can control the price of the product it sells."
+    },
+    {
+      "id": "u7-mcq-02",
+      "format": "mcq",
+      "section": "7.1",
+      "concepts": [
+        "c7-barriers-to-entry",
+        "c7-licenses"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "The government of Veld requires anyone who wants to run a taxi service to hold a permit, and it issues only 200 permits. Which type of barrier to entry is this?",
+      "hints": [
+        "Use the types of barriers to entry: natural, legal and those created by firms.",
+        "Identify who creates the restriction in the scenario and what form it takes."
+      ],
+      "targets": "Classifying barriers to entry",
+      "options": [
+        {
+          "id": "a",
+          "text": "Economies of scale",
+          "misconception": "Economies of scale are a common barrier, but nothing here is about cost per unit falling as firms grow."
+        },
+        {
+          "id": "b",
+          "text": "Brand loyalty",
+          "misconception": "Existing taxi firms may have loyal customers, but the restriction here comes from the government, not from consumers."
+        },
+        {
+          "id": "c",
+          "text": "A legal barrier created by a government licence",
+          "misconception": null
+        },
+        {
+          "id": "d",
+          "text": "Control of an essential natural resource",
+          "misconception": "The permits are scarce, but they are a legal right issued by the government, not a natural resource owned by a firm."
+        }
+      ],
+      "answer": "c"
+    },
+    {
+      "id": "u7-mcq-03",
+      "format": "mcq",
+      "section": "7.2",
+      "concepts": [
+        "c7-implicit-cost",
+        "c7-explicit-cost",
+        "c7-cost-of-production"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Rina owns a shop building in Kuva. Instead of renting it to another business for 3,000 zed a month, she uses it for her own bakery. How should an economist treat the 3,000 zed?",
+      "hints": [
+        "Use the difference between explicit and implicit costs.",
+        "Ask whether any money is paid to an outsider, and whether Rina gives up any income by her choice."
+      ],
+      "targets": "Opportunity cost of self-owned resources",
+      "options": [
+        {
+          "id": "a",
+          "text": "As an implicit cost of the bakery",
+          "misconception": null
+        },
+        {
+          "id": "b",
+          "text": "As an explicit cost of the bakery",
+          "misconception": "3,000 zed is a clear money amount, but no payment is made to anyone outside the firm."
+        },
+        {
+          "id": "c",
+          "text": "As abnormal profit of the bakery",
+          "misconception": "Rina does not receive this money; she gives it up, so it is a cost, not profit."
+        },
+        {
+          "id": "d",
+          "text": "It is not a cost because Rina pays nothing for the building",
+          "misconception": "This is the accountant's view; economists also count income sacrificed by using self-owned resources."
+        }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u7-sa-02",
+      "format": "short_answer",
+      "section": "7.2",
+      "concepts": [
+        "c7-explicit-cost",
+        "c7-implicit-cost",
+        "c7-cost-of-production"
+      ],
+      "command_term": "distinguish",
+      "marks": 2,
+      "prompt": "Distinguish between explicit costs and implicit costs, using one example of each from a small restaurant.",
+      "hints": [
+        "Think about who receives a payment and whether money actually changes hands.",
+        "For each type, give a short description and then pick one resource the restaurant uses that fits it."
+      ],
+      "targets": "Explicit vs implicit costs with examples",
+      "marking_points": [
+        "Explicit costs are payments made to outsiders for resources, e.g. wages paid to waiters or rent paid to a landlord [1]",
+        "Implicit costs are income given up by using the firm's own resources, e.g. the salary the owner could earn working elsewhere [1]"
+      ],
+      "model_answer_note": "A full-mark answer contrasts money paid to outsiders with income sacrificed on self-owned resources, and gives a correct restaurant example for each."
+    },
+    {
+      "id": "u7-mcq-04",
+      "format": "mcq",
+      "section": "7.2",
+      "concepts": [
+        "c7-marginal-revenue-mr",
+        "c7-total-revenue-tr"
+      ],
+      "command_term": "calculate",
+      "marks": 1,
+      "prompt": "Using Table 1, what is the marginal revenue of the fourth bag?",
+      "hints": [
+        "Use total revenue (price multiplied by quantity) and the meaning of marginal revenue.",
+        "Work out total revenue at three bags and at four bags, then find the change."
+      ],
+      "targets": "Marginal revenue from a demand schedule",
+      "table": {
+        "caption": "Table 1: Demand for handmade bags sold by Oro Ltd",
+        "columns": [
+          "Quantity (bags per day)",
+          "Price (zed)"
+        ],
+        "rows": [
+          [
+            "1",
+            "10"
+          ],
+          [
+            "2",
+            "9"
+          ],
+          [
+            "3",
+            "8"
+          ],
+          [
+            "4",
+            "7"
+          ]
+        ]
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": "7 zed",
+          "misconception": "7 zed is the price of the fourth bag, but the firm must lower the price on the first three bags as well."
+        },
+        {
+          "id": "b",
+          "text": "28 zed",
+          "misconception": "This is total revenue at four bags, not the extra revenue from the fourth bag."
+        },
+        {
+          "id": "c",
+          "text": "6 zed",
+          "misconception": "This is the marginal revenue of the third bag, so it uses the wrong rows."
+        },
+        {
+          "id": "d",
+          "text": "4 zed",
+          "misconception": null
+        }
+      ],
+      "answer": "d"
+    },
+    {
+      "id": "u7-sa-03",
+      "format": "short_answer",
+      "section": "7.2",
+      "concepts": [
+        "c7-cost-of-production"
+      ],
+      "command_term": "calculate",
+      "marks": 3,
+      "prompt": "Using Table 2, calculate (i) the marginal cost of the fourth unit and (ii) the average total cost when 5 units are produced.",
+      "hints": [
+        "Marginal cost comes from changes in total cost; average total cost relates total cost to output.",
+        "For (i) compare two neighbouring rows; for (ii) divide the total cost at the given output by that output."
+      ],
+      "targets": "Marginal cost and average total cost from a cost table",
+      "table": {
+        "caption": "Table 2: Total costs of Veld Tiles",
+        "columns": [
+          "Output (units)",
+          "Total cost (zed)"
+        ],
+        "rows": [
+          [
+            "0",
+            "20"
+          ],
+          [
+            "1",
+            "30"
+          ],
+          [
+            "2",
+            "36"
+          ],
+          [
+            "3",
+            "45"
+          ],
+          [
+            "4",
+            "60"
+          ],
+          [
+            "5",
+            "80"
+          ]
+        ]
+      },
+      "marking_points": [
+        "(i) MC of the fourth unit = 60 − 45 = 15 zed [1]",
+        "(ii) ATC = TC ÷ Q = 80 ÷ 5 [1]",
+        "= 16 zed [1]"
+      ],
+      "model_answer_note": "A full-mark answer gives MC = 15 zed and ATC = 16 zed, with the working shown."
+    },
+    {
+      "id": "u7-mcq-05",
+      "format": "mcq",
+      "section": "7.2",
+      "concepts": [
+        "c7-diseconomies-of-scale",
+        "c7-co-ordination-and-monitoring-difficulties",
+        "c7-economies-of-scale"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Tamba Motors doubles all of its inputs and finds that its average cost per car rises. Which of the following best explains this?",
+      "hints": [
+        "Use the idea of long-run average cost when all factors of production are increased.",
+        "Decide which options would push average cost up, and which of those applies only when some inputs are fixed."
+      ],
+      "targets": "Diseconomies of scale vs diminishing returns",
+      "options": [
+        {
+          "id": "a",
+          "text": "Bulk buying of steel at a lower price per tonne",
+          "misconception": "This is linked to growing size, but it lowers average cost, so it is an economy of scale."
+        },
+        {
+          "id": "b",
+          "text": "Managers find it harder to co-ordinate and monitor a much larger workforce",
+          "misconception": null
+        },
+        {
+          "id": "c",
+          "text": "The law of diminishing marginal returns",
+          "misconception": "This also raises costs, but it is a short-run idea that applies when at least one input is fixed, not when all inputs increase."
+        },
+        {
+          "id": "d",
+          "text": "Workers become more specialised in single tasks",
+          "misconception": "This happens as firms grow, but specialisation lowers average cost."
+        }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "u7-sa-04",
+      "format": "short_answer",
+      "section": "7.2",
+      "concepts": [
+        "c7-economies-of-scale",
+        "c7-specialization-of-labor",
+        "c7-specialization-of-management",
+        "c7-bulk-buying-of-inputs-factors-of-production",
+        "c7-financing-economies"
+      ],
+      "command_term": "explain",
+      "marks": 4,
+      "prompt": "Kuva Foods is expanding from one factory to five. Explain two economies of scale it may gain.",
+      "hints": [
+        "Use the sources of economies of scale that explain the falling part of the long-run average cost curve.",
+        "For each source, say what changes as the firm grows, then link that change to cost per unit."
+      ],
+      "targets": "Sources of economies of scale and the link to average cost",
+      "marking_points": [
+        "Identifies a first source, e.g. bulk buying of inputs [1]",
+        "Explains how it lowers average cost, e.g. suppliers charge a lower price per unit on large orders [1]",
+        "Identifies a second source, e.g. specialisation of labour or management, or financing economies [1]",
+        "Explains how it lowers average cost, e.g. workers focus on the tasks they do best, so output per worker rises [1]"
+      ],
+      "model_answer_note": "A full-mark answer names two distinct economies of scale and, for each, explains why cost per unit falls as Kuva Foods grows."
+    },
+    {
+      "id": "u7-mcq-06",
+      "format": "mcq",
+      "section": "7.3",
+      "concepts": [
+        "c7-perfect-competition"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Which best describes the demand curve facing a single firm in a perfectly competitive market?",
+      "hints": [
+        "Use the idea of a price taker selling a homogeneous product.",
+        "Think about what happens to a firm's sales if it charges slightly above the market price, and whether it must cut price to sell more."
+      ],
+      "targets": "Firm vs market demand in perfect competition",
+      "options": [
+        {
+          "id": "a",
+          "text": "Horizontal (perfectly elastic) at the market price",
+          "misconception": null
+        },
+        {
+          "id": "b",
+          "text": "Downward sloping, the same shape as the market demand curve",
+          "misconception": "The market demand curve slopes down, but one small firm can sell any quantity it produces at the market price."
+        },
+        {
+          "id": "c",
+          "text": "Vertical (perfectly inelastic) at the firm's output",
+          "misconception": "This would mean the firm could charge any price without losing sales, which is the opposite of a price taker."
+        },
+        {
+          "id": "d",
+          "text": "Downward sloping and fairly elastic",
+          "misconception": "This describes a firm in monopolistic competition, not a price taker."
+        }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u7-sa-05",
+      "format": "short_answer",
+      "section": "7.3",
+      "concepts": [
+        "c7-profit-maximization",
+        "c7-total-revenue-tr",
+        "c7-marginal-revenue-mr",
+        "c7-abnormal-profit"
+      ],
+      "command_term": "calculate",
+      "marks": 3,
+      "prompt": "A wheat farm in a perfectly competitive market sells at the market price of 12 zed per tonne. Using Table 3, identify the profit-maximizing output and calculate the profit at that output.",
+      "hints": [
+        "Use the rule MR = MC, remembering that for a price taker marginal revenue equals the market price.",
+        "Find the marginal cost of each extra tonne, choose the last tonne whose MC does not exceed the price, then compare TR and TC at that output."
+      ],
+      "targets": "MR = MC for a price taker and profit from a cost table",
+      "table": {
+        "caption": "Table 3: Costs of a wheat farm in a perfectly competitive market",
+        "columns": [
+          "Output (tonnes)",
+          "Total cost (zed)"
+        ],
+        "rows": [
+          [
+            "0",
+            "10"
+          ],
+          [
+            "1",
+            "18"
+          ],
+          [
+            "2",
+            "24"
+          ],
+          [
+            "3",
+            "32"
+          ],
+          [
+            "4",
+            "42"
+          ],
+          [
+            "5",
+            "56"
+          ]
+        ]
+      },
+      "marking_points": [
+        "MC of the 4th tonne is 10 zed (below 12) and MC of the 5th tonne is 14 zed (above 12), so profit is maximized at 4 tonnes [1]",
+        "TR = 12 × 4 = 48 zed and TC = 42 zed [1]",
+        "Profit = 48 − 42 = 6 zed [1]"
+      ],
+      "model_answer_note": "A full-mark answer identifies 4 tonnes using MC compared with price, and calculates a profit of 6 zed (abnormal profit)."
+    },
+    {
+      "id": "u7-mcq-07",
+      "format": "mcq",
+      "section": "7.3",
+      "concepts": [
+        "c7-perfect-competition",
+        "c7-abnormal-profit",
+        "c7-normal-profit",
+        "c7-barriers-to-entry"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Firms in a perfectly competitive industry are earning abnormal profit. What happens in the long run?",
+      "hints": [
+        "Use the assumption of free entry and exit, and the market supply curve.",
+        "Trace what abnormal profit attracts, how that shifts market supply, and what then happens to price and each firm's profit."
+      ],
+      "targets": "Long-run adjustment in perfect competition",
+      "options": [
+        {
+          "id": "a",
+          "text": "Firms keep earning abnormal profit because each firm is too small to affect the price",
+          "misconception": "Firms are price takers, but being a price taker does not stop new firms from entering."
+        },
+        {
+          "id": "b",
+          "text": "Existing firms raise their prices, so profits rise further",
+          "misconception": "A price taker cannot raise its price without losing all its sales."
+        },
+        {
+          "id": "c",
+          "text": "New firms enter, market supply increases and price falls until firms earn normal profit",
+          "misconception": null
+        },
+        {
+          "id": "d",
+          "text": "Firms leave the industry, market supply decreases and price rises",
+          "misconception": "This is the adjustment process, but exit happens when firms make losses, not abnormal profit."
+        }
+      ],
+      "answer": "c"
+    },
+    {
+      "id": "u7-sa-06",
+      "format": "short_answer",
+      "section": "7.3",
+      "concepts": [
+        "c7-loss",
+        "c7-normal-profit",
+        "c7-perfect-competition",
+        "c7-barriers-to-entry"
+      ],
+      "command_term": "explain",
+      "marks": 4,
+      "prompt": "Firms in a perfectly competitive market are making losses in the short run. Explain how the market returns to long-run equilibrium.",
+      "hints": [
+        "Use a market diagram next to a firm diagram that shows the firm's ATC curve.",
+        "Say what losses encourage firms to do, how this moves the market supply curve, and what the new price means for the firms that remain."
+      ],
+      "targets": "Long-run adjustment from losses to normal profit",
+      "marking_points": [
+        "Losses mean price is below average total cost (TR < TC) [1]",
+        "With no barriers, some firms leave the industry in the long run [1]",
+        "Market supply decreases (shifts left), so the market price rises [1]",
+        "Price rises until it equals minimum ATC, where the remaining firms earn normal profit [1]"
+      ],
+      "model_answer_note": "A full-mark answer links losses to exit, a leftward shift of market supply, a higher price, and normal profit at P = minimum ATC."
+    },
+    {
+      "id": "u7-mcq-08",
+      "format": "mcq",
+      "section": "7.3",
+      "concepts": [
+        "c7-loss",
+        "c7-perfect-competition"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Pello Farms is a firm in a perfectly competitive market. Using Table 4, what should Pello Farms do in the short run?",
+      "hints": [
+        "Compare the market price with the firm's average variable cost and average total cost (the shut-down rule).",
+        "Ask whether each unit sold covers at least its variable cost; if not, producing adds to the loss from fixed costs."
+      ],
+      "targets": "Short-run shut-down rule",
+      "table": {
+        "caption": "Table 4: Short-run data for Pello Farms at its best output",
+        "columns": [
+          "Item",
+          "Value (zed per unit)"
+        ],
+        "rows": [
+          [
+            "Market price",
+            "6"
+          ],
+          [
+            "Average variable cost (AVC)",
+            "7"
+          ],
+          [
+            "Average total cost (ATC)",
+            "9"
+          ]
+        ]
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": "Keep producing, because it must pay its fixed costs anyway",
+          "misconception": "Fixed costs are paid either way, but here price does not cover average variable cost, so producing makes the loss bigger."
+        },
+        {
+          "id": "b",
+          "text": "Keep producing, because it earns normal profit",
+          "misconception": "Price is below both AVC and ATC, so the firm makes a loss, not normal profit."
+        },
+        {
+          "id": "c",
+          "text": "Raise its price to 9 zed to cover average total cost",
+          "misconception": "This would cover costs, but a perfectly competitive firm is a price taker and would lose all its customers."
+        },
+        {
+          "id": "d",
+          "text": "Shut down, because the price does not cover average variable cost",
+          "misconception": null
+        }
+      ],
+      "answer": "d"
+    },
+    {
+      "id": "u7-mcq-09",
+      "format": "mcq",
+      "section": "7.4",
+      "concepts": [
+        "c7-monopoly"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "On a diagram for a profit-maximizing monopoly, at which output would the firm be allocatively efficient?",
+      "hints": [
+        "Use the condition for allocative efficiency, written in terms of price and marginal cost.",
+        "Price is read from the demand (AR) curve, so look for where that curve meets another curve."
+      ],
+      "targets": "Allocatively efficient output on a monopoly diagram",
+      "options": [
+        {
+          "id": "a",
+          "text": "Where marginal revenue equals marginal cost",
+          "misconception": "This is the output the monopolist chooses, but it maximizes profit, and there price is above MC."
+        },
+        {
+          "id": "b",
+          "text": "Where average total cost is at its minimum",
+          "misconception": "This is productive efficiency, which is a different idea."
+        },
+        {
+          "id": "c",
+          "text": "Where the demand (AR) curve intersects the marginal cost curve",
+          "misconception": null
+        },
+        {
+          "id": "d",
+          "text": "Where marginal revenue equals zero",
+          "misconception": "Total revenue is at its highest here, so this is revenue maximization."
+        }
+      ],
+      "answer": "c"
+    },
+    {
+      "id": "u7-sa-07",
+      "format": "short_answer",
+      "section": "7.4",
+      "concepts": [
+        "c7-natural-monopoly",
+        "c7-economies-of-scale",
+        "c7-monopoly"
+      ],
+      "command_term": "explain",
+      "marks": 3,
+      "prompt": "Explain why a water supply company in Tarn may be a natural monopoly. Refer to a long-run average total cost (LRATC) curve in your answer.",
+      "hints": [
+        "Use economies of scale and where the market demand curve cuts the LRATC curve.",
+        "Think about the cost of building a water network, what that does to cost per unit as output grows, and compare one firm with several firms sharing the market."
+      ],
+      "targets": "Natural monopoly and the falling LRATC curve",
+      "marking_points": [
+        "Very high fixed costs (e.g. the pipe network) give large economies of scale [1]",
+        "The LRATC curve is still falling at the output that meets the whole market demand (demand cuts LRATC on its falling part) [1]",
+        "So one firm can supply the whole market at a lower average cost than two or more firms could [1]"
+      ],
+      "model_answer_note": "A full-mark answer links high fixed costs to economies of scale, places market demand on the falling part of LRATC, and concludes that one firm supplies most cheaply."
+    },
+    {
+      "id": "u7-mcq-10",
+      "format": "mcq",
+      "section": "7.4",
+      "concepts": [
+        "c7-monopoly",
+        "c7-profit-maximization",
+        "c7-marginal-revenue-mr"
+      ],
+      "command_term": "calculate",
+      "marks": 1,
+      "prompt": "Zolt is the only railway operator in Veld. Its marginal cost is constant at 10 zed per trip and it has no fixed costs. Using Table 5, what are Zolt's profit-maximizing quantity and price?",
+      "hints": [
+        "Use the profit-maximizing rule MR = MC, and read price from the demand schedule.",
+        "Calculate total revenue and marginal revenue for each quantity, stop at the last trip whose MR is not below MC, then read its price."
+      ],
+      "targets": "Monopoly profit maximization from a schedule",
+      "table": {
+        "caption": "Table 5: Demand for Zolt's train trips",
+        "columns": [
+          "Quantity (trips)",
+          "Price (zed)"
+        ],
+        "rows": [
+          [
+            "1",
+            "20"
+          ],
+          [
+            "2",
+            "18"
+          ],
+          [
+            "3",
+            "16"
+          ],
+          [
+            "4",
+            "14"
+          ],
+          [
+            "5",
+            "12"
+          ]
+        ]
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": "3 trips at 16 zed",
+          "misconception": null
+        },
+        {
+          "id": "b",
+          "text": "5 trips at 12 zed",
+          "misconception": "This gives the highest total revenue in the table, but the last two trips add less to revenue than they cost."
+        },
+        {
+          "id": "c",
+          "text": "4 trips at 14 zed",
+          "misconception": "Price is still above MC here, but the marginal revenue of the fourth trip (8 zed) is below 10 zed."
+        },
+        {
+          "id": "d",
+          "text": "3 trips at 12 zed",
+          "misconception": "12 zed is the marginal revenue of the third trip, but a monopolist charges the price on the demand curve."
+        }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u7-sa-08",
+      "format": "short_answer",
+      "section": "7.4",
+      "concepts": [
+        "c7-monopoly",
+        "c7-market-power",
+        "c7-profit-maximization"
+      ],
+      "command_term": "explain",
+      "marks": 4,
+      "prompt": "Explain why a profit-maximizing monopoly leads to a welfare (deadweight) loss compared with a perfectly competitive market.",
+      "hints": [
+        "Use a monopoly diagram with demand (AR), MR and MC, and compare it with the output where P = MC.",
+        "Compare output and price in the two cases, then think about units that consumers value more than they cost to make but which are not produced."
+      ],
+      "targets": "Monopoly allocative inefficiency and welfare loss",
+      "marking_points": [
+        "The monopoly produces where MR = MC [1]",
+        "At this output price is above marginal cost (P > MC), so the outcome is allocatively inefficient [1]",
+        "Output is lower and price higher than in a competitive market, which produces where P = MC [1]",
+        "Units between the two outputs, which consumers value above their MC, are not produced; the lost consumer and producer surplus is the welfare loss [1]"
+      ],
+      "model_answer_note": "A full-mark answer uses MR = MC, shows P > MC, compares with the competitive output, and identifies the lost surplus as the welfare loss."
+    },
+    {
+      "id": "u7-mcq-11",
+      "format": "mcq",
+      "section": "7.4",
+      "concepts": [
+        "c7-monopoly",
+        "c7-loss"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "A monopoly's average total cost curve lies above its demand curve at every level of output. Which statement is correct?",
+      "hints": [
+        "Compare average revenue (the demand curve) with average total cost.",
+        "Consider profit per unit when price is below ATC, and what a firm does in the long run if this never changes."
+      ],
+      "targets": "Loss-making monopoly",
+      "options": [
+        {
+          "id": "a",
+          "text": "The firm can make abnormal profit by producing where MR = MC",
+          "misconception": "MR = MC gives the best output, but the best possible result here is still a loss."
+        },
+        {
+          "id": "b",
+          "text": "The firm makes a loss at any output, so in the long run it will leave the market unless it receives support such as a subsidy",
+          "misconception": null
+        },
+        {
+          "id": "c",
+          "text": "The firm can remove the loss by raising its price, because it is a price maker",
+          "misconception": "A monopoly sets its price, but it must stay on the demand curve, which is below ATC everywhere."
+        },
+        {
+          "id": "d",
+          "text": "The firm earns normal profit because barriers to entry protect it",
+          "misconception": "Barriers keep rivals out, but they cannot make revenue cover costs."
+        }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "u7-sa-09",
+      "format": "short_answer",
+      "section": "7.5",
+      "concepts": [
+        "c7-barriers-to-entry",
+        "c7-product-differentiation",
+        "c7-abnormal-profit",
+        "c7-normal-profit",
+        "c7-imperfect-competition"
+      ],
+      "command_term": "explain",
+      "marks": 4,
+      "prompt": "Hair salons in the town of Mira operate in monopolistic competition and are currently earning abnormal profits. Explain why these profits are likely to disappear in the long run.",
+      "hints": [
+        "Use a firm diagram with demand (AR), MR, MC and ATC, and the assumption about entry in this market structure.",
+        "Say what the profits attract, how this affects each firm's demand curve (its position and its elasticity), and where the process stops."
+      ],
+      "targets": "Long-run equilibrium in monopolistic competition",
+      "marking_points": [
+        "Barriers to entry are low, so abnormal profit attracts new firms [1]",
+        "Each existing firm loses customers, so its demand (AR) curve shifts left [1]",
+        "Demand also becomes more elastic because there are more close substitutes [1]",
+        "Entry continues until demand is tangent to ATC, where P = ATC and firms earn normal profit [1]"
+      ],
+      "model_answer_note": "A full-mark answer links low barriers to entry, a leftward and more elastic demand curve, and the tangency of AR with ATC giving normal profit."
+    },
+    {
+      "id": "u7-mcq-12",
+      "format": "mcq",
+      "section": "7.5",
+      "concepts": [
+        "c7-imperfect-competition",
+        "c7-product-differentiation",
+        "c7-barriers-to-entry"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Which set of features describes monopolistic competition?",
+      "hints": [
+        "Use three characteristics: number of firms, type of product and barriers to entry.",
+        "Check each option against how many firms there are and whether their products are the same or different."
+      ],
+      "targets": "Characteristics of monopolistic competition",
+      "options": [
+        {
+          "id": "a",
+          "text": "A few large firms, differentiated or identical products, high barriers to entry",
+          "misconception": "Products can be differentiated, but a few firms and high barriers describe oligopoly."
+        },
+        {
+          "id": "b",
+          "text": "Many firms, identical products, no barriers to entry",
+          "misconception": "There are many firms, but identical products describe perfect competition."
+        },
+        {
+          "id": "c",
+          "text": "One firm, no close substitutes, high barriers to entry",
+          "misconception": "This describes monopoly, which has no competing firms."
+        },
+        {
+          "id": "d",
+          "text": "Many firms, differentiated products, low barriers to entry",
+          "misconception": null
+        }
+      ],
+      "answer": "d"
+    },
+    {
+      "id": "u7-sa-10",
+      "format": "short_answer",
+      "section": "7.5",
+      "concepts": [
+        "c7-price-competition",
+        "c7-branding",
+        "c7-product-differentiation"
+      ],
+      "command_term": "distinguish",
+      "marks": 2,
+      "prompt": "Distinguish between price competition and non-price competition, using the example of coffee shops in Kuva.",
+      "hints": [
+        "Think about the different ways a firm can win customers from its rivals.",
+        "Give one method that changes what the customer pays and one that does not, with a coffee shop example for each."
+      ],
+      "targets": "Price vs non-price competition",
+      "marking_points": [
+        "Price competition: a firm lowers its price to attract customers from rivals, e.g. cutting the price of a coffee [1]",
+        "Non-price competition: a firm attracts customers by other means such as branding, advertising or product differentiation, e.g. a loyalty card or better seating [1]"
+      ],
+      "model_answer_note": "A full-mark answer contrasts cutting price with methods other than price, each with a relevant coffee shop example."
+    },
+    {
+      "id": "u7-mcq-13",
+      "format": "mcq",
+      "section": "7.5",
+      "concepts": [
+        "c7-normal-profit",
+        "c7-imperfect-competition"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "On a diagram for a firm in monopolistic competition in long-run equilibrium, which of the following is true?",
+      "hints": [
+        "Use the long-run diagram in which firms earn normal profit.",
+        "The demand curve slopes downward, so consider where it can touch the ATC curve and what that means for profit."
+      ],
+      "targets": "Long-run monopolistic competition diagram",
+      "options": [
+        {
+          "id": "a",
+          "text": "The demand (AR) curve is tangent to the ATC curve at the profit-maximizing output",
+          "misconception": null
+        },
+        {
+          "id": "b",
+          "text": "The demand curve is horizontal and touches the lowest point of ATC",
+          "misconception": "This shows normal profit, but it describes perfect competition, not a firm with a downward-sloping demand curve."
+        },
+        {
+          "id": "c",
+          "text": "The demand curve lies above ATC at the profit-maximizing output",
+          "misconception": "This is a short-run position with abnormal profit, which new entry removes."
+        },
+        {
+          "id": "d",
+          "text": "The firm produces at the lowest point of its ATC curve",
+          "misconception": "Firms do earn normal profit, but a downward-sloping demand curve can only touch ATC on its falling part, leaving excess capacity."
+        }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u7-sa-11",
+      "format": "short_answer",
+      "section": "7.6",
+      "concepts": [
+        "c7-strategic-behavior",
+        "c7-barriers-to-entry",
+        "c7-imperfect-competition"
+      ],
+      "command_term": "distinguish",
+      "marks": 3,
+      "prompt": "Distinguish between monopolistic competition and oligopoly.",
+      "hints": [
+        "Compare the two structures on number of firms, barriers to entry and how firms react to each other.",
+        "For each point, state what is true in one structure and then give the contrast in the other."
+      ],
+      "targets": "Monopolistic competition vs oligopoly",
+      "marking_points": [
+        "Monopolistic competition has many firms, while oligopoly has a few large firms that dominate the market [1]",
+        "Monopolistic competition has low barriers to entry, while oligopoly usually has high barriers [1]",
+        "Oligopoly firms are interdependent and act strategically, while firms in monopolistic competition act largely independently [1]"
+      ],
+      "model_answer_note": "A full-mark answer gives three clear contrasts: number of firms, barriers to entry, and interdependence."
+    },
+    {
+      "id": "u7-mcq-14",
+      "format": "mcq",
+      "section": "7.6",
+      "concepts": [
+        "c7-strategic-behavior",
+        "c7-collusion"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Using Table 6, if Kett and Lomo cannot collude, which outcome is most likely?",
+      "hints": [
+        "Use game theory: find each firm's best choice for each possible choice of its rival.",
+        "Check Kett's payoffs for each choice Lomo could make, repeat for Lomo, and see where both best choices meet."
+      ],
+      "targets": "Dominant strategy in a payoff matrix",
+      "table": {
+        "caption": "Table 6: Payoff matrix for Kett and Lomo, the only two cement producers in Tarn (annual profit, zed million)",
+        "columns": [
+          "",
+          "Lomo charges a high price",
+          "Lomo charges a low price"
+        ],
+        "rows": [
+          [
+            "Kett charges a high price",
+            "Kett 10, Lomo 10",
+            "Kett 4, Lomo 14"
+          ],
+          [
+            "Kett charges a low price",
+            "Kett 14, Lomo 4",
+            "Kett 6, Lomo 6"
+          ]
+        ]
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": "Both charge a high price and each earns 10 million zed",
+          "misconception": "This gives the highest joint profit, but each firm can gain by switching to a low price."
+        },
+        {
+          "id": "b",
+          "text": "Kett charges a high price and Lomo a low price",
+          "misconception": "Lomo does best here, but Kett would switch to a low price rather than earn only 4 million zed."
+        },
+        {
+          "id": "c",
+          "text": "Both charge a low price and each earns 6 million zed",
+          "misconception": null
+        },
+        {
+          "id": "d",
+          "text": "Kett charges a low price and Lomo a high price",
+          "misconception": "Kett does best here, but Lomo would switch to a low price rather than earn only 4 million zed."
+        }
+      ],
+      "answer": "c"
+    },
+    {
+      "id": "u7-sa-12",
+      "format": "short_answer",
+      "section": "7.6",
+      "concepts": [
+        "c7-collusion",
+        "c7-collusive-oligopoly",
+        "c7-strategic-behavior"
+      ],
+      "command_term": "explain",
+      "marks": 3,
+      "prompt": "Kett and Lomo (Table 6) secretly agree that both will charge a high price. Using the payoff matrix, explain why each firm has an incentive to cheat on this agreement.",
+      "hints": [
+        "Start from the cell of the table that shows the agreed outcome.",
+        "Keep the rival's choice fixed at the agreed price and compare what one firm earns by keeping or breaking the deal."
+      ],
+      "targets": "Incentive to cheat in a collusive agreement",
+      "table": {
+        "caption": "Table 6: Payoff matrix for Kett and Lomo, the only two cement producers in Tarn (annual profit, zed million)",
+        "columns": [
+          "",
+          "Lomo charges a high price",
+          "Lomo charges a low price"
+        ],
+        "rows": [
+          [
+            "Kett charges a high price",
+            "Kett 10, Lomo 10",
+            "Kett 4, Lomo 14"
+          ],
+          [
+            "Kett charges a low price",
+            "Kett 14, Lomo 4",
+            "Kett 6, Lomo 6"
+          ]
+        ]
+      },
+      "marking_points": [
+        "Under the agreement each firm earns 10 million zed [1]",
+        "If one firm switches to a low price while the other keeps a high price, the cheating firm earns 14 million zed [1]",
+        "Because 14 is more than 10, each firm can raise its own profit by cheating (and cheating also avoids being left with 4 million zed), so the agreement is unstable [1]"
+      ],
+      "model_answer_note": "A full-mark answer quotes the 10 and 14 payoffs, shows that cheating raises one firm's profit, and concludes the agreement is unstable."
+    },
+    {
+      "id": "u7-sa-13",
+      "format": "short_answer",
+      "section": "7.6",
+      "concepts": [
+        "c7-market-power"
+      ],
+      "command_term": "calculate",
+      "marks": 2,
+      "prompt": "Using Table 7, calculate the four-firm concentration ratio and state what it suggests about the market structure.",
+      "hints": [
+        "Use the concentration ratio, which is built from the market shares of the largest firms.",
+        "Rank the firms by share, add up the top four, then judge whether a few firms dominate the market."
+      ],
+      "targets": "Concentration ratio as evidence of oligopoly",
+      "table": {
+        "caption": "Table 7: Market shares in Veld's mobile phone service market",
+        "columns": [
+          "Firm",
+          "Market share (%)"
+        ],
+        "rows": [
+          [
+            "Ruma",
+            "30"
+          ],
+          [
+            "Sela",
+            "20"
+          ],
+          [
+            "Tovi",
+            "15"
+          ],
+          [
+            "Uxo",
+            "10"
+          ],
+          [
+            "Vane",
+            "8"
+          ],
+          [
+            "All other firms",
+            "17"
+          ]
+        ]
+      },
+      "marking_points": [
+        "CR4 = 30 + 20 + 15 + 10 = 75% [1]",
+        "The four largest firms hold most of the market, which suggests an oligopoly [1]"
+      ],
+      "model_answer_note": "A full-mark answer calculates a CR4 of 75% and concludes the market is likely an oligopoly."
+    },
+    {
+      "id": "u7-mcq-15",
+      "format": "mcq",
+      "section": "7.7",
+      "concepts": [
+        "c7-merger",
+        "c7-abuse-of-market-power"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Two of the three largest supermarket chains in Kuva plan to merge. Kuva's competition authority believes the merged firm would be able to raise prices. Which response most directly prevents this abuse of market power?",
+      "hints": [
+        "Use the government responses to abuse of market power, such as legislation, regulation and fines.",
+        "Ask which option stops the rise in market concentration before it happens, rather than rewarding or strengthening the firm."
+      ],
+      "targets": "Merger control as a response to market power",
+      "options": [
+        {
+          "id": "a",
+          "text": "Giving the merged firm a subsidy to lower its costs",
+          "misconception": "Lower costs might lower prices, but a subsidy rewards the firm and does nothing to limit its market power."
+        },
+        {
+          "id": "b",
+          "text": "Blocking the merger under competition (anti-monopoly) law",
+          "misconception": null
+        },
+        {
+          "id": "c",
+          "text": "Granting the merged firm a patent on its store design",
+          "misconception": "Patents are a government tool, but a patent creates a barrier to entry and increases market power."
+        },
+        {
+          "id": "d",
+          "text": "Setting a maximum price on all goods sold in every shop in Kuva",
+          "misconception": "Price ceilings limit prices, but one on every good in every shop is not aimed at the merger and would cause shortages across the economy."
+        }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "u7-sa-14",
+      "format": "short_answer",
+      "section": "7.7",
+      "concepts": [
+        "c7-abuse-of-market-power",
+        "c7-fines",
+        "c7-merger",
+        "c7-collusion"
+      ],
+      "command_term": "explain",
+      "marks": 4,
+      "prompt": "Explain two ways a government could respond when firms in an industry abuse their market power.",
+      "hints": [
+        "Use the policy options: legislation, fines, regulation and control of mergers.",
+        "For each policy, say what the government does and then how it changes the firms' behaviour or the market outcome."
+      ],
+      "targets": "Government responses to abuse of market power",
+      "marking_points": [
+        "First policy identified, e.g. competition law that bans collusion, with fines for firms found guilty [1]",
+        "Explained, e.g. fines raise the expected cost of anti-competitive behaviour, so firms are less likely to fix prices [1]",
+        "Second policy identified, e.g. a regulator sets maximum prices or quality standards, or blocks mergers / breaks up firms [1]",
+        "Explained, e.g. price moves closer to the competitive level, so output and consumer surplus rise [1]"
+      ],
+      "model_answer_note": "A full-mark answer names two different policies and, for each, explains how it reduces the firms' ability to exploit market power."
+    },
+    {
+      "id": "u7-sa-15",
+      "format": "short_answer",
+      "section": "7.7",
+      "concepts": [
+        "c7-natural-monopoly",
+        "c7-loss",
+        "c7-economies-of-scale"
+      ],
+      "command_term": "explain",
+      "marks": 3,
+      "prompt": "A regulator requires Tarn's natural monopoly electricity supplier to set its price equal to marginal cost. Explain why this may cause the firm to make a loss.",
+      "hints": [
+        "Use a natural monopoly diagram with a falling ATC curve, an MC curve and the demand curve.",
+        "Recall how MC and ATC are related while ATC is falling, then compare price with ATC at the regulated output."
+      ],
+      "targets": "Marginal cost pricing of a natural monopoly",
+      "marking_points": [
+        "For a natural monopoly, ATC is still falling where demand meets MC [1]",
+        "When ATC is falling, MC lies below ATC [1]",
+        "So setting P = MC means price is below ATC and the firm makes a loss (it would need a subsidy or would leave the market) [1]"
+      ],
+      "model_answer_note": "A full-mark answer explains that falling ATC puts MC below ATC, so a price set at MC cannot cover average total cost."
+    }
+  ]
+}

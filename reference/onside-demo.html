@@ -1,0 +1,1067 @@
+<title>Onside Demo</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Instrument+Sans:wght@400;500;600;700&display=swap">
+<style>
+:root {
+  color-scheme: light;
+  --bg: #F7F6F1; --surface: #FFFFFF; --surface2: #FAF9F5; --sunk: #F0EFE8;
+  --line: #E2E0D6; --line2: #CAC7BA;
+  --ink: #141414; --ink-hover: #2E2E2E; --ink2: #55544E; --faint: #8A887E;
+  --red: #C8322B; --red-hover: #A92822; --redtint: #FDE7E5; --redtext: #9A231D;
+  --green: #2E7D4F; --greentint: #E5F2E9;
+  --amber: #8A5F00; --ambertint: #F7EED3;
+  --hl: #E4F86A; --hlborder: #C9DE45; --hllabel: #3E4A00;
+  --pink: #FF6FAE; --pink-hover: #F2559A; --pinktint: #FFE3EE; --pinktext: #9E1F4F;
+  --serif: 'Instrument Serif', Georgia, 'Times New Roman', serif;
+  --sans: 'Instrument Sans', 'Helvetica Neue', Arial, sans-serif;
+  --shadow: 0 1px 2px rgba(20, 20, 20, .05), 0 4px 16px rgba(20, 20, 20, .05);
+}
+html, body { height: 100%; }
+html { font-synthesis: none; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.5 var(--sans); }
+* { box-sizing: border-box; }
+button, input, textarea { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.serif { font-family: var(--serif); }
+.muted { color: var(--ink2); }
+#app { min-height: 100%; display: flex; flex-direction: column; }
+
+/* ---------- global nav ---------- */
+.nav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10; background: var(--surface); border-bottom: 1px solid var(--line); }
+.nav-in { max-width: 1120px; margin: 0 auto; height: 64px; padding-inline: 24px; display: flex; align-items: center; gap: 36px; }
+.logo { display: flex; align-items: center; padding: 0 2px; border: 0; background: linear-gradient(transparent 58%, var(--hl) 58%); cursor: pointer; font-family: var(--serif); font-size: 30px; line-height: 1.1; }
+.logo-mark { width: 30px; height: 30px; border-radius: 7px; background: var(--ink); display: flex; align-items: center; justify-content: center; }
+.tabs { display: flex; gap: 4px; height: 100%; }
+.tab { height: 100%; padding: 0 12px; display: flex; align-items: center; border: 0; border-bottom: 2px solid transparent; background: none; font-size: 15px; font-weight: 500; color: var(--ink2); cursor: pointer; }
+.tab.on { color: var(--ink); border-bottom-color: var(--ink); font-weight: 600; }
+.tab:hover { color: var(--ink); }
+.me { margin-left: auto; display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 500; }
+.avatar { width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: var(--sunk); border: 1px solid var(--line); font-size: 13px; font-weight: 600; color: var(--ink); flex-shrink: 0; }
+.avatar.lg { width: 48px; height: 48px; font-size: 16px; }
+
+/* ---------- layout ---------- */
+.page { flex-grow: 1; padding-block: 32px 72px; }
+.wrap { max-width: 1120px; margin: 0 auto; padding-inline: 24px; }
+.narrow { max-width: 780px; margin: 0 auto; padding-inline: 24px; }
+.crumbs { display: flex; align-items: center; gap: 8px; font-size: 14px; color: var(--ink2); margin-bottom: 12px; flex-wrap: wrap; }
+.crumbs button { padding: 0; border: 0; background: none; color: var(--ink2); cursor: pointer; }
+.crumbs button:hover { color: var(--ink); text-decoration: underline; }
+.crumbs .cur { color: var(--ink); font-weight: 500; }
+.phead { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; margin-bottom: 24px; flex-wrap: wrap; }
+.phead h1 { margin: 0; font-family: var(--serif); font-size: 46px; font-weight: 500; line-height: 1.15; letter-spacing: -0.01em; text-wrap: balance; }
+.phead p { margin: 6px 0 0; color: var(--ink2); }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; box-shadow: var(--shadow); }
+.card-hd { padding: 18px 24px; border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
+.card-hd h2 { margin: 0; font-size: 17px; font-weight: 600; }
+.stack { display: flex; flex-direction: column; gap: 20px; }
+
+/* ---------- controls ---------- */
+.btn { height: 44px; padding: 0 18px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: 1px solid var(--line2); border-radius: 8px; background: var(--surface); color: var(--ink); font-size: 15px; font-weight: 600; cursor: pointer; white-space: nowrap; text-decoration: none; }
+.btn:hover { border-color: var(--ink); }
+.btn.primary { background: var(--ink); border-color: var(--ink); color: #FFFFFF; }
+.btn.primary:hover { background: var(--ink-hover); }
+.btn.accent { background: var(--pink); border-color: var(--pink); color: var(--ink); }
+.btn.accent:hover { background: var(--pink-hover); border-color: var(--pink-hover); }
+.btn.lg { height: 50px; padding: 0 24px; }
+.btn.sm { height: 36px; padding: 0 12px; font-size: 14px; }
+.btn.ghost { border-color: transparent; background: transparent; }
+.btn.ghost:hover { background: var(--sunk); border-color: transparent; }
+.btn[disabled], .btn[disabled]:hover { background: var(--sunk); border-color: var(--line); color: var(--faint); cursor: not-allowed; }
+.link { padding: 0; border: 0; background: none; color: var(--ink2); font-size: 14px; font-weight: 500; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+.link:hover { color: var(--ink); }
+.pill { display: inline-flex; align-items: center; gap: 6px; height: 26px; padding: 0 10px; border-radius: 999px; font-size: 13px; font-weight: 600; white-space: nowrap; }
+.pill.red { background: var(--redtint); color: var(--redtext); }
+.pill.gray { background: var(--sunk); color: var(--ink2); }
+.pill.green { background: var(--greentint); color: var(--green); }
+.pill.ink { background: var(--ink); color: #FFFFFF; }
+.pill.hl { background: var(--hl); color: var(--ink); }
+.pill.amber { background: var(--ambertint); color: var(--amber); }
+.banner { display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-radius: 10px; background: var(--surface2); border: 1px solid var(--line); font-size: 14px; color: var(--ink2); }
+.st { display: inline-flex; align-items: center; gap: 7px; font-weight: 600; white-space: nowrap; }
+.st.solid { color: var(--green); } .st.shaky { color: var(--amber); } .st.needs { color: var(--red); }
+
+/* ---------- S1 ---------- */
+.alist { display: flex; flex-direction: column; gap: 14px; }
+.acard { padding: 22px 24px; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 16px 24px; align-items: center; transition: border-color .15s, box-shadow .15s; }
+.acard.clickable { cursor: pointer; }
+.acard.clickable:hover { border-color: var(--ink); box-shadow: 0 2px 4px rgba(29, 39, 64, .08), 0 10px 24px rgba(29, 39, 64, .08); }
+.acard h3 { margin: 4px 0 6px; font-family: var(--serif); font-size: 26px; font-weight: 500; line-height: 1.2; }
+.meta { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 16px; font-size: 14px; color: var(--ink2); }
+.bar { display: flex; gap: 4px; width: 160px; }
+.bar span { flex: 1; height: 6px; border-radius: 3px; background: var(--line); }
+.bar span.on { background: var(--green); }
+
+/* ---------- S2 ---------- */
+.subbar { background: var(--surface2); border-bottom: 1px solid var(--line); }
+.subbar .wrap { height: 60px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.subbar .crumbs { margin: 0; min-width: 0; flex-wrap: nowrap; }
+.subbar .crumbs .cur { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.qtop { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: 14px; flex-wrap: wrap; }
+.qtop .count { font-size: 14px; font-weight: 600; color: var(--ink2); }
+.stepper { margin: 0; padding: 0; list-style: none; display: flex; gap: 6px; }
+.stepper button { width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--line2); background: var(--surface); display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600; cursor: pointer; color: var(--ink2); position: relative; }
+.stepper button.on { border: 2px solid var(--ink); color: var(--ink); }
+.stepper button .dot { position: absolute; right: -2px; bottom: -2px; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: var(--surface); }
+.qcard { padding: 40px 44px 20px; display: flex; flex-direction: column; gap: 26px; }
+.prompt { margin: 0; font-family: var(--sans); font-size: 28px; font-weight: 500; line-height: 1.4; text-wrap: pretty; }
+.root { border-top: 1.5px solid currentColor; padding: 0 3px; }
+.field { display: flex; flex-direction: column; gap: 8px; }
+.field label { font-size: 14px; font-weight: 600; }
+.working { width: 100%; min-height: 108px; padding: 12px 14px; background: var(--surface2); border: 1px solid var(--line2); border-radius: 8px; font-family: var(--sans); font-size: 17px; line-height: 26px; resize: vertical; }
+.ansrow { display: flex; gap: 10px; }
+.answer { flex-grow: 1; min-width: 0; height: 50px; padding: 0 14px; background: #FFFFFF; border: 1px solid var(--line2); border-radius: 8px; font-family: var(--sans); font-size: 18px; }
+.answer:focus { border-color: var(--ink); }
+.answer:disabled { background: var(--sunk); color: var(--ink2); }
+.fb { display: flex; gap: 12px; align-items: flex-start; padding: 14px 16px; border-radius: 10px; animation: fade .25s ease-out both; }
+.fb.no { background: var(--pinktint); color: var(--pinktext); }
+.fb.ok { background: var(--greentint); color: var(--green); }
+.fb .t { font-weight: 600; }
+.fb .s { font-size: 14px; color: var(--ink2); }
+.fb s { font-size: 16px; text-decoration-thickness: 1.5px; }
+.hintnote { border: 1px solid var(--hlborder); border-radius: 10px; background: #F7FCD9; }
+.hintnote summary { padding: 10px 14px; cursor: pointer; font-size: 14px; font-weight: 600; }
+.hintnote p { margin: 0; padding: 0 14px 14px; font-family: var(--sans); font-size: 16px; line-height: 1.5; }
+.hintnote p span { background: transparent; padding: 1px 3px; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+.qfoot { margin-top: 4px; padding-top: 14px; border-top: 1px solid var(--line); display: flex; justify-content: flex-end; align-items: center; gap: 8px; font-size: 14px; color: var(--ink2); }
+.pager { display: flex; justify-content: space-between; margin-top: 18px; gap: 12px; }
+
+/* drawer */
+.dscrim { position: fixed; inset: 0; z-index: 30; background: rgba(29, 39, 64, .28); animation: fade .2s ease-out both; }
+.drawer { position: fixed; z-index: 31; top: 0; right: 0; bottom: 0; width: 440px; max-width: 100%; background: var(--surface); border-left: 1px solid var(--line); box-shadow: -12px 0 32px rgba(29, 39, 64, .12); display: flex; flex-direction: column; animation: slide .25s ease-out both; padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+@keyframes slide { from { transform: translateX(24px); opacity: 0; } }
+@keyframes fade { from { opacity: 0; } }
+.dh { padding: 18px 20px 14px 24px; display: flex; justify-content: space-between; align-items: center; }
+.dh h2 { margin: 0; font-family: var(--serif); font-size: 26px; font-weight: 500; }
+.xbtn { width: 44px; height: 44px; border: 0; border-radius: 8px; background: none; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+.xbtn:hover { background: var(--sunk); }
+.dtrans { margin: 0 24px 14px; display: flex; gap: 8px; align-items: center; font-size: 13px; color: var(--ink2); }
+.dbody { flex-grow: 1; min-height: 0; display: flex; flex-direction: column; }
+.reveal { animation: fade .5s ease-out both; }
+.lockbox { margin: 12px 24px; padding: 28px 24px; border-radius: 12px; background: var(--surface2); border: 1px solid var(--line); display: flex; flex-direction: column; gap: 10px; align-items: flex-start; }
+.lockbox h3 { margin: 0; font-family: var(--serif); font-size: 24px; font-weight: 500; }
+.lockbox p { margin: 0; color: var(--ink2); }
+.lockbox { align-items: center; text-align: center; }
+.ring { position: relative; width: 150px; height: 150px; margin: 4px 0 8px; }
+.ring svg { position: absolute; inset: 0; transform: rotate(-90deg); }
+.ring .track { fill: none; stroke: var(--line); stroke-width: 10; }
+.ring .fill { fill: none; stroke: var(--hl); stroke-width: 10; stroke-linecap: round; transition: stroke-dashoffset 1s linear; }
+.ring .num { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.ring .num b { font-family: var(--serif); font-weight: 400; font-size: 48px; line-height: 1; font-variant-numeric: tabular-nums; }
+.ring .num span { font-size: 12px; color: var(--ink2); }
+.log { flex-grow: 1; min-height: 0; overflow-y: auto; padding: 18px 24px; display: flex; flex-direction: column; gap: 14px; }
+.log .empty { margin: auto 0; color: var(--ink2); font-size: 14px; text-align: center; padding: 0 20px; }
+.msg { display: flex; flex-direction: column; gap: 3px; }
+.msg .who { font-size: 12px; color: var(--ink2); }
+.msg p { margin: 0; font-size: 15px; line-height: 1.5; }
+.msg.me { align-items: flex-end; }
+.msg.me p { max-width: 320px; padding: 9px 13px; border-radius: 14px 14px 4px 14px; background: var(--ink); color: #FFFDF8; }
+.msg.ai p { max-width: 360px; padding: 9px 13px; border-radius: 14px 14px 14px 4px; background: var(--sunk); }
+.marker { display: flex; align-items: center; gap: 10px; font-size: 12px; color: var(--ink2); }
+.marker::before, .marker::after { content: ""; flex-grow: 1; height: 1px; background: var(--line); }
+.marker { font-weight: 600; color: var(--hllabel); }
+.dots span { display: inline-block; width: 6px; height: 6px; margin-right: 4px; border-radius: 50%; background: var(--ink2); animation: blink 1s infinite; }
+.dots span:nth-child(2) { animation-delay: .2s; } .dots span:nth-child(3) { animation-delay: .4s; }
+@keyframes blink { 0%, 100% { opacity: .2; } 50% { opacity: 1; } }
+.dfoot { padding: 14px 24px 18px; border-top: 1px solid var(--line); display: flex; flex-direction: column; gap: 8px; }
+.ask { display: flex; gap: 8px; }
+.ask input { flex-grow: 1; min-width: 0; height: 46px; padding: 0 14px; background: #FFFFFF; border: 1px solid var(--line2); border-radius: 8px; font-size: 15px; }
+.ask input:focus { border-color: var(--ink); }
+.iconbtn { width: 46px; height: 46px; flex-shrink: 0; border: 0; border-radius: 8px; background: var(--ink); display: flex; align-items: center; justify-content: center; cursor: pointer; }
+.note { margin: 0; font-size: 13px; color: var(--ink2); }
+.hzone { padding: 4px 24px 0; display: flex; flex-direction: column; gap: 10px; }
+.hcard { padding: 14px 16px; border-radius: 12px; background: var(--hl); border: 1px solid var(--hlborder); display: flex; flex-direction: column; gap: 8px; animation: fade .3s ease-out both; }
+.hcard .hlab { font-size: 12px; font-weight: 700; color: var(--hllabel); }
+.hcard p { margin: 0; font-family: var(--sans); font-size: 17px; line-height: 1.45; }
+.chips { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 2px; }
+.chip { height: 36px; padding: 0 13px; border: 1px solid #9DB22A; border-radius: 999px; background: transparent; font-size: 13px; font-weight: 500; cursor: pointer; }
+.chip.strong { background: #FFFFFF; font-weight: 700; }
+.chip:hover { background: #FFFFFF; }
+.chip[disabled] { opacity: .5; cursor: default; }
+.prev { border-top: 1px solid #C9DE45; padding-top: 8px; font-size: 14px; }
+.prev summary { cursor: pointer; font-weight: 600; }
+.prev p { font-size: 16px; margin-top: 6px; }
+.hrow { padding: 8px 8px 8px 16px; border: 1px dashed var(--line2); border-radius: 12px; display: flex; justify-content: space-between; align-items: center; gap: 12px; font-size: 14px; }
+.askdiv { margin: 16px 24px 0; display: flex; align-items: center; gap: 10px; font-size: 12px; font-weight: 700; color: var(--ink2); }
+.askdiv::after { content: ""; flex-grow: 1; height: 1px; background: var(--line); }
+
+/* modal */
+.scrim { position: fixed; inset: 0; z-index: 40; display: flex; align-items: center; justify-content: center; padding: 16px; background: rgba(29, 39, 64, .45); animation: fade .15s ease-out both; }
+.dialog { width: 100%; max-width: 440px; padding: 28px; display: flex; flex-direction: column; gap: 14px; background: var(--surface); border-radius: 14px; box-shadow: 0 20px 50px rgba(29, 39, 64, .25); }
+.dialog h2 { margin: 0; font-family: var(--serif); font-size: 28px; font-weight: 500; }
+.dialog p { margin: 0; color: var(--ink2); }
+.drop { display: flex; align-items: center; gap: 14px; padding: 14px 16px; border-radius: 10px; background: var(--surface2); font-family: var(--serif); font-size: 34px; }
+.drop s { color: var(--ink2); text-decoration-color: var(--red); text-decoration-thickness: 2px; }
+.drop b { font-weight: 500; color: var(--red); }
+.dialog .acts { display: flex; justify-content: flex-end; gap: 10px; padding-top: 6px; flex-wrap: wrap; }
+
+#toast { position: fixed; left: 50%; bottom: calc(28px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); z-index: 50; display: flex; align-items: center; gap: 10px; padding: 12px 18px; border-radius: 10px; background: var(--ink); color: #FFFDF8; font-weight: 500; box-shadow: 0 8px 24px rgba(29, 39, 64, .25); animation: fade .2s ease-out both; }
+#toast[hidden] { display: none; }
+
+/* ---------- tables ---------- */
+.scrollx { overflow-x: auto; }
+table.t { width: 100%; border-collapse: collapse; font-size: 15px; }
+table.t th { text-align: left; padding: 12px 16px; font-size: 13px; font-weight: 600; color: var(--ink2); background: var(--surface2); border-bottom: 1px solid var(--line); white-space: nowrap; }
+table.t td { padding: 16px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+table.t tr:last-child td { border-bottom: 0; }
+table.t tr.hov:hover td { background: var(--surface2); }
+.who-cell { display: flex; align-items: center; gap: 12px; }
+.ph td { color: var(--faint); }
+
+/* ---------- T2 ---------- */
+.hero { padding: 32px 36px; }
+.hero .eyebrow { font-size: 14px; color: var(--ink2); margin: 0 0 10px; }
+.headline { margin: 0; display: flex; flex-wrap: wrap; gap: 8px 10px; align-items: center; font-family: var(--sans); font-size: 24px; font-weight: 600; line-height: 1.3; }
+.headline .sep { color: var(--line2); font-weight: 400; }
+.headline em { font-style: normal; padding: 2px 8px; border-radius: 6px; background: var(--hl); }
+.headline .bad { color: var(--red); }
+.scores { margin-top: 24px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.score { padding: 20px 22px; border-radius: 10px; display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; flex-wrap: wrap; }
+.score > div:first-child { display: flex; flex-direction: column; gap: 4px; }
+.score.ind { border: 1.5px solid var(--ink); }
+.score.sup { border: 1px solid var(--line); background: var(--surface2); }
+.sl { font-size: 14px; font-weight: 700; }
+.sv { font-family: var(--serif); font-size: 60px; line-height: 1; }
+.ss { font-size: 14px; color: var(--ink2); }
+.ss b { color: var(--ink); }
+.qboxes { display: flex; gap: 6px; }
+.qboxes span { width: 40px; height: 40px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: var(--ink2); border: 1.5px dashed var(--line2); }
+.score.ind .qboxes span.on { background: var(--ink); border: 1.5px solid var(--ink); color: #FFFFFF; }
+.score.sup .qboxes span.on { background: var(--hl); border: 1.5px solid var(--hlborder); color: var(--ink); }
+.scorefoot { margin-top: 14px; display: flex; justify-content: space-between; gap: 8px 24px; flex-wrap: wrap; font-size: 13px; color: var(--ink2); }
+.scorefoot .facts { color: var(--ink); font-weight: 600; }
+.stats { margin: 28px 0 0; padding-top: 22px; border-top: 1px solid var(--line); display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)) minmax(0, 2fr); gap: 16px; }
+.stats dt { font-size: 13px; color: var(--ink2); }
+.stats dd { margin: 2px 0 0; font-family: var(--sans); font-size: 28px; line-height: 1.2; }
+.stats dd.sm { font-size: 22px; line-height: 1.5; }
+.concept { font-family: var(--sans); font-size: 16px; font-weight: 600; }
+.qrow { width: 100%; display: grid; grid-template-columns: 44px minmax(180px, 1fr) 132px 56px 96px 50px 52px 60px 118px 24px; gap: 12px; align-items: center; padding: 14px 20px; border: 0; border-bottom: 1px solid var(--line); background: none; text-align: left; font-size: 15px; cursor: pointer; }
+.qrow:hover { background: var(--surface2); }
+.qrow.head { cursor: default; background: var(--surface2); padding-top: 12px; padding-bottom: 12px; font-size: 13px; font-weight: 600; color: var(--ink2); }
+.qrow.open { background: var(--surface2); border-bottom-color: transparent; }
+.qrow .n { width: 30px; height: 30px; border-radius: 50%; background: var(--sunk); display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 14px; }
+.qrow .qt { font-family: var(--sans); font-size: 15px; }
+.qrow .chev { transition: transform .2s; }
+.qrow[aria-expanded="true"] .chev { transform: rotate(180deg); }
+.qlist { min-width: 980px; }
+.pips { display: flex; gap: 3px; }
+.pips span { width: 12px; height: 12px; border-radius: 3px; border: 1.5px solid var(--line2); }
+.pips span.on { background: var(--hl); border-color: #9DB22A; }
+.detail { padding: 6px 20px 24px 76px; background: var(--surface2); border-bottom: 1px solid var(--line); display: flex; flex-direction: column; gap: 20px; animation: fade .25s ease-out both; }
+.detail .two { display: grid; grid-template-columns: 280px minmax(0, 1fr); gap: 36px; }
+.detail h3 { margin: 0 0 10px; font-size: 13px; font-weight: 600; color: var(--ink2); }
+.att { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+.att .v { font-size: 16px; font-weight: 500; }
+.att s.v { text-decoration-color: var(--red); text-decoration-thickness: 2px; }
+.summary { margin: 0; padding-left: 18px; font-family: var(--sans); font-size: 15px; line-height: 1.6; }
+.convo { margin: 0; padding: 16px 18px; list-style: none; display: flex; flex-direction: column; gap: 10px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; font-size: 15px; line-height: 1.5; }
+.convo li { display: grid; grid-template-columns: 50px 56px minmax(0, 1fr); gap: 12px; }
+.convo .tm { color: var(--ink2); font-variant-numeric: tabular-nums; font-size: 14px; }
+.convo li.mk { grid-template-columns: 50px minmax(0, 1fr); align-items: center; }
+.convo li.mk .tm { color: var(--hllabel); }
+.convo li.mk span:last-child { display: flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 700; color: var(--hllabel); }
+.convo li.mk span:last-child::after { content: ""; flex-grow: 1; height: 6px; background: var(--hl); border-radius: 3px; }
+
+/* ---------- T3 ---------- */
+.t3grid { display: grid; grid-template-columns: 340px minmax(0, 1fr); gap: 24px; align-items: start; }
+.settings { position: sticky; top: calc(84px + env(safe-area-inset-top, 0px)); padding: 24px; display: flex; flex-direction: column; gap: 22px; }
+.settings fieldset { margin: 0; padding: 0; border: 0; display: flex; flex-direction: column; gap: 2px; }
+.settings legend { padding: 0 0 6px; font-size: 14px; font-weight: 600; }
+.opt { min-height: 42px; display: flex; align-items: center; gap: 12px; font-size: 15px; cursor: pointer; }
+.settings input[type="checkbox"], .settings input[type="radio"] { accent-color: var(--ink); width: 18px; height: 18px; margin: 0; flex-shrink: 0; }
+.seg { display: flex; gap: 8px; flex-wrap: wrap; }
+.seg label { height: 38px; padding: 0 14px; display: flex; align-items: center; gap: 8px; border: 1px solid var(--line2); border-radius: 8px; cursor: pointer; font-size: 14px; }
+.seg label:has(input:checked) { border-color: var(--ink); background: var(--surface2); font-weight: 600; }
+.qc { padding: 22px 26px; display: flex; flex-direction: column; gap: 14px; }
+.qc.enter { animation: rise .4s ease-out both; }
+@keyframes rise { from { opacity: 0; transform: translateY(8px); } }
+.qc .ch { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+.qc .qtext { margin: 0; font-family: var(--sans); font-size: 20px; font-weight: 500; line-height: 1.35; }
+.qc .qtext[contenteditable="true"] { background: #FFFFFF; outline: 2px solid var(--ink); border-radius: 6px; padding: 4px 8px; }
+.opts { margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 24px; font-family: var(--sans); font-size: 16px; }
+.opts li { display: flex; align-items: center; gap: 12px; min-height: 42px; padding: 4px 10px 4px 4px; border-radius: 8px; }
+.opts .k { width: 30px; height: 30px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; border: 1px solid var(--line2); border-radius: 50%; font-family: var(--sans); font-size: 13px; font-weight: 600; }
+.opts li.right { background: var(--greentint); }
+.opts li.right .k { border-color: var(--green); background: var(--green); color: #FFFFFF; }
+.why { padding: 12px 14px; border-radius: 10px; background: var(--pinktint); }
+.why b { display: block; font-size: 13px; color: var(--pinktext); margin-bottom: 2px; }
+.why p { margin: 0; font-size: 15px; line-height: 1.45; color: var(--ink); }
+.ansline { margin: 0; display: flex; align-items: baseline; gap: 10px; font-size: 14px; color: var(--ink2); }
+.ansline span { font-family: var(--sans); font-size: 16px; font-weight: 600; color: var(--green); }
+.actions { position: sticky; bottom: env(safe-area-inset-bottom, 0px); padding: 14px 18px; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+.empty-state { padding: 56px 32px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.empty-state p { margin: 0; max-width: 420px; }
+.loading { padding: 40px 28px; display: flex; align-items: center; justify-content: center; gap: 12px; font-family: var(--sans); font-size: 16px; color: var(--ink2); }
+
+@media (max-width: 900px) {
+  .nav-in { padding-inline: 16px; gap: 16px; }
+  .me span:last-child { display: none; }
+  .wrap, .narrow { padding-inline: 16px; }
+  .page { padding-block: 20px 48px; }
+  .phead h1 { font-size: 32px; }
+  .acard { grid-template-columns: 1fr; }
+  .qcard { padding: 24px 20px 16px; }
+  .prompt { font-size: 27px; }
+  .ansrow { flex-direction: column; }
+  .hero { padding: 24px 20px; }
+  .headline { font-size: 32px; }
+  .stats { grid-template-columns: 1fr 1fr; }
+  .scores { grid-template-columns: 1fr; }
+  .sv { font-size: 48px; }
+  .detail { padding-left: 20px; }
+  .detail .two { grid-template-columns: 1fr; gap: 20px; }
+  .t3grid { grid-template-columns: 1fr; }
+  .settings { position: static; }
+  .opts { grid-template-columns: 1fr; }
+  .subbar .crumbs .cur { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+</style>
+
+<div id="app"></div>
+<div id="drawer"></div>
+<div id="modal"></div>
+<div id="toast" role="status" aria-live="polite" hidden></div>
+
+<script>
+(function () {
+  'use strict';
+
+  const I = {
+    mark: '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8.6l2.6 2.6L13 3.8" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    eye: '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true" style="flex-shrink:0"><path d="M1.5 8s2.4-4.5 6.5-4.5S14.5 8 14.5 8 12.1 12.5 8 12.5 1.5 8 1.5 8z" stroke="currentColor" stroke-width="1.3"/><circle cx="8" cy="8" r="2" stroke="currentColor" stroke-width="1.3"/></svg>',
+    arrow: (c) => `<svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M3 9h11M10 4.5L14.5 9 10 13.5" stroke="${c}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+    back: '<svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M15 9H4M8 4.5L3.5 9 8 13.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    chev: '<svg class="chev" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="#141414" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    x: '<svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M4.5 4.5l9 9M13.5 4.5l-9 9" stroke="#141414" stroke-width="1.8" stroke-linecap="round"/></svg>',
+    check: '<svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true" style="flex-shrink:0"><path d="M4 9.4l3 3 7-7.4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    cross: '<svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true" style="flex-shrink:0;margin-top:2px"><path d="M5 5l8 8M13 5l-8 8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>',
+    bulb: '<svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M6.5 13.5h5M7.2 16h3.6M9 2a5 5 0 0 0-3 9c.6.5 1 1.2 1 2h4c0-.8.4-1.5 1-2a5 5 0 0 0-3-9z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>',
+    pencil: '<svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true"><path d="M5 23l1.4-5.2L18.8 5.4a2 2 0 0 1 2.8 0l1 1a2 2 0 0 1 0 2.8L10.2 21.6z" stroke="#141414" stroke-width="1.6" stroke-linejoin="round"/><path d="M16.6 7.6l3.8 3.8" stroke="#141414" stroke-width="1.6"/></svg>',
+    dCorrect: '<svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><circle cx="7" cy="7" r="6.5" fill="#2E6A43"/><path d="M4.2 7.2l1.9 1.9 3.8-4" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    dWrong: '<svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><circle cx="7" cy="7" r="6.5" fill="#B3342B"/><path d="M4.8 4.8l4.4 4.4M9.2 4.8l-4.4 4.4" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/></svg>',
+    solid: (s = 18) => `<svg width="${s}" height="${s}" viewBox="0 0 18 18" aria-hidden="true"><circle cx="9" cy="9" r="8" fill="#2E6A43"/><path d="M5.4 9.3l2.4 2.4 4.8-5" fill="none" stroke="#FFFBF4" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+    shaky: (s = 18) => `<svg width="${s}" height="${s}" viewBox="0 0 18 18" aria-hidden="true"><circle cx="9" cy="9" r="7.2" fill="none" stroke="#8F5E10" stroke-width="1.6"/><path d="M9 1.8a7.2 7.2 0 0 1 0 14.4z" fill="#8F5E10"/></svg>`,
+    needs: (s = 18) => `<svg width="${s}" height="${s}" viewBox="0 0 18 18" aria-hidden="true"><path d="M9 1.8l7.6 13.4H1.4z" fill="#B3342B"/><path d="M9 7v3.6" stroke="#FFFBF4" stroke-width="1.8" stroke-linecap="round"/><circle cx="9" cy="12.9" r="1" fill="#FFFBF4"/></svg>`
+  };
+  const ST = { solid: 'Solid', shaky: 'Shaky', needs: 'Needs work' };
+  const status = (k, s) => `<span class="st ${k}">${I[k](s)}${ST[k]}</span>`;
+  const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const $ = (sel) => document.querySelector(sel);
+
+  // ---------- content ----------
+  const TITLE = 'Differentiation: chain rule &amp; tangents';
+  const MAX = [100, 90, 70];
+  const LAST_HINT = 2;
+  const HINTS = [null,
+    { name: 'Hint 1', desc: 'A question that points you in a direction.', text: 'A tangent line needs a point and a gradient. You already have the point (4, 3). How are you finding the gradient?' },
+    { name: 'Hint 2', desc: 'Walks you through the key step.', text: 'Write √(2x + 1) as (2x + 1)^½. The chain rule gives ½(2x + 1)^−½ × (derivative of 2x + 1). Substitute x = 4.' }
+  ];
+  const QUESTIONS = {
+    1: { prompt: 'Differentiate <i>f</i>(<i>x</i>) = (3<i>x</i>² − 5)⁴.', seeded: { state: 'correct', score: 100, hint: 0, answer: 'f′(x) = 24x(3x² − 5)³' } },
+    2: { prompt: 'Find the equation of the tangent to <span style="white-space:nowrap"><i>y</i> = √<span class="root">2<i>x</i> + 1</span></span> at <i>x</i> = 4.' },
+    3: { prompt: 'Given <i>g</i>(<i>x</i>) = e<sup><i>x</i>² − 3<i>x</i></sup>, find the <i>x</i>-coordinate where <i>g</i>′(<i>x</i>) = 0.', seeded: { state: 'correct', score: 100, hint: 0, answer: 'x = 1.5' } },
+    4: { prompt: '<i>f</i>(<i>x</i>) = ln(<i>x</i>² + 1). Find <i>f</i>′(1).', seeded: { state: 'helped', score: 70, hint: 2, answer: '1' } }
+  };
+  const AI = {
+    outer: "That's the outer part. With the chain rule there's one more factor. What's the derivative of the inside, 2x + 1?",
+    multiply: 'Multiply the outer derivative by it. What do you get when you simplify?',
+    generic: "Walk me through the step you're unsure of. What do you have for the gradient so far?",
+    explain1: 'A line is fixed by one point and its slope. You have the point. What does dy/dx give you at x = 4?',
+    explain2: 'Start from (2x + 1)^½. Bring the ½ down, lower the power by one, then multiply by the derivative of 2x + 1. What do you get before you put in x = 4?'
+  };
+  const SCRIPT_STUDENT = ['is the derivative of √(2x+1) just 1/(2√(2x+1))?', '2? so where does it go', 'can you just tell me the gradient'];
+  const SCRIPT_ANSWERS = ['y = x/6 + 7/3', 'y = ⅓x + 5/3'];
+
+  const QUIZ = [
+    { type: 'Multiple choice', q: 'Which is the derivative of (5<i>x</i> − 2)<sup>½</sup>?', opts: [['A', '1 / (2√(5<i>x</i> − 2))'], ['B', '5 / (2√(5<i>x</i> − 2))', true], ['C', '5√(5<i>x</i> − 2)'], ['D', '5 / √(5<i>x</i> − 2)']], why: 'A = Mina’s Q2 mistake' },
+    { type: 'Short answer', q: 'Find the gradient of <i>y</i> = (<i>x</i>² + 3)³ at <i>x</i> = 1.', ans: '96', why: 'Non-linear inner function' },
+    { type: 'Short answer', q: 'A student writes <span style="white-space:nowrap"><i>d</i>/<i>dx</i>[e<sup>4x</sup>] = e<sup>4x</sup></span>. Explain the error in one sentence.', ans: 'The inner derivative 4 is missing, so it should be 4e<sup>4x</sup>.', why: 'Spot the mistake' }
+  ];
+
+  const T2Q = [
+    { n: 1, q: 'Differentiate (3<i>x</i>² − 5)⁴', result: 'Correct · 1st try', score: '100%', hint: 0, ai: 0, time: '3 min', st: 'solid', concepts: 'Chain rule · inner derivative, Power rule', attempts: [['f′(x) = 24x(3x² − 5)³', true]], note: ['No help'] },
+    { n: 2, q: 'Tangent to <i>y</i> = √(2<i>x</i> + 1) at <i>x</i> = 4', result: 'Correct · 2nd try', score: '90%', hint: 1, ai: 3, time: '14 min', st: 'shaky', concepts: 'Chain rule · inner derivative, Equation of a tangent line', attempts: [['y = x/6 + 7/3', false], ['y = ⅓x + 5⁄3', true]],
+      summary: ['Missed: inner derivative (×2)', 'Fixed after 2 AI prompts + Hint 1', 'Asked for the answer once — refused'],
+      convo: [
+        ['06:12', 'Mina', 'is the derivative of √(2x+1) just 1/(2√(2x+1))?'],
+        ['', 'AI', AI.outer],
+        ['06:40', 'Mina', '2? so where does it go'],
+        ['', 'AI', AI.multiply],
+        ['07:05', 'mark', 'Hint 1 opened'],
+        ['08:30', 'Mina', 'can you just tell me the gradient'],
+        ['', 'AI', "I won't give the final value here. If you're stuck, Hint 2 walks through that step — your max score would drop to 70%."]
+      ] },
+    { n: 3, q: '<i>g</i>′(<i>x</i>) = 0 for <i>g</i>(<i>x</i>) = e<sup>x² − 3x</sup>', result: 'Correct · 1st try', score: '100%', hint: 0, ai: 2, time: '9 min', st: 'shaky', concepts: 'Chain rule · inner derivative', attempts: [['x = 1.5', true]], note: ['2 AI questions: derivative of e^(x²−3x)', 'No hints'] },
+    { n: 4, q: '<i>f</i>′(1) for <i>f</i>(<i>x</i>) = ln(<i>x</i>² + 1)', result: 'Correct · 2nd try', score: '70%', hint: 2, ai: 0, time: '12 min', st: 'needs', concepts: 'Chain rule · inner derivative', attempts: [['1/2', false], ['1', true]], note: ['Missed: 2x (same as Q2)', 'Hint 1 + Hint 2 before correct'] }
+  ];
+
+  // ---------- state ----------
+  function fresh() {
+    return {
+      view: 's1', cur: 2,
+      q2: { remaining: 90, elapsed: 0, attemptsLeft: 3, attempts: [], hint: 0, hintTimes: {}, state: 'progress', score: null, chat: [], used: {}, busy: false, feedback: null, working: '', draft: '' },
+      drawer: { open: false, tab: 'ask' },
+      t2open: { 2: true }, convoOpen: true,
+      t3: { phase: 'idle', cards: [] }
+    };
+  }
+  let S = fresh();
+
+  const mmss = (s) => `${String(Math.floor(s / 60)).padStart(2, '0')}:${String(s % 60).padStart(2, '0')}`;
+  const locked = () => S.q2.remaining > 0;
+  const clockStr = (sec) => `${Math.floor(sec / 60)}:${String(sec % 60).padStart(2, '0')}`;
+
+  function go(view, q) {
+    closeModal();
+    S.drawer.open = false; renderDrawer();
+    $('#toast').hidden = true;
+    S.view = view;
+    if (q) S.cur = q;
+    render();
+    window.scrollTo(0, 0);
+  }
+
+  // ---------- chrome ----------
+  function nav(role) {
+    const student = role === 'student';
+    return `<header class="nav"><div class="nav-in">
+      <button class="logo" data-go="${student ? 's1' : 't1'}">Onside</button>
+      <nav class="tabs" aria-label="Main">
+        <button class="tab on" data-go="${student ? 's1' : 't1'}" aria-current="page">${student ? 'Assignments' : 'Students'}</button>
+      </nav>
+      <div class="me"><span class="avatar">${student ? 'MC' : 'DS'}</span><span>${student ? 'Mina Cho' : 'Daniel Seo'}</span></div>
+    </div></header>`;
+  }
+  const crumbs = (items) => `<nav class="crumbs" aria-label="Breadcrumb">${items.map((it, i) => (it.go ? `<button data-go="${it.go}">${it.label}</button>` : `<span class="cur">${it.label}</span>`) + (i < items.length - 1 ? '<span aria-hidden="true">/</span>' : '')).join('')}</nav>`;
+
+  function qState(n) {
+    if (n === 2) return S.q2.state;
+    return QUESTIONS[n].seeded.state;
+  }
+  const answeredCount = () => [1, 2, 3, 4].filter((n) => qState(n) !== 'progress').length;
+
+  // ---------- S1 ----------
+  function viewS1() {
+    const done = answeredCount();
+    return nav('student') + `
+    <main class="page"><div class="wrap">
+      <div class="phead"><div><h1>Your assignments</h1><p>Due this week</p></div></div>
+      <div class="stack">
+        <div class="banner">${I.eye}Your tutor can see how you use the AI Helper.</div>
+        <div class="alist">
+          <article class="card acard clickable" data-go="s2" data-q="2">
+            <div>
+              <span class="pill gray">Math AA SL</span>
+              <h3>${TITLE}</h3>
+              <div class="meta"><span>Due Thu, 24 Sep</span><span>4 questions</span>
+                <span style="display:flex;align-items:center;gap:10px"><span class="bar" aria-hidden="true">${[1, 2, 3, 4].map((i) => `<span class="${i <= done ? 'on' : ''}"></span>`).join('')}</span>${done} of 4</span>
+              </div>
+            </div>
+            <button class="btn primary" data-go="s2" data-q="2">${done === 4 ? 'Review' : 'Continue'} ${I.arrow('#FFFFFF')}</button>
+          </article>
+          <article class="card acard">
+            <div>
+              <span class="pill gray">Economics HL</span>
+              <h3>Negative externalities — short answers</h3>
+              <div class="meta"><span>Due Mon, 28 Sep</span><span>Not started</span></div>
+            </div>
+            <button class="btn" data-toast="This assignment isn't part of the demo.">Start</button>
+          </article>
+        </div>
+      </div>
+    </div></main>`;
+  }
+
+  // ---------- S2 ----------
+  function viewS2() {
+    return nav('student') + `
+    <div class="subbar"><div class="wrap">
+      ${crumbs([{ label: 'Assignments', go: 's1' }, { label: TITLE }])}
+      <button class="btn primary sm" data-go="s3">Submit assignment</button>
+    </div></div>
+    <main class="page"><div class="narrow">
+      <div class="qtop"><span class="count" id="qcount"></span><ol class="stepper" id="stepper" aria-label="Questions"></ol></div>
+      <article class="card qcard" id="qcard"></article>
+      <div class="pager" id="pager"></div>
+    </div></main>`;
+  }
+
+  function renderStepper() {
+    const el = $('#stepper'); if (!el) return;
+    $('#qcount').textContent = `Question ${S.cur} of 4`;
+    const label = { correct: 'answered', helped: 'answered', wrong: 'answered', progress: 'not answered yet' };
+    el.innerHTML = [1, 2, 3, 4].map((n) => {
+      const st = qState(n);
+      const dot = st === 'progress' ? '' : `<span class="dot">${st === 'wrong' ? I.dWrong : I.dCorrect}</span>`;
+      return `<li><button data-q="${n}" class="${S.cur === n ? 'on' : ''}" ${S.cur === n ? 'aria-current="step"' : ''} aria-label="Question ${n}, ${label[st]}">${n}${dot}</button></li>`;
+    }).join('');
+    const p = $('#pager');
+    const prev = S.cur > 1 ? `<button class="btn ghost" data-q="${S.cur - 1}">${I.back} Previous</button>` : '<span></span>';
+    const next = S.cur < 4 ? `<button class="btn" data-q="${S.cur + 1}">Next ${I.arrow('#141414')}</button>` : `<button class="btn primary" data-go="s3">Review and submit ${I.arrow('#FFFFFF')}</button>`;
+    p.innerHTML = prev + next;
+  }
+
+  function hintNotes(h) {
+    if (!h) return '';
+    return `<div class="stack" style="gap:8px">${[1, 2].filter((i) => i <= h).map((i) => `<details class="hintnote" ${i === h ? 'open' : ''}><summary>${HINTS[i].name}</summary><p><span>${esc(HINTS[i].text)}</span></p></details>`).join('')}</div>`;
+  }
+
+  function renderCard() {
+    const el = $('#qcard'); if (!el) return;
+    const n = S.cur;
+    const prompt = `<p class="prompt">${QUESTIONS[n].prompt}</p>`;
+    if (n !== 2) {
+      const s = QUESTIONS[n].seeded;
+      el.innerHTML = `${prompt}
+        ${hintNotes(s.hint)}
+        <div class="field"><label>Your answer</label><input class="answer" disabled value="${esc(s.answer)}" aria-label="Your answer"></div>
+        <div class="fb ok">${I.check}<span class="t">Answered</span></div>
+        <div class="qfoot" style="border:0;padding:0"></div>`;
+      return;
+    }
+    const q = S.q2;
+    const final = q.state !== 'progress';
+    el.innerHTML = `${prompt}
+      <div id="hints">${hintNotes(q.hint)}</div>
+      <div class="field">
+        <label for="working">Your working <span class="muted" style="font-weight:400">(optional)</span></label>
+        <textarea id="working" class="working" rows="3" placeholder="Write your steps here"></textarea>
+      </div>
+      <div class="field">
+        <label for="answer">Final answer</label>
+        <form class="ansrow" id="ansform">
+          <input id="answer" class="answer" type="text" autocomplete="off" placeholder="y = …" ${final ? 'disabled' : ''}>
+          <button class="btn primary lg" type="submit" ${final ? 'disabled' : ''}>Check answer</button>
+        </form>
+      </div>
+      <div id="fb"></div>
+      <div class="qfoot">${final ? '' : `Stuck on a step? <button class="link" data-helper="1">Open the Helper</button>`}</div>`;
+    const w = $('#working');
+    w.value = q.working;
+    w.addEventListener('input', () => { q.working = w.value; });
+    renderFeedback();
+  }
+
+  function renderFeedback() {
+    const el = $('#fb'); if (!el) return;
+    const f = S.q2.feedback;
+    if (!f) { el.innerHTML = ''; return; }
+    el.innerHTML = `<div class="fb ${f.ok ? 'ok' : 'no'}" role="status">${f.ok ? I.check : I.cross}<div><div class="t">${f.text}</div>${f.sub ? `<div class="s">${f.sub}</div>` : ''}</div></div>`;
+  }
+
+  function norm(s) {
+    return s.toLowerCase().replace(/⅓/g, '1/3').replace(/⁵⁄₃|5⁄3/g, '5/3').replace(/⁄/g, '/').replace(/[−–]/g, '-').replace(/[\s*·]/g, '');
+  }
+  const OK2 = new Set(['1/3x+5/3', 'x/3+5/3', '(1/3)x+5/3', '(x+5)/3', '1/3(x+5)', '(1/3)(x+5)', '5/3+1/3x', '5/3+x/3', '5/3+(1/3)x', '(x/3)+(5/3)', '(1/3)x+(5/3)']);
+  function isCorrect(raw) {
+    const s = norm(raw);
+    if (s === '3y=x+5' || s === 'x-3y+5=0' || s === 'x-3y=-5') return true;
+    return OK2.has(s.replace(/^y=/, ''));
+  }
+
+  function checkAnswer() {
+    const q = S.q2;
+    if (q.state !== 'progress') return;
+    const input = $('#answer');
+    const v = input.value.trim();
+    if (!v) { q.feedback = { ok: false, text: 'Enter an answer first.' }; renderFeedback(); input.focus(); return; }
+    if (isCorrect(v)) {
+      q.attempts.push({ v, ok: true });
+      q.state = q.hint > 0 ? 'helped' : 'correct';
+      q.score = MAX[q.hint];
+      q.feedback = { ok: true, text: 'Correct.' };
+      renderCard(); renderStepper();
+      return;
+    }
+    q.attempts.push({ v, ok: false });
+    q.attemptsLeft -= 1;
+    if (q.attemptsLeft === 0) {
+      q.state = 'wrong'; q.score = 0;
+      q.feedback = { ok: false, text: 'That was your last attempt.', sub: 'Daniel will go over it in your next lesson.' };
+      renderCard(); renderStepper();
+      return;
+    }
+    q.feedback = { ok: false, text: 'Not quite.', sub: `${q.attemptsLeft} attempt${q.attemptsLeft === 1 ? '' : 's'} left` };
+    input.value = '';
+    renderFeedback();
+    input.focus();
+  }
+
+  // ---------- drawer ----------
+  function openDrawer(tab) {
+    S.drawer.open = true;
+    if (tab) S.drawer.tab = tab;
+    renderDrawer();
+    const f = $('#ask') || $('.drawer .xbtn');
+    if (f) f.focus();
+  }
+  function closeDrawer() {
+    S.drawer.open = false;
+    renderDrawer();
+    const l = $('[data-helper]'); if (l) l.focus();
+  }
+
+  function renderDrawer(reveal) {
+    const root = $('#drawer');
+    const hadFocus = document.activeElement && document.activeElement.id === 'ask';
+    if (!S.drawer.open || S.view !== 's2' || S.cur !== 2) { root.innerHTML = ''; return; }
+    const q = S.q2;
+    let body;
+    if (locked()) {
+      const C = 2 * Math.PI * 64;
+      body = `<div class="lockbox">
+        <div class="ring" role="timer" aria-label="Helper opens in ${q.remaining} seconds">
+          <svg width="150" height="150" viewBox="0 0 150 150" aria-hidden="true"><circle class="track" cx="75" cy="75" r="64"/><circle class="fill" id="lockfill" cx="75" cy="75" r="64" stroke-dasharray="${C.toFixed(1)}" stroke-dashoffset="${(C * q.remaining / 90).toFixed(1)}"/></svg>
+          <div class="num"><b id="lockclock">${clockStr(q.remaining)}</b><span>until it opens</span></div>
+        </div>
+        <h3>Give it a proper try first.</h3>
+                <button class="btn" data-close-drawer="1" style="margin-top:6px">Back to the question</button>
+      </div>`;
+    } else {
+      const final = q.state !== 'progress';
+      const next = q.hint + 1;
+      let hintBlock = '';
+      if (q.hint > 0) {
+        const h = q.hint;
+        hintBlock += `<div class="hcard">
+          <span class="hlab">Hint ${h} of ${LAST_HINT}</span>
+          <p>${esc(HINTS[h].text)}</p>
+          <div class="chips">
+            <button class="chip strong" data-dontget="${h}" ${q.busy ? 'disabled' : ''}>I don't get this hint</button>
+            ${!final && next <= LAST_HINT ? `<button class="chip" data-hint="${next}">Open Hint ${next}${next === LAST_HINT ? ' · last hint' : ''}</button>` : ''}
+          </div>
+          ${h > 1 ? `<details class="prev"><summary>Hint 1</summary><p>${esc(HINTS[1].text)}</p></details>` : ''}
+        </div>`;
+      } else if (!final) {
+        hintBlock += `<div class="hrow"><div><b>Hint 1</b></div><button class="btn sm" data-hint="1">Open</button></div>`;
+      }
+            body = `<div class="dbody ${reveal ? 'reveal' : ''}">
+        <div class="hzone">${hintBlock}</div>
+        <div class="askdiv">${q.hint > 0 ? 'Ask about this hint or any step' : 'Ask about any step'}</div>
+        <div class="log" id="log" aria-live="polite"></div>
+        <form class="dfoot" id="askform">
+          <div class="ask"><label for="ask" class="sr">Ask the Helper</label><input id="ask" autocomplete="off" placeholder="${q.hint > 0 ? 'Ask about this hint or your working' : "Ask about the step you're stuck on"}"><button class="iconbtn" type="submit" aria-label="Send question">${I.arrow('#FFFFFF')}</button></div>
+          <p class="note">Questions don't cost points.</p>
+        </form>
+      </div>`;
+    }
+    root.innerHTML = `<div class="dscrim" data-close-drawer="1"></div>
+      <aside class="drawer" role="dialog" aria-modal="true" aria-labelledby="dtitle">
+        <div class="dh"><h2 id="dtitle">Helper</h2><button class="xbtn" data-close-drawer="1" aria-label="Close Helper">${I.x}</button></div>
+        <p class="dtrans">${I.eye}Your tutor can see how you use the AI Helper.</p>
+        ${body}
+      </aside>`;
+    const a = $('#ask');
+    if (a) { a.value = q.draft; a.addEventListener('input', () => { q.draft = a.value; }); if (hadFocus) a.focus(); }
+    renderLog();
+  }
+
+  function renderLog() {
+    const el = $('#log'); if (!el) return;
+    const q = S.q2;
+    if (!q.chat.length) {
+      el.innerHTML = '<p class="empty">Ask about a step. No answers given.</p>';
+      return;
+    }
+    let items = q.chat;
+    let lastMark = -1;
+    q.chat.forEach((m, i) => { if (m.kind === 'mark') lastMark = i; });
+    const hidden = lastMark > 0 && !q.showEarlier ? q.chat.slice(0, lastMark).filter((m) => m.kind === 'me').length : 0;
+    if (hidden) items = q.chat.slice(lastMark);
+    const more = hidden ? `<button class="link" style="align-self:center;font-size:13px" data-earlier="1">Show ${hidden} earlier question${hidden === 1 ? '' : 's'}</button>` : '';
+    el.innerHTML = more + items.map((m) => {
+      if (m.kind === 'mark') return `<div class="marker">${esc(m.text)}</div>`;
+      if (m.kind === 'me') return `<div class="msg me"><span class="who">You · ${m.t}</span><p>${esc(m.text)}</p></div>`;
+      return `<div class="msg ai"><span class="who">Helper</span><p>${m.pending ? '<span class="dots" aria-label="Helper is typing"><span></span><span></span><span></span></span>' : esc(m.text)}</p></div>`;
+    }).join('');
+    el.scrollTop = el.scrollHeight;
+  }
+
+  function replyFor(text) {
+    const q = S.q2;
+    const t = text.toLowerCase();
+    if (/(just tell|tell me|give me|what'?s the (answer|gradient)|what is the (answer|gradient)|the answer\b|just give)/.test(t)) {
+      const next = q.hint + 1;
+      if (q.state !== 'progress') return "This question is closed. Look back at where your first attempt went wrong.";
+      if (next <= LAST_HINT) return `I won't give the final value here. If you're stuck, Hint ${next} walks through that step — your max score would drop to ${MAX[next]}%.`;
+      return "I won't give the final value here. Try the step in Hint 2 and tell me what you get.";
+    }
+    if (/don'?t (get|understand)|confus|why do i need|what does (the|this) hint/.test(t)) return q.hint >= 2 ? AI.explain2 : AI.explain1;
+    if (!q.used.outer && (/(√|sqrt|root)/.test(t) || /1\s*\/\s*\(?\s*2/.test(t))) { q.used.outer = true; return AI.outer; }
+    if (!q.used.multiply && /where does it go|^\s*2\b|times 2|multiply/.test(t)) { q.used.multiply = true; return AI.multiply; }
+    if (!q.used.outer) { q.used.outer = true; return AI.outer; }
+    if (!q.used.multiply) { q.used.multiply = true; return AI.multiply; }
+    return AI.generic;
+  }
+
+  function sendChat(preset) {
+    const q = S.q2;
+    const input = $('#ask');
+    const text = preset || input.value.trim();
+    if (!text || q.busy) return;
+    if (!preset) { input.value = ''; q.draft = ''; }
+    q.chat.push({ kind: 'me', text, t: mmss(q.elapsed) });
+    const reply = replyFor(text);
+    const m = { kind: 'ai', text: '', pending: true };
+    q.chat.push(m);
+    q.busy = true;
+    renderLog();
+    setTimeout(() => {
+      m.pending = false;
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { m.text = reply; q.busy = false; renderDrawer(); return; }
+      let i = 0;
+      const step = () => {
+        i = Math.min(reply.length, i + 3);
+        m.text = reply.slice(0, i);
+        renderLog();
+        if (i < reply.length) setTimeout(step, 16); else { q.busy = false; renderDrawer(); }
+      };
+      step();
+    }, 750);
+  }
+
+  // ---------- modal ----------
+  function openHintModal(i) {
+    const from = MAX[S.q2.hint], to = MAX[i];
+    const title = `Open Hint ${i}?`;
+    $('#modal').innerHTML = `<div class="scrim" data-close-modal="1">
+      <div class="dialog" role="alertdialog" aria-modal="true" aria-labelledby="mt" aria-describedby="md">
+        <h2 id="mt">${title}</h2>
+        <p id="md">Your max score for this question drops from ${from}% to ${to}%.</p>
+        <div class="drop" aria-hidden="true"><s>${from}%</s>${I.arrow('#141414')}<b>${to}%</b></div>
+        <div class="acts"><button class="btn" data-close-modal="1" id="keep">Keep trying</button><button class="btn primary" data-open-hint="${i}">Open Hint ${i}</button></div>
+      </div></div>`;
+    $('#keep').focus();
+  }
+  function closeModal() { $('#modal').innerHTML = ''; }
+  function openHint(i) {
+    const q = S.q2;
+    q.hint = i;
+    q.hintTimes[i] = mmss(q.elapsed);
+    q.chat.push({ kind: 'mark', text: `Hint ${i} opened · ${mmss(q.elapsed)}`, t: mmss(q.elapsed) });
+    q.showEarlier = false;
+    closeModal();
+    renderDrawer();
+    const h = $('#hints'); if (h) h.innerHTML = hintNotes(q.hint);
+  }
+
+  // ---------- S3 ----------
+  function viewS3() {
+    const q = S.q2;
+    const rows = [1, 2, 3, 4].map((n) => {
+      const st = qState(n);
+      const hint = n === 2 ? q.hint : QUESTIONS[n].seeded.hint;
+      const score = n === 2 ? (st === 'progress' ? 0 : q.score) : QUESTIONS[n].seeded.score;
+      const res = st === 'progress' ? '<span class="pill gray">Not answered</span>' : st === 'wrong' ? '<span class="pill red">Incorrect</span>' : '<span class="pill green">Correct</span>';
+      const help = hint === 0 ? 'None' : hint === 1 ? 'Hint 1' : 'Hint 1, Hint 2';
+      return { n, res, help, score };
+    });
+    const total = Math.round(rows.reduce((a, r) => a + r.score, 0) / 4);
+    return nav('student') + `
+    <main class="page"><div class="narrow">
+      ${crumbs([{ label: 'Assignments', go: 's1' }, { label: 'Submitted' }])}
+      <div class="phead"><div><h1>Assignment submitted</h1><p>${TITLE} · Math AA SL</p></div></div>
+      <div class="card">
+        <div class="card-hd"><h2>Your score</h2><span class="serif" style="font-size:40px;line-height:1">${total}%</span></div>
+        <div class="scrollx"><table class="t">
+          <thead><tr><th>Question</th><th>Result</th><th>Help used</th><th style="text-align:right">Score</th></tr></thead>
+          <tbody>${rows.map((r) => `<tr><td style="font-weight:600">Q${r.n}</td><td>${r.res}</td><td class="muted">${r.help}</td><td style="text-align:right;font-weight:600">${r.score}%</td></tr>`).join('')}</tbody>
+        </table></div>
+      </div>
+      <div class="banner" style="margin-top:20px;justify-content:space-between;flex-wrap:wrap">
+        <span style="font-weight:600">Daniel reviews this before your next lesson.</span>
+        <button class="btn" data-go="s1">Back to assignments</button>
+      </div>
+    </div></main>`;
+  }
+
+  // ---------- T1 ----------
+  function viewT1() {
+    const MOCK = [
+      ['CL', 'Chloe Lim', 'Integration by parts', 'Math AA HL', '<span class="pill red">Submitted · Needs review</span>', '60%', '95%', status('shaky', 16), 'Review'],
+      ['ET', 'Ethan Tan', 'Quadratic inequalities', 'Sec 4 E-Math', '<span class="pill green">Reviewed</span>', '80%', '85%', status('solid', 16), 'View'],
+      ['SW', 'Sofia Wong', 'Normal distribution', 'Math AI SL', '<span class="pill green">Reviewed</span>', '90%', '90%', status('solid', 16), 'View'],
+      ['AN', 'Arjun Nair', 'Trigonometric identities', 'Sec 3 A-Math', '<span class="pill amber">In progress · 2 of 5</span>', '', '', '<span class="muted">—</span>', 'View'],
+      ['RK', 'Ryan Koh', 'Rates of change', 'Sec 4 A-Math', '<span class="pill gray">Not started · Due Mon</span>', '', '', '<span class="muted">—</span>', 'View'],
+      ['HG', 'Hannah Goh', 'Vectors in 3D', 'Math AA SL', '<span class="pill green">Reviewed</span>', '45%', '80%', status('needs', 16).replace('Needs work', '2 concepts need work'), 'View']
+    ];
+    const ph = MOCK.map(([ini, name, a, subj, st, ind, sup, con, btn]) => `<tr class="hov"><td><div class="who-cell"><span class="avatar">${ini}</span><span style="font-weight:600">${name}</span></div></td><td><div>${a}</div><div class="muted" style="font-size:13px">${subj}</div></td><td>${st}</td><td>${ind ? `<span style="font-weight:700">${ind}</span> <span class="muted">/ ${sup}</span>` : '<span class="muted">—</span>'}</td><td>${con}</td><td style="text-align:right"><button class="btn sm" data-toast="Only Mina's review is part of the demo.">${btn}</button></td></tr>`).join('');
+    return nav('tutor') + `
+    <main class="page"><div class="wrap">
+      <div class="phead"><div><h1>Students</h1><p>7 students · 2 submissions need review</p></div></div>
+      <div class="card"><div class="scrollx"><table class="t" style="min-width:900px">
+        <thead><tr><th>Student</th><th>Latest assignment</th><th>Status</th><th>Independent / Supported</th><th>Concepts</th><th></th></tr></thead>
+        <tbody>
+          <tr class="hov">
+            <td><div class="who-cell"><span class="avatar">MC</span><span style="font-weight:600">Mina Cho</span></div></td>
+            <td><div>${TITLE}</div><div class="muted" style="font-size:13px">Math AA SL</div></td>
+            <td><span class="pill red">Submitted · Needs review</span></td>
+            <td><span style="font-weight:700">25%</span> <span class="muted">/ 90%</span></td>
+            <td>${status('needs', 16).replace('Needs work', '1 concept needs work')}</td>
+            <td style="text-align:right"><button class="btn primary sm" data-go="t2">Review ${I.arrow('#FFFFFF')}</button></td>
+          </tr>
+          ${ph}
+        </tbody>
+      </table></div></div>
+    </div></main>`;
+  }
+
+  // ---------- T2 ----------
+  function viewT2() {
+    const pips = (h) => `<span class="pips" aria-label="${h ? `Hint ${h} opened` : 'No hints'}">${[1, 2].map((i) => `<span class="${i <= h ? 'on' : ''}"></span>`).join('')}</span>`;
+    const aiTag = (r) => (r.hint === 0 && r.ai === 0) ? '<span class="pill ink">Without AI</span>' : '<span class="pill hl">With AI</span>';
+    const rows = T2Q.map((r) => {
+      const open = !!S.t2open[r.n];
+      const att = r.attempts.map(([v, ok], i) => `<div class="att"><span class="muted" style="font-size:13px;width:14px">${i + 1}</span>${ok ? `<span class="v">${esc(v)}</span><span class="pill green">Correct</span>` : `<s class="v">${esc(v)}</s><span class="pill red">Incorrect</span>`}</div>`).join('');
+      const right = `<div><h3>${r.summary ? 'AI summary' : 'Help used'}</h3><ul class="summary">${(r.summary || r.note).map((x) => `<li>${esc(x)}</li>`).join('')}</ul></div>`;
+      const convo = r.convo ? `<div>
+          <button class="btn sm" data-convo="1" aria-expanded="${S.convoOpen}">${S.convoOpen ? 'Hide full conversation' : 'Show full conversation'}</button>
+          ${S.convoOpen ? `<ol class="convo" style="margin-top:12px">${r.convo.map(([tm, who, text]) => who === 'mark'
+            ? `<li class="mk"><span class="tm">${tm}</span><span>${text}</span></li>`
+            : `<li><span class="tm">${tm}</span><span style="font-weight:600;${who === 'AI' ? 'color:var(--ink2)' : ''}">${who}</span><span${who === 'Mina' ? ' style="font-weight:500"' : ' style="color:var(--ink2)"'}>${esc(text)}</span></li>`).join('')}</ol>` : ''}
+        </div>` : '';
+      return `<button class="qrow ${open ? 'open' : ''}" data-row="${r.n}" aria-expanded="${open}">
+          <span class="n">${r.n}</span><span class="qt">${r.q}</span><span>${r.result}</span><span style="font-weight:600">${r.score}</span>${aiTag(r)}${pips(r.hint)}<span>${r.ai}</span><span>${r.time}</span>${status(r.st, 16)}${I.chev}
+        </button>
+        ${open ? `<div class="detail"><div class="two"><div><h3>Attempts</h3>${att}</div>${right}</div>${convo}</div>` : ''}`;
+    }).join('');
+
+    return nav('tutor') + `
+    <main class="page"><div class="wrap">
+      ${crumbs([{ label: 'Students', go: 't1' }, { label: 'Mina Cho' }])}
+      <div class="phead">
+        <div style="display:flex;align-items:center;gap:14px"><span class="avatar lg">MC</span><div><h1 style="font-size:32px">Mina Cho</h1><p style="margin-top:2px">IB DP Year 1 · Math AA SL · Economics HL</p></div></div>
+        <button class="btn accent" data-go="t3">Create review quiz</button>
+      </div>
+      <div class="stack">
+        <section class="card hero">
+          <p class="eyebrow">${TITLE} · Submitted</p>
+          <h2 class="headline"><span>4/4 correct</span><span class="sep">|</span><span>1 without AI</span><span class="sep">|</span><span>Weak spot: <em>Chain rule</em></span></h2>
+          <div class="scores">
+            <div class="score ind">
+              <div><span class="sl">Independent score · no AI</span><span class="sv">25%</span><span class="ss">Solved without AI: <b>1 of 4</b></span></div>
+              <div class="qboxes" aria-label="Solved without AI: Q1">${[1, 2, 3, 4].map((n) => `<span class="${n === 1 ? 'on' : ''}">Q${n}</span>`).join('')}</div>
+            </div>
+            <div class="score sup">
+              <div><span class="sl">Supported score · with AI</span><span class="sv">90%</span><span class="ss">Solved with AI help: <b>3 of 4</b></span></div>
+              <div class="qboxes" aria-label="Solved with AI help: Q2, Q3, Q4">${[1, 2, 3, 4].map((n) => `<span class="${n > 1 ? 'on' : ''}">Q${n}</span>`).join('')}</div>
+            </div>
+          </div>
+          <div class="scorefoot"><span class="facts">38 min · 5 AI questions · 3 hints</span></div>
+        </section>
+        <section class="card" aria-labelledby="cw">
+          <div class="card-hd"><h2 id="cw">Concepts to watch</h2><button class="btn sm" data-go="t3">Create review quiz ${I.arrow('#141414')}</button></div>
+          <div class="scrollx"><table class="t" style="min-width:680px">
+            <thead><tr><th style="width:280px">Concept</th><th style="width:150px">Status</th><th>Why</th></tr></thead>
+            <tbody>
+              <tr><td class="concept">Chain rule · inner derivative</td><td>${status('needs')}</td><td>Missed inner derivative on Q2 and Q4 · repeated after help</td></tr>
+              <tr><td class="concept">Equation of a tangent line</td><td>${status('solid')}</td><td>No help</td></tr>
+              <tr><td class="concept">Power rule</td><td>${status('solid')}</td><td>No help</td></tr>
+            </tbody>
+          </table></div>
+        </section>
+        <section class="card" aria-labelledby="qq" style="overflow:hidden">
+          <div class="card-hd"><h2 id="qq">Question by question</h2></div>
+          <div class="scrollx"><div class="qlist">
+            <div class="qrow head"><span>Q</span><span>Question</span><span>Result</span><span>Score</span><span>Solved</span><span>Hints</span><span>AI qs</span><span>Time</span><span>Status</span><span></span></div>
+            ${rows}
+          </div></div>
+        </section>
+      </div>
+    </div></main>`;
+  }
+
+  // ---------- T3 ----------
+  function viewT3() {
+    const tag = (k) => status(k, 14).replace('class="st', 'style="font-size:12px" class="st');
+    return nav('tutor') + `
+    <main class="page"><div class="wrap">
+      ${crumbs([{ label: 'Students', go: 't1' }, { label: 'Mina Cho', go: 't2' }, { label: 'Review quiz' }])}
+      <div class="phead"><div><h1>Review quiz for Mina</h1><p>Built from ${TITLE}</p></div></div>
+      <div class="t3grid">
+        <form class="card settings" id="quizform" aria-label="Quiz settings">
+          <fieldset><legend>Concepts to include</legend>
+            <label class="opt"><input type="checkbox" id="c1" checked><span style="flex-grow:1">Chain rule · inner derivative</span>${tag('needs')}</label>
+            <label class="opt"><input type="checkbox" id="c2"><span style="flex-grow:1">Equation of a tangent line</span>${tag('solid')}</label>
+            <label class="opt"><input type="checkbox" id="c3"><span style="flex-grow:1">Power rule</span>${tag('solid')}</label>
+          </fieldset>
+          <fieldset><legend>Number of questions</legend>
+            <div class="seg"><label><input type="radio" name="count" id="n3" checked>3</label><label><input type="radio" name="count" id="n5">5</label></div>
+          </fieldset>
+          <fieldset><legend>Format</legend>
+            <div class="seg"><label><input type="radio" name="fmt" id="f1">Multiple choice</label><label><input type="radio" name="fmt" id="f2">Short answer</label><label><input type="radio" name="fmt" id="f3" checked>Mixed</label></div>
+          </fieldset>
+          <label class="opt" style="align-items:flex-start;padding-top:16px;border-top:1px solid var(--line)">
+            <input type="checkbox" id="nohelper" checked style="margin-top:3px">
+            <span><span style="display:block;font-weight:600">Turn off AI Helper</span></span>
+          </label>
+          <button class="btn primary lg" type="submit">Generate quiz</button>
+        </form>
+        <div class="stack" id="quiz"></div>
+      </div>
+    </div></main>`;
+  }
+
+  function renderQuiz(animate) {
+    const el = $('#quiz'); if (!el) return;
+    const t = S.t3;
+    if (t.phase === 'idle') {
+      el.innerHTML = `<div class="card empty-state"><p class="serif" style="font-size:26px">No questions yet</p></div>`;
+      return;
+    }
+    if (t.phase === 'loading') {
+      el.innerHTML = `<div class="card loading" role="status"><span class="dots"><span></span><span></span><span></span></span>Writing questions from Mina's mistakes</div>`;
+      return;
+    }
+    const off = $('#nohelper') ? $('#nohelper').checked : true;
+    const cards = t.cards.map((c, idx) => {
+      const d = QUIZ[c.id];
+      const body = d.opts
+        ? `<ol class="opts">${d.opts.map(([k, v, right]) => `<li class="${right ? 'right' : ''}"><span class="k">${k}</span><span>${v}</span>${right ? '<span class="sr">(correct answer)</span>' : ''}</li>`).join('')}</ol>`
+        : `<p class="ansline">Answer <span>${d.ans}</span></p>`;
+      return `<article class="card qc ${animate || c.fresh ? 'enter' : ''}" style="animation-delay:${animate ? idx * 120 : 0}ms">
+        <div class="ch"><span class="pill gray">Question ${idx + 1} · ${d.type}</span>
+          <div style="display:flex;gap:4px">
+            <button class="btn ghost sm" data-edit="${idx}">${c.editing ? 'Done' : 'Edit'}</button>
+            <button class="btn ghost sm" data-regen="${idx}">Regenerate</button>
+            <button class="btn ghost sm" data-remove="${idx}" style="color:var(--ink2)">Remove</button>
+          </div></div>
+        <p class="qtext" ${c.editing ? 'contenteditable="true"' : ''} data-qtext="${idx}">${c.q || d.q}</p>
+        ${body}
+        <div class="why"><b>Targets</b><p>${d.why}</p></div>
+      </article>`;
+    }).join('');
+    el.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px"><h2 class="serif" style="margin:0;font-size:26px;font-weight:500">${t.cards.length} question${t.cards.length === 1 ? '' : 's'}</h2><span class="muted" style="font-size:14px">Mixed · AI Helper ${off ? 'off' : 'on'}</span></div>
+      ${cards || '<div class="card empty-state"><p class="muted">All questions removed. Select Generate quiz to start again.</p></div>'}
+      <div class="card actions"><span></span>
+        <div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn" data-toast="Saved as a warm-up for your next lesson." ${t.cards.length ? '' : 'disabled'}>Use as lesson warm-up</button><button class="btn accent" data-toast="Quiz sent to Mina." ${t.cards.length ? '' : 'disabled'}>Send to Mina</button></div>
+      </div>`;
+    t.cards.forEach((c) => { c.fresh = false; });
+  }
+
+  function generate() {
+    S.t3.phase = 'loading';
+    renderQuiz();
+    setTimeout(() => {
+      S.t3.phase = 'ready';
+      S.t3.cards = QUIZ.map((_, id) => ({ id }));
+      renderQuiz(true);
+    }, 1300);
+  }
+
+  let toastTimer;
+  function toast(msg) {
+    const el = $('#toast');
+    el.innerHTML = `${I.check}<span>${esc(msg)}</span>`;
+    el.hidden = false;
+    el.style.animation = 'none'; void el.offsetWidth; el.style.animation = '';
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => { el.hidden = true; }, 2800);
+  }
+
+  // ---------- render ----------
+  function render() {
+    const v = S.view;
+    $('#app').innerHTML = v === 's1' ? viewS1() : v === 's2' ? viewS2() : v === 's3' ? viewS3() : v === 't1' ? viewT1() : v === 't2' ? viewT2() : viewT3();
+    if (v === 's2') { renderStepper(); renderCard(); }
+    if (v === 't3') renderQuiz();
+    renderDrawer();
+  }
+
+  setInterval(() => {
+    if (S.view !== 's2' || S.cur !== 2 || document.hidden) return;
+    const q = S.q2;
+    q.elapsed += 1;
+    if (q.remaining > 0) {
+      q.remaining -= 1;
+      if (q.remaining === 0 && S.drawer.open) renderDrawer(true);
+      else if (S.drawer.open) {
+        const a = document.getElementById('lockclock'), b = document.getElementById('lockclock2'), f = document.getElementById('lockfill');
+        if (a) a.textContent = clockStr(q.remaining);
+        if (b) b.textContent = clockStr(q.remaining);
+        if (f) f.setAttribute('stroke-dashoffset', (2 * Math.PI * 64 * q.remaining / 90).toFixed(1));
+      }
+    }
+  }, 1000);
+
+  function skipTimer() {
+    if (S.q2.remaining > 0) { S.q2.remaining = 0; if (S.drawer.open) renderDrawer(true); }
+  }
+
+  function typeInto(input, text) {
+    if (!input || input.disabled) return;
+    input.focus();
+    input.value = '';
+    let i = 0;
+    const step = () => {
+      i += 1;
+      input.value = text.slice(0, i);
+      input.dispatchEvent(new Event('input'));
+      if (i < text.length) setTimeout(step, 38);
+    };
+    step();
+  }
+
+  // ---------- events ----------
+  document.addEventListener('click', (e) => {
+    const t = e.target.closest('button, [data-go], [data-close-drawer], [data-close-modal]');
+    if (!t) return;
+    if (t.dataset.closeModal) { if (e.target === t || t.tagName === 'BUTTON') closeModal(); return; }
+    if (t.dataset.closeDrawer) { closeDrawer(); return; }
+    if (t.dataset.go) { go(t.dataset.go, t.dataset.q ? +t.dataset.q : null); return; }
+    if (t.dataset.q) { S.cur = +t.dataset.q; renderStepper(); renderCard(); window.scrollTo(0, 0); return; }
+    if (t.dataset.helper) { openDrawer(); return; }
+    if (t.dataset.dontget) { sendChat(`I don't get Hint ${t.dataset.dontget}`); renderDrawer(); return; }
+    if (t.dataset.earlier) { S.q2.showEarlier = true; renderLog(); return; }
+    if (t.dataset.hint) { openHintModal(+t.dataset.hint); return; }
+    if (t.dataset.openHint) { openHint(+t.dataset.openHint); return; }
+    if (t.dataset.toast) { toast(t.dataset.toast); return; }
+    if (t.dataset.row) { const n = +t.dataset.row; S.t2open[n] = !S.t2open[n]; const y = window.scrollY; render(); window.scrollTo(0, y); return; }
+    if (t.dataset.convo) { S.convoOpen = !S.convoOpen; const y = window.scrollY; render(); window.scrollTo(0, y); return; }
+    if (t.dataset.edit !== undefined) {
+      const i = +t.dataset.edit; const c = S.t3.cards[i];
+      if (c.editing) c.q = $(`[data-qtext="${i}"]`).innerHTML;
+      c.editing = !c.editing; renderQuiz();
+      if (c.editing) $(`[data-qtext="${i}"]`).focus();
+      return;
+    }
+    if (t.dataset.regen !== undefined) { const i = +t.dataset.regen; S.t3.cards[i] = { id: S.t3.cards[i].id, fresh: true }; renderQuiz(); return; }
+    if (t.dataset.remove !== undefined) { S.t3.cards.splice(+t.dataset.remove, 1); renderQuiz(); return; }
+  });
+
+  document.addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (e.target.id === 'ansform') checkAnswer();
+    else if (e.target.id === 'askform') sendChat();
+    else if (e.target.id === 'quizform') generate();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      if ($('#modal').innerHTML) { closeModal(); return; }
+      if (S.drawer.open) { closeDrawer(); return; }
+    }
+    // Demo controls — not shown in the UI
+    if (e.key === '`') { e.preventDefault(); skipTimer(); return; }
+    if (!e.altKey) return;
+    const code = e.code;
+    if (code === 'KeyS') { e.preventDefault(); go('s1'); }
+    else if (code === 'KeyT') { e.preventDefault(); go('t1'); }
+    else if (code === 'KeyR') { e.preventDefault(); S = fresh(); render(); window.scrollTo(0, 0); toast('Demo reset.'); }
+    else if (code === 'KeyN' && S.view === 's2' && S.cur === 2) {
+      e.preventDefault();
+      if (!S.drawer.open) openDrawer();
+      const count = S.q2.chat.filter((m) => m.kind === 'me').length;
+      typeInto($('#ask'), SCRIPT_STUDENT[Math.min(count, SCRIPT_STUDENT.length - 1)]);
+    } else if (code === 'KeyM' && S.view === 's2' && S.cur === 2) {
+      e.preventDefault();
+      if (S.drawer.open) closeDrawer();
+      typeInto($('#answer'), S.q2.attempts.length === 0 ? SCRIPT_ANSWERS[0] : SCRIPT_ANSWERS[1]);
+    }
+  });
+
+  render();
+})();
+</script>

@@ -1,0 +1,1089 @@
+{
+  "unit": 11,
+  "title": "Macroeconomic objectives II: Economic growth, sustainable level of debt",
+  "questions": [
+    {
+      "id": "u11-mcq-01",
+      "format": "mcq",
+      "section": "11.1",
+      "concepts": [
+        "c11-economic-growth"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Which of the following best describes economic growth?",
+      "hints": [
+        "Recall the difference between nominal and real measures of output.",
+        "For each option, ask whether it describes a change in what is produced, a change in prices, or a change in inputs."
+      ],
+      "targets": "Real vs nominal measure of growth",
+      "options": [
+        {
+          "id": "a",
+          "text": "An increase in nominal GDP over a period of time",
+          "misconception": "Nominal GDP can rise only because prices rise, with no extra output produced."
+        },
+        {
+          "id": "b",
+          "text": "An increase in real GDP over a period of time",
+          "misconception": null
+        },
+        {
+          "id": "c",
+          "text": "An increase in the average price level over a period of time",
+          "misconception": "This describes inflation, not a rise in the quantity of output."
+        },
+        {
+          "id": "d",
+          "text": "An increase in the number of people in the labour force",
+          "misconception": "More workers may help output grow, but it is a cause of growth, not growth itself."
+        }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "u11-mcq-02",
+      "format": "mcq",
+      "section": "11.1",
+      "concepts": [
+        "c11-real-gdp-per-capita",
+        "c11-living-standards"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Veld's real GDP grew by 2% last year. Why would an economist prefer real GDP per capita to real GDP when judging whether average living standards in Veld improved?",
+      "hints": [
+        "Compare what the words 'per capita' add to the real GDP figure.",
+        "Ask what could happen to output per person if output rises but something else rises faster."
+      ],
+      "targets": "Why per capita adjustment matters for living standards",
+      "options": [
+        {
+          "id": "a",
+          "text": "It takes account of changes in the size of the population",
+          "misconception": null
+        },
+        {
+          "id": "b",
+          "text": "It removes the effect of inflation, which real GDP does not",
+          "misconception": "Real GDP is already adjusted for inflation; the per capita step adjusts for something else."
+        },
+        {
+          "id": "c",
+          "text": "It includes the value of non-market activities such as unpaid care work",
+          "misconception": "Per capita figures still leave out non-market output, just like total real GDP."
+        },
+        {
+          "id": "d",
+          "text": "It shows how income is shared between rich and poor households",
+          "misconception": "An average per person says nothing about how income is distributed."
+        }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u11-sa-01",
+      "format": "short_answer",
+      "section": "11.1",
+      "concepts": [
+        "c11-economic-growth"
+      ],
+      "command_term": "define",
+      "marks": 2,
+      "prompt": "Define the term economic growth.",
+      "hints": [
+        "Your definition should refer to a specific measure of output.",
+        "Say what happens to that measure and over what kind of period."
+      ],
+      "targets": "Precise definition using real output",
+      "marking_points": [
+        "An increase in real GDP / real output of goods and services [1]",
+        "Over a period of time (e.g. from one year to the next) [1]"
+      ],
+      "model_answer_note": "A full-mark answer states an increase in real GDP (real output) and refers to a time period; 'GDP' alone without 'real' earns only 1."
+    },
+    {
+      "id": "u11-mcq-03",
+      "format": "mcq",
+      "section": "11.1",
+      "concepts": [
+        "c11-natural-capital",
+        "c11-ecological-resources"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Which of the following is an example of natural capital in the country of Kuva?",
+      "hints": [
+        "Use the four types of capital: physical, human, natural and institutional.",
+        "Decide which option is provided by nature rather than produced or learned by people."
+      ],
+      "targets": "Classifying types of capital",
+      "options": [
+        {
+          "id": "a",
+          "text": "A newly built highway linking Kuva's two largest cities",
+          "misconception": "A highway is man-made, so it is physical capital."
+        },
+        {
+          "id": "b",
+          "text": "The fish stocks in Kuva's coastal waters",
+          "misconception": null
+        },
+        {
+          "id": "c",
+          "text": "A training programme that improves the skills of Kuva's nurses",
+          "misconception": "Skills and training are part of human capital."
+        },
+        {
+          "id": "d",
+          "text": "The money that Kuvan households hold in savings accounts",
+          "misconception": "Savings are financial assets, not a factor of production provided by nature."
+        }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "u11-sa-02",
+      "format": "short_answer",
+      "section": "11.1",
+      "concepts": [
+        "c11-physical-capital",
+        "c11-human-capital"
+      ],
+      "command_term": "distinguish",
+      "marks": 2,
+      "prompt": "Distinguish between physical capital and human capital.",
+      "hints": [
+        "Think about what each type of capital consists of.",
+        "For each one, give what it is and the kind of investment that creates it, with a short example."
+      ],
+      "targets": "Physical vs human capital",
+      "marking_points": [
+        "Physical capital is man-made goods used to produce other goods, such as machines, equipment or roads [1]",
+        "Human capital is the skills, knowledge and health of workers, built through spending on education, training and health care [1]"
+      ],
+      "model_answer_note": "A full-mark answer gives a clear description of each type, ideally with an example; one mark for each side of the distinction."
+    },
+    {
+      "id": "u11-mcq-04",
+      "format": "mcq",
+      "section": "11.1",
+      "concepts": [
+        "c11-economic-growth"
+      ],
+      "command_term": "calculate",
+      "marks": 1,
+      "prompt": "Using Table 1, what was the rate of economic growth in Veld between 2024 and 2025?",
+      "hints": [
+        "Use the percentage change formula with real GDP.",
+        "Find the change between the two years, divide by the earlier year's value and multiply by 100."
+      ],
+      "targets": "Percentage change with the correct base year",
+      "table": {
+        "caption": "Table 1: Real GDP of Veld",
+        "columns": [
+          "Year",
+          "Real GDP (zed billion)"
+        ],
+        "rows": [
+          [
+            "2024",
+            "400"
+          ],
+          [
+            "2025",
+            "420"
+          ]
+        ]
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": "20%",
+          "misconception": "This is the absolute increase in zed billion, not a percentage change."
+        },
+        {
+          "id": "b",
+          "text": "4.8%",
+          "misconception": "This divides the increase by the 2025 value instead of the starting value."
+        },
+        {
+          "id": "c",
+          "text": "5%",
+          "misconception": null
+        },
+        {
+          "id": "d",
+          "text": "105%",
+          "misconception": "This is the 2025 figure as a percentage of the 2024 figure, not the rate of change."
+        }
+      ],
+      "answer": "c"
+    },
+    {
+      "id": "u11-sa-03",
+      "format": "short_answer",
+      "section": "11.1",
+      "concepts": [
+        "c11-economic-growth",
+        "c11-real-gdp-per-capita"
+      ],
+      "command_term": "calculate",
+      "marks": 3,
+      "prompt": "Using Table 2, calculate (i) the rate of economic growth in Veld between 2024 and 2025 and (ii) real GDP per capita in each year. Show your working.",
+      "hints": [
+        "Use the percentage change formula for (i) and divide output by population for (ii).",
+        "Keep the units consistent: both real GDP and population are in millions, so the per capita answer is in zed per person."
+      ],
+      "targets": "Growth rate vs per capita change",
+      "table": {
+        "caption": "Table 2: Real GDP and population of Veld",
+        "columns": [
+          "Year",
+          "Real GDP (zed million)",
+          "Population (million)"
+        ],
+        "rows": [
+          [
+            "2024",
+            "500",
+            "10.0"
+          ],
+          [
+            "2025",
+            "530",
+            "10.6"
+          ]
+        ]
+      },
+      "marking_points": [
+        "Growth rate = (530 − 500) / 500 × 100 [1]",
+        "= 6% [1]",
+        "Real GDP per capita = 500 / 10 = 50 zed in 2024 and 530 / 10.6 = 50 zed in 2025 [1]"
+      ],
+      "model_answer_note": "A full-mark answer shows the working and reaches 6% growth and real GDP per capita of 50 zed in both years; a strong student notes per capita output did not change despite growth."
+    },
+    {
+      "id": "u11-mcq-05",
+      "format": "mcq",
+      "section": "11.1",
+      "concepts": [
+        "c11-productivity",
+        "c11-improvement-in-productivity"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Table 3 shows output and hours worked in Kuva. Which statement about labour productivity is correct?",
+      "hints": [
+        "Productivity is measured as output per hour of work.",
+        "Work out output divided by hours for each year separately, then compare."
+      ],
+      "targets": "Output vs output per hour",
+      "table": {
+        "caption": "Table 3: Output and hours worked in Kuva",
+        "columns": [
+          "Year",
+          "Output (million units)",
+          "Hours worked (million)"
+        ],
+        "rows": [
+          [
+            "Year 1",
+            "600",
+            "200"
+          ],
+          [
+            "Year 2",
+            "700",
+            "250"
+          ]
+        ]
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": "Productivity rose, because total output increased",
+          "misconception": "A rise in total output can come from more hours worked, not from more output per hour."
+        },
+        {
+          "id": "b",
+          "text": "Productivity fell from 3.0 to 2.8 units per hour",
+          "misconception": null
+        },
+        {
+          "id": "c",
+          "text": "Productivity rose from 3.0 to 3.5 units per hour",
+          "misconception": "This divides Year 2 output by Year 1 hours, mixing the two years."
+        },
+        {
+          "id": "d",
+          "text": "Productivity was unchanged, because output and hours both rose",
+          "misconception": "Both rose, but by different percentages, so output per hour changed."
+        }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "u11-sa-04",
+      "format": "short_answer",
+      "section": "11.1",
+      "concepts": [
+        "c11-productivity",
+        "c11-improvement-in-productivity"
+      ],
+      "command_term": "calculate",
+      "marks": 3,
+      "prompt": "Using Table 4, calculate labour productivity in Veld in each year and the percentage change in productivity between the two years.",
+      "hints": [
+        "Productivity is output divided by hours worked.",
+        "Find the value for each year first, then apply the percentage change formula using the first year as the base."
+      ],
+      "targets": "Productivity level and its percentage change",
+      "table": {
+        "caption": "Table 4: Real output and hours worked in Veld",
+        "columns": [
+          "Year",
+          "Real output (zed million)",
+          "Hours worked (million)"
+        ],
+        "rows": [
+          [
+            "Year 1",
+            "2,000",
+            "400"
+          ],
+          [
+            "Year 2",
+            "2,160",
+            "400"
+          ]
+        ]
+      },
+      "marking_points": [
+        "Year 1: 2,000 / 400 = 5 zed of output per hour; Year 2: 2,160 / 400 = 5.4 zed per hour [1]",
+        "Percentage change = (5.4 − 5) / 5 × 100 [1]",
+        "= 8% [1]"
+      ],
+      "model_answer_note": "A full-mark answer gives both productivity figures (5 and 5.4 zed per hour) and an 8% increase with working shown."
+    },
+    {
+      "id": "u11-mcq-06",
+      "format": "mcq",
+      "section": "11.1",
+      "concepts": [
+        "c11-human-capital",
+        "c11-economic-growth"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "The government of Kuva greatly expands vocational training for young workers. On a production possibilities curve (PPC) diagram, which change best shows the long-term effect on economic growth?",
+      "hints": [
+        "Ask whether training changes how much the economy is able to produce at full employment.",
+        "A change in the economy's productive capacity is shown differently from a change in how fully resources are used."
+      ],
+      "targets": "Actual vs potential growth on a PPC",
+      "options": [
+        {
+          "id": "a",
+          "text": "A movement from a point inside the PPC to a point on the PPC",
+          "misconception": "This shows the use of previously unemployed resources, which is short-term growth."
+        },
+        {
+          "id": "b",
+          "text": "A movement along the PPC towards more capital goods",
+          "misconception": "This shows a change in the output mix, not an increase in what the economy can produce."
+        },
+        {
+          "id": "c",
+          "text": "A movement from a point on the PPC to a point inside it",
+          "misconception": "This shows a loss of output, such as during a recession."
+        },
+        {
+          "id": "d",
+          "text": "An outward shift of the whole PPC",
+          "misconception": null
+        }
+      ],
+      "answer": "d"
+    },
+    {
+      "id": "u11-mcq-07",
+      "format": "mcq",
+      "section": "11.1",
+      "concepts": [
+        "c11-economic-growth"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Veld's economy is in a recession with high unemployment. Which of the following is most likely to cause short-term growth without increasing potential output?",
+      "hints": [
+        "Short-term growth is linked to aggregate demand; long-term growth is linked to productive capacity.",
+        "For each option, decide whether it changes the economy's resources or only the level of spending."
+      ],
+      "targets": "Demand-side (actual) vs supply-side (potential) causes of growth",
+      "options": [
+        {
+          "id": "a",
+          "text": "Discovery of large new reserves of natural gas",
+          "misconception": "New resources raise the economy's productive capacity, which is long-term growth."
+        },
+        {
+          "id": "b",
+          "text": "A rise in the number of university graduates",
+          "misconception": "More graduates improve human capital and raise potential output."
+        },
+        {
+          "id": "c",
+          "text": "A rise in consumer confidence that increases household spending",
+          "misconception": null
+        },
+        {
+          "id": "d",
+          "text": "Adoption of new technology that raises output per worker",
+          "misconception": "Better technology raises productivity and shifts potential output outwards."
+        }
+      ],
+      "answer": "c"
+    },
+    {
+      "id": "u11-sa-05",
+      "format": "short_answer",
+      "section": "11.1",
+      "concepts": [
+        "c11-economic-growth"
+      ],
+      "command_term": "distinguish",
+      "marks": 4,
+      "prompt": "Distinguish between short-term economic growth and long-term economic growth. You may refer to a PPC or an AD/AS diagram in words.",
+      "hints": [
+        "Use the ideas of actual output and potential output.",
+        "For each type, say what causes it and how it would appear on a PPC or AD/AS diagram."
+      ],
+      "targets": "Actual vs potential growth, with causes and diagrams",
+      "marking_points": [
+        "Short-term growth is an increase in actual real output, often by using unemployed resources [1]",
+        "It is shown as a movement from inside the PPC towards the curve, or a rightward AD shift with a recessionary gap [1]",
+        "Long-term growth is an increase in potential output / productive capacity, from more or better resources [1]",
+        "It is shown as an outward shift of the PPC or a rightward shift of LRAS [1]"
+      ],
+      "model_answer_note": "A full-mark answer explains both types with a cause and correctly describes how each appears on a diagram."
+    },
+    {
+      "id": "u11-sa-06",
+      "format": "short_answer",
+      "section": "11.1",
+      "concepts": [
+        "c11-human-capital",
+        "c11-economic-growth",
+        "c11-productivity"
+      ],
+      "command_term": "explain",
+      "marks": 4,
+      "prompt": "Explain how increased government spending on education and health care in Kuva could lead to long-term economic growth. Refer to a diagram in your answer.",
+      "hints": [
+        "Think about which type of capital this spending builds and how it affects workers.",
+        "Link the effect on workers to output per hour, then to productive capacity, and state the shift on a PPC or LRAS diagram."
+      ],
+      "targets": "Human capital to potential output chain",
+      "marking_points": [
+        "Spending on education and health increases human capital (skills, knowledge, health of workers) [1]",
+        "Workers become more productive, producing more output per hour [1]",
+        "This increases the economy's productive capacity / potential output [1]",
+        "Shown as an outward shift of the PPC or a rightward shift of the LRAS curve [1]"
+      ],
+      "model_answer_note": "A full-mark answer builds the chain from spending to human capital to productivity to potential output and names the correct diagram shift."
+    },
+    {
+      "id": "u11-sa-07",
+      "format": "short_answer",
+      "section": "11.1",
+      "concepts": [
+        "c11-economic-growth",
+        "c11-living-standards",
+        "c11-real-gdp-per-capita"
+      ],
+      "command_term": "explain",
+      "marks": 4,
+      "prompt": "Real GDP in Veld has grown by 4% a year for a decade. Explain two reasons why this growth may not have improved living standards for all of Veld's people.",
+      "hints": [
+        "Consider how the extra output is shared and what real GDP does not capture.",
+        "For each reason, state it and then explain how it stops some people's living standards rising."
+      ],
+      "targets": "Limits of growth as a measure of well-being",
+      "marking_points": [
+        "Reason 1 identified, e.g. benefits of growth are unequally distributed [1]",
+        "Explained, e.g. most extra income goes to high-income groups so low-income households see little change [1]",
+        "Reason 2 identified, e.g. population grows as fast as output / environmental damage / longer working hours [1]",
+        "Explained, e.g. real GDP per capita barely rises, or pollution harms health, lowering quality of life [1]"
+      ],
+      "model_answer_note": "A full-mark answer gives two distinct reasons, each with a clear link to why some people's living standards do not improve."
+    },
+    {
+      "id": "u11-mcq-08",
+      "format": "mcq",
+      "section": "11.2",
+      "concepts": [
+        "c11-government-debt",
+        "c11-budget-deficit",
+        "c11-budget-surplus"
+      ],
+      "command_term": "calculate",
+      "marks": 1,
+      "prompt": "Veld's government debt was zed 100 billion at the start of Year 1. Using Table 5, what was the government debt at the end of Year 3?",
+      "hints": [
+        "Government debt is built up from past budget balances.",
+        "Start with the opening debt, add each deficit and subtract each surplus."
+      ],
+      "targets": "Deficit/surplus as flows, debt as a stock",
+      "table": {
+        "caption": "Table 5: Budget balance of the government of Veld",
+        "columns": [
+          "Year",
+          "Budget balance (zed billion)"
+        ],
+        "rows": [
+          [
+            "Year 1",
+            "Deficit of 10"
+          ],
+          [
+            "Year 2",
+            "Deficit of 15"
+          ],
+          [
+            "Year 3",
+            "Surplus of 5"
+          ]
+        ]
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": "zed 130 billion",
+          "misconception": "This adds the surplus as if it were another deficit."
+        },
+        {
+          "id": "b",
+          "text": "zed 120 billion",
+          "misconception": null
+        },
+        {
+          "id": "c",
+          "text": "zed 20 billion",
+          "misconception": "This is only the net change in debt; the starting debt must be included."
+        },
+        {
+          "id": "d",
+          "text": "zed 95 billion",
+          "misconception": "This applies only the final year's surplus and ignores the earlier deficits."
+        }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "u11-sa-08",
+      "format": "short_answer",
+      "section": "11.2",
+      "concepts": [
+        "c11-budget-deficit",
+        "c11-government-debt"
+      ],
+      "command_term": "distinguish",
+      "marks": 2,
+      "prompt": "Distinguish between a budget deficit and government debt.",
+      "hints": [
+        "One of these is measured over a period of time and the other at a point in time.",
+        "State what each one is and how the two are connected."
+      ],
+      "targets": "Flow vs stock",
+      "marking_points": [
+        "A budget deficit occurs when government expenditure exceeds tax revenue in a given period (e.g. one year) [1]",
+        "Government debt is the total amount owed, the accumulation of past deficits minus surpluses [1]"
+      ],
+      "model_answer_note": "A full-mark answer defines the deficit as a yearly shortfall and debt as the accumulated total owed."
+    },
+    {
+      "id": "u11-mcq-09",
+      "format": "mcq",
+      "section": "11.2",
+      "concepts": [
+        "c11-debt-to-gdp-ratio"
+      ],
+      "command_term": "calculate",
+      "marks": 1,
+      "prompt": "Using Table 6, what was Kuva's debt-to-GDP ratio in 2025?",
+      "hints": [
+        "Use the debt-to-GDP ratio formula.",
+        "Divide government debt by GDP and multiply by 100."
+      ],
+      "targets": "Correct numerator and denominator",
+      "table": {
+        "caption": "Table 6: Kuva, 2025",
+        "columns": [
+          "Indicator",
+          "Value (kuvan dollar billion)"
+        ],
+        "rows": [
+          [
+            "Government debt",
+            "90"
+          ],
+          [
+            "Nominal GDP",
+            "150"
+          ]
+        ]
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": "60%",
+          "misconception": null
+        },
+        {
+          "id": "b",
+          "text": "167%",
+          "misconception": "This divides GDP by debt, turning the ratio upside down."
+        },
+        {
+          "id": "c",
+          "text": "40%",
+          "misconception": "This is the gap between GDP and debt as a share of GDP, not debt as a share of GDP."
+        },
+        {
+          "id": "d",
+          "text": "90%",
+          "misconception": "This treats the debt figure itself as a percentage."
+        }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u11-sa-09",
+      "format": "short_answer",
+      "section": "11.2",
+      "concepts": [
+        "c11-debt-to-gdp-ratio",
+        "c11-government-debt"
+      ],
+      "command_term": "calculate",
+      "marks": 3,
+      "prompt": "Using Table 7, calculate Veld's debt-to-GDP ratio in 2024 and 2025. State what the result suggests about the burden of the debt.",
+      "hints": [
+        "Use the debt-to-GDP ratio for each year.",
+        "Compare the two ratios rather than the two debt figures when judging the burden."
+      ],
+      "targets": "Debt level vs debt relative to GDP",
+      "table": {
+        "caption": "Table 7: Government debt and nominal GDP of Veld",
+        "columns": [
+          "Year",
+          "Government debt (zed billion)",
+          "Nominal GDP (zed billion)"
+        ],
+        "rows": [
+          [
+            "2024",
+            "120",
+            "400"
+          ],
+          [
+            "2025",
+            "135",
+            "450"
+          ]
+        ]
+      },
+      "marking_points": [
+        "2024: 120 / 400 × 100 = 30% [1]",
+        "2025: 135 / 450 × 100 = 30% [1]",
+        "The ratio is unchanged, so although debt rose, the burden relative to the size of the economy did not increase [1]"
+      ],
+      "model_answer_note": "A full-mark answer calculates 30% for both years and notes that the debt burden relative to GDP is unchanged even though the debt itself grew."
+    },
+    {
+      "id": "u11-mcq-10",
+      "format": "mcq",
+      "section": "11.2",
+      "concepts": [
+        "c11-bond",
+        "c11-lender",
+        "c11-borrower"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "The government of Kuva sells bonds to a pension fund. Which statement is correct?",
+      "hints": [
+        "Identify who issues the bond and who holds it.",
+        "Follow the money: who receives funds now, and who receives payments later?"
+      ],
+      "targets": "Roles of issuer and holder of a bond",
+      "options": [
+        {
+          "id": "a",
+          "text": "The government is the lender and the pension fund is the borrower",
+          "misconception": "The roles are reversed: the one who issues the bond receives the money."
+        },
+        {
+          "id": "b",
+          "text": "The pension fund pays interest to the government until the bond matures",
+          "misconception": "Interest flows to the bondholder, not from it."
+        },
+        {
+          "id": "c",
+          "text": "The government must pay interest to the pension fund and repay the amount borrowed on the maturity date",
+          "misconception": null
+        },
+        {
+          "id": "d",
+          "text": "The government never has to repay the amount borrowed, only the interest",
+          "misconception": "A bond has a maturity date on which the amount borrowed is repaid."
+        }
+      ],
+      "answer": "c"
+    },
+    {
+      "id": "u11-sa-10",
+      "format": "short_answer",
+      "section": "11.2",
+      "concepts": [
+        "c11-sustainable-debt",
+        "c11-debt-servicing"
+      ],
+      "command_term": "define",
+      "marks": 2,
+      "prompt": "Define the term sustainable debt.",
+      "hints": [
+        "Think about the payments that come with debt and whether the government can keep making them.",
+        "A full definition also mentions what happens to the wider economy while those payments are made."
+      ],
+      "targets": "Precise definition of sustainable debt",
+      "marking_points": [
+        "A level of debt at which the government has enough revenue to meet its debt obligations (interest and repayment) without falling into arrears [1]",
+        "While still allowing economic growth to continue at an acceptable rate [1]"
+      ],
+      "model_answer_note": "A full-mark answer mentions meeting interest and repayment without arrears and the continuation of acceptable economic growth."
+    },
+    {
+      "id": "u11-mcq-11",
+      "format": "mcq",
+      "section": "11.2",
+      "concepts": [
+        "c11-credit-rating",
+        "c11-bond"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "A credit rating agency downgrades the government of Veld's credit rating. What is the most likely consequence?",
+      "hints": [
+        "A credit rating is an assessment of the borrower's ability to repay.",
+        "Think about how lenders respond when they judge a borrower to be riskier."
+      ],
+      "targets": "Link between credit rating and cost of borrowing",
+      "options": [
+        {
+          "id": "a",
+          "text": "Veld's government can borrow more cheaply than before",
+          "misconception": "A downgrade signals higher risk, which does not make borrowing cheaper."
+        },
+        {
+          "id": "b",
+          "text": "Veld's existing debt is cancelled by lenders",
+          "misconception": "A rating is an assessment, not a debt cancellation."
+        },
+        {
+          "id": "c",
+          "text": "Veld's budget moves automatically into surplus",
+          "misconception": "A rating change does not change tax revenue or spending directly."
+        },
+        {
+          "id": "d",
+          "text": "Veld's government must offer higher interest rates on new bonds",
+          "misconception": null
+        }
+      ],
+      "answer": "d"
+    },
+    {
+      "id": "u11-mcq-12",
+      "format": "mcq",
+      "section": "11.2",
+      "concepts": [
+        "c11-sustainable-debt",
+        "c11-debt-servicing",
+        "c11-there-is-a-point-where-the-level-of-debt-cannot-"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Which situation is most likely to make Kuva's government debt less sustainable?",
+      "hints": [
+        "Consider what happens to debt servicing costs and to tax revenue.",
+        "For each option, compare what happens to the cost of servicing the debt with what happens to the government's ability to pay."
+      ],
+      "targets": "Factors affecting debt sustainability",
+      "options": [
+        {
+          "id": "a",
+          "text": "Real GDP grows faster than the interest rate paid on the debt",
+          "misconception": "Faster growth raises tax revenue and GDP, so the debt burden tends to fall."
+        },
+        {
+          "id": "b",
+          "text": "The government runs a budget surplus for several years",
+          "misconception": "Surpluses reduce the debt."
+        },
+        {
+          "id": "c",
+          "text": "Kuva's credit rating is upgraded",
+          "misconception": "An upgrade usually lowers borrowing costs."
+        },
+        {
+          "id": "d",
+          "text": "Interest rates on government bonds rise while economic growth slows",
+          "misconception": null
+        }
+      ],
+      "answer": "d"
+    },
+    {
+      "id": "u11-sa-11",
+      "format": "short_answer",
+      "section": "11.2",
+      "concepts": [
+        "c11-government-debt",
+        "c11-debt-servicing",
+        "c11-governments-have-to-provide"
+      ],
+      "command_term": "explain",
+      "marks": 4,
+      "prompt": "Explain two possible consequences for the economy of Veld if its government debt becomes very high.",
+      "hints": [
+        "Think about debt servicing and how lenders view a heavily indebted government.",
+        "For each consequence, name it and then show the chain of effects on the economy or government spending."
+      ],
+      "targets": "Consequences of high government debt",
+      "marking_points": [
+        "Consequence 1, e.g. debt servicing takes a larger share of government revenue [1]",
+        "Explained, e.g. there is an opportunity cost as less is left for health care, education or infrastructure, which can slow growth [1]",
+        "Consequence 2, e.g. credit rating is downgraded / future taxes must rise [1]",
+        "Explained, e.g. borrowing costs rise, making the debt harder to repay, or higher taxes reduce consumption and investment [1]"
+      ],
+      "model_answer_note": "A full-mark answer gives two different consequences, each explained with a clear effect on the government or the wider economy."
+    },
+    {
+      "id": "u11-sa-12",
+      "format": "short_answer",
+      "section": "11.2",
+      "concepts": [
+        "c11-credit-rating",
+        "c11-debt-servicing",
+        "c11-sustainable-debt"
+      ],
+      "command_term": "explain",
+      "marks": 3,
+      "prompt": "Explain how a downgrade in its credit rating could make Kuva's government debt less sustainable.",
+      "hints": [
+        "Start from what a credit rating tells lenders.",
+        "Link the lenders' reaction to the cost of new borrowing, then to debt servicing and the government's budget."
+      ],
+      "targets": "Credit rating to borrowing cost to sustainability chain",
+      "marking_points": [
+        "A downgrade signals a higher risk that the government may not repay [1]",
+        "Lenders demand higher interest rates on new government bonds [1]",
+        "Debt servicing costs rise, so more revenue goes to interest and it becomes harder to meet obligations without further borrowing [1]"
+      ],
+      "model_answer_note": "A full-mark answer links the downgrade to higher interest rates and then to higher debt servicing costs that threaten sustainability."
+    },
+    {
+      "id": "u11-mcq-13",
+      "format": "mcq",
+      "section": "11.3",
+      "concepts": [
+        "c11-economic-growth"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Veld's economy is growing rapidly and real GDP is now above its full employment level. Which macroeconomic objective is most likely to conflict with this growth?",
+      "hints": [
+        "Think of an AD/AS diagram where output is beyond the full employment level.",
+        "For each objective, ask whether it usually improves or worsens when output keeps rising beyond that level."
+      ],
+      "targets": "Growth vs inflation conflict",
+      "options": [
+        {
+          "id": "a",
+          "text": "Low and stable inflation",
+          "misconception": null
+        },
+        {
+          "id": "b",
+          "text": "Low unemployment",
+          "misconception": "Rapid growth usually lowers unemployment, so these objectives tend to support each other."
+        },
+        {
+          "id": "c",
+          "text": "A reduction in government debt",
+          "misconception": "Growth raises tax revenue, which usually helps reduce the debt burden."
+        },
+        {
+          "id": "d",
+          "text": "A rise in real GDP per capita",
+          "misconception": "Rapid growth in real GDP usually raises real GDP per capita."
+        }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u11-mcq-14",
+      "format": "mcq",
+      "section": "11.3",
+      "concepts": [
+        "c11-economic-growth",
+        "c11-natural-capital",
+        "c11-ecological-resources"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Which of the following is most likely to be a cost of rapid economic growth in Kuva?",
+      "hints": [
+        "Think about what happens to natural capital when production expands quickly.",
+        "Rule out options that describe what usually happens in a slowdown rather than a boom."
+      ],
+      "targets": "Environmental costs of growth",
+      "options": [
+        {
+          "id": "a",
+          "text": "A fall in tax revenue collected by the government",
+          "misconception": "Growth raises incomes and spending, so tax revenue usually rises."
+        },
+        {
+          "id": "b",
+          "text": "A rise in cyclical unemployment",
+          "misconception": "Cyclical unemployment rises in a downturn, not when output grows rapidly."
+        },
+        {
+          "id": "c",
+          "text": "A fall in the average price level",
+          "misconception": "Rapid growth tends to put upward, not downward, pressure on prices."
+        },
+        {
+          "id": "d",
+          "text": "Faster depletion of forests and non-renewable resources",
+          "misconception": null
+        }
+      ],
+      "answer": "d"
+    },
+    {
+      "id": "u11-sa-13",
+      "format": "short_answer",
+      "section": "11.3",
+      "concepts": [
+        "c11-economic-growth"
+      ],
+      "command_term": "explain",
+      "marks": 4,
+      "prompt": "Using an AD/AS diagram described in words, explain why rapid economic growth in Veld may conflict with the objective of low inflation.",
+      "hints": [
+        "Use an AD/AS diagram with the economy near or beyond full employment output.",
+        "Describe which curve shifts, what happens to real output and the price level, and why the price effect is large."
+      ],
+      "targets": "Growth vs low inflation, demand-pull",
+      "marking_points": [
+        "Rapid growth driven by rising AD is shown as a rightward shift of the AD curve [1]",
+        "Real output rises but the price level also rises [1]",
+        "As the economy approaches or passes full employment, resources become scarce and costs rise [1]",
+        "So further increases in AD mainly raise the price level, causing demand-pull inflation / an inflationary gap [1]"
+      ],
+      "model_answer_note": "A full-mark answer describes a rightward AD shift near full employment and explains why the price level rises, linking this to demand-pull inflation."
+    },
+    {
+      "id": "u11-sa-14",
+      "format": "short_answer",
+      "section": "11.3",
+      "concepts": [
+        "c11-economic-growth",
+        "c11-natural-capital",
+        "c11-ecological-resources"
+      ],
+      "command_term": "explain",
+      "marks": 3,
+      "prompt": "Explain why the pursuit of rapid economic growth in Kuva may conflict with environmental sustainability.",
+      "hints": [
+        "Think about what happens to natural capital and ecological resources as output expands.",
+        "Link more production to resource use or pollution, then to the ability of future generations to meet their needs."
+      ],
+      "targets": "Growth vs environmental sustainability",
+      "marking_points": [
+        "Higher output requires more use of natural resources, e.g. forests, minerals, fossil fuels [1]",
+        "Production and consumption create more pollution / damage to ecological resources such as clean air, soil and biodiversity [1]",
+        "Natural capital is depleted, reducing the ability of future generations to meet their needs [1]"
+      ],
+      "model_answer_note": "A full-mark answer links growth to resource depletion and pollution, and then to reduced sustainability for future generations."
+    },
+    {
+      "id": "u11-mcq-15",
+      "format": "mcq",
+      "section": "11.3",
+      "concepts": [
+        "c11-economic-growth",
+        "c11-living-standards"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Which scenario best shows a conflict between economic growth and an equitable distribution of income in Veld?",
+      "hints": [
+        "Look for growth happening together with a change in how income is shared.",
+        "For each option, ask whether income shares change and, if so, in which direction."
+      ],
+      "targets": "Growth vs equity conflict",
+      "options": [
+        {
+          "id": "a",
+          "text": "Real GDP falls and unemployment rises across all regions",
+          "misconception": "This is a recession, where growth is absent rather than in conflict with equity."
+        },
+        {
+          "id": "b",
+          "text": "Real GDP rises and the incomes of all groups rise by the same percentage",
+          "misconception": "If all incomes rise by the same percentage, income shares stay the same."
+        },
+        {
+          "id": "c",
+          "text": "Real GDP rises, but most of the extra income goes to the richest 10% of households",
+          "misconception": null
+        },
+        {
+          "id": "d",
+          "text": "Real GDP rises and the government uses extra tax revenue to raise transfer payments",
+          "misconception": "This shows growth supporting a fairer distribution, not conflicting with it."
+        }
+      ],
+      "answer": "c"
+    },
+    {
+      "id": "u11-sa-15",
+      "format": "short_answer",
+      "section": "11.3",
+      "concepts": [
+        "c11-budget-deficit",
+        "c11-government-debt",
+        "c11-economic-growth"
+      ],
+      "command_term": "explain",
+      "marks": 3,
+      "prompt": "The government of Kuva cuts its spending sharply to reduce its budget deficit. Explain why this may conflict with the objectives of economic growth and low unemployment.",
+      "hints": [
+        "Government spending is one of the components of aggregate demand.",
+        "Trace the effect of the spending cut through AD to real output and then to the demand for labour."
+      ],
+      "targets": "Deficit reduction vs growth and unemployment",
+      "marking_points": [
+        "Lower government spending reduces aggregate demand, shifting AD to the left [1]",
+        "Real output falls or grows more slowly, reducing economic growth [1]",
+        "Firms need fewer workers, so (cyclical) unemployment rises [1]"
+      ],
+      "model_answer_note": "A full-mark answer links the spending cut to a fall in AD, then to lower real output and higher unemployment."
+    }
+  ]
+}

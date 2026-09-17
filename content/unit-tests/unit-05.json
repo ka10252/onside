@@ -1,0 +1,660 @@
+{
+  "unit": 5,
+  "title": "Market failure and socially undesirable outcomes I",
+  "questions": [
+    {
+      "id": "u5-mcq-01",
+      "format": "mcq",
+      "section": "5.1",
+      "concepts": ["c5-common-pool-resources", "c5-non-excludable"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Which of the following best describes a common pool resource?",
+      "hints": [
+        "Think about two features: whether people can be stopped from using the resource, and whether one person's use leaves less for others.",
+        "Check each option for who owns the resource and whether a price is charged for using it."
+      ],
+      "targets": "Recall of common pool resource features (no price, non-excludable, rivalrous)",
+      "options": [
+        {"id": "a", "text": "A resource owned by the government and sold to firms at a set price", "misconception": "Government ownership and a price both make the resource excludable, so it is no longer freely available to anyone."},
+        {"id": "b", "text": "A resource that has no owner and no price, that anyone can use, and where one person's use reduces what is left for others", "misconception": null},
+        {"id": "c", "text": "A resource that anyone can use and where one person's use does not reduce what is left for others", "misconception": "This describes a public good; common pool resources are rivalrous, which is why they get used up."},
+        {"id": "d", "text": "A resource that is bought and sold in a market, where buyers who do not pay can be excluded", "misconception": "This describes an ordinary private good, not a resource that is free for anyone to use."}
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "u5-mcq-02",
+      "format": "mcq",
+      "section": "5.1",
+      "concepts": ["c5-renewable-resources", "c5-non-renewable-resources"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Which of the following is a renewable resource?",
+      "hints": [
+        "Use the difference between resources with a finite supply and resources that nature reproduces.",
+        "Ask which resource can regrow over a short period if it is not overused."
+      ],
+      "targets": "Renewable vs non-renewable resources",
+      "options": [
+        {"id": "a", "text": "Fish stocks in the lakes of Veld", "misconception": null},
+        {"id": "b", "text": "Coal deposits in the hills of Veld", "misconception": "Coal takes millions of years to form, so its supply is finite and it is non-renewable."},
+        {"id": "c", "text": "Natural gas fields off the coast of Veld", "misconception": "Natural gas is a fossil fuel with a finite supply, so it is non-renewable."},
+        {"id": "d", "text": "Copper ore in the mines of Veld", "misconception": "Copper can be recycled, but the ore in the ground is finite and is not reproduced by natural processes."}
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u5-sa-01",
+      "format": "short_answer",
+      "section": "5.1",
+      "concepts": ["c5-common-pool-resources"],
+      "command_term": "define",
+      "marks": 2,
+      "prompt": "Define the term common pool resources.",
+      "hints": [
+        "Think about who owns these resources and whether a price is charged to use them.",
+        "Cover two ideas: the ownership and price feature, and who is able to use the resource."
+      ],
+      "targets": "Precise definition: no owner / no price, and free access for anyone",
+      "marking_points": [
+        "Resources that are not owned by anyone and have no price [1]",
+        "Anyone can use them without payment or restriction (non-excludable) [1]"
+      ],
+      "model_answer_note": "A full-mark answer mentions both the absence of ownership or price and the open access for anyone. An example (e.g. ocean fish) alone does not earn marks."
+    },
+    {
+      "id": "u5-mcq-03",
+      "format": "mcq",
+      "section": "5.2",
+      "concepts": ["c5-market-failure"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Economists say that market failure has occurred when:",
+      "hints": [
+        "Market failure is about how resources are allocated compared with what society wants.",
+        "Compare the quantity the free market produces with the quantity that is best for society as a whole."
+      ],
+      "targets": "Market failure as allocative inefficiency, not as low profits or price changes",
+      "options": [
+        {"id": "a", "text": "the price of a good rises sharply over a short period", "misconception": "Price rises are a normal market response to changes in demand or supply and do not by themselves mean resources are misallocated."},
+        {"id": "b", "text": "firms in an industry make losses and leave the market", "misconception": "Firms exiting a loss-making industry is the market working normally, reallocating resources."},
+        {"id": "c", "text": "the market produces more or less of a good than the socially optimal quantity", "misconception": null},
+        {"id": "d", "text": "a market takes a long time to reach its equilibrium price", "misconception": "Slow adjustment is not the definition; even at equilibrium the market can fail if social costs or benefits are ignored."}
+      ],
+      "answer": "c"
+    },
+    {
+      "id": "u5-sa-02",
+      "format": "short_answer",
+      "section": "5.2",
+      "concepts": ["c5-marginal-private-cost-msc", "c5-marginal-social-cost-msc", "c5-external-cost"],
+      "command_term": "distinguish",
+      "marks": 2,
+      "prompt": "Distinguish between marginal private cost (MPC) and marginal social cost (MSC).",
+      "hints": [
+        "Think about who bears each cost when one more unit is produced.",
+        "Describe each term, then say how they are linked when third parties are affected."
+      ],
+      "targets": "Private vs social cost and the link through external cost",
+      "marking_points": [
+        "MPC is the cost to producers of producing one more unit, while MSC is the cost to society of producing one more unit [1]",
+        "MSC equals MPC plus any external cost, so they differ when there is a negative externality [1]"
+      ],
+      "model_answer_note": "A full-mark answer states both meanings clearly and makes the link that MSC includes external costs borne by third parties."
+    },
+    {
+      "id": "u5-mcq-04",
+      "format": "mcq",
+      "section": "5.2",
+      "concepts": ["c5-negative-externality", "c5-marginal-social-cost-msc", "c5-marginal-private-cost-msc"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Which condition shows that the production of a good creates a negative externality?",
+      "hints": [
+        "A production externality shows up on the cost side, not the benefit side.",
+        "Think about whether society's cost is higher or lower than the firm's own cost when third parties are harmed."
+      ],
+      "targets": "Negative production externality = MSC above MPC",
+      "options": [
+        {"id": "a", "text": "MSB > MPB", "misconception": "This compares benefits and describes a positive consumption externality, not a production cost problem."},
+        {"id": "b", "text": "MPB > MSB", "misconception": "This compares benefits and describes a negative consumption externality, which comes from consumers."},
+        {"id": "c", "text": "MPC > MSC", "misconception": "If private cost exceeded social cost, production would be creating external benefits, not costs."},
+        {"id": "d", "text": "MSC > MPC", "misconception": null}
+      ],
+      "answer": "d"
+    },
+    {
+      "id": "u5-sa-03",
+      "format": "short_answer",
+      "section": "5.3",
+      "concepts": ["c5-carbon-tax"],
+      "command_term": "define",
+      "marks": 2,
+      "prompt": "Define the term carbon tax.",
+      "hints": [
+        "Think about what is being taxed and what it is linked to.",
+        "Cover two ideas: the base of the tax, and how the amount paid changes."
+      ],
+      "targets": "Carbon tax: per-unit tax on carbon emissions, rising with emissions",
+      "marking_points": [
+        "A tax per unit of carbon emissions from (the burning of) fossil fuels [1]",
+        "The more carbon that is emitted, the higher the tax paid [1]"
+      ],
+      "model_answer_note": "A full-mark answer states that the tax is levied on carbon emissions and that the amount paid rises with emissions. 'A tax on pollution' alone gets at most 1 mark."
+    },
+    {
+      "id": "u5-mcq-05",
+      "format": "mcq",
+      "section": "5.3",
+      "concepts": ["c5-external-cost", "c5-negative-production-externalities"],
+      "command_term": "calculate",
+      "marks": 1,
+      "prompt": "Table 1 shows costs for a steel plant in Kuva, whose smoke damages nearby farms. At an output of 20 tonnes, what is the external cost per tonne?",
+      "table": {
+        "caption": "Table 1: Costs of steel production in Kuva",
+        "columns": ["Output (tonnes)", "MPC (zeds)", "MSC (zeds)"],
+        "rows": [["10", "4", "7"], ["20", "5", "8"], ["30", "6", "9"]]
+      },
+      "hints": [
+        "Use the link between MSC, MPC and external cost.",
+        "Read the row for 20 tonnes and find the vertical gap between the two cost figures."
+      ],
+      "targets": "External cost = MSC - MPC",
+      "options": [
+        {"id": "a", "text": "Z5", "misconception": "This is the private cost the firm pays, not the cost to third parties."},
+        {"id": "b", "text": "Z3", "misconception": null},
+        {"id": "c", "text": "Z8", "misconception": "This is the full social cost, which includes the firm's own private cost."},
+        {"id": "d", "text": "Z13", "misconception": "Adding MPC and MSC double-counts the private cost; external cost is the difference."}
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "u5-sa-04",
+      "format": "short_answer",
+      "section": "5.2",
+      "concepts": ["c5-external-cost", "c5-marginal-social-cost-msc", "c5-marginal-private-cost-msc"],
+      "command_term": "calculate",
+      "marks": 2,
+      "prompt": "Table 2 shows data for a chemical product in Kuva at the current output of 50 units. Using the data, calculate (a) the external cost per unit and (b) the total external cost at this output.",
+      "table": {
+        "caption": "Table 2: Benefits and costs at an output of 50 units",
+        "columns": ["Measure", "Value per unit (zeds)"],
+        "rows": [["MPB", "20"], ["MSB", "20"], ["MPC", "12"], ["MSC", "17"]]
+      },
+      "hints": [
+        "Use the cost rows only: external cost is the gap between social and private cost.",
+        "Find the gap per unit first, then scale it up by the number of units produced."
+      ],
+      "targets": "External cost per unit and in total; ignoring the equal benefit rows",
+      "marking_points": [
+        "External cost per unit = MSC - MPC = 17 - 12 = Z5 [1]",
+        "Total external cost = 5 x 50 = Z250 [1]"
+      ],
+      "model_answer_note": "A full-mark answer shows both subtractions and multiplication with units (zeds). Own-figure rule applies to part (b)."
+    },
+    {
+      "id": "u5-mcq-06",
+      "format": "mcq",
+      "section": "5.4",
+      "concepts": ["c5-negative-consumption-externalities", "c5-marginal-private-benefit-mpb", "c5-marginal-social-benefit-msb"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Loud music played by some residents of a Veld apartment block disturbs their neighbours. On a diagram of this market, how are the benefit curves drawn?",
+      "hints": [
+        "This is a consumption externality, so it appears on the benefit (demand) side.",
+        "Think about whether society gains more or less than the consumer from each extra unit when neighbours are harmed."
+      ],
+      "targets": "Negative consumption externality = MSB below MPB",
+      "options": [
+        {"id": "a", "text": "The MSB curve lies below the MPB curve", "misconception": null},
+        {"id": "b", "text": "The MSB curve lies above the MPB curve", "misconception": "MSB above MPB shows external benefits, which is a positive consumption externality."},
+        {"id": "c", "text": "The MSC curve lies above the MPC curve, and MSB equals MPB", "misconception": "This shows a production externality; here the harm comes from consumers, not producers."},
+        {"id": "d", "text": "The MSB and MPB curves are the same, because only producers create externalities", "misconception": "Consumers can also create externalities, so the benefit curves separate."}
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u5-sa-05",
+      "format": "short_answer",
+      "section": "5.4",
+      "concepts": ["c5-demerit-goods"],
+      "command_term": "define",
+      "marks": 2,
+      "prompt": "Define the term demerit goods.",
+      "hints": [
+        "Think about how society judges these goods and what the market does with them.",
+        "Cover two ideas: whether the goods are seen as good for consumers, and whether the market produces too much or too little."
+      ],
+      "targets": "Demerit good: undesirable for consumers and overprovided by the market",
+      "marking_points": [
+        "Goods considered undesirable (harmful) for consumers [1]",
+        "which are overprovided / overconsumed by the free market [1]"
+      ],
+      "model_answer_note": "A full-mark answer includes both the judgement that the good is undesirable and the overprovision by the market. Examples such as cigarettes are fine but not required."
+    },
+    {
+      "id": "u5-mcq-07",
+      "format": "mcq",
+      "section": "5.4",
+      "concepts": ["c5-negative-consumption-externalities", "c5-negative-externality"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "In the city of Tarn, each extra private car driven at rush hour slows down buses, delivery vans and other drivers. What type of externality does this describe?",
+      "hints": [
+        "Ask who creates the side-effect: producers making a good, or people using a good.",
+        "Then decide whether the side-effect on third parties is harmful or helpful."
+      ],
+      "targets": "Traffic congestion as a negative consumption externality",
+      "options": [
+        {"id": "a", "text": "A negative production externality", "misconception": "Car makers are not causing the delay; it comes from people choosing to drive the cars."},
+        {"id": "b", "text": "A positive consumption externality", "misconception": "Slower journeys for others are a cost, not a benefit, to third parties."},
+        {"id": "c", "text": "A negative consumption externality", "misconception": null},
+        {"id": "d", "text": "A positive production externality", "misconception": "The effect is neither caused by producers nor beneficial to third parties."}
+      ],
+      "answer": "c"
+    },
+    {
+      "id": "u5-sa-06",
+      "format": "short_answer",
+      "section": "5.3",
+      "concepts": ["c5-tradable-permits"],
+      "command_term": "define",
+      "marks": 2,
+      "prompt": "Define the term tradable permits.",
+      "hints": [
+        "Think about what the permits allow a firm to do and who issues them.",
+        "Cover who issues the permits and what firms can do with them once issued."
+      ],
+      "targets": "Tradable permits: permits to pollute, issued by an authority, that can be bought and sold",
+      "marking_points": [
+        "Permits allowing firms to emit a certain amount of pollution, issued by a government or international body [1]",
+        "which firms can buy and sell (trade) with each other [1]"
+      ],
+      "model_answer_note": "A full-mark answer covers both the permission to pollute issued by an authority and the ability to trade the permits."
+    },
+    {
+      "id": "u5-mcq-08",
+      "format": "mcq",
+      "section": "5.3",
+      "concepts": ["c5-negative-production-externalities", "c5-market-failure"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "A diagram shows a market with MSC above MPC, and MPB = MSB. Qm is where MPB = MPC and Qopt is where MSB = MSC. Which statement about this diagram is correct?",
+      "hints": [
+        "Compare where the demand curve meets the lower cost curve and where it meets the higher cost curve.",
+        "A higher cost curve meets a downward-sloping demand curve further to the left and at a higher price."
+      ],
+      "targets": "Overallocation and underpricing with a negative production externality",
+      "options": [
+        {"id": "a", "text": "Qm is less than Qopt, and the market price is too high", "misconception": "This is the pattern for a positive externality; with external costs the market ignores part of the cost and overproduces."},
+        {"id": "b", "text": "Qm equals Qopt, but the market price is too low", "misconception": "The two curves cross the demand curve at different points, so the quantities cannot be equal."},
+        {"id": "c", "text": "Qm is greater than Qopt, and the market price is above the socially optimal price", "misconception": "The quantity comparison is right, but because firms ignore external costs, the market price is below the socially optimal price."},
+        {"id": "d", "text": "Qm is greater than Qopt, and the market price is below the socially optimal price", "misconception": null}
+      ],
+      "answer": "d"
+    },
+    {
+      "id": "u5-sa-07",
+      "format": "short_answer",
+      "section": "5.1",
+      "concepts": ["c5-common-pool-resources", "c5-non-excludable", "c5-sustainability"],
+      "command_term": "outline",
+      "marks": 2,
+      "prompt": "Outline why common pool resources, such as the forests of Veld, tend to be overused.",
+      "hints": [
+        "Link your answer to the lack of a price and the fact that users cannot be stopped.",
+        "Think about what each individual user considers when deciding how much to take, and what they ignore."
+      ],
+      "targets": "Tragedy of the commons logic",
+      "marking_points": [
+        "Because they have no price and are non-excludable, users have an incentive to take as much as they want [1]",
+        "Each user ignores the effect on other users and future generations, so the resource is depleted / used unsustainably [1]"
+      ],
+      "model_answer_note": "A full-mark answer links open access/no price to individual incentives and then to depletion for everyone (the tragedy of the commons)."
+    },
+    {
+      "id": "u5-mcq-09",
+      "format": "mcq",
+      "section": "5.1",
+      "concepts": ["c5-sustainability", "c5-renewable-resources"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Table 3 shows data for Lake Oro in Veld, where anyone may fish without a licence. Which conclusion is best supported by the data?",
+      "table": {
+        "caption": "Table 3: Fishing in Lake Oro",
+        "columns": ["Year", "Fish stock (tonnes)", "Annual catch (tonnes)"],
+        "rows": [["2020", "1000", "150"], ["2022", "800", "200"], ["2024", "550", "260"]]
+      },
+      "hints": [
+        "Look at how the two columns move over time and compare their directions.",
+        "Ask whether the resource is being left in the same condition for future users."
+      ],
+      "targets": "Reading data as evidence of unsustainable use of a common pool resource",
+      "options": [
+        {"id": "a", "text": "The fish stock is falling because fewer people are fishing", "misconception": "The catch is rising, so fishing activity is increasing, not decreasing."},
+        {"id": "b", "text": "The fish are being caught faster than they can reproduce, so use is unsustainable", "misconception": null},
+        {"id": "c", "text": "The fishery is sustainable because the catch is still rising", "misconception": "A rising catch while the stock shrinks means future generations will have fewer fish, which is unsustainable."},
+        {"id": "d", "text": "The fish stock has fallen by more than half since 2020", "misconception": "The stock fell from 1000 to 550 tonnes, a fall of 45%, which is less than half."}
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "u5-mcq-10",
+      "format": "mcq",
+      "section": "5.3",
+      "concepts": ["c5-carbon-tax", "c5-negative-production-externalities"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "The government of Veld places a carbon tax on electricity producers that burn coal. On a negative production externality diagram, what is the main effect of the tax?",
+      "hints": [
+        "A tax on producers changes their costs, so think about which cost curve moves.",
+        "Consider which direction it moves and which other curve it moves towards."
+      ],
+      "targets": "Carbon tax internalises the externality by shifting MPC up",
+      "options": [
+        {"id": "a", "text": "The MPC (supply) curve shifts upwards towards the MSC curve, reducing output", "misconception": null},
+        {"id": "b", "text": "The MSC curve shifts upwards, increasing the external cost", "misconception": "The tax does not create more pollution; it raises the firm's private cost."},
+        {"id": "c", "text": "The MPB (demand) curve shifts to the left", "misconception": "The tax is placed on producers, so it affects their costs, not consumers' benefits."},
+        {"id": "d", "text": "The MPC (supply) curve shifts downwards, increasing output", "misconception": "A tax raises costs, so supply shifts up (left), not down."}
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u5-sa-08",
+      "format": "short_answer",
+      "section": "5.2",
+      "concepts": ["c5-externality", "c5-market-failure", "c5-marginal-social-benefit-msb", "c5-marginal-social-cost-msc"],
+      "command_term": "explain",
+      "marks": 3,
+      "prompt": "Explain why the presence of externalities leads to market failure.",
+      "hints": [
+        "Start with who is affected by an externality and whose interests buyers and sellers take into account.",
+        "Link this to where the market settles and where society's best outcome is (MSB = MSC)."
+      ],
+      "targets": "Chain: third parties ignored -> private decisions -> output not at MSB = MSC -> allocative inefficiency",
+      "marking_points": [
+        "Externalities affect third parties whose interests are not taken into account by buyers and sellers [1]",
+        "The market settles where MPB = MPC, which differs from the social optimum where MSB = MSC [1]",
+        "So too much or too little is produced, resulting in allocative inefficiency (a welfare loss) [1]"
+      ],
+      "model_answer_note": "A full-mark answer builds the full chain from third parties being ignored to output differing from MSB = MSC and allocative inefficiency."
+    },
+    {
+      "id": "u5-mcq-11",
+      "format": "mcq",
+      "section": "5.4",
+      "concepts": ["c5-demerit-goods", "c5-negative-consumption-externalities"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "The government of Kuva bans all advertising of energy drinks, which it treats as a demerit good. On a negative consumption externality diagram, what is the intended effect?",
+      "hints": [
+        "Advertising works on consumers, so think about which side of the market changes.",
+        "Consider whether the curve moves towards or away from the MSB curve."
+      ],
+      "targets": "Advertising ban reduces demand (MPB shifts left towards MSB)",
+      "options": [
+        {"id": "a", "text": "The MPC curve shifts upwards towards the MSC curve", "misconception": "An advertising ban does not raise firms' production costs; it changes what consumers want."},
+        {"id": "b", "text": "The MSB curve shifts to the right towards the MPB curve", "misconception": "The ban aims to change private behaviour; the harm to third parties per unit is not reduced."},
+        {"id": "c", "text": "The MPB curve shifts to the right, raising consumption", "misconception": "Less advertising reduces, not raises, demand."},
+        {"id": "d", "text": "The MPB curve shifts to the left towards the MSB curve", "misconception": null}
+      ],
+      "answer": "d"
+    },
+    {
+      "id": "u5-sa-09",
+      "format": "short_answer",
+      "section": "5.1",
+      "concepts": ["c5-sustainability", "c5-renewable-resources"],
+      "command_term": "calculate",
+      "marks": 2,
+      "prompt": "Table 4 shows data for a fishery in Veld. Assuming the annual catch and natural regrowth stay the same each year, calculate the fish stock at the start of 2027.",
+      "table": {
+        "caption": "Table 4: Veld fishery",
+        "columns": ["Item", "Tonnes"],
+        "rows": [["Fish stock at start of 2024", "2000"], ["Annual catch", "500"], ["Annual natural regrowth", "300"]]
+      },
+      "hints": [
+        "Work out the net change in the stock in one year using the catch and the regrowth.",
+        "Count how many full years pass between the start of 2024 and the start of 2027, then apply the yearly change."
+      ],
+      "targets": "Net depletion over several years",
+      "marking_points": [
+        "Net annual change = 300 - 500 = a fall of 200 tonnes per year [1]",
+        "Stock at start of 2027 = 2000 - (3 x 200) = 1400 tonnes [1]"
+      ],
+      "model_answer_note": "A full-mark answer shows the net yearly fall and applies it over three years to reach 1400 tonnes. Using four years (1200) is a common error."
+    },
+    {
+      "id": "u5-mcq-12",
+      "format": "mcq",
+      "section": "5.1",
+      "concepts": ["c5-collective-self-governance", "c5-common-pool-resources", "c5-sustainability"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Villagers who fish in a lake in Kuva meet and agree limits on how much each household may catch, and they monitor each other. Which approach does this illustrate?",
+      "hints": [
+        "Notice who designs and enforces the rules in this scenario.",
+        "Rule out the options where the government or a market price is doing the work."
+      ],
+      "targets": "Recognising collective self-governance",
+      "options": [
+        {"id": "a", "text": "Tradable permits", "misconception": "Tradable permits are issued by a government or international body and are bought and sold, which is not described here."},
+        {"id": "b", "text": "Government regulation", "misconception": "The rules come from the resource users themselves, not from the state."},
+        {"id": "c", "text": "Collective self-governance", "misconception": null},
+        {"id": "d", "text": "A carbon tax", "misconception": "No tax is involved, and the problem is overfishing, not carbon emissions."}
+      ],
+      "answer": "c"
+    },
+    {
+      "id": "u5-sa-10",
+      "format": "short_answer",
+      "section": "5.3",
+      "concepts": ["c5-carbon-tax"],
+      "command_term": "calculate",
+      "marks": 3,
+      "prompt": "Veld introduces a carbon tax of Z20 per tonne of carbon emitted. Using Table 5, calculate the total carbon tax paid by the three firms and the percentage of this total paid by Firm A.",
+      "table": {
+        "caption": "Table 5: Annual carbon emissions of three firms in Veld",
+        "columns": ["Firm", "Emissions (tonnes)"],
+        "rows": [["A", "50"], ["B", "30"], ["C", "20"]]
+      },
+      "hints": [
+        "Multiply each firm's emissions by the tax rate per tonne.",
+        "Add the three amounts, then express Firm A's amount as a share of the total and multiply by 100."
+      ],
+      "targets": "Applying a per-unit carbon tax and a percentage share",
+      "marking_points": [
+        "Tax paid: A = 50 x 20 = Z1000, B = 30 x 20 = Z600, C = 20 x 20 = Z400 [1]",
+        "Total tax = 1000 + 600 + 400 = Z2000 [1]",
+        "Firm A's share = (1000 / 2000) x 100 = 50% [1]"
+      ],
+      "model_answer_note": "A full-mark answer shows each firm's tax, the total of Z2000 and Firm A's share of 50%. Accept the shortcut 100 tonnes x Z20 for the total."
+    },
+    {
+      "id": "u5-mcq-13",
+      "format": "mcq",
+      "section": "5.3",
+      "concepts": ["c5-tradable-permits"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "An international body cuts the number of tradable pollution permits it issues to firms by 20%. Assuming demand for permits is unchanged, what is the most likely result?",
+      "hints": [
+        "Treat the permits as a market with a demand and a fixed supply.",
+        "Think about what happens to the permit price when supply falls, and how firms respond to that price."
+      ],
+      "targets": "Permit supply cut raises permit price and the incentive to abate",
+      "options": [
+        {"id": "a", "text": "The permit price falls, so firms pollute more", "misconception": "A smaller supply of permits with unchanged demand raises, not lowers, the price."},
+        {"id": "b", "text": "The permit price rises, giving firms a stronger incentive to cut emissions", "misconception": null},
+        {"id": "c", "text": "The permit price stays the same because permits are issued by the authority", "misconception": "Once issued, permits are traded, so their price responds to changes in supply."},
+        {"id": "d", "text": "Total emissions rise because firms rush to buy the remaining permits", "misconception": "Total emissions are capped by the number of permits, so fewer permits means lower allowed emissions."}
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "u5-sa-11",
+      "format": "short_answer",
+      "section": "5.3",
+      "concepts": ["c5-tradable-permits"],
+      "command_term": "explain",
+      "marks": 3,
+      "prompt": "In Kuva, each tradable permit allows one tonne of emissions and currently sells for Z25. Using Table 6, explain which firm is likely to sell permits and which is likely to buy them, and why this matters for the cost of cutting pollution.",
+      "table": {
+        "caption": "Table 6: Cost of reducing emissions by one tonne",
+        "columns": ["Firm", "Cost of cutting one tonne (zeds)"],
+        "rows": [["X", "10"], ["Y", "40"]]
+      },
+      "hints": [
+        "For each firm, compare its cost of cutting a tonne with the permit price.",
+        "A firm chooses the cheaper option: cutting emissions itself, or holding a permit. Then think about where the cuts end up happening."
+      ],
+      "targets": "Cost comparison drives trading; emissions cut where cheapest",
+      "marking_points": [
+        "Firm X can cut a tonne for less than the permit price, so it cuts emissions and sells its spare permits [1]",
+        "Firm Y finds buying a permit cheaper than cutting a tonne, so it buys permits [1]",
+        "So emission cuts are made by the firms that can cut most cheaply, meeting the pollution limit at lower total cost [1]"
+      ],
+      "model_answer_note": "A full-mark answer compares each firm's cost with Z25, identifies X as seller and Y as buyer, and explains the efficiency gain of cutting where it is cheapest."
+    },
+    {
+      "id": "u5-mcq-14",
+      "format": "mcq",
+      "section": "5.2",
+      "concepts": ["c5-external-cost", "c5-height", "c5-market-failure"],
+      "command_term": "calculate",
+      "marks": 1,
+      "prompt": "A factory in Veld creates a constant external cost per unit, so the MSC curve is parallel to the MPC curve. There is no consumption externality. Using Table 7, what is the welfare loss?",
+      "table": {
+        "caption": "Table 7: Market for a product in Veld",
+        "columns": ["Measure", "Value"],
+        "rows": [["Market quantity (Qm)", "100 units"], ["Socially optimal quantity (Qopt)", "80 units"], ["External cost per unit", "Z5"]]
+      },
+      "hints": [
+        "The welfare loss is a triangle: its height is MSC - MPC and its width is Qm - Qopt.",
+        "Find the width from the two quantities, then use the formula for the area of a triangle."
+      ],
+      "targets": "Welfare loss triangle = 1/2 x height x width",
+      "options": [
+        {"id": "a", "text": "Z100", "misconception": "This multiplies height by width but forgets to halve it for a triangle."},
+        {"id": "b", "text": "Z400", "misconception": "This multiplies the external cost by Qopt instead of by the gap between Qm and Qopt."},
+        {"id": "c", "text": "Z250", "misconception": "This uses the whole market quantity as the width instead of the overproduction only."},
+        {"id": "d", "text": "Z50", "misconception": null}
+      ],
+      "answer": "d"
+    },
+    {
+      "id": "u5-sa-12",
+      "format": "short_answer",
+      "section": "5.3",
+      "concepts": ["c5-height", "c5-external-cost", "c5-negative-production-externalities"],
+      "command_term": "calculate",
+      "marks": 3,
+      "prompt": "A paper mill in Kuva pollutes a river. Table 8 shows the market data; there are no consumption externalities, so MPB = MSB. Calculate the market quantity, the socially optimal quantity and the welfare loss.",
+      "table": {
+        "caption": "Table 8: Paper market in Kuva (values in zeds per tonne)",
+        "columns": ["Output (tonnes)", "MPB = MSB", "MPC", "MSC"],
+        "rows": [["100", "16", "7", "10"], ["200", "14", "8", "11"], ["300", "12", "9", "12"], ["400", "10", "10", "13"], ["500", "8", "11", "14"]]
+      },
+      "hints": [
+        "The market settles where MPB = MPC, and the social optimum is where MSB = MSC. The welfare loss triangle has height MSC - MPC and width Qm - Qopt.",
+        "Find each quantity from the table, measure the height at the market quantity, then take half of height times width."
+      ],
+      "targets": "Reading Qm and Qopt from a table; welfare loss area",
+      "marking_points": [
+        "Market quantity (MPB = MPC = Z10) = 400 tonnes [1]",
+        "Socially optimal quantity (MSB = MSC = Z12) = 300 tonnes [1]",
+        "Welfare loss = 1/2 x (13 - 10) x (400 - 300) = Z150 [1]"
+      ],
+      "model_answer_note": "A full-mark answer identifies 400 and 300 tonnes and shows the triangle working to reach Z150. Own-figure rule for the last mark."
+    },
+    {
+      "id": "u5-mcq-15",
+      "format": "mcq",
+      "section": "5.4",
+      "concepts": ["c5-negative-consumption-externalities", "c5-demerit-goods", "c5-marginal-social-benefit-msb"],
+      "command_term": "calculate",
+      "marks": 1,
+      "prompt": "Table 9 shows the market for energy drinks in Veld. Production creates no externalities, so MPC = MSC. By how many cans per week does the free market overconsume compared with the social optimum?",
+      "table": {
+        "caption": "Table 9: Energy drink market in Veld (values in zeds per can)",
+        "columns": ["Quantity (cans per week)", "MPB", "MSB", "MPC = MSC"],
+        "rows": [["1000", "10", "9", "6"], ["2000", "8", "6", "6"], ["3000", "6", "3", "6"], ["4000", "4", "0", "6"]]
+      },
+      "hints": [
+        "The market quantity is where MPB = MPC; the socially optimal quantity is where MSB = MSC.",
+        "Find the two quantities in the table, then take the difference."
+      ],
+      "targets": "Identifying Qm and Qopt for a negative consumption externality",
+      "options": [
+        {"id": "a", "text": "1000 cans", "misconception": null},
+        {"id": "b", "text": "2000 cans", "misconception": "This is the socially optimal quantity, not the amount of overconsumption."},
+        {"id": "c", "text": "3000 cans", "misconception": "This is the market quantity, not the gap between market and optimum."},
+        {"id": "d", "text": "4000 cans", "misconception": "At 4000 cans MPB is below MPC, so the market does not produce this much."}
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u5-sa-13",
+      "format": "short_answer",
+      "section": "5.3",
+      "concepts": ["c5-negative-production-externalities", "c5-external-cost", "c5-market-failure"],
+      "command_term": "explain",
+      "marks": 4,
+      "prompt": "Farms in Veld use chemical fertilisers that run off into rivers and harm fishing communities downstream. Using a negative production externality diagram, explain why the free market leads to market failure in this case. (Describe what your labelled diagram would show.)",
+      "hints": [
+        "Your diagram needs MPB = MSB, MPC and MSC, with Qm, Qopt and the welfare loss marked.",
+        "Say who bears the extra cost, where the market settles compared with the social optimum, and what area shows the loss to society."
+      ],
+      "targets": "Full diagram explanation of a negative production externality",
+      "marking_points": [
+        "Fertiliser runoff imposes external costs on third parties (fishing communities), so MSC lies above MPC [1]",
+        "Farmers ignore these costs and produce where MPB = MPC at Qm [1]",
+        "The social optimum is where MSB = MSC at Qopt, so Qm > Qopt: too much is produced (overallocation) and the price is too low [1]",
+        "This creates a welfare loss shown by the triangle between MSC and MSB from Qopt to Qm [1]"
+      ],
+      "model_answer_note": "A full-mark answer describes a correctly labelled diagram, links the runoff to MSC > MPC, compares Qm with Qopt and identifies the welfare loss triangle."
+    },
+    {
+      "id": "u5-sa-14",
+      "format": "short_answer",
+      "section": "5.4",
+      "concepts": ["c5-negative-consumption-externalities", "c5-marginal-private-benefit-mpb", "c5-marginal-social-benefit-msb", "c5-market-failure"],
+      "command_term": "explain",
+      "marks": 4,
+      "prompt": "Using a negative consumption externality diagram, explain why traffic congestion in the city of Tarn is an example of market failure. (Describe what your labelled diagram would show.)",
+      "hints": [
+        "Your diagram needs MPC = MSC, MPB and MSB, with Qm, Qopt and the welfare loss marked.",
+        "Say who is harmed by each extra car trip, which benefit curve lies lower, where drivers choose to be, and where society would prefer them to be."
+      ],
+      "targets": "Full diagram explanation of a negative consumption externality applied to congestion",
+      "marking_points": [
+        "Each extra car trip slows others and adds pollution, imposing external costs on third parties, so MSB lies below MPB [1]",
+        "Drivers consider only their private benefit and drive up to Qm where MPB = MPC [1]",
+        "The social optimum is at Qopt where MSB = MSC, so Qm > Qopt: there is overconsumption of car journeys [1]",
+        "This creates a welfare loss shown by the triangle between MSC and MSB from Qopt to Qm, so resources are misallocated [1]"
+      ],
+      "model_answer_note": "A full-mark answer describes a correctly labelled diagram with MSB below MPB, compares Qm with Qopt and identifies the welfare loss triangle as evidence of allocative inefficiency."
+    },
+    {
+      "id": "u5-sa-15",
+      "format": "short_answer",
+      "section": "5.4",
+      "concepts": ["c5-demerit-goods", "c5-negative-consumption-externalities"],
+      "command_term": "explain",
+      "marks": 3,
+      "prompt": "Kuva's government places an indirect tax on sugary drinks, which it treats as a demerit good. Explain how the tax could move the market towards the socially optimal quantity.",
+      "hints": [
+        "Think about how a tax on sellers affects their supply curve and the price consumers pay.",
+        "Follow the chain from the price change to the quantity bought, and compare the new quantity with the social optimum."
+      ],
+      "targets": "Tax on a demerit good: supply shift, higher price, lower quantity towards Qopt",
+      "marking_points": [
+        "The tax raises firms' costs, shifting the supply (MPC) curve upwards [1]",
+        "The price paid by consumers rises, so the quantity consumed falls [1]",
+        "Consumption falls from Qm towards Qopt, reducing overconsumption and the welfare loss [1]"
+      ],
+      "model_answer_note": "A full-mark answer traces the chain from the supply shift to a higher price and lower consumption, ending closer to Qopt. Note that the tax should ideally equal the external cost at Qopt."
+    }
+  ]
+}

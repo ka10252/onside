@@ -1,0 +1,700 @@
+{
+  "unit": 14,
+  "title": "International trade: Part I",
+  "questions": [
+    {
+      "id": "u14-mcq-01",
+      "format": "mcq",
+      "section": "14.1",
+      "concepts": ["c14-free-trade"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Veld opens its economy to international trade. Which of the following is most likely to be a benefit for consumers in Veld?",
+      "hints": [
+        "Think about the benefits of trade from the point of view of households, not firms or the government.",
+        "Check each option: is it actually a benefit, and does it go to consumers?"
+      ],
+      "targets": "Consumer benefits of trade",
+      "options": [
+        { "id": "a", "text": "A guarantee that no jobs are lost in domestic industries", "misconception": "Trade can cause job losses in industries that compete with imports, so there is no such guarantee." },
+        { "id": "b", "text": "Higher prices for imported goods because of transport costs", "misconception": "Transport costs are a cost of trade, not a benefit, and imports are usually cheaper than domestic production." },
+        { "id": "c", "text": "A wider choice of goods at lower prices", "misconception": null },
+        { "id": "d", "text": "More tariff revenue collected by the government", "misconception": "Opening up to free trade removes tariffs, and tariff revenue goes to the government, not to consumers." }
+      ],
+      "answer": "c"
+    },
+    {
+      "id": "u14-sa-01",
+      "format": "short_answer",
+      "section": "14.1",
+      "concepts": ["c14-free-trade"],
+      "command_term": "define",
+      "marks": 2,
+      "prompt": "Define the term free trade.",
+      "hints": [
+        "Think about what the word 'free' refers to when goods cross borders between countries.",
+        "Describe the activity first, then say what is missing from it."
+      ],
+      "targets": "Trade between countries without government restrictions",
+      "marking_points": [
+        "The exchange of goods and services between countries [1]",
+        "without government restrictions or intervention, such as tariffs or quotas [1]"
+      ],
+      "model_answer_note": "A full-mark answer refers to international exchange and to the absence of government-imposed barriers."
+    },
+    {
+      "id": "u14-mcq-02",
+      "format": "mcq",
+      "section": "14.3",
+      "concepts": ["c14-trade-protection"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Which of the following is NOT a form of trade protection?",
+      "hints": [
+        "Trade protection gives domestic producers an advantage over foreign producers.",
+        "For each option, ask whether it restricts trade or gives local firms an edge, or whether it does the opposite."
+      ],
+      "targets": "Types of trade protection",
+      "options": [
+        { "id": "a", "text": "A tax on imported cars", "misconception": "A tax on imports is a tariff, the most common form of protection." },
+        { "id": "b", "text": "A limit on the quantity of steel that may be imported each year", "misconception": "A quantity limit on imports is an import quota, a form of protection." },
+        { "id": "c", "text": "A subsidy paid to domestic firms for each unit they export", "misconception": "Export subsidies give domestic firms an advantage over foreign rivals, so they count as protection." },
+        { "id": "d", "text": "A trade agreement that removes tariffs between two countries", "misconception": null }
+      ],
+      "answer": "d"
+    },
+    {
+      "id": "u14-sa-02",
+      "format": "short_answer",
+      "section": "14.3",
+      "concepts": ["c14-trade-protection"],
+      "command_term": "define",
+      "marks": 2,
+      "prompt": "Define the term tariff.",
+      "hints": [
+        "This is the most common form of trade protection; think about what kind of government instrument it is.",
+        "State what it is and which goods it applies to."
+      ],
+      "targets": "Tax on imports",
+      "marking_points": [
+        "A tax [1]",
+        "imposed on imported goods or services [1]"
+      ],
+      "model_answer_note": "A full-mark answer says it is a tax and that it applies to imports; 'a trade barrier' alone earns no marks."
+    },
+    {
+      "id": "u14-mcq-03",
+      "format": "mcq",
+      "section": "14.2",
+      "concepts": ["c14-absolute-advantage", "c14-comparative-advantage"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "With the same resources, a worker in Veld can produce more tonnes of rice per day than a worker in Kuva. What can be concluded?",
+      "hints": [
+        "Decide whether the information is about the amount produced or about what is given up.",
+        "Only one of the two types of advantage can be judged from output figures for a single good."
+      ],
+      "targets": "Absolute advantage vs comparative advantage",
+      "options": [
+        { "id": "a", "text": "Veld has a comparative advantage in rice", "misconception": "Comparative advantage depends on opportunity cost, which needs data on another good." },
+        { "id": "b", "text": "Veld has an absolute advantage in rice", "misconception": null },
+        { "id": "c", "text": "Veld has a lower opportunity cost of producing rice", "misconception": "Opportunity cost cannot be found without knowing what else each worker could produce." },
+        { "id": "d", "text": "Veld has an absolute advantage in all goods", "misconception": "The data only covers rice, so nothing can be said about other goods." }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "u14-sa-03",
+      "format": "short_answer",
+      "section": "14.1",
+      "concepts": ["c14-specialization"],
+      "command_term": "define",
+      "marks": 2,
+      "prompt": "Define the term specialization.",
+      "hints": [
+        "Think about how a country divides its resources across different products.",
+        "Say what the country does with its production and what happens to the range of goods it makes."
+      ],
+      "targets": "Concentrating production on few goods",
+      "marking_points": [
+        "When an individual, firm or country concentrates its production [1]",
+        "on one or a few goods or services [1]"
+      ],
+      "model_answer_note": "A full-mark answer mentions concentrating production and a narrow range of goods or services."
+    },
+    {
+      "id": "u14-mcq-04",
+      "format": "mcq",
+      "section": "14.3",
+      "concepts": ["c14-trade-protection"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "A diagram shows the domestic market for steel in Kuva, with domestic demand, domestic supply and a horizontal world supply curve below the domestic equilibrium price. Kuva then imposes a tariff on steel imports. What would the diagram show?",
+      "hints": [
+        "Think about which curve the tariff moves on a tariff diagram.",
+        "Read off the new price, then the new quantities supplied by domestic firms and demanded by consumers; imports are the gap between them."
+      ],
+      "targets": "Tariff effects on price, domestic output and imports",
+      "options": [
+        { "id": "a", "text": "The domestic price rises, domestic production rises and imports fall", "misconception": null },
+        { "id": "b", "text": "The domestic price rises, domestic production falls and imports rise", "misconception": "A higher price makes domestic firms supply more, not less, so imports shrink." },
+        { "id": "c", "text": "The world supply curve shifts down and imports rise", "misconception": "A tariff raises the price of imports, so the world supply curve shifts up, not down." },
+        { "id": "d", "text": "The domestic price is unchanged and only imports fall", "misconception": "The tariff is added to the world price, so the price paid in Kuva rises." }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u14-sa-04",
+      "format": "short_answer",
+      "section": "14.2",
+      "concepts": ["c14-comparative-advantage"],
+      "command_term": "define",
+      "marks": 2,
+      "prompt": "Define the term comparative advantage.",
+      "hints": [
+        "Think about how this idea differs from absolute advantage.",
+        "Your definition must say what is being compared and between whom."
+      ],
+      "targets": "Lower opportunity cost than another country",
+      "marking_points": [
+        "A country can produce a good at a lower opportunity cost [1]",
+        "than another country [1]"
+      ],
+      "model_answer_note": "Full marks need the idea of lower opportunity cost and a comparison with another country; 'produces more' describes absolute advantage and earns no marks."
+    },
+    {
+      "id": "u14-mcq-05",
+      "format": "mcq",
+      "section": "14.1",
+      "concepts": ["c14-free-trade"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Kuva has almost no oil deposits. Which benefit of international trade is most relevant to Kuva in this case?",
+      "hints": [
+        "Think about the list of benefits of trade and which one relates to natural resources.",
+        "Ask what Kuva cannot produce at home and how trade changes that."
+      ],
+      "targets": "Access to resources as a benefit of trade",
+      "options": [
+        { "id": "a", "text": "The government can collect more tariff revenue", "misconception": "Tariff revenue comes from restricting trade, not from the benefits of free trade." },
+        { "id": "b", "text": "Kuva can protect its infant oil industry", "misconception": "Protection is an argument against free trade, and Kuva has no oil to build an industry on." },
+        { "id": "c", "text": "Kuva can specialise in producing oil", "misconception": "A country with almost no oil deposits cannot specialise in oil production." },
+        { "id": "d", "text": "Kuva can obtain resources that it cannot produce itself", "misconception": null }
+      ],
+      "answer": "d"
+    },
+    {
+      "id": "u14-sa-05",
+      "format": "short_answer",
+      "section": "14.2",
+      "concepts": ["c14-opportunity-cost", "c14-comparative-advantage"],
+      "command_term": "calculate",
+      "marks": 2,
+      "prompt": "Using the data in Table 1, calculate the opportunity cost of producing one unit of wheat in Veld and in Kuva, in units of cloth.",
+      "table": {
+        "caption": "Table 1: Output per worker per day",
+        "columns": ["Country", "Wheat (units)", "Cloth (units)"],
+        "rows": [
+          ["Veld", "8", "4"],
+          ["Kuva", "2", "2"]
+        ]
+      },
+      "hints": [
+        "Opportunity cost is what must be given up; here it is measured in units of cloth.",
+        "For each country, divide the cloth a worker could make by the wheat that worker could make instead."
+      ],
+      "targets": "Opportunity cost ratios from an output table",
+      "marking_points": [
+        "Veld: 4 ÷ 8 = 0.5 units of cloth per unit of wheat [1]",
+        "Kuva: 2 ÷ 2 = 1 unit of cloth per unit of wheat [1]"
+      ],
+      "model_answer_note": "Full marks need both correct ratios with units of cloth; inverted ratios (2 and 1) earn no marks for Veld."
+    },
+    {
+      "id": "u14-mcq-06",
+      "format": "mcq",
+      "section": "14.2",
+      "concepts": ["c14-comparative-advantage", "c14-absolute-advantage", "c14-opportunity-cost"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Using Table 2, which statement is correct?",
+      "table": {
+        "caption": "Table 2: Output per worker per day",
+        "columns": ["Country", "Wheat (units)", "Cloth (units)"],
+        "rows": [
+          ["Veld", "8", "4"],
+          ["Kuva", "2", "2"]
+        ]
+      },
+      "hints": [
+        "Use opportunity cost, not the size of output, to judge comparative advantage.",
+        "Work out what each country gives up for one unit of each good, then compare the two countries good by good."
+      ],
+      "targets": "Comparative advantage exists even when one country has absolute advantage in both goods",
+      "options": [
+        { "id": "a", "text": "Veld has a comparative advantage in both wheat and cloth", "misconception": "Veld produces more of both, which is absolute advantage; a country cannot have a comparative advantage in both goods." },
+        { "id": "b", "text": "Veld has a comparative advantage in cloth and Kuva in wheat", "misconception": "This reverses the opportunity cost comparison." },
+        { "id": "c", "text": "Veld has a comparative advantage in wheat and Kuva in cloth", "misconception": null },
+        { "id": "d", "text": "Kuva has no comparative advantage because it produces less of both goods", "misconception": "Producing less of both is an absolute disadvantage; Kuva can still have a lower opportunity cost in one good." }
+      ],
+      "answer": "c"
+    },
+    {
+      "id": "u14-sa-06",
+      "format": "short_answer",
+      "section": "14.1",
+      "concepts": [],
+      "command_term": "calculate",
+      "marks": 2,
+      "prompt": "Kuva lost its preferential access to a large export market. Using the data in Table 3, calculate the change in Kuva's export revenue from bananas between 2024 and 2025.",
+      "table": {
+        "caption": "Table 3: Kuva's banana exports",
+        "columns": ["Year", "Export price (zeds per kg)", "Quantity exported (million kg)"],
+        "rows": [
+          ["2024", "6", "30"],
+          ["2025", "5", "24"]
+        ]
+      },
+      "hints": [
+        "Export revenue is found from the price and the quantity sold abroad.",
+        "Find revenue in each year, then subtract the 2024 figure from the 2025 figure and give units."
+      ],
+      "targets": "Export revenue = price × quantity; change with sign and units",
+      "marking_points": [
+        "Revenue 2024 = 6 × 30 = 180 million zeds; revenue 2025 = 5 × 24 = 120 million zeds [1]",
+        "Change = 120 − 180 = −60 million zeds (a fall of 60 million zeds) [1]"
+      ],
+      "model_answer_note": "Full marks need both revenue figures and a fall of 60 million zeds with units; a missing sign or 'fall' loses the second mark."
+    },
+    {
+      "id": "u14-mcq-07",
+      "format": "mcq",
+      "section": "14.1",
+      "concepts": [],
+      "command_term": "calculate",
+      "marks": 1,
+      "prompt": "Table 4 shows Veld's coffee exports. What was the percentage change in Veld's coffee export revenue between 2024 and 2025?",
+      "table": {
+        "caption": "Table 4: Veld's coffee exports",
+        "columns": ["Year", "Export price (zeds per kg)", "Quantity exported (million kg)"],
+        "rows": [
+          ["2024", "5", "40"],
+          ["2025", "4", "45"]
+        ]
+      },
+      "hints": [
+        "Revenue depends on both price and quantity, so work out total revenue first.",
+        "Find revenue in each year, then divide the change by the 2024 revenue and multiply by 100."
+      ],
+      "targets": "Percentage change in export revenue, not in price or quantity alone",
+      "options": [
+        { "id": "a", "text": "−10%", "misconception": null },
+        { "id": "b", "text": "−20%", "misconception": "This is the percentage change in price only, ignoring the rise in quantity." },
+        { "id": "c", "text": "+12.5%", "misconception": "This is the percentage change in quantity only, ignoring the fall in price." },
+        { "id": "d", "text": "−7.5%", "misconception": "Adding the price and quantity percentage changes only approximates the change in revenue." }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u14-sa-07",
+      "format": "short_answer",
+      "section": "14.3",
+      "concepts": ["c14-trade-protection"],
+      "command_term": "calculate",
+      "marks": 2,
+      "prompt": "The world price of rice is 4 zeds per kg. Veld imposes a tariff of 1 zed per kg on rice imports. Using the data in Table 5, calculate the quantity of rice imported after the tariff and the government's tariff revenue.",
+      "table": {
+        "caption": "Table 5: Domestic rice market in Veld",
+        "columns": ["Price (zeds per kg)", "Quantity demanded (thousand kg)", "Quantity supplied by domestic firms (thousand kg)"],
+        "rows": [
+          ["4", "100", "20"],
+          ["5", "70", "40"]
+        ]
+      },
+      "hints": [
+        "Use the row for the price that consumers pay once the tariff is added to the world price.",
+        "Imports are the gap between what is demanded and what domestic firms supply; revenue is the tariff per unit times the units imported."
+      ],
+      "targets": "Imports and tariff revenue after a tariff",
+      "marking_points": [
+        "Imports after the tariff = 70 − 40 = 30 thousand kg [1]",
+        "Tariff revenue = 1 × 30 = 30 thousand zeds [1]"
+      ],
+      "model_answer_note": "Full marks need imports of 30 thousand kg and revenue of 30 thousand zeds; using the free-trade imports (80) earns no marks."
+    },
+    {
+      "id": "u14-mcq-08",
+      "format": "mcq",
+      "section": "14.3",
+      "concepts": ["c14-trade-protection"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Kuva imposes an import quota on sugar that is smaller than the quantity it imported under free trade. What is the most likely effect on consumers in Kuva?",
+      "hints": [
+        "Think about a quota diagram, where supply beyond domestic output is limited to a fixed amount.",
+        "With fewer imports available, consider what happens to the price and then to the quantity consumers buy."
+      ],
+      "targets": "Import quota raises price and cuts consumption",
+      "options": [
+        { "id": "a", "text": "They pay the world price and buy more sugar", "misconception": "A quota limits supply, so the domestic price rises above the world price." },
+        { "id": "b", "text": "They pay a higher price and buy less sugar", "misconception": null },
+        { "id": "c", "text": "They pay a higher price and buy more sugar", "misconception": "With a downward-sloping demand curve, a higher price reduces the quantity demanded." },
+        { "id": "d", "text": "The price is unchanged but consumers pay a tax to the government", "misconception": "A quota is a quantity limit, not a tax; the price rises and the government gets no revenue unless it sells licences." }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "u14-sa-08",
+      "format": "short_answer",
+      "section": "14.2",
+      "concepts": ["c14-comparative-advantage", "c14-opportunity-cost", "c14-specialization"],
+      "command_term": "explain",
+      "marks": 3,
+      "prompt": "Using the data in Table 6, explain which good each country should specialise in.",
+      "table": {
+        "caption": "Table 6: Output per worker per day",
+        "columns": ["Country", "Phones (units)", "Rice (tonnes)"],
+        "rows": [
+          ["Veld", "10", "20"],
+          ["Kuva", "4", "12"]
+        ]
+      },
+      "hints": [
+        "Specialisation should follow comparative advantage, so you need opportunity costs, not output levels.",
+        "Work out what each country gives up for one phone and for one tonne of rice, compare them, and match each country to the good with the lower cost."
+      ],
+      "targets": "Applying comparative advantage when one country has absolute advantage in both",
+      "marking_points": [
+        "Opportunity cost of one phone: Veld 20 ÷ 10 = 2 tonnes of rice; Kuva 12 ÷ 4 = 3 tonnes of rice [1]",
+        "Veld has the lower opportunity cost of phones, so it should specialise in phones [1]",
+        "Opportunity cost of one tonne of rice: Kuva 1/3 phone vs Veld 1/2 phone, so Kuva should specialise in rice [1]"
+      ],
+      "model_answer_note": "A full-mark answer uses opportunity cost figures for both countries and assigns phones to Veld and rice to Kuva; answers based only on Veld producing more earn 0."
+    },
+    {
+      "id": "u14-mcq-09",
+      "format": "mcq",
+      "section": "14.2",
+      "concepts": ["c14-comparative-advantage", "c14-opportunity-cost"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Veld and Kuva each have a straight-line production possibilities curve (PPC), with wheat on the horizontal axis and cloth on the vertical axis. Veld's PPC is steeper than Kuva's. What can be concluded?",
+      "hints": [
+        "The slope of a straight-line PPC shows an opportunity cost.",
+        "Work out what a steeper slope means for the cloth given up per unit of wheat, then decide which good is relatively cheaper for Veld."
+      ],
+      "targets": "Reading comparative advantage from PPC slopes",
+      "options": [
+        { "id": "a", "text": "Veld has a comparative advantage in cloth", "misconception": null },
+        { "id": "b", "text": "Veld has a comparative advantage in wheat", "misconception": "A steeper slope means Veld gives up more cloth per unit of wheat, so wheat is relatively costly for Veld." },
+        { "id": "c", "text": "Veld has an absolute advantage in both goods", "misconception": "Absolute advantage depends on where the PPC is, not on its slope." },
+        { "id": "d", "text": "Neither country can gain from trade", "misconception": "Gains are impossible only if the slopes are equal; different slopes mean different opportunity costs." }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u14-sa-09",
+      "format": "short_answer",
+      "section": "14.3",
+      "concepts": ["c14-trade-protection"],
+      "command_term": "calculate",
+      "marks": 2,
+      "prompt": "The world price of rice is 4 zeds per kg. Veld imposes a tariff of 1 zed per kg on rice imports. Using the data in Table 7, calculate the change in the revenue of domestic rice producers.",
+      "table": {
+        "caption": "Table 7: Domestic rice market in Veld",
+        "columns": ["Price (zeds per kg)", "Quantity demanded (thousand kg)", "Quantity supplied by domestic firms (thousand kg)"],
+        "rows": [
+          ["4", "100", "20"],
+          ["5", "70", "40"]
+        ]
+      },
+      "hints": [
+        "Producer revenue uses the price domestic firms receive and the quantity they sell.",
+        "Find domestic producers' revenue at the world price and at the price with the tariff, then find the difference."
+      ],
+      "targets": "Domestic producer revenue before and after a tariff",
+      "marking_points": [
+        "Before: 4 × 20 = 80 thousand zeds; after: 5 × 40 = 200 thousand zeds [1]",
+        "Change = 200 − 80 = an increase of 120 thousand zeds [1]"
+      ],
+      "model_answer_note": "Full marks need both revenue figures and an increase of 120 thousand zeds; using quantity demanded instead of domestic supply earns no marks."
+    },
+    {
+      "id": "u14-mcq-10",
+      "format": "mcq",
+      "section": "14.1",
+      "concepts": ["c14-specialization", "c14-free-trade"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Veld specialises according to its comparative advantage and trades with Kuva on terms that benefit both countries. On a diagram of Veld's PPC, where can Veld's consumption point now be?",
+      "hints": [
+        "Distinguish between what Veld can produce and what Veld can consume once it trades.",
+        "Think about what Veld receives in exchange for its exports compared with what it would give up producing those goods itself."
+      ],
+      "targets": "Gains from trade: consumption beyond the PPC",
+      "options": [
+        { "id": "a", "text": "On a new PPC further out, because trade increases Veld's resources", "misconception": "Trade does not change the quantity of Veld's factors of production, so the PPC itself does not shift." },
+        { "id": "b", "text": "Inside its PPC", "misconception": "A point inside the PPC means unused resources or a loss, not a gain from trade." },
+        { "id": "c", "text": "On its PPC, with more of both goods than before", "misconception": "Moving along a PPC always means giving up some of one good to get more of the other." },
+        { "id": "d", "text": "Outside its PPC", "misconception": null }
+      ],
+      "answer": "d"
+    },
+    {
+      "id": "u14-sa-10",
+      "format": "short_answer",
+      "section": "14.1",
+      "concepts": ["c14-free-trade"],
+      "command_term": "explain",
+      "marks": 3,
+      "prompt": "Explain how free trade can increase the efficiency of domestic firms in Veld.",
+      "hints": [
+        "Think about the competition domestic firms face once foreign goods can enter freely.",
+        "Link that competition to firms' costs and behaviour, then to how the country's resources are used."
+      ],
+      "targets": "Competition from trade and efficiency",
+      "marking_points": [
+        "Domestic firms face more competition from foreign producers [1]",
+        "so they must cut costs, improve quality or innovate, and inefficient firms may leave the market [1]",
+        "resources move to more productive uses, lowering costs and prices / improving allocative efficiency [1]"
+      ],
+      "model_answer_note": "A full-mark answer links foreign competition to pressure on firms and then to better use of resources or lower costs and prices."
+    },
+    {
+      "id": "u14-mcq-11",
+      "format": "mcq",
+      "section": "14.3",
+      "concepts": ["c14-trade-protection"],
+      "command_term": "calculate",
+      "marks": 1,
+      "prompt": "The world price of rice is 4 zeds per kg and Veld imposes a tariff of 1 zed per kg. The domestic supply curve is a straight line. Using Table 8, by how much does domestic producer surplus increase?",
+      "table": {
+        "caption": "Table 8: Domestic rice market in Veld",
+        "columns": ["Price (zeds per kg)", "Quantity demanded (thousand kg)", "Quantity supplied by domestic firms (thousand kg)"],
+        "rows": [
+          ["4", "100", "20"],
+          ["5", "70", "40"]
+        ]
+      },
+      "hints": [
+        "On a tariff diagram, the gain in producer surplus is the area between the two prices, to the left of the domestic supply curve.",
+        "That area is a trapezium: use the average of the two domestic quantities multiplied by the price change."
+      ],
+      "targets": "Producer surplus change vs revenue change",
+      "options": [
+        { "id": "a", "text": "20 thousand zeds", "misconception": "This is only the change in domestic output multiplied by the tariff, which misses the rectangle for existing output." },
+        { "id": "b", "text": "120 thousand zeds", "misconception": "This is the change in producer revenue, which includes the costs of producing the extra output." },
+        { "id": "c", "text": "30 thousand zeds", "misconception": null },
+        { "id": "d", "text": "60 thousand zeds", "misconception": "This adds the two quantities without averaging them, so the trapezium is counted twice." }
+      ],
+      "answer": "c"
+    },
+    {
+      "id": "u14-sa-11",
+      "format": "short_answer",
+      "section": "14.2",
+      "concepts": ["c14-absolute-advantage", "c14-comparative-advantage"],
+      "command_term": "distinguish",
+      "marks": 2,
+      "prompt": "Distinguish between absolute advantage and comparative advantage.",
+      "hints": [
+        "One concept is judged by output levels and the other by what is given up.",
+        "Write one clear sentence for each concept, making the basis of comparison explicit."
+      ],
+      "targets": "Output with the same resources vs opportunity cost",
+      "marking_points": [
+        "Absolute advantage: a country can produce more of a good than another country with the same resources (or use fewer resources) [1]",
+        "Comparative advantage: a country can produce a good at a lower opportunity cost than another country [1]"
+      ],
+      "model_answer_note": "Both concepts must be explained with the correct basis (resources/output vs opportunity cost); two definitions without a comparison with another country lose marks."
+    },
+    {
+      "id": "u14-mcq-12",
+      "format": "mcq",
+      "section": "14.2",
+      "concepts": ["c14-comparative-advantage", "c14-specialization"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Which of the following is a reason why the gains from trade predicted by the theory of comparative advantage may not be achieved in practice?",
+      "hints": [
+        "Think about the simplifying assumptions behind the theory of comparative advantage.",
+        "Separate the conditions that create gains from the real-world factors that can cancel them out."
+      ],
+      "targets": "Limitations of comparative advantage theory",
+      "options": [
+        { "id": "a", "text": "Countries have different opportunity costs", "misconception": "Different opportunity costs are what create the gains from trade in the first place." },
+        { "id": "b", "text": "Transport costs may be larger than the difference in opportunity costs", "misconception": null },
+        { "id": "c", "text": "Countries trade at terms between their two opportunity costs", "misconception": "Trading between the two opportunity costs is the condition for both countries to gain." },
+        { "id": "d", "text": "Specialisation increases total world output", "misconception": "Higher total output is a gain from specialisation, not a limitation." }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "u14-sa-12",
+      "format": "short_answer",
+      "section": "14.3",
+      "concepts": ["c14-trade-protection", "c14-free-trade"],
+      "command_term": "calculate",
+      "marks": 3,
+      "prompt": "Veld currently has a tariff of 1 zed per kg on rice, and the world price is 4 zeds per kg. The demand and domestic supply curves are straight lines. Using the data in Table 9, calculate the gain in social welfare if Veld removes the tariff.",
+      "table": {
+        "caption": "Table 9: Domestic rice market in Veld",
+        "columns": ["Price (zeds per kg)", "Quantity demanded (thousand kg)", "Quantity supplied by domestic firms (thousand kg)"],
+        "rows": [
+          ["4", "100", "20"],
+          ["5", "70", "40"]
+        ]
+      },
+      "hints": [
+        "Removing the tariff gets rid of the deadweight loss it caused; on a tariff diagram this loss is two triangles.",
+        "Find one triangle from the change in domestic supply and one from the change in quantity demanded, each with the tariff as its height, then add them."
+      ],
+      "targets": "Welfare loss of a tariff: production and consumption triangles",
+      "marking_points": [
+        "Production-side triangle = ½ × (40 − 20) × 1 = 10 thousand zeds [1]",
+        "Consumption-side triangle = ½ × (100 − 70) × 1 = 15 thousand zeds [1]",
+        "Gain in social welfare = 10 + 15 = 25 thousand zeds [1]"
+      ],
+      "model_answer_note": "Full marks need both triangles and a total of 25 thousand zeds; forgetting the ½ (answer 50) loses the final mark only if the method is otherwise correct."
+    },
+    {
+      "id": "u14-mcq-13",
+      "format": "mcq",
+      "section": "14.3",
+      "concepts": ["c14-trade-protection"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Veld imports much of its steel at the world price. The government gives domestic steel producers a subsidy per tonne produced. What would a diagram of Veld's steel market show?",
+      "hints": [
+        "Think about which curve the subsidy shifts and whether the price paid by consumers is still set by the world price.",
+        "Compare the new domestic output with total demand to find what happens to imports."
+      ],
+      "targets": "Production subsidy vs tariff: price unchanged, imports fall",
+      "options": [
+        { "id": "a", "text": "The domestic price rises above the world price and consumption falls", "misconception": "This describes a tariff; a subsidy lowers producers' costs without raising the price consumers pay." },
+        { "id": "b", "text": "The domestic price falls below the world price and imports rise", "misconception": "The price stays at the world price, because consumers can still buy imports at that price." },
+        { "id": "c", "text": "Domestic production rises and imports also rise", "misconception": "With consumption unchanged, more domestic output must replace some imports." },
+        { "id": "d", "text": "The price stays at the world price, domestic production rises and imports fall", "misconception": null }
+      ],
+      "answer": "d"
+    },
+    {
+      "id": "u14-sa-13",
+      "format": "short_answer",
+      "section": "14.2",
+      "concepts": ["c14-comparative-advantage", "c14-specialization"],
+      "command_term": "explain",
+      "marks": 2,
+      "prompt": "Explain one reason, other than transport costs, why a country may not gain as much as the theory of comparative advantage predicts.",
+      "hints": [
+        "Think about the other simplifying assumptions of the theory, such as those about costs or about how easily resources move.",
+        "State the assumption that fails in reality, then say how that failure reduces the gains."
+      ],
+      "targets": "Limitations of comparative advantage (costs, factor mobility, risks)",
+      "marking_points": [
+        "Identifies an unrealistic assumption or real-world problem, e.g. rising costs as output expands, immobile factors of production, or over-dependence on a few exports [1]",
+        "Explains how it reduces the gains, e.g. opportunity costs rise with specialisation, workers in shrinking industries become unemployed, or export earnings become unstable [1]"
+      ],
+      "model_answer_note": "A full-mark answer names one valid limitation other than transport costs and clearly explains why it reduces the gains from specialisation."
+    },
+    {
+      "id": "u14-mcq-14",
+      "format": "mcq",
+      "section": "14.1",
+      "concepts": ["c14-free-trade"],
+      "command_term": "calculate",
+      "marks": 1,
+      "prompt": "Under free trade, Veld can buy rice at the world price of 4 zeds per kg. Using Table 10, what are total consumer spending on rice and the quantity of rice imported?",
+      "table": {
+        "caption": "Table 10: Domestic rice market in Veld",
+        "columns": ["Price (zeds per kg)", "Quantity demanded (thousand kg)", "Quantity supplied by domestic firms (thousand kg)"],
+        "rows": [
+          ["4", "100", "20"],
+          ["5", "70", "40"]
+        ]
+      },
+      "hints": [
+        "Use only the row for the world price, since there is no tariff.",
+        "Spending uses the quantity consumers buy; imports are the part of that quantity not supplied by domestic firms."
+      ],
+      "targets": "Consumer spending and imports at the world price",
+      "options": [
+        { "id": "a", "text": "Spending 400 thousand zeds; imports 80 thousand kg", "misconception": null },
+        { "id": "b", "text": "Spending 400 thousand zeds; imports 100 thousand kg", "misconception": "Not all rice is imported; domestic firms still supply part of the quantity demanded." },
+        { "id": "c", "text": "Spending 80 thousand zeds; imports 20 thousand kg", "misconception": "These use the domestic supply figure, which describes domestic producers, not consumers or imports." },
+        { "id": "d", "text": "Spending 320 thousand zeds; imports 80 thousand kg", "misconception": "This counts only spending on imports, not total consumer spending on rice." }
+      ],
+      "answer": "a"
+    },
+    {
+      "id": "u14-sa-14",
+      "format": "short_answer",
+      "section": "14.1",
+      "concepts": ["c14-free-trade", "c14-specialization"],
+      "command_term": "explain",
+      "marks": 3,
+      "prompt": "Explain how access to international markets can allow firms in Kuva to lower their average costs.",
+      "hints": [
+        "Think about the concept that links the scale of production to average costs.",
+        "Link the size of the market firms can sell to, to the amount they produce, and then to their costs per unit."
+      ],
+      "targets": "Trade, larger markets and economies of scale",
+      "marking_points": [
+        "Trade gives firms access to a much larger market than the domestic one [1]",
+        "so firms can expand and produce on a larger scale [1]",
+        "gaining economies of scale, so average (unit) costs fall [1]"
+      ],
+      "model_answer_note": "A full-mark answer links a bigger market to larger-scale production and to economies of scale that reduce average costs."
+    },
+    {
+      "id": "u14-mcq-15",
+      "format": "mcq",
+      "section": "14.2",
+      "concepts": ["c14-comparative-advantage", "c14-opportunity-cost"],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Using Table 11, Veld specialises in wheat and exports it to Kuva in exchange for cloth. Which terms of trade would benefit both countries?",
+      "table": {
+        "caption": "Table 11: Output per worker per day",
+        "columns": ["Country", "Wheat (units)", "Cloth (units)"],
+        "rows": [
+          ["Veld", "8", "4"],
+          ["Kuva", "2", "2"]
+        ]
+      },
+      "hints": [
+        "Mutually beneficial terms of trade lie between the two countries' opportunity costs of the traded good.",
+        "Find each country's opportunity cost of one unit of wheat in cloth, then pick the option that falls between them."
+      ],
+      "targets": "Terms of trade must lie between the opportunity cost ratios",
+      "options": [
+        { "id": "a", "text": "1 unit of wheat for 0.25 units of cloth", "misconception": "Veld could get more cloth than this by moving its own resources out of wheat, so Veld would lose." },
+        { "id": "b", "text": "1 unit of wheat for 0.75 units of cloth", "misconception": null },
+        { "id": "c", "text": "1 unit of wheat for 1.5 units of cloth", "misconception": "Kuva gives up only 1 unit of cloth to make a unit of wheat itself, so it would not pay more." },
+        { "id": "d", "text": "1 unit of wheat for 2 units of cloth", "misconception": "This uses the inverted ratio (Veld's opportunity cost of cloth in wheat) and Kuva would not accept it." }
+      ],
+      "answer": "b"
+    },
+    {
+      "id": "u14-sa-15",
+      "format": "short_answer",
+      "section": "14.3",
+      "concepts": ["c14-trade-protection", "c14-free-trade"],
+      "command_term": "explain",
+      "marks": 4,
+      "prompt": "Veld signs a trade agreement that removes its tariff on imported shoes. Explain, with reference to a tariff diagram, the effects on consumers, domestic shoe producers and imports in Veld.",
+      "hints": [
+        "Use a diagram with domestic demand, domestic supply and a world supply curve that moves when the tariff goes.",
+        "Start with the new price, then read off what happens to the quantity bought, the quantity made at home and the gap between them."
+      ],
+      "targets": "Effects of tariff removal on price, consumer and producer surplus, and imports",
+      "marking_points": [
+        "The domestic price falls to the world price [1]",
+        "consumers buy more at the lower price, so consumer surplus rises [1]",
+        "domestic producers supply less, so their revenue/producer surplus falls [1]",
+        "imports rise, as the gap between quantity demanded and domestic supply widens [1]"
+      ],
+      "model_answer_note": "A full-mark answer covers the fall in price and the separate effects on consumers, domestic producers and imports, each linked to the diagram."
+    }
+  ]
+}

@@ -1,0 +1,1121 @@
+{
+  "unit": 10,
+  "title": "Macroeconomic objectives 1: low unemployment, low and stable rate of inflation",
+  "questions": [
+    {
+      "id": "u10-mcq-01",
+      "format": "mcq",
+      "section": "10.1",
+      "concepts": [
+        "c10-unemployment",
+        "c10-labor-force"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Which of the following people in Veld would be counted as unemployed?",
+      "options": [
+        {
+          "id": "a",
+          "text": "A 67-year-old who has retired and is not looking for work",
+          "misconception": "Retired people above working age who are not seeking work are outside the labour force."
+        },
+        {
+          "id": "b",
+          "text": "A 30-year-old who lost her job last month and is applying for new jobs",
+          "misconception": null
+        },
+        {
+          "id": "c",
+          "text": "A 19-year-old full-time university student who is not looking for work",
+          "misconception": "Students who are not seeking work are not in the labour force, so they are not unemployed."
+        },
+        {
+          "id": "d",
+          "text": "A 45-year-old who stopped looking for work after a year of failed applications",
+          "misconception": "This is a discouraged worker; because they are no longer seeking work, they are not counted as unemployed."
+        }
+      ],
+      "answer": "b",
+      "hints": [
+        "Use the official conditions a person must meet to be counted as unemployed.",
+        "Check each person against age, whether they have a job, and whether they are actively searching."
+      ],
+      "targets": "Who counts as unemployed vs outside the labour force"
+    },
+    {
+      "id": "u10-sa-01",
+      "format": "short_answer",
+      "section": "10.2",
+      "concepts": [
+        "c10-inflation"
+      ],
+      "command_term": "define",
+      "marks": 2,
+      "prompt": "Define inflation.",
+      "marking_points": [
+        "A sustained (continuing) increase [1]",
+        "in the general (average) price level of goods and services in an economy [1]"
+      ],
+      "model_answer_note": "A full-mark answer includes both 'sustained' and 'general price level'; a rise in the price of one good is not enough.",
+      "hints": [
+        "Think about what a price index such as the CPI measures over time.",
+        "Your answer should say how long the change lasts and which prices are involved."
+      ],
+      "targets": "Precise definition: sustained + general price level"
+    },
+    {
+      "id": "u10-sa-02",
+      "format": "short_answer",
+      "section": "10.1",
+      "concepts": [
+        "c10-unemployment",
+        "c10-labor-force"
+      ],
+      "command_term": "define",
+      "marks": 2,
+      "prompt": "Define the unemployment rate.",
+      "marking_points": [
+        "The number of unemployed people expressed as a percentage of the labour force [1]",
+        "where the unemployed are people of working age without a job who are actively seeking work [1]"
+      ],
+      "model_answer_note": "A full-mark answer gives the percentage relationship with the labour force (not the whole population) and describes who is unemployed.",
+      "hints": [
+        "This is a rate, so it compares one group of people with a larger group.",
+        "State which two groups are compared and describe the people in the smaller group."
+      ],
+      "targets": "Unemployment rate uses the labour force, not the population"
+    },
+    {
+      "id": "u10-mcq-02",
+      "format": "mcq",
+      "section": "10.1",
+      "concepts": [
+        "c10-underemployment"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Which of the following is an example of underemployment?",
+      "options": [
+        {
+          "id": "a",
+          "text": "A worker who is between jobs for three weeks after moving city",
+          "misconception": "This is frictional unemployment: the person has no job while searching."
+        },
+        {
+          "id": "b",
+          "text": "A person who has given up looking for work",
+          "misconception": "This is a discouraged worker, who is outside the labour force rather than employed."
+        },
+        {
+          "id": "c",
+          "text": "A ski instructor who has no work during the summer",
+          "misconception": "This is seasonal unemployment: the person has no job at that time of year."
+        },
+        {
+          "id": "d",
+          "text": "A trained engineer working part-time as a delivery driver who wants full-time engineering work",
+          "misconception": null
+        }
+      ],
+      "answer": "d",
+      "hints": [
+        "Underemployed people do have a job, so first remove anyone without work.",
+        "Then ask whose job uses fewer hours or lower skills than they want or have."
+      ],
+      "targets": "Underemployment vs types of unemployment"
+    },
+    {
+      "id": "u10-mcq-03",
+      "format": "mcq",
+      "section": "10.1",
+      "concepts": [
+        "c10-unemployment",
+        "c10-labor-market-rigidities"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "A factory in Kuva replaces its assembly workers with robots. The workers' skills are no longer needed anywhere in the economy. What type of unemployment does this create?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Structural unemployment",
+          "misconception": null
+        },
+        {
+          "id": "b",
+          "text": "Frictional unemployment",
+          "misconception": "Frictional unemployment is short-term job search; here the workers' skills are no longer demanded at all."
+        },
+        {
+          "id": "c",
+          "text": "Cyclical unemployment",
+          "misconception": "Cyclical unemployment comes from a fall in AD in a downturn, not from a change in technology."
+        },
+        {
+          "id": "d",
+          "text": "Seasonal unemployment",
+          "misconception": "Seasonal unemployment follows the time of year; this job loss is permanent."
+        }
+      ],
+      "answer": "a",
+      "hints": [
+        "Think about the cause of the job loss and how long it is likely to last.",
+        "Ask whether there is a mismatch between workers' skills and the jobs available."
+      ],
+      "targets": "Identifying structural unemployment from technological change"
+    },
+    {
+      "id": "u10-sa-03",
+      "format": "short_answer",
+      "section": "10.1",
+      "concepts": [
+        "c10-unemployment",
+        "c10-labor-force"
+      ],
+      "command_term": "calculate",
+      "marks": 2,
+      "prompt": "Table 1 shows labour market data for Veld. Calculate the unemployment rate.",
+      "table": {
+        "caption": "Table 1: Veld's labour market",
+        "columns": [
+          "Group",
+          "Number (millions)"
+        ],
+        "rows": [
+          [
+            "Working-age population",
+            "50"
+          ],
+          [
+            "Employed",
+            "36"
+          ],
+          [
+            "Unemployed and seeking work",
+            "4"
+          ],
+          [
+            "Working age, not in the labour force",
+            "10"
+          ]
+        ]
+      },
+      "marking_points": [
+        "Labour force = employed + unemployed = 36 + 4 = 40 million [1]",
+        "Unemployment rate = 4 / 40 × 100 = 10% [1]"
+      ],
+      "model_answer_note": "Full marks for the correct labour force and a 10% unemployment rate with working; dividing by the working-age population (8%) earns 0 for the second mark.",
+      "hints": [
+        "Not every row of Table 1 belongs in the calculation; decide which people make up the labour force.",
+        "Find the labour force first, then express the unemployed as a percentage of it."
+      ],
+      "targets": "Correct denominator: labour force, not working-age population"
+    },
+    {
+      "id": "u10-mcq-04",
+      "format": "mcq",
+      "section": "10.2",
+      "concepts": [
+        "c10-price-index",
+        "c10-consumer-price-index-cpi"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Veld's consumer price index (CPI) is 120 in 2025, using 2020 as the base year. Which statement is correct?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Prices have risen by 120% since 2020",
+          "misconception": "The base year has an index of 100, so the rise is measured from 100, not from zero."
+        },
+        {
+          "id": "b",
+          "text": "The inflation rate in 2025 was 20%",
+          "misconception": "The index compares 2025 with 2020, not with 2024, so it does not give one year's inflation rate."
+        },
+        {
+          "id": "c",
+          "text": "On average, prices in 2025 are 20% higher than in 2020",
+          "misconception": null
+        },
+        {
+          "id": "d",
+          "text": "Every good in the basket costs 20% more than in 2020",
+          "misconception": "The CPI is an average; some prices may have risen more, less, or even fallen."
+        }
+      ],
+      "answer": "c",
+      "hints": [
+        "Recall the value of a price index in its base year.",
+        "Compare the 2025 value with the base-year value, and think about what an average can and cannot tell you."
+      ],
+      "targets": "Interpreting an index number relative to the base year"
+    },
+    {
+      "id": "u10-mcq-05",
+      "format": "mcq",
+      "section": "10.2",
+      "concepts": [
+        "c10-inflation",
+        "c10-price-index",
+        "c10-consumer-price-index-cpi"
+      ],
+      "command_term": "calculate",
+      "marks": 1,
+      "prompt": "Table 2 shows Kuva's consumer price index. What was the rate of inflation between 2024 and 2025?",
+      "table": {
+        "caption": "Table 2: Kuva's consumer price index (base year 2020 = 100)",
+        "columns": [
+          "Year",
+          "CPI"
+        ],
+        "rows": [
+          [
+            "2024",
+            "125"
+          ],
+          [
+            "2025",
+            "135"
+          ]
+        ]
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": "8%",
+          "misconception": null
+        },
+        {
+          "id": "b",
+          "text": "10%",
+          "misconception": "This is the change in index points, not the percentage change from 2024."
+        },
+        {
+          "id": "c",
+          "text": "35%",
+          "misconception": "This compares 2025 with the base year value of 100, not with 2024."
+        },
+        {
+          "id": "d",
+          "text": "7.4%",
+          "misconception": "This divides the change by the 2025 value instead of the earlier 2024 value."
+        }
+      ],
+      "answer": "a",
+      "hints": [
+        "Use the percentage change formula with the two index values.",
+        "Find the change in the index, then divide by the value for the earlier year and multiply by 100."
+      ],
+      "targets": "Inflation rate from CPI: dividing by the earlier year"
+    },
+    {
+      "id": "u10-sa-04",
+      "format": "short_answer",
+      "section": "10.2",
+      "concepts": [
+        "c10-inflation",
+        "c10-price-index"
+      ],
+      "command_term": "calculate",
+      "marks": 2,
+      "prompt": "Table 3 shows Tarsa's consumer price index. Calculate the rate of inflation between 2024 and 2025.",
+      "table": {
+        "caption": "Table 3: Tarsa's consumer price index (base year 2023 = 100)",
+        "columns": [
+          "Year",
+          "CPI"
+        ],
+        "rows": [
+          [
+            "2023",
+            "100"
+          ],
+          [
+            "2024",
+            "104"
+          ],
+          [
+            "2025",
+            "117"
+          ]
+        ]
+      },
+      "marking_points": [
+        "Working: (117 − 104) / 104 × 100 [1]",
+        "Inflation rate = 12.5% [1]"
+      ],
+      "model_answer_note": "Correct working dividing by the 2024 value and an answer of 12.5% earns both marks.",
+      "hints": [
+        "Pick the two index values for the years in the question; the base year value is not needed.",
+        "Apply the percentage change formula, dividing by the earlier year's value."
+      ],
+      "targets": "Inflation rate from a price index, not from the base year"
+    },
+    {
+      "id": "u10-mcq-06",
+      "format": "mcq",
+      "section": "10.2",
+      "concepts": [
+        "c10-disinflation",
+        "c10-deflation",
+        "c10-change-in-the-rate-of-inflation"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Table 4 shows Veld's annual inflation rate. Which statement is correct?",
+      "table": {
+        "caption": "Table 4: Veld's inflation rate",
+        "columns": [
+          "Year",
+          "Inflation rate (%)"
+        ],
+        "rows": [
+          [
+            "2022",
+            "6"
+          ],
+          [
+            "2023",
+            "4"
+          ],
+          [
+            "2024",
+            "2"
+          ],
+          [
+            "2025",
+            "−1"
+          ]
+        ]
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": "Between 2022 and 2024 Veld experienced deflation",
+          "misconception": "The inflation rate stayed positive, so the price level kept rising; only its speed fell."
+        },
+        {
+          "id": "b",
+          "text": "The price level fell in 2024",
+          "misconception": "A positive inflation rate of 2% means the price level still rose in 2024."
+        },
+        {
+          "id": "c",
+          "text": "Between 2023 and 2024 Veld experienced disinflation",
+          "misconception": null
+        },
+        {
+          "id": "d",
+          "text": "In 2025 Veld experienced disinflation",
+          "misconception": "A negative inflation rate means the price level fell, which is deflation rather than disinflation."
+        }
+      ],
+      "answer": "c",
+      "hints": [
+        "Look carefully at whether each inflation rate is positive or negative, and how it changes.",
+        "Separate a fall in the price level from a fall in the speed at which the price level is rising."
+      ],
+      "targets": "Disinflation vs deflation from data"
+    },
+    {
+      "id": "u10-mcq-07",
+      "format": "mcq",
+      "section": "10.2",
+      "concepts": [
+        "c10-purchasing-power",
+        "c10-inflation"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "In Kuva, a worker's nominal wage rises by 3% over a year, while the inflation rate is 5%. What happens to the worker's purchasing power?",
+      "options": [
+        {
+          "id": "a",
+          "text": "It rises by about 8%",
+          "misconception": "This adds the two rates, but inflation reduces what a wage can buy rather than adding to it."
+        },
+        {
+          "id": "b",
+          "text": "It rises by about 2%",
+          "misconception": "This gets the size right but the direction wrong; prices rose faster than the wage."
+        },
+        {
+          "id": "c",
+          "text": "It is unchanged because the wage has risen",
+          "misconception": "A higher nominal wage does not protect purchasing power if prices rise even faster."
+        },
+        {
+          "id": "d",
+          "text": "It falls by about 2%",
+          "misconception": null
+        }
+      ],
+      "answer": "d",
+      "hints": [
+        "Purchasing power depends on the real value of the wage, not its nominal value.",
+        "Compare how fast the wage is growing with how fast prices are growing."
+      ],
+      "targets": "Real vs nominal wages and purchasing power"
+    },
+    {
+      "id": "u10-mcq-08",
+      "format": "mcq",
+      "section": "10.1",
+      "concepts": [
+        "c10-unemployment",
+        "c10-labor-force",
+        "c10-discouraged-workers"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Table 5 shows labour market data for Kuva. Which statement about the change from Year 1 to Year 2 is correct?",
+      "table": {
+        "caption": "Table 5: Kuva's labour market (millions)",
+        "columns": [
+          "Year",
+          "Employed",
+          "Unemployed and seeking work",
+          "Discouraged workers"
+        ],
+        "rows": [
+          [
+            "Year 1",
+            "45",
+            "5",
+            "0"
+          ],
+          [
+            "Year 2",
+            "45",
+            "3",
+            "2"
+          ]
+        ]
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": "The unemployment rate fell to 6%",
+          "misconception": "This divides by the Year 1 labour force; discouraged workers have left the labour force, so it is smaller in Year 2."
+        },
+        {
+          "id": "b",
+          "text": "The unemployment rate fell to 6.25% even though no new jobs were created",
+          "misconception": null
+        },
+        {
+          "id": "c",
+          "text": "The unemployment rate stayed at 10% because discouraged workers are still counted",
+          "misconception": "Discouraged workers are not actively seeking work, so they are not counted as unemployed."
+        },
+        {
+          "id": "d",
+          "text": "The unemployment rate rose because the labour force became smaller",
+          "misconception": "A smaller labour force with fewer unemployed people gives a lower, not higher, rate here."
+        }
+      ],
+      "answer": "b",
+      "hints": [
+        "Check which groups belong to the labour force in each year.",
+        "Work out the labour force for Year 2 first, then the rate, and compare the number employed in the two years."
+      ],
+      "targets": "Discouraged workers make the unemployment rate understate true unemployment"
+    },
+    {
+      "id": "u10-sa-05",
+      "format": "short_answer",
+      "section": "10.2",
+      "concepts": [
+        "c10-consumer-price-index-cpi",
+        "c10-basket",
+        "c10-weighted-price-index",
+        "c10-price-index"
+      ],
+      "command_term": "calculate",
+      "marks": 3,
+      "prompt": "Table 6 shows the typical household basket in Veld. Using 2024 as the base year, calculate the consumer price index (CPI) for 2025.",
+      "table": {
+        "caption": "Table 6: Veld's household basket",
+        "columns": [
+          "Item",
+          "Quantity in basket",
+          "Price in 2024 (zeds)",
+          "Price in 2025 (zeds)"
+        ],
+        "rows": [
+          [
+            "Food",
+            "10",
+            "5",
+            "6"
+          ],
+          [
+            "Transport",
+            "5",
+            "6",
+            "6"
+          ],
+          [
+            "Housing",
+            "2",
+            "10",
+            "12"
+          ]
+        ]
+      },
+      "marking_points": [
+        "Cost of basket in 2024 = (10 × 5) + (5 × 6) + (2 × 10) = 100 zeds [1]",
+        "Cost of basket in 2025 = (10 × 6) + (5 × 6) + (2 × 12) = 114 zeds [1]",
+        "CPI 2025 = 114 / 100 × 100 = 114 [1]"
+      ],
+      "model_answer_note": "Both basket costs with working and a CPI of 114 earns full marks; own-figure rule applies for the last mark.",
+      "hints": [
+        "Use the quantities in the basket together with the prices for each year.",
+        "Find the total cost of the same basket in each year, then express the later cost relative to the base-year cost."
+      ],
+      "targets": "Weighted basket cost and CPI calculation"
+    },
+    {
+      "id": "u10-sa-06",
+      "format": "short_answer",
+      "section": "10.1",
+      "concepts": [
+        "c10-unemployment",
+        "c10-labor-market-rigidities"
+      ],
+      "command_term": "distinguish",
+      "marks": 3,
+      "prompt": "Distinguish between cyclical unemployment and structural unemployment.",
+      "marking_points": [
+        "Cyclical unemployment is caused by a fall in aggregate demand during a downturn or recession [1]",
+        "Structural unemployment is caused by a mismatch between workers' skills or location and the jobs available, e.g. due to technological change or changes in demand for industries [1]",
+        "Cyclical unemployment falls as the economy recovers, while structural unemployment is long-term and part of the natural rate [1]"
+      ],
+      "model_answer_note": "A full-mark answer gives the cause of each type and a clear difference in how long each lasts or how it is fixed.",
+      "hints": [
+        "Use the business cycle for one type and changes in the structure of the economy for the other.",
+        "For each type, give its cause, then compare what happens to it when the economy grows again."
+      ],
+      "targets": "Cyclical vs structural unemployment"
+    },
+    {
+      "id": "u10-mcq-09",
+      "format": "mcq",
+      "section": "10.2",
+      "concepts": [
+        "c10-inflation"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Which of the following is most likely to cause cost-push inflation in Veld?",
+      "options": [
+        {
+          "id": "a",
+          "text": "A rise in consumer confidence",
+          "misconception": "Higher confidence raises consumption and AD, which causes demand-pull, not cost-push, inflation."
+        },
+        {
+          "id": "b",
+          "text": "A cut in income tax",
+          "misconception": "A tax cut raises disposable income and AD, which is a demand-pull cause."
+        },
+        {
+          "id": "c",
+          "text": "Large nominal wage increases that are greater than productivity growth",
+          "misconception": null
+        },
+        {
+          "id": "d",
+          "text": "A rise in labour productivity",
+          "misconception": "Higher productivity lowers costs per unit of output, which reduces cost pressure."
+        }
+      ],
+      "answer": "c",
+      "hints": [
+        "Cost-push inflation starts on the supply side of the AD-AS model.",
+        "Find the option that raises firms' costs per unit of output."
+      ],
+      "targets": "Cost-push from the labour market vs demand-pull causes"
+    },
+    {
+      "id": "u10-sa-07",
+      "format": "short_answer",
+      "section": "10.2",
+      "concepts": [
+        "c10-inflation"
+      ],
+      "command_term": "distinguish",
+      "marks": 4,
+      "prompt": "Distinguish between demand-pull inflation and cost-push inflation.",
+      "marking_points": [
+        "Demand-pull inflation is caused by an increase in aggregate demand (C, I, G or X − M) [1]",
+        "AD shifts right, so the price level rises and real GDP rises (towards or beyond potential) [1]",
+        "Cost-push inflation is caused by a rise in firms' costs of production, e.g. wages or imported raw materials [1]",
+        "SRAS shifts left, so the price level rises while real GDP falls [1]"
+      ],
+      "model_answer_note": "A full-mark answer gives the cause of each type, the curve that shifts, and the different effect on real GDP.",
+      "hints": [
+        "Use an AD-AS diagram for each type.",
+        "For each, name the cause, say which curve shifts and in which direction, then compare what happens to output."
+      ],
+      "targets": "Demand-pull vs cost-push on AD-AS"
+    },
+    {
+      "id": "u10-sa-08",
+      "format": "short_answer",
+      "section": "10.1",
+      "concepts": [
+        "c10-unemployment"
+      ],
+      "command_term": "explain",
+      "marks": 3,
+      "prompt": "Kuva signs a free trade agreement that removes tariffs on imported clothing. Explain how this could increase structural unemployment in Kuva.",
+      "marking_points": [
+        "Cheaper imported clothing reduces demand for clothing made in Kuva [1]",
+        "Domestic clothing firms cut output or close, so workers lose their jobs [1]",
+        "These workers' skills do not match the jobs in growing industries (or they live in the wrong area), so unemployment is long-term / structural [1]"
+      ],
+      "model_answer_note": "A full-mark answer links trade to falling demand for a domestic industry, job losses, and a skills or location mismatch.",
+      "hints": [
+        "Think about what happens to a domestic industry that now faces cheaper foreign competition.",
+        "Follow the chain from falling demand to job losses, then explain why these workers struggle to find other jobs."
+      ],
+      "targets": "Trade integration and structural unemployment"
+    },
+    {
+      "id": "u10-sa-09",
+      "format": "short_answer",
+      "section": "10.1",
+      "concepts": [
+        "c10-unemployment",
+        "c10-labor-market-rigidities"
+      ],
+      "command_term": "explain",
+      "marks": 3,
+      "prompt": "The government of Veld sets a national minimum wage above the market equilibrium wage. Using a labour market diagram described in words, explain how this could cause unemployment.",
+      "marking_points": [
+        "The minimum wage is a labour market rigidity set above the equilibrium wage (a price floor) [1]",
+        "At this wage the quantity of labour supplied rises and the quantity of labour demanded falls [1]",
+        "The excess supply of labour (the gap between the two quantities) is unemployment [1]"
+      ],
+      "model_answer_note": "A full-mark answer describes the wage floor above equilibrium and identifies the excess supply of labour as unemployment.",
+      "hints": [
+        "Use a labour market diagram with the wage rate on the vertical axis and demand and supply of labour.",
+        "Draw a line above the equilibrium wage and compare how many people want to work with how many workers firms want to hire."
+      ],
+      "targets": "Minimum wage and real-wage (structural) unemployment"
+    },
+    {
+      "id": "u10-sa-10",
+      "format": "short_answer",
+      "section": "10.1",
+      "concepts": [
+        "c10-unemployment-has-the-following-economic-costs",
+        "c10-unemployment"
+      ],
+      "command_term": "explain",
+      "marks": 4,
+      "prompt": "Explain two economic costs of high unemployment for Veld.",
+      "marking_points": [
+        "Loss of real output: unemployed labour means the economy produces below its potential (inside its PPC) [1]",
+        "This output is lost for good, so incomes and living standards are lower than they could be [1]",
+        "Lower incomes reduce tax revenue for the government [1]",
+        "Spending on unemployment benefits rises, worsening the budget and leaving less for other uses [1]"
+      ],
+      "model_answer_note": "Accept other valid costs (e.g. loss of skills/human capital, greater income inequality) where each is identified [1] and explained [1].",
+      "hints": [
+        "Think about the effects on total output and on the government's budget.",
+        "For each cost, state it and then explain how it follows from people being out of work."
+      ],
+      "targets": "Economic costs of unemployment, including public finances"
+    },
+    {
+      "id": "u10-mcq-10",
+      "format": "mcq",
+      "section": "10.2",
+      "concepts": [
+        "c10-deflation",
+        "c10-deferred-consumption"
+      ],
+      "command_term": "explain",
+      "marks": 1,
+      "prompt": "Why might deflation harm the economy of Kuva?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Consumers delay purchases because they expect prices to fall further, so aggregate demand falls",
+          "misconception": null
+        },
+        {
+          "id": "b",
+          "text": "It raises purchasing power, so it always increases consumer spending",
+          "misconception": "Higher purchasing power can help, but expected further price falls give people a reason to wait before spending."
+        },
+        {
+          "id": "c",
+          "text": "It makes Kuva's exports less competitive abroad",
+          "misconception": "Falling domestic prices make exports cheaper, so this is not a cost of deflation."
+        },
+        {
+          "id": "d",
+          "text": "It reduces the real value of debts that households owe",
+          "misconception": "Deflation increases the real burden of debt, it does not reduce it."
+        }
+      ],
+      "answer": "a",
+      "hints": [
+        "Think about how expectations of future prices affect spending decisions today.",
+        "Follow the chain from expected price changes to spending, to AD, to output and jobs."
+      ],
+      "targets": "Deferred consumption as a cost of deflation"
+    },
+    {
+      "id": "u10-mcq-11",
+      "format": "mcq",
+      "section": "10.2",
+      "concepts": [
+        "c10-inflation",
+        "c10-purchasing-power"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "In Tarsa, inflation is unexpectedly 8% in a year, while banks pay and charge a fixed interest rate of 3%. Which group is most likely to gain?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Savers earning a fixed interest rate",
+          "misconception": "Their interest is less than inflation, so the real value of their savings falls."
+        },
+        {
+          "id": "b",
+          "text": "Pensioners on fixed nominal incomes",
+          "misconception": "Their income buys less when prices rise, so they lose purchasing power."
+        },
+        {
+          "id": "c",
+          "text": "Banks that have lent money at fixed rates",
+          "misconception": "Lenders are repaid in money that is worth less, so they lose in real terms."
+        },
+        {
+          "id": "d",
+          "text": "Borrowers with fixed-rate loans",
+          "misconception": null
+        }
+      ],
+      "answer": "d",
+      "hints": [
+        "Compare the interest rate with the inflation rate to find the real interest rate.",
+        "Ask who is repaying money whose real value has fallen."
+      ],
+      "targets": "Redistributive effects of unexpected inflation"
+    },
+    {
+      "id": "u10-sa-11",
+      "format": "short_answer",
+      "section": "10.2",
+      "concepts": [
+        "c10-consumer-price-index-cpi",
+        "c10-weighted-price-index"
+      ],
+      "command_term": "explain",
+      "marks": 4,
+      "prompt": "Explain two limitations of using the consumer price index (CPI) to measure changes in the cost of living for households in Veld.",
+      "marking_points": [
+        "Different households (e.g. pensioners, rural families) have spending patterns that differ from the typical basket [1]",
+        "So their actual rise in the cost of living may be higher or lower than the CPI shows [1]",
+        "Quality improvements and new products are not fully captured by the basket [1]",
+        "So part of a measured price rise may reflect better products, meaning the CPI can overstate inflation [1]"
+      ],
+      "model_answer_note": "Accept other valid limitations (e.g. substitution towards cheaper goods, regional price differences, outdated weights) where each is identified [1] and explained [1].",
+      "hints": [
+        "Think about how the basket and its weights are chosen and how often they change.",
+        "For each limitation, state it and then explain why it makes the CPI differ from a real household's experience."
+      ],
+      "targets": "Limitations of the CPI"
+    },
+    {
+      "id": "u10-sa-12",
+      "format": "short_answer",
+      "section": "10.2",
+      "concepts": [
+        "c10-inflation"
+      ],
+      "command_term": "explain",
+      "marks": 3,
+      "prompt": "The zed, Veld's currency, depreciates sharply. Explain how this could cause both cost-push and demand-pull inflation in Veld.",
+      "marking_points": [
+        "Imported raw materials and fuel become more expensive in zeds, raising firms' costs, so SRAS shifts left (cost-push) [1]",
+        "Veld's exports become cheaper for foreigners and imports dearer, so net exports rise [1]",
+        "AD shifts right, raising the price level (demand-pull) [1]"
+      ],
+      "model_answer_note": "A full-mark answer explains one supply-side channel through import costs and one demand-side channel through net exports.",
+      "hints": [
+        "Think about how a depreciation changes the prices of imports and exports.",
+        "Trace one channel through firms' costs and another through a component of AD."
+      ],
+      "targets": "Depreciation as a cause of both types of inflation"
+    },
+    {
+      "id": "u10-mcq-12",
+      "format": "mcq",
+      "section": "10.3",
+      "concepts": [
+        "c10-inflation",
+        "c10-unemployment"
+      ],
+      "command_term": "describe",
+      "marks": 1,
+      "prompt": "What does a short-run Phillips curve (SRPC) show?",
+      "options": [
+        {
+          "id": "a",
+          "text": "A positive relationship between the inflation rate and the unemployment rate",
+          "misconception": "A positive relationship would mean they rise together; the SRPC slopes downward."
+        },
+        {
+          "id": "b",
+          "text": "An inverse relationship between the inflation rate and the unemployment rate",
+          "misconception": null
+        },
+        {
+          "id": "c",
+          "text": "No relationship between inflation and unemployment at any time",
+          "misconception": "That is closer to the long-run view; in the short run the curve shows a trade-off."
+        },
+        {
+          "id": "d",
+          "text": "An inverse relationship between the inflation rate and real GDP",
+          "misconception": "The Phillips curve plots inflation against unemployment, not against real GDP."
+        }
+      ],
+      "answer": "b",
+      "hints": [
+        "Recall the two variables on the axes of the Phillips curve.",
+        "Think about which way the short-run curve slopes and what that says about the two variables."
+      ],
+      "targets": "What the SRPC shows"
+    },
+    {
+      "id": "u10-mcq-13",
+      "format": "mcq",
+      "section": "10.3",
+      "concepts": [
+        "c10-inflation",
+        "c10-unemployment",
+        "c10-stagflation"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Table 7 shows data for Veld. Which statement is best supported by the data?",
+      "table": {
+        "caption": "Table 7: Veld's inflation and unemployment",
+        "columns": [
+          "Year",
+          "Inflation rate (%)",
+          "Unemployment rate (%)"
+        ],
+        "rows": [
+          [
+            "2021",
+            "2",
+            "8"
+          ],
+          [
+            "2022",
+            "4",
+            "6"
+          ],
+          [
+            "2023",
+            "6",
+            "4"
+          ],
+          [
+            "2024",
+            "9",
+            "9"
+          ]
+        ]
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": "From 2021 to 2023 the data are consistent with a movement along a single short-run Phillips curve",
+          "misconception": null
+        },
+        {
+          "id": "b",
+          "text": "From 2023 to 2024 the data are consistent with a movement along a single short-run Phillips curve",
+          "misconception": "Inflation and unemployment both rose, which cannot happen along a downward-sloping SRPC."
+        },
+        {
+          "id": "c",
+          "text": "From 2021 to 2023 the data show the long-run Phillips curve shifting",
+          "misconception": "A falling unemployment rate with rising inflation is a short-run trade-off, not evidence about the LRPC."
+        },
+        {
+          "id": "d",
+          "text": "In 2024 Veld experienced disinflation",
+          "misconception": "Inflation rose from 6% to 9%, so the rate of inflation increased."
+        }
+      ],
+      "answer": "a",
+      "hints": [
+        "Look at the direction of change in both columns for each pair of years.",
+        "A movement along a downward-sloping curve means the two variables move in opposite directions."
+      ],
+      "targets": "Reading data for a trade-off vs a shift (stagflation)"
+    },
+    {
+      "id": "u10-mcq-14",
+      "format": "mcq",
+      "section": "10.3",
+      "concepts": [
+        "c10-inflation",
+        "c10-unemployment"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "Which of the following would most likely move Kuva down along its existing short-run Phillips curve?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Expansionary monetary policy that raises aggregate demand",
+          "misconception": "Higher AD lowers unemployment and raises inflation, which is a movement up the curve."
+        },
+        {
+          "id": "b",
+          "text": "A large fall in world oil prices",
+          "misconception": "A supply-side change shifts the SRPC rather than moving the economy along it."
+        },
+        {
+          "id": "c",
+          "text": "Contractionary fiscal policy that reduces aggregate demand",
+          "misconception": null
+        },
+        {
+          "id": "d",
+          "text": "Supply-side policies that lower the natural rate of unemployment",
+          "misconception": "These shift the long-run Phillips curve to the left rather than moving along the SRPC."
+        }
+      ],
+      "answer": "c",
+      "hints": [
+        "Movements along the SRPC come from changes in aggregate demand.",
+        "Decide which direction on the curve means lower inflation and higher unemployment, then find the policy that causes it."
+      ],
+      "targets": "Movement along vs shift of the SRPC"
+    },
+    {
+      "id": "u10-sa-13",
+      "format": "short_answer",
+      "section": "10.3",
+      "concepts": [
+        "c10-inflation",
+        "c10-unemployment"
+      ],
+      "command_term": "distinguish",
+      "marks": 2,
+      "prompt": "Distinguish between the short-run Phillips curve and the long-run Phillips curve.",
+      "marking_points": [
+        "The short-run Phillips curve slopes downward, showing a trade-off between inflation and unemployment for a given expected inflation rate [1]",
+        "The long-run Phillips curve is vertical at the natural rate of unemployment, showing no trade-off in the long run [1]"
+      ],
+      "model_answer_note": "A full-mark answer states the shape and meaning of each curve.",
+      "hints": [
+        "Use the shape of each curve on a diagram with inflation on the vertical axis.",
+        "For each curve, say what shape it has and what it implies about a trade-off."
+      ],
+      "targets": "SRPC vs LRPC"
+    },
+    {
+      "id": "u10-sa-14",
+      "format": "short_answer",
+      "section": "10.3",
+      "concepts": [
+        "c10-stagflation",
+        "c10-inflation",
+        "c10-unemployment"
+      ],
+      "command_term": "explain",
+      "marks": 3,
+      "prompt": "Explain how a sharp rise in world oil prices could cause stagflation in Tarsa, with reference to the short-run Phillips curve.",
+      "marking_points": [
+        "Higher oil prices raise firms' costs, so SRAS shifts left [1]",
+        "The price level rises while real GDP falls, so inflation and unemployment both increase [1]",
+        "This is shown by the short-run Phillips curve shifting to the right (outward) [1]"
+      ],
+      "model_answer_note": "A full-mark answer links the supply shock to higher inflation and higher unemployment together and shows this as an outward SRPC shift.",
+      "hints": [
+        "Start with an AD-AS diagram, then link it to a Phillips curve diagram.",
+        "Trace the cost change to the supply curve, then to both inflation and unemployment, then to the position of the SRPC."
+      ],
+      "targets": "Supply shock, stagflation and an SRPC shift"
+    },
+    {
+      "id": "u10-mcq-15",
+      "format": "mcq",
+      "section": "10.3",
+      "concepts": [
+        "c10-unemployment",
+        "c10-inflation"
+      ],
+      "command_term": "identify",
+      "marks": 1,
+      "prompt": "According to the natural rate of unemployment hypothesis, the long-run Phillips curve is:",
+      "options": [
+        {
+          "id": "a",
+          "text": "downward sloping, like the short-run curve",
+          "misconception": "A downward slope would mean a lasting trade-off, which the hypothesis rejects."
+        },
+        {
+          "id": "b",
+          "text": "horizontal at an inflation rate of zero",
+          "misconception": "A horizontal curve would mean unemployment can change with no effect on inflation."
+        },
+        {
+          "id": "c",
+          "text": "vertical at an unemployment rate of zero",
+          "misconception": "Even in the long run there is frictional and structural unemployment, so the natural rate is above zero."
+        },
+        {
+          "id": "d",
+          "text": "vertical at the natural rate of unemployment",
+          "misconception": null
+        }
+      ],
+      "answer": "d",
+      "hints": [
+        "Link the long-run Phillips curve to the long-run aggregate supply curve.",
+        "Ask whether changes in inflation can change unemployment once expectations have adjusted."
+      ],
+      "targets": "Shape and position of the LRPC"
+    },
+    {
+      "id": "u10-sa-15",
+      "format": "short_answer",
+      "section": "10.3",
+      "concepts": [
+        "c10-inflation",
+        "c10-unemployment"
+      ],
+      "command_term": "explain",
+      "marks": 4,
+      "prompt": "The government of Veld raises aggregate demand to push unemployment below its natural rate. Explain, using the natural rate of unemployment hypothesis, what will happen in the long run.",
+      "marking_points": [
+        "In the short run, higher AD raises inflation and lowers unemployment: a movement up along the SRPC [1]",
+        "Workers come to expect higher inflation and demand higher nominal wages [1]",
+        "Firms' costs rise, SRAS shifts left and the SRPC shifts right, so unemployment returns to the natural rate [1]",
+        "The long-run result is higher inflation with no lasting fall in unemployment, shown by a vertical LRPC [1]"
+      ],
+      "model_answer_note": "A full-mark answer covers the short-run movement, the role of inflation expectations and wages, and the long-run return to the natural rate at higher inflation.",
+      "hints": [
+        "Use a diagram with a short-run and a long-run Phillips curve.",
+        "Trace the steps: the short-run effect, then how expectations and wages adjust, then where the economy ends up."
+      ],
+      "targets": "Long-run Phillips curve and expectations"
+    }
+  ]
+}

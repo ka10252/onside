@@ -12,6 +12,8 @@ import { initials } from "@/lib/format";
 import { requireUser } from "@/lib/session";
 import { unitTestProgress } from "@/lib/unit-progress";
 
+const day = (iso: string) => new Date(iso).toLocaleDateString("en-SG", { day: "numeric", month: "short" });
+
 export default async function StudentPage({ params }: PageProps<"/tutor/students/[id]">) {
   const user = await requireUser("tutor");
   const { id } = await params;
@@ -19,6 +21,17 @@ export default async function StudentPage({ params }: PageProps<"/tutor/students
   if (!student) notFound();
   const assignments = await assignmentsForStudent(id);
   const progress = await unitTestProgress(id);
+  const marked = assignments.filter((a) => a.status === "reviewed");
+  const got = marked.reduce((n, a) => n + a.marks_got, 0);
+  const outOf = marked.reduce((n, a) => n + a.marks_total, 0);
+  const waiting = assignments.filter((a) => a.status === "submitted").length;
+  const summary = (
+    <span className="muted" style={{ fontSize: 14 }}>
+      {assignments.length} sent · {marked.length} marked
+      {outOf > 0 ? ` · ${Math.round((got / outOf) * 100)}% overall` : ""}
+      {waiting ? ` · ${waiting} to review` : ""}
+    </span>
+  );
   const assignedSetIds = new Set(assignments.map((a) => a.set_id));
   const sets = (await listSets())
     .filter((s) => !s.review_of)
@@ -47,9 +60,12 @@ export default async function StudentPage({ params }: PageProps<"/tutor/students
                   </p>
                 </div>
               </div>
-              <Link href={`/tutor/students/${student.id}/concepts`} className="btn">
-                Concept board
-              </Link>
+              <div className="rowacts">
+                {summary}
+                <Link href={`/tutor/students/${student.id}/concepts`} className="btn">
+                  Concept board
+                </Link>
+              </div>
             </div>
           </div>
 
@@ -67,7 +83,10 @@ export default async function StudentPage({ params }: PageProps<"/tutor/students
                       <tr>
                         <th>Set</th>
                         <th>Status</th>
+                        <th>Marks</th>
                         <th>Sent</th>
+                        <th>Due</th>
+                        <th>Submitted</th>
                         <th />
                       </tr>
                     </thead>
@@ -85,7 +104,18 @@ export default async function StudentPage({ params }: PageProps<"/tutor/students
                           <td>
                             <StatusPill status={a.status} answered={a.answered} total={a.total} due={a.due_at} />
                           </td>
-                          <td className="muted">{new Date(a.assigned_at).toLocaleDateString("en-SG", { day: "numeric", month: "short" })}</td>
+                          <td>
+                            {a.status === "reviewed" ? (
+                              <b>
+                                {Math.round(a.marks_got * 10) / 10}/{a.marks_total}
+                              </b>
+                            ) : (
+                              <span className="muted">—</span>
+                            )}
+                          </td>
+                          <td className="muted">{day(a.assigned_at)}</td>
+                          <td className="muted">{a.due_at ? day(a.due_at) : "—"}</td>
+                          <td className="muted">{a.submitted_at ? day(a.submitted_at) : "—"}</td>
                           <td>
                             <div className="rowacts">
                               {a.status !== "not_started" && (

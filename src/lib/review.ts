@@ -1,4 +1,5 @@
 import "server-only";
+import { cache } from "react";
 import type { AiMark } from "./ai/marking";
 import { isPast, type Question } from "./content";
 import { all, json, one } from "./db";
@@ -110,7 +111,8 @@ function result(q: Question, r: ReviewItem["r"], confirmed: number | null, auto:
   return "To confirm";
 }
 
-export async function loadReview(assignmentId: string) {
+/** Cached per request: the students list and the concept board both ask for the same sets. */
+export const loadReview = cache(async (assignmentId: string) => {
   const a = await one<{
     id: string; set_id: string; student_id: string; status: string; due_at: string | null; started_at: string | null;
     submitted_at: string | null; reviewed_at: string | null; marking_started_at: string | null; title: string; helper: string;
@@ -186,7 +188,7 @@ export async function loadReview(assignmentId: string) {
     hints: items.reduce((s, it) => s + (it.r?.hint_level ?? 0), 0),
   };
   return { a, closed, items, scored, score, concepts, weak: weakSpot(concepts), facts };
-}
+});
 
 export type Review = NonNullable<Awaited<ReturnType<typeof loadReview>>>;
 

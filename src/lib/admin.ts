@@ -55,13 +55,18 @@ export type AssignmentRow = {
   submitted_at: string | null;
   answered: number;
   total: number;
+  marks_got: number;
+  marks_total: number;
 };
 
 const ASSIGNMENT_SELECT = `
   SELECT a.id, a.set_id, s.title AS set_title, a.student_id, u.name AS student_name, a.status,
          a.due_at, a.assigned_at, a.submitted_at,
          (SELECT COUNT(*) FROM responses r WHERE r.assignment_id = a.id AND ${hasAnswerSql()}) AS answered,
-         (SELECT COUNT(*) FROM set_items i WHERE i.set_id = a.set_id) AS total
+         (SELECT COUNT(*) FROM set_items i WHERE i.set_id = a.set_id) AS total,
+         (SELECT COALESCE(SUM(q.marks), 0) FROM set_items i JOIN questions q ON q.id = i.question_id WHERE i.set_id = a.set_id) AS marks_total,
+         (SELECT COALESCE(SUM(COALESCE((r.tutor_mark::jsonb ->> 'marks')::float, r.auto_marks, 0)), 0)
+            FROM responses r WHERE r.assignment_id = a.id) AS marks_got
     FROM assignments a
     JOIN sets s ON s.id = a.set_id
     JOIN users u ON u.id = a.student_id`;

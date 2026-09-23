@@ -22,15 +22,16 @@ type Row = {
 const shortDate = (iso: string) => new Date(iso).toLocaleDateString("en-SG", { day: "numeric", month: "short" });
 const today = () => new Date().toISOString().slice(0, 10);
 
-export default async function AssignmentsPage() {
+export default async function AssignmentsPage({ searchParams }: PageProps<"/student">) {
   const user = await requireUser("student");
   await closeExpiredAssignments();
+  const { tab } = (await searchParams) as { tab?: string };
   const rows = await all<Row>(
-      `SELECT a.id, s.title, a.status, a.due_at, a.assigned_at, a.submitted_at, s.helper, s.time_limit_min,
-              (SELECT COUNT(*) FROM set_items i WHERE i.set_id = s.id) AS total,
-              (SELECT COUNT(*) FROM responses r WHERE r.assignment_id = a.id AND ${hasAnswerSql()}) AS answered
-         FROM assignments a JOIN sets s ON s.id = a.set_id
-        WHERE a.student_id = ?`,
+    `SELECT a.id, s.title, a.status, a.due_at, a.assigned_at, a.submitted_at, s.helper, s.time_limit_min,
+            (SELECT COUNT(*) FROM set_items i WHERE i.set_id = s.id) AS total,
+            (SELECT COUNT(*) FROM responses r WHERE r.assignment_id = a.id AND ${hasAnswerSql()}) AS answered
+       FROM assignments a JOIN sets s ON s.id = a.set_id
+      WHERE a.student_id = ?`,
     user.id,
   );
 
@@ -40,8 +41,10 @@ export default async function AssignmentsPage() {
   const done = rows
     .filter((r) => r.status === "submitted" || r.status === "reviewed")
     .sort((a, b) => (b.submitted_at ?? "").localeCompare(a.submitted_at ?? ""));
+  const showDone = tab === "done";
+  const list = showDone ? done : todo;
   const reviews = new Map(
-    await Promise.all(done.filter((r) => r.status === "reviewed").map(async (r) => [r.id, await loadReview(r.id)] as const)),
+    showDone ? await Promise.all(done.filter((r) => r.status === "reviewed").map(async (r) => [r.id, await loadReview(r.id)] as const)) : [],
   );
 
   return (
@@ -58,76 +61,76 @@ export default async function AssignmentsPage() {
             </div>
           </div>
 
-          <section className="stack" style={{ gap: 12 }}>
-            <h2 className="sechead">To do</h2>
-            {todo.length === 0 ? (
-              <div className="card empty-state">
-                <p className="muted">Nothing to do right now.</p>
-              </div>
-            ) : (
-              <div className="alist">
-                {todo.map((r) => {
-                  const overdue = r.due_at !== null && r.due_at < today();
-                  return (
-                    <Link key={r.id} href={`/student/a/${r.id}`} className="card acard clickable" style={{ color: "inherit", textDecoration: "none" }}>
-                      <div>
-                        <h3>{r.title}</h3>
-                        <div className="meta">
-                          <span>{r.total} questions</span>
-                          {r.status === "in_progress" && (
-                            <span>
-                              {r.answered} of {r.total} answered
-                            </span>
-                          )}
-                          {r.helper === "off" && <span>Helper off{r.time_limit_min ? ` · ${r.time_limit_min} min` : ""}</span>}
-                          <span>Sent {shortDate(r.assigned_at)}</span>
-                          {r.due_at && <span>Due {formatDue(r.due_at)}</span>}
-                        </div>
-                      </div>
-                      <span className={`pill ${overdue ? "red" : r.status === "in_progress" ? "amber" : "gray"}`}>
-                        {overdue ? "Overdue" : r.status === "in_progress" ? "Continue" : "Start"}
-                      </span>
-                    </Link>
-                  );
-                })}
-              </div>
-            )}
-          </section>
+          <nav className="filters" aria-label="Which assignments to show">
+            <Link href="/student" className={`chip${showDone ? "" : " on"}`} aria-current={showDone ? undefined : "page"}>
+              To do · {todo.length}
+            </Link>
+            <Link href="/student?tab=done" className={`chip${showDone ? " on" : ""}`} aria-current={showDone ? "page" : undefined}>
+              Done · {done.length}
+            </Link>
+          </nav>
 
-          <section className="stack" style={{ gap: 12 }}>
-            <h2 className="sechead">Done</h2>
-            {done.length === 0 ? (
-              <div className="card empty-state">
-                <p className="muted">Finished sets show here with your marks and your tutor&apos;s comments.</p>
-              </div>
-            ) : (
-              <div className="alist">
-                {done.map((r) => {
-                  const rv = reviews.get(r.id) ?? null;
-                  return (
-                    <Link key={r.id} href={`/student/a/${r.id}/done`} className="card acard clickable" style={{ color: "inherit", textDecoration: "none" }}>
-                      <div>
-                        <h3>{r.title}</h3>
-                        <div className="meta">
-                          <span>{r.total} questions</span>
-                          {r.submitted_at && <span>Submitted {shortDate(r.submitted_at)}</span>}
-                          {rv && (
-                            <span>
-                              <b style={{ color: "var(--ink)" }}>
-                                {rv.score.marks}/{rv.score.total}
-                              </b>{" "}
-                              marks
-                            </span>
-                          )}
-                        </div>
+          {list.length === 0 ? (
+            <div className="card empty-state">
+              <p className="muted">
+                {showDone ? "Finished sets show here with your marks and your tutor's comments." : "Nothing to do right now."}
+              </p>
+            </div>
+          ) : (
+            <div className="alist">
+              {list.map((r) => {
+                const overdue = !showDone && r.due_at !== null && r.due_at < today();
+                const rv = reviews.get(r.id) ?? null;
+                return (
+                  <Link
+                    key={r.id}
+                    href={showDone ? `/student/a/${r.id}/done` : `/student/a/${r.id}`}
+                    className="card acard clickable"
+                    style={{ color: "inherit", textDecoration: "none" }}
+                  >
+                    <div>
+                      <h3>{r.title}</h3>
+                      <div className="meta">
+                        <span>{r.total} questions</span>
+                        {!showDone && r.status === "in_progress" && (
+                          <span>
+                            {r.answered} of {r.total} answered
+                          </span>
+                        )}
+                        {!showDone && r.helper === "off" && <span>Helper off{r.time_limit_min ? ` · ${r.time_limit_min} min` : ""}</span>}
+                        <span>Sent {shortDate(r.assigned_at)}</span>
+                        <span>{r.due_at ? `Due ${formatDue(r.due_at)}` : "No due date"}</span>
+                        {showDone && r.submitted_at && <span>Submitted {shortDate(r.submitted_at)}</span>}
+                        {rv && (
+                          <span>
+                            <b style={{ color: "var(--ink)" }}>
+                              {rv.score.marks}/{rv.score.total}
+                            </b>{" "}
+                            marks
+                          </span>
+                        )}
                       </div>
-                      <span className={`pill ${rv ? "green" : "gray"}`}>{rv ? "Marked · Review" : "Waiting for marks"}</span>
-                    </Link>
-                  );
-                })}
-              </div>
-            )}
-          </section>
+                    </div>
+                    <span
+                      className={`pill ${
+                        showDone ? (r.status === "reviewed" ? "green" : "gray") : overdue ? "red" : r.status === "in_progress" ? "amber" : "gray"
+                      }`}
+                    >
+                      {showDone
+                        ? r.status === "reviewed"
+                          ? "Marked · Review"
+                          : "Waiting for marks"
+                        : overdue
+                          ? "Overdue"
+                          : r.status === "in_progress"
+                            ? "Continue"
+                            : "Start"}
+                    </span>
+                  </Link>
+                );
+              })}
+            </div>
+          )}
         </div>
       </main>
     </>

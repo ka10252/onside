@@ -62,7 +62,7 @@ export default async function StudentsPage() {
                     return (
                     <tr key={r.id} className="hov">
                       <td>
-                        <div className="who-cell">
+                        <Link href={`/tutor/students/${r.id}`} className="who-cell" style={{ color: "inherit", textDecoration: "none" }}>
                           <span className="avatar" aria-hidden>{initials(r.name)}</span>
                           <div>
                             <b>{r.name}</b>
@@ -71,9 +71,15 @@ export default async function StudentsPage() {
                               {r.subtitle ? ` · ${r.subtitle}` : ""}
                             </div>
                           </div>
-                        </div>
+                        </Link>
                       </td>
-                      <td>{r.set_title ?? <span className="muted">No assignment yet</span>}</td>
+                      <td>
+                        {r.set_title ? (
+                          <Link href={`/tutor/students/${r.id}`} style={{ color: "inherit" }}>{r.set_title}</Link>
+                        ) : (
+                          <span className="muted">No assignment yet</span>
+                        )}
+                      </td>
                       <td>{r.status ? <StatusPill status={r.status} answered={r.answered} total={r.total} /> : "—"}</td>
                       <td>
                         {!sum ? "—" : sum.pending ? (

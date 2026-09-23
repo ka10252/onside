@@ -8,6 +8,7 @@ import { saveDraft, submitAssignment, uploadPhoto } from "@/lib/student-actions"
 import { ArrowLeft, ArrowRight, EyeIcon } from "../Icons";
 import { Blocks, Rich } from "../Rich";
 import { flushAll, registerSaver } from "./flush";
+import { dropBackup, keepBackup, reportIfStale, useBackup } from "./stale";
 import { HelperDrawer, type Msg } from "./HelperDrawer";
 import { useActivity } from "./useActivity";
 
@@ -50,6 +51,7 @@ export function Solve(props: SolveProps) {
   const [chat, setChat] = useState<Msg[]>(props.r.chat);
   const [confirmSubmit, setConfirmSubmit] = useState(false);
   const [answered, setAnswered] = useState(props.answered);
+  const [stale, setStale] = useState(false);
   const { onPaste, pauseTracking } = useActivity(r.id, !r.submitted);
   const base = `/student/a/${assignment.id}`;
   const unanswered = answered.filter((x) => !x).length;
@@ -58,8 +60,22 @@ export function Solve(props: SolveProps) {
     [position],
   );
 
+  useEffect(() => {
+    const onStale = () => setStale(true);
+    window.addEventListener("onside:stale", onStale);
+    return () => window.removeEventListener("onside:stale", onStale);
+  }, []);
+
   return (
     <>
+      {stale && (
+        <div className="stalebar" role="alert">
+          <span>This page is out of date, so your last answers may not have been saved. Refresh to carry on.</span>
+          <button type="button" className="btn sm" onClick={() => window.location.reload()}>
+            Refresh
+          </button>
+        </div>
+      )}
       <div className="subbar">
         <div className="wrap">
           <nav className="crumbs" aria-label="Breadcrumb">
@@ -198,7 +214,11 @@ function SubmitDialog({ assignmentId, unanswered, total, onCancel }: { assignmen
       router.push(res.to);
     } catch (e) {
       console.error("submit failed", e);
-      setError("It didn't submit. Check your connection and try again.");
+      setError(
+        reportIfStale(e)
+          ? "This page is out of date. Refresh the page, then submit again."
+          : "It didn't submit. Check your connection and try again.",
+      );
       setPending(false);
     }
   }
@@ -275,8 +295,17 @@ function useAutosave<T>(responseId: string, value: T, initial: T, toDraft: (v: T
       if (key === saved.current && (!snapshot || key === snap.current)) return;
       saved.current = key;
       if (snapshot) snap.current = key;
-      const res = await saveDraft(responseId, toDraftRef.current(latest.current), snapshot);
-      if ("ok" in res) setSavedAt(timeNow());
+      keepBackup(responseId, latest.current);
+      try {
+        const res = await saveDraft(responseId, toDraftRef.current(latest.current), snapshot);
+        if ("ok" in res) {
+          setSavedAt(timeNow());
+          dropBackup(responseId);
+        }
+      } catch (e) {
+        saved.current = ""; // try again on the next change
+        if (!reportIfStale(e)) throw e;
+      }
     },
     [responseId],
   );
@@ -303,6 +332,27 @@ function useAutosave<T>(responseId: string, value: T, initial: T, toDraft: (v: T
   }, [key, enabled, save]);
 
   return savedAt;
+}
+
+/** Offers back an answer this browser kept when a save didn't reach the server. */
+function RestoreNote({ onRestore }: { onRestore: () => void }) {
+  const [gone, setGone] = useState(false);
+  if (gone) return null;
+  return (
+    <p className="formmsg bad" role="status">
+      An answer on this computer was never saved.{" "}
+      <button
+        type="button"
+        className="link"
+        onClick={() => {
+          onRestore();
+          setGone(true);
+        }}
+      >
+        Put it back
+      </button>
+    </p>
+  );
 }
 
 function SavedNote({ savedAt, extra }: { savedAt: string | null; extra?: string }) {
@@ -349,10 +399,27 @@ function AutoAnswer({
         : { answers: r.answers };
   const savedAt = useAutosave(r.id, value, initial, (v) => v, !done);
 
+  // An answer this browser kept because the server never got it (e.g. the site was updated mid-question).
+  const backup = useBackup<{ answers?: string[]; working?: string }>(r.id);
+  const restore = () => {
+    if (!backup) return;
+    if (q.format === "mcq" && backup.answers?.[0]) setChoice(backup.answers[0]);
+    if (q.format === "calculation") {
+      if (backup.answers?.length) setAnswers((cur) => cur.map((x, i) => backup.answers![i] ?? x));
+      if (backup.working) setWorking(backup.working);
+    }
+    if (q.format === "analysis_chain" && backup.answers?.length) {
+      setChain(backup.answers);
+      setChosenChain(true);
+    }
+    onAnswered(true);
+  };
+
   const calcHas = (w: string, a: string[]) => Boolean(w.trim()) || a.some((x) => x.trim());
 
   return (
     <>
+      {!done && backup && <RestoreNote onRestore={restore} />}
       {q.format === "mcq" && (
         <div className="choices" role="radiogroup" aria-label="Options">
           {q.options!.map((o) => (
@@ -561,6 +628,18 @@ function WrittenAnswer({
     onAnswered(Boolean(w.trim() || t.trim() || p.some((x) => x.trim()) || (next.photo ?? r.photo)));
   };
 
+  const backup = useBackup<{ working?: string; text?: string; plan?: string[] }>(r.id);
+  const restore = () => {
+    if (!backup) return;
+    if (backup.working) setWorking(backup.working);
+    if (backup.text) {
+      setText(backup.text);
+      setStage("write");
+    }
+    if (backup.plan?.length) setPlan((cur) => cur.map((x, i) => backup.plan![i] ?? x));
+    onAnswered(true);
+  };
+
   async function upload(original: File) {
     setError(null);
     if (original.size > 25 * 1024 * 1024) return setError("The photo must be under 25 MB.");
@@ -615,6 +694,7 @@ function WrittenAnswer({
 
   return (
     <>
+      {!done && backup && <RestoreNote onRestore={restore} />}
       {isEssay && (
         <details className="sub">
           <summary>Your plan</summary>

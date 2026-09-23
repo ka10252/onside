@@ -202,3 +202,20 @@ table.board { table-layout: fixed; min-width: 860px; }
 .bigmark .of { font-family: var(--serif); font-size: 32px; color: var(--ink2); }
 .bigpc { font-size: 24px; font-weight: 700; }
 .filtersep { width: 1px; align-self: stretch; background: var(--line2); margin: 0 4px; }
+
+/* Student dashboard */
+.dash { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 16px; align-items: start; }
+.steps { list-style: none; margin: 0; padding: 6px 0; }
+.steps li { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 20px; border-top: 1px solid var(--line); }
+.steps li:first-child { border-top: 0; }
+.steps li.weak span { display: inline-flex; align-items: center; gap: 8px; }
+.unitbars { list-style: none; margin: 0; padding: 6px 0; }
+.unitbars li { display: grid; grid-template-columns: minmax(0, 1fr) 120px auto; gap: 12px; align-items: center; padding: 10px 20px; border-top: 1px solid var(--line); }
+.unitbars li:first-child { border-top: 0; }
+.unitbars .ub-name { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.unitbars .ub-n { font-size: 13px; color: var(--ink2); font-variant-numeric: tabular-nums; }
+.unitbars .bar { display: flex; gap: 2px; height: 10px; border-radius: 5px; overflow: hidden; background: var(--sunk); }
+.trend { display: flex; align-items: flex-end; gap: 10px; height: 120px; padding: 16px 20px 0; }
+.trend .tbar { display: flex; flex-direction: column; justify-content: flex-end; align-items: center; gap: 6px; width: 44px; height: 100%; }
+.trend .fill { width: 100%; background: var(--ink); border-radius: 4px 4px 0 0; }
+.trend .tl { font-size: 12px; color: var(--ink2); font-variant-numeric: tabular-nums; }

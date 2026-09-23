@@ -55,5 +55,15 @@ export async function getFile(key: string): Promise<Buffer | null> {
   return Buffer.from(await res.arrayBuffer());
 }
 
+export async function deleteFile(key: string) {
+  const k = safeKey(key);
+  const sb = supabase();
+  if (!sb) {
+    await fs.rm(path.join(LOCAL, k), { force: true });
+    return;
+  }
+  await fetch(`${sb.url}/storage/v1/object/${BUCKET}/${k}`, { method: "DELETE", headers: { Authorization: `Bearer ${sb.key}` } });
+}
+
 export const IMAGE_TYPES: Record<string, string> = { jpg: "image/jpeg", jpeg: "image/jpeg", png: "image/png", webp: "image/webp" };
 export const contentTypeOf = (key: string) => IMAGE_TYPES[key.split(".").pop()?.toLowerCase() ?? ""] ?? "application/octet-stream";

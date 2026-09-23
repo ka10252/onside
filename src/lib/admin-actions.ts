@@ -4,7 +4,8 @@ import { randomBytes } from "node:crypto";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { setIsLocked } from "./admin";
-import { NOW_SQL, one, run, tx, type Queryable } from "./db";
+import { all, NOW_SQL, one, run, tx, type Queryable } from "./db";
+import { deleteFile } from "./storage";
 import { checkLogin, hashPassword } from "./password";
 import { requireUser } from "./session";
 
@@ -234,6 +235,26 @@ export async function unassign(fd: FormData) {
   });
   revalidatePath("/tutor", "layout");
   revalidatePath("/student");
+}
+
+/** Removes an assignment and everything in it: answers, photos, marks and activity. */
+export async function deleteAssignment(fd: FormData) {
+  await requireUser("tutor");
+  const id = text(fd, "id");
+  const a = await one<{ student_id: string }>("SELECT student_id FROM assignments WHERE id = ?", id);
+  if (!a) return;
+  const photos = await all<{ photo_path: string }>("SELECT photo_path FROM responses WHERE assignment_id = ? AND photo_path IS NOT NULL", id);
+  await tx(async (t) => {
+    await t.run("UPDATE sets SET review_of = NULL WHERE review_of = ?", id); // a review quiz built from it stays
+    await t.run("DELETE FROM events WHERE response_id IN (SELECT id FROM responses WHERE assignment_id = ?)", id);
+    await t.run("DELETE FROM responses WHERE assignment_id = ?", id);
+    await t.run("DELETE FROM ai_batches WHERE assignment_id = ?", id);
+    await t.run("DELETE FROM assignments WHERE id = ?", id);
+  });
+  for (const p of photos) await deleteFile(p.photo_path).catch(() => {});
+  revalidatePath("/tutor", "layout");
+  revalidatePath("/student", "layout");
+  redirect(`/tutor/students/${a.student_id}`);
 }
 
 // ---------- hints ----------

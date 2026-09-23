@@ -106,6 +106,33 @@ export function listSets(): Promise<SetRow[]> {
   );
 }
 
+export type StudentStats = {
+  last_active: string | null;
+  answered: number;
+  minutes: number;
+  ai_questions: number;
+  hints: number;
+  paste_chars: number;
+  blur_count: number;
+};
+
+/** Facts about how a student works, for the top of their page. */
+export async function studentStats(studentId: string): Promise<StudentStats> {
+  const row = await one<StudentStats>(
+    `SELECT (SELECT MAX(e.at) FROM events e JOIN responses x ON x.id = e.response_id WHERE x.student_id = ?) AS last_active,
+            COUNT(*) FILTER (WHERE r.submitted_at IS NOT NULL) AS answered,
+            COALESCE(SUM(r.active_ms), 0) / 60000 AS minutes,
+            COALESCE(SUM(r.ai_questions), 0) AS ai_questions,
+            COALESCE(SUM(r.hint_level), 0) AS hints,
+            COALESCE(SUM(r.paste_chars), 0) AS paste_chars,
+            COALESCE(SUM(r.blur_count), 0) AS blur_count
+       FROM responses r WHERE r.student_id = ?`,
+    studentId,
+    studentId,
+  );
+  return row ?? { last_active: null, answered: 0, minutes: 0, ai_questions: 0, hints: 0, paste_chars: 0, blur_count: 0 };
+}
+
 export type BankQuestion = {
   id: string;
   unit_number: number;

@@ -1,7 +1,6 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
 import { run } from "./db";
 import { HELPER_LOCK_MS, hintCap } from "./grading";
 import { requireUser } from "./session";
@@ -105,12 +104,18 @@ export async function openHint(responseId: string, level: 1 | 2): Promise<{ hint
 
 // ---------- assignment ----------
 
-export async function submitAssignment(assignmentId: string) {
+/** Submits the whole set. Returns where to go next; the browser does the navigating. */
+export async function submitAssignment(assignmentId: string): Promise<{ to: string } | Fail> {
   const user = await requireUser("student");
   const a = await getAssignment(assignmentId, user.id);
-  if (!a) redirect("/student");
-  if (a.status === "in_progress" || a.status === "not_started") await finalizeAssignment(a.id);
+  if (!a) return { error: "This set is not yours." };
+  try {
+    if (a.status === "in_progress" || a.status === "not_started") await finalizeAssignment(a.id);
+  } catch (e) {
+    console.error("submit failed", e);
+    return { error: `It didn't submit (${e instanceof Error ? e.message.slice(0, 120) : "unknown error"}). Try again.` };
+  }
   revalidatePath("/student");
   revalidatePath("/tutor", "layout");
-  redirect(`/student/a/${a.id}/done`);
+  return { to: `/student/a/${a.id}/done` };
 }

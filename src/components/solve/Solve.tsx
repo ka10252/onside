@@ -181,6 +181,7 @@ export function Solve(props: SolveProps) {
 }
 
 function SubmitDialog({ assignmentId, unanswered, total, onCancel }: { assignmentId: string; unanswered: number; total: number; onCancel: () => void }) {
+  const router = useRouter();
   const [pending, setPending] = useState(false);
   const [error, setError] = useState<string | null>(null);
   async function submit() {
@@ -188,13 +189,17 @@ function SubmitDialog({ assignmentId, unanswered, total, onCancel }: { assignmen
     setError(null);
     try {
       await flushAll();
-      await submitAssignment(assignmentId); // redirects to the results page
-    } catch (e) {
-      // redirect() surfaces as a thrown navigation signal in some versions; only show real failures
-      if (e instanceof Error && !/NEXT_REDIRECT/.test(e.message)) {
-        setError("It didn't submit. Check your connection and try again.");
+      const res = await submitAssignment(assignmentId);
+      if ("error" in res) {
+        setError(res.error);
         setPending(false);
+        return;
       }
+      router.push(res.to);
+    } catch (e) {
+      console.error("submit failed", e);
+      setError("It didn't submit. Check your connection and try again.");
+      setPending(false);
     }
   }
   return (
@@ -222,6 +227,7 @@ function SubmitDialog({ assignmentId, unanswered, total, onCancel }: { assignmen
 }
 
 function TimeLeft({ deadline, assignmentId }: { deadline: number; assignmentId: string }) {
+  const router = useRouter();
   const [now, setNow] = useState(() => Date.now());
   const sent = useRef(false);
   useEffect(() => {
@@ -232,9 +238,12 @@ function TimeLeft({ deadline, assignmentId }: { deadline: number; assignmentId: 
   useEffect(() => {
     if (left === 0 && !sent.current) {
       sent.current = true;
-      void flushAll().then(() => submitAssignment(assignmentId));
+      void flushAll()
+        .then(() => submitAssignment(assignmentId))
+        .then((res) => router.push("to" in res ? res.to : `/student/a/${assignmentId}/done`))
+        .catch(() => router.refresh());
     }
-  }, [left, assignmentId]);
+  }, [left, assignmentId, router]);
   const m = Math.floor(left / 60_000);
   const s = Math.floor((left % 60_000) / 1000);
   return (

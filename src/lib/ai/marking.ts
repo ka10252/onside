@@ -1,9 +1,8 @@
 import "server-only";
-import fs from "node:fs/promises";
-import path from "node:path";
+import { after } from "next/server";
 import { isPast, pastContext, type Question } from "../content";
-import { db, json } from "../db";
-import { DATA_DIR } from "../db-core";
+import { all, json, one, run } from "../db";
+import { contentTypeOf, getFile } from "../storage";
 import { ai, extractJson, generateJson, type GenerateRequest } from "./index";
 import { referenceFor, tableText } from "./helper";
 
@@ -49,9 +48,9 @@ function markingText(q: Question): string {
   return referenceFor(q);
 }
 
-function checklistFor(q: Question): string[] | null {
+async function checklistFor(q: Question): Promise<string[] | null> {
   if (isPast(q) || q.format !== "diagram") return null;
-  const row = db().prepare("SELECT data FROM diagram_checklists WHERE id = ?").get(q.diagram_checklist) as { data: string } | undefined;
+  const row = await one<{ data: string }>("SELECT data FROM diagram_checklists WHERE id = ?", q.diagram_checklist);
   return row ? (JSON.parse(row.data).items as string[]) : null;
 }
 
@@ -74,7 +73,7 @@ async function buildMarkRequest(q: Question, r: ResponseForMarking): Promise<{ r
     .filter(Boolean)
     .join("\n\n");
   const context = isPast(q)
-    ? pastContext(q.past.paper, q.past.question)
+    ? (await pastContext(q.past.paper, q.past.question))
         .map((b) => (b.type === "text" ? b.text : b.type === "table" ? tableText(b) : `[${b.caption ?? "figure"}]`))
         .join("\n")
         .slice(0, 3000)
@@ -83,12 +82,11 @@ async function buildMarkRequest(q: Question, r: ResponseForMarking): Promise<{ r
       : "";
   const images = [];
   if (r.photo_path) {
-    const file = path.join(DATA_DIR, r.photo_path);
-    const ext = path.extname(file).slice(1);
-    const mime = ext === "jpg" ? "image/jpeg" : `image/${ext}`;
-    images.push({ mimeType: mime, base64: (await fs.readFile(file)).toString("base64") });
+    const body = await getFile(r.photo_path);
+    if (!body) throw new Error("Photo file not found");
+    images.push({ mimeType: contentTypeOf(r.photo_path), base64: body.toString("base64") });
   }
-  const checklist = checklistFor(q);
+  const checklist = await checklistFor(q);
   const diagramPart =
     r.photo_path || checklist
       ? `\nA photo of the student's hand-drawn diagram is attached${r.photo_path ? "" : " (none was uploaded)"}. Check it${
@@ -156,16 +154,15 @@ const errorMark = (e: unknown): AiMark => ({
   at: new Date().toISOString(),
 });
 
-/** Marks every written answer in an assignment that has no suggestion yet. Runs in the background. */
+/** Marks every written answer in an assignment that has no suggestion yet. Runs after the response is sent. */
 export async function markAssignment(assignmentId: string, force = false) {
   // force: retry failed suggestions only (the "Retry AI marking" button).
-  const rows = db()
-    .prepare(
-      `SELECT r.id, r.final_text, r.working_text, r.plan_text, r.photo_path, r.answers, r.attempts, r.ai_mark, q.data
-         FROM responses r JOIN questions q ON q.id = r.question_id
-        WHERE r.assignment_id = ? AND r.submitted_at IS NOT NULL AND r.tutor_mark IS NULL`,
-    )
-    .all(assignmentId) as (ResponseForMarking & { ai_mark: string | null; data: string })[];
+  const rows = await all<ResponseForMarking & { ai_mark: string | null; data: string }>(
+    `SELECT r.id, r.final_text, r.working_text, r.plan_text, r.photo_path, r.answers, r.attempts, r.ai_mark, q.data
+       FROM responses r JOIN questions q ON q.id = r.question_id
+      WHERE r.assignment_id = ? AND r.submitted_at IS NOT NULL AND r.tutor_mark IS NULL`,
+    assignmentId,
+  );
   const todo = rows.filter((r) => {
     const q = JSON.parse(r.data) as Question;
     // Diagrams are marked by the tutor, not the AI (Jin, 2026-09-17).
@@ -174,12 +171,12 @@ export async function markAssignment(assignmentId: string, force = false) {
     return needsAi && (force ? prev?.status === "error" : !prev);
   });
   if (!todo.length) return;
-  const save = db().prepare("UPDATE responses SET ai_mark = ? WHERE id = ?");
+  const save = (mark: AiMark, id: string) => run("UPDATE responses SET ai_mark = ? WHERE id = ?", JSON.stringify(mark), id);
   let provider;
   try {
     provider = ai();
   } catch (e) {
-    for (const r of todo) save.run(JSON.stringify(errorMark(e)), r.id);
+    for (const r of todo) await save(errorMark(e), r.id);
     return;
   }
 
@@ -190,19 +187,21 @@ export async function markAssignment(assignmentId: string, force = false) {
       try {
         built.push({ r, ...(await buildMarkRequest(JSON.parse(r.data) as Question, r)) });
       } catch (e) {
-        save.run(JSON.stringify(errorMark(e)), r.id); // e.g. a missing photo file
+        await save(errorMark(e), r.id); // e.g. a missing photo file
       }
     }
     if (!built.length) return;
     try {
       const batchId = await provider.submitBatch(built.map((b) => ({ id: b.r.id, req: { ...b.req, json: true } })));
-      db()
-        .prepare("INSERT INTO ai_batches (id, assignment_id, response_ids) VALUES (?, ?, ?)")
-        .run(batchId, assignmentId, JSON.stringify(built.map((b) => b.r.id)));
-      for (const b of built) save.run(JSON.stringify({ status: "pending", at: new Date().toISOString() }), b.r.id);
-      startPolling();
+      await run(
+        "INSERT INTO ai_batches (id, assignment_id, response_ids) VALUES (?, ?, ?)",
+        batchId,
+        assignmentId,
+        JSON.stringify(built.map((b) => b.r.id)),
+      );
+      for (const b of built) await save({ status: "pending", at: new Date().toISOString() }, b.r.id);
     } catch (e) {
-      for (const b of built) save.run(JSON.stringify(errorMark(e)), b.r.id);
+      for (const b of built) await save(errorMark(e), b.r.id);
     }
     return;
   }
@@ -214,11 +213,14 @@ export async function markAssignment(assignmentId: string, force = false) {
     } catch (e) {
       mark = errorMark(e);
     }
-    save.run(JSON.stringify(mark), r.id);
+    await save(mark, r.id);
   }
 }
 
-/** Stores finished batch results. Safe to call often. */
+/**
+ * Stores finished batch results. Safe to call often: the tutor's pages call it (there is no
+ * always-on server on Vercel), and the review page refreshes while a batch is pending.
+ */
 export async function pollMarkingBatches() {
   let provider;
   try {
@@ -226,14 +228,13 @@ export async function pollMarkingBatches() {
   } catch {
     return;
   }
+  const pending = await all<{ id: string; response_ids: string; created_at: string }>(
+    "SELECT id, response_ids, created_at FROM ai_batches WHERE status = 'pending'",
+  );
   if (!provider.collectBatch) {
-    const stale = db().prepare("SELECT id, response_ids FROM ai_batches WHERE status = 'pending'").all() as { id: string; response_ids: string }[];
-    for (const b of stale) expireBatch(b.id, b.response_ids);
+    for (const b of pending) await expireBatch(b.id, b.response_ids);
     return;
   }
-  const pending = db()
-    .prepare("SELECT id, response_ids, created_at FROM ai_batches WHERE status = 'pending'")
-    .all() as { id: string; response_ids: string; created_at: string }[];
   for (const b of pending) {
     let res;
     try {
@@ -241,15 +242,19 @@ export async function pollMarkingBatches() {
     } catch (e) {
       console.error("batch poll failed", e);
       // Batches finish within 24 h; after that, give up so the tutor can retry or mark by hand.
-      if (Date.now() - new Date(b.created_at).getTime() > 25 * 3600_000) expireBatch(b.id, b.response_ids);
+      if (Date.now() - new Date(b.created_at).getTime() > 25 * 3600_000) await expireBatch(b.id, b.response_ids);
       continue;
     }
     if (res.status === "pending") continue;
-    const save = db().prepare("UPDATE responses SET ai_mark = ? WHERE id = ?");
+    // Claim the batch so two page loads don't store it twice.
+    const claimed = await run("UPDATE ai_batches SET status = 'done' WHERE id = ? AND status = 'pending'", b.id);
+    if (!claimed) continue;
     for (const id of JSON.parse(b.response_ids) as string[]) {
-      const row = db()
-        .prepare("SELECT r.id, r.final_text, r.working_text, r.plan_text, r.photo_path, r.answers, r.attempts, q.data FROM responses r JOIN questions q ON q.id = r.question_id WHERE r.id = ?")
-        .get(id) as (ResponseForMarking & { data: string }) | undefined;
+      const row = await one<ResponseForMarking & { data: string }>(
+        `SELECT r.id, r.final_text, r.working_text, r.plan_text, r.photo_path, r.answers, r.attempts, q.data
+           FROM responses r JOIN questions q ON q.id = r.question_id WHERE r.id = ?`,
+        id,
+      );
       if (!row) continue;
       const q = JSON.parse(row.data) as Question;
       const out = res.results.get(id);
@@ -262,39 +267,56 @@ export async function pollMarkingBatches() {
       } catch (e) {
         mark = errorMark(e);
       }
-      save.run(JSON.stringify(mark), id);
+      await run("UPDATE responses SET ai_mark = ? WHERE id = ?", JSON.stringify(mark), id);
     }
-    db().prepare("UPDATE ai_batches SET status = 'done' WHERE id = ?").run(b.id);
   }
 }
 
-function expireBatch(id: string, responseIds: string) {
-  const save = db().prepare("UPDATE responses SET ai_mark = ? WHERE id = ? AND json_extract(ai_mark, '$.status') = 'pending'");
-  for (const rid of JSON.parse(responseIds) as string[]) save.run(JSON.stringify(errorMark(new Error("AI marking timed out"))), rid);
-  db().prepare("UPDATE ai_batches SET status = 'failed' WHERE id = ?").run(id);
+async function expireBatch(id: string, responseIds: string) {
+  for (const rid of JSON.parse(responseIds) as string[]) {
+    await run(
+      "UPDATE responses SET ai_mark = ? WHERE id = ? AND (ai_mark::jsonb ->> 'status') = 'pending'",
+      JSON.stringify(errorMark(new Error("AI marking timed out"))),
+      rid,
+    );
+  }
+  await run("UPDATE ai_batches SET status = 'failed' WHERE id = ?", id);
 }
 
-const gp = globalThis as unknown as { onsideBatchTimer?: ReturnType<typeof setInterval> };
-function startPolling() {
-  gp.onsideBatchTimer ??= setInterval(() => {
-    void pollMarkingBatches().catch((e) => console.error("batch poll failed", e));
-  }, 60_000);
+export async function hasPendingBatches(assignmentId: string) {
+  return Boolean(await one("SELECT 1 FROM ai_batches WHERE assignment_id = ? AND status = 'pending'", assignmentId));
 }
 
-export function hasPendingBatches(assignmentId: string) {
-  return Boolean(db().prepare("SELECT 1 FROM ai_batches WHERE assignment_id = ? AND status = 'pending'").get(assignmentId));
-}
+// A marking run is "in progress" for at most this long (the function time limit on Vercel).
+const RUN_MS = 5 * 60_000;
 
-// Survives dev hot reloads.
-const g = globalThis as unknown as { onsideMarking?: Set<string> };
-const running = (g.onsideMarking ??= new Set<string>());
-
+/** Starts AI marking after the current response is sent. One run per assignment at a time. */
 export function queueMarking(assignmentId: string, force = false) {
-  if (running.has(assignmentId)) return;
-  running.add(assignmentId);
-  void markAssignment(assignmentId, force)
-    .catch((e) => console.error("marking failed", e))
-    .finally(() => running.delete(assignmentId));
+  const job = async () => {
+    const now = new Date();
+    const claimed = await run(
+      "UPDATE assignments SET marking_started_at = ? WHERE id = ? AND (marking_started_at IS NULL OR marking_started_at < ?)",
+      now.toISOString(),
+      assignmentId,
+      new Date(now.getTime() - RUN_MS).toISOString(),
+    );
+    if (!claimed) return;
+    try {
+      await markAssignment(assignmentId, force);
+    } catch (e) {
+      console.error("marking failed", e);
+    } finally {
+      await run("UPDATE assignments SET marking_started_at = NULL WHERE id = ?", assignmentId);
+    }
+  };
+  try {
+    after(job);
+  } catch {
+    void job(); // outside a request (scripts)
+  }
 }
 
-export const isMarking = (assignmentId: string) => running.has(assignmentId);
+export async function isMarking(assignmentId: string) {
+  const row = await one<{ marking_started_at: string | null }>("SELECT marking_started_at FROM assignments WHERE id = ?", assignmentId);
+  return Boolean(row?.marking_started_at && Date.now() - new Date(row.marking_started_at).getTime() < RUN_MS);
+}

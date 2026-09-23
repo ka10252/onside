@@ -1,4 +1,4 @@
-import { db } from "@/lib/db";
+import { one, tx } from "@/lib/db";
 import { flagsFor } from "@/lib/grading";
 import { currentUser } from "@/lib/session";
 
@@ -20,14 +20,12 @@ export async function POST(req: Request) {
   } catch {
     return new Response(null, { status: 400 });
   }
-  const r = db()
-    .prepare(
-      `SELECT r.id, r.paste_chars, r.away_ms, r.submitted_at, a.status FROM responses r
-         JOIN assignments a ON a.id = r.assignment_id WHERE r.id = ? AND r.student_id = ?`,
-    )
-    .get(String(body.responseId), user.id) as
-    | { id: string; paste_chars: number; away_ms: number; submitted_at: string | null; status: string }
-    | undefined;
+  const r = await one<{ id: string; paste_chars: number; away_ms: number; submitted_at: string | null; status: string }>(
+    `SELECT r.id, r.paste_chars, r.away_ms, r.submitted_at, a.status FROM responses r
+       JOIN assignments a ON a.id = r.assignment_id WHERE r.id = ? AND r.student_id = ?`,
+    String(body.responseId),
+    user.id,
+  );
   if (!r) return new Response(null, { status: 404 });
   if (r.status === "submitted" || r.status === "reviewed") return new Response(null, { status: 204 });
 
@@ -38,17 +36,21 @@ export async function POST(req: Request) {
   const away = n(body.awayMs, 24 * 3600_000);
   const active = n(body.activeMs, 3600_000);
 
-  const insert = db().prepare("INSERT INTO events (response_id, type, data) VALUES (?, ?, ?)");
-  db().transaction(() => {
-    for (const p of pastes) insert.run(r.id, "paste", JSON.stringify(p));
-    if (blurs) insert.run(r.id, "blur", JSON.stringify({ count: blurs, awayMs: away }));
+  const INSERT = "INSERT INTO events (response_id, type, data) VALUES (?, ?, ?)";
+  await tx(async (t) => {
+    for (const p of pastes) await t.run(INSERT, r.id, "paste", JSON.stringify(p));
+    if (blurs) await t.run(INSERT, r.id, "blur", JSON.stringify({ count: blurs, awayMs: away }));
     const flags = flagsFor(r.paste_chars + pasted, r.away_ms + away);
-    db()
-      .prepare(
-        `UPDATE responses SET paste_chars = paste_chars + ?, blur_count = blur_count + ?, away_ms = away_ms + ?,
-                active_ms = active_ms + ?, flags = ? WHERE id = ?`,
-      )
-      .run(pasted, blurs, away, active, JSON.stringify(flags), r.id);
-  })();
+    await t.run(
+      `UPDATE responses SET paste_chars = paste_chars + ?, blur_count = blur_count + ?, away_ms = away_ms + ?,
+              active_ms = active_ms + ?, flags = ? WHERE id = ?`,
+      pasted,
+      blurs,
+      away,
+      active,
+      JSON.stringify(flags),
+      r.id,
+    );
+  });
   return new Response(null, { status: 204 });
 }

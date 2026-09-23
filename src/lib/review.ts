@@ -1,7 +1,7 @@
 import "server-only";
 import type { AiMark } from "./ai/marking";
 import { isPast, type Question } from "./content";
-import { db, json } from "./db";
+import { all, json, one } from "./db";
 import { conceptStatus, scoreSet, weakSpot, type ScoredQuestion } from "./scoring";
 import { isWritten, type ResponseRow } from "./student";
 
@@ -33,18 +33,24 @@ const mmss = (ms: number) => {
 const ordinal = (n: number) => ["1st", "2nd", "3rd"][n - 1] ?? `${n}th`;
 const words = (s: string, n: number) => s.split(/\s+/).slice(0, n).join(" ") + (s.split(/\s+/).length > n ? "…" : "");
 
-export function conceptsFor(q: Question): { key: string; label: string }[] {
-  if (isPast(q)) {
-    if (!q.section) return [];
-    const s = db().prepare("SELECT title FROM sections WHERE id = ?").get(q.section) as { title: string } | undefined;
-    return [{ key: `s:${q.section}`, label: `${q.section} ${s?.title ?? ""}`.trim() }];
-  }
-  if (!q.concepts.length && q.section) {
-    const s = db().prepare("SELECT title FROM sections WHERE id = ?").get(q.section) as { title: string } | undefined;
-    return [{ key: `s:${q.section}`, label: `${q.section} ${s?.title ?? ""}`.trim() }];
-  }
-  const get = db().prepare("SELECT term FROM concepts WHERE id = ?");
-  return q.concepts.map((id) => ({ key: id, label: (get.get(id) as { term: string } | undefined)?.term ?? id }));
+// Section titles and concept terms change only when content is re-seeded; keep them for a few minutes.
+let names: { at: number; sections: Map<string, string>; concepts: Map<string, string> } | null = null;
+async function nameLookup() {
+  if (names && Date.now() - names.at < 5 * 60_000) return names;
+  const [sections, concepts] = await Promise.all([
+    all<{ id: string; title: string }>("SELECT id, title FROM sections"),
+    all<{ id: string; term: string }>("SELECT id, term FROM concepts"),
+  ]);
+  names = { at: Date.now(), sections: new Map(sections.map((x) => [x.id, x.title])), concepts: new Map(concepts.map((x) => [x.id, x.term])) };
+  return names;
+}
+
+export async function conceptsFor(q: Question): Promise<{ key: string; label: string }[]> {
+  const n = await nameLookup();
+  const section = (id: string) => ({ key: `s:${id}`, label: `${id} ${n.sections.get(id) ?? ""}`.trim() });
+  if (isPast(q)) return q.section ? [section(q.section)] : [];
+  if (!q.concepts.length && q.section) return [section(q.section)];
+  return q.concepts.map((id) => ({ key: id, label: n.concepts.get(id) ?? id }));
 }
 
 /** Marks that count: tutor's, else auto result, else 0 for no answer; null while waiting for the tutor. */
@@ -104,32 +110,26 @@ function result(q: Question, r: ReviewItem["r"], confirmed: number | null, auto:
   return "To confirm";
 }
 
-export function loadReview(assignmentId: string) {
-  const a = db()
-    .prepare(
-      `SELECT a.*, s.title, s.helper, s.time_limit_min, u.name AS student_name, u.subtitle AS student_subtitle
-         FROM assignments a JOIN sets s ON s.id = a.set_id JOIN users u ON u.id = a.student_id WHERE a.id = ?`,
-    )
-    .get(assignmentId) as
-    | {
-        id: string; set_id: string; student_id: string; status: string; due_at: string | null; started_at: string | null;
-        submitted_at: string | null; reviewed_at: string | null; title: string; helper: string; time_limit_min: number | null;
-        student_name: string; student_subtitle: string | null;
-      }
-    | undefined;
+export async function loadReview(assignmentId: string) {
+  const a = await one<{
+    id: string; set_id: string; student_id: string; status: string; due_at: string | null; started_at: string | null;
+    submitted_at: string | null; reviewed_at: string | null; marking_started_at: string | null; title: string; helper: string;
+    time_limit_min: number | null; student_name: string; student_subtitle: string | null;
+  }>(
+    `SELECT a.*, s.title, s.helper, s.time_limit_min, u.name AS student_name, u.subtitle AS student_subtitle
+       FROM assignments a JOIN sets s ON s.id = a.set_id JOIN users u ON u.id = a.student_id WHERE a.id = ?`,
+    assignmentId,
+  );
   if (!a) return null;
   const closed = a.status === "submitted" || a.status === "reviewed";
-  const qs = (
-    db()
-      .prepare("SELECT q.data FROM set_items i JOIN questions q ON q.id = i.question_id WHERE i.set_id = ? ORDER BY i.position")
-      .all(a.set_id) as { data: string }[]
-  ).map((x) => JSON.parse(x.data) as Question);
-  const responses = new Map(
-    (db().prepare("SELECT * FROM responses WHERE assignment_id = ?").all(a.id) as NonNullable<ReviewItem["r"]>[]).map((r) => [r.question_id, r]),
-  );
-  const events = db()
-    .prepare("SELECT e.* FROM events e JOIN responses r ON r.id = e.response_id WHERE r.assignment_id = ? ORDER BY e.id")
-    .all(a.id) as EventRow[];
+  const [qrows, rrows, events] = await Promise.all([
+    all<{ data: string }>("SELECT q.data FROM set_items i JOIN questions q ON q.id = i.question_id WHERE i.set_id = ? ORDER BY i.position", a.set_id),
+    all<NonNullable<ReviewItem["r"]>>("SELECT * FROM responses WHERE assignment_id = ?", a.id),
+    all<EventRow>("SELECT e.* FROM events e JOIN responses r ON r.id = e.response_id WHERE r.assignment_id = ? ORDER BY e.id", a.id),
+  ]);
+  const qs = qrows.map((x) => JSON.parse(x.data) as Question);
+  const responses = new Map(rrows.map((r) => [r.question_id, r]));
+  const conceptLists = await Promise.all(qs.map((q) => conceptsFor(q)));
 
   const items: ReviewItem[] = qs.map((q, i) => {
     const r = responses.get(q.id) ?? null;
@@ -163,7 +163,7 @@ export function loadReview(assignmentId: string) {
       honesty: described.honesty,
       log,
       snapshots,
-      concepts: conceptsFor(q),
+      concepts: conceptLists[i]!,
       timeMin: Math.round((r?.active_ms ?? 0) / 60000),
     };
   });
@@ -188,18 +188,17 @@ export function loadReview(assignmentId: string) {
   return { a, closed, items, scored, score, concepts, weak: weakSpot(concepts), facts };
 }
 
-export type Review = NonNullable<ReturnType<typeof loadReview>>;
+export type Review = NonNullable<Awaited<ReturnType<typeof loadReview>>>;
 
 /** Latest reviewed-or-submitted assignment summary for the students list. */
-export function latestSummary(studentId: string) {
-  const row = db()
-    .prepare(
-      `SELECT id FROM assignments WHERE student_id = ? AND status IN ('submitted', 'reviewed')
-        ORDER BY COALESCE(submitted_at, assigned_at) DESC LIMIT 1`,
-    )
-    .get(studentId) as { id: string } | undefined;
+export async function latestSummary(studentId: string) {
+  const row = await one<{ id: string }>(
+    `SELECT id FROM assignments WHERE student_id = ? AND status IN ('submitted', 'reviewed')
+      ORDER BY COALESCE(submitted_at, assigned_at) DESC LIMIT 1`,
+    studentId,
+  );
   if (!row) return null;
-  const rv = loadReview(row.id);
+  const rv = await loadReview(row.id);
   if (!rv) return null;
   return {
     assignmentId: row.id,

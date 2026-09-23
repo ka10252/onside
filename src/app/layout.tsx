@@ -5,6 +5,9 @@ import "./globals.css";
 const serif = Instrument_Serif({ variable: "--font-serif", subsets: ["latin"], weight: "400" });
 const sans = Instrument_Sans({ variable: "--font-sans", subsets: ["latin"], weight: ["400", "500", "600", "700"] });
 
+// AI marking runs after a response is sent (next/server after()); give it time on Vercel.
+export const maxDuration = 300;
+
 export const metadata: Metadata = {
   title: "Onside",
   description: "Homework and review for IB Economics HL",

@@ -552,14 +552,15 @@ function WrittenAnswer({
     onAnswered(Boolean(w.trim() || t.trim() || p.some((x) => x.trim()) || (next.photo ?? r.photo)));
   };
 
-  async function upload(file: File) {
+  async function upload(original: File) {
     setError(null);
-    if (file.size > 12 * 1024 * 1024) return setError("The photo must be under 12 MB.");
-    const fd = new FormData();
-    fd.set("responseId", r.id);
-    fd.set("photo", file);
+    if (original.size > 25 * 1024 * 1024) return setError("The photo must be under 25 MB.");
     setUploading(true);
     try {
+      const file = await shrinkPhoto(original);
+      const fd = new FormData();
+      fd.set("responseId", r.id);
+      fd.set("photo", file);
       const res = await uploadPhoto(fd);
       if ("error" in res) return setError(res.error);
       setR({ ...r, photo: true });
@@ -681,6 +682,24 @@ function WrittenAnswer({
       {error && <p className="formmsg bad" role="alert">{error}</p>}
     </>
   );
+}
+
+/** Resizes a photo to at most 2000 px on the long side as JPEG, so it uploads quickly and stays under the server limit. */
+async function shrinkPhoto(file: File): Promise<File> {
+  if (file.size < 1.5 * 1024 * 1024) return file;
+  try {
+    const bitmap = await createImageBitmap(file);
+    const scale = Math.min(1, 2000 / Math.max(bitmap.width, bitmap.height));
+    const canvas = document.createElement("canvas");
+    canvas.width = Math.round(bitmap.width * scale);
+    canvas.height = Math.round(bitmap.height * scale);
+    canvas.getContext("2d")!.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
+    bitmap.close();
+    const blob = await new Promise<Blob | null>((res) => canvas.toBlob(res, "image/jpeg", 0.85));
+    return blob ? new File([blob], "diagram.jpg", { type: "image/jpeg" }) : file;
+  } catch {
+    return file;
+  }
 }
 
 function safeParse(s: string): string[] {

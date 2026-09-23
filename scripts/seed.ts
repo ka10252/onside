@@ -1,11 +1,13 @@
-// Loads content/ into the local SQLite database. Safe to re-run: content rows are upserted,
-// users are only added if missing, and student work is never touched.
-//   npm run db:seed          upsert content
-//   npm run db:reset         delete data/onside.db, then seed
+// Loads content/ into the database (Supabase when DATABASE_URL is set, else data/pglite).
+// Safe to re-run: content rows are upserted, users are only added if missing, and student work is never touched.
+// Past-paper figures are uploaded to private storage.
+//   npm run db:seed            upsert content
+//   npm run db:reset           local database only: delete data/pglite, then seed
 import fs from "node:fs";
 import path from "node:path";
-import type Database from "better-sqlite3";
-import { DB_PATH, openDb } from "../src/lib/db-core";
+import { createStorageClient } from "./storage-client";
+import { openDb, PGLITE_DIR, type Queryable } from "../src/lib/db-core";
+import { loadEnv } from "./env";
 
 const ROOT = process.cwd();
 const CONTENT = path.join(ROOT, "content");
@@ -32,14 +34,14 @@ const USERS = [{ id: "tutor-jin", role: "tutor", name: "Jin", subtitle: "IB Econ
 
 type Row = Record<string, string | number | null>;
 
-function upsert(db: Database.Database, table: string, row: Row, key: string[] = ["id"]) {
+async function upsert(db: Queryable, table: string, row: Row, key: string[] = ["id"]) {
   const cols = Object.keys(row);
   const updates = cols.filter((c) => !key.includes(c));
   const sql =
-    `INSERT INTO ${table} (${cols.join(", ")}) VALUES (${cols.map((c) => "@" + c).join(", ")}) ` +
-    `ON CONFLICT(${key.join(", ")}) DO ` +
+    `INSERT INTO ${table} (${cols.join(", ")}) VALUES (${cols.map(() => "?").join(", ")}) ` +
+    `ON CONFLICT (${key.join(", ")}) DO ` +
     (updates.length ? `UPDATE SET ${updates.map((c) => `${c} = excluded.${c}`).join(", ")}` : "NOTHING");
-  db.prepare(sql).run(row);
+  await db.run(sql, ...cols.map((c) => row[c]));
 }
 
 function readJson<T>(rel: string): T {
@@ -98,9 +100,9 @@ type Pack = {
   related_past_items: Record<string, string[]>;
 };
 
-function seed(db: Database.Database) {
-  for (const u of USERS) upsert(db, "users", u);
-  for (const p of PARTS) upsert(db, "parts", p);
+async function seed(db: Queryable) {
+  for (const u of USERS) await upsert(db, "users", u);
+  for (const p of PARTS) await upsert(db, "parts", p);
 
   // Syllabus tree
   const tree = readJson<Tree>("syllabus-tree.json");
@@ -110,7 +112,7 @@ function seed(db: Database.Database) {
 
   for (const part of tree.parts) {
     for (const unit of part.units) {
-      upsert(db, "units", {
+      await upsert(db, "units", {
         id: unit.id,
         number: unit.number,
         part_id: PART_ID[part.part],
@@ -119,61 +121,60 @@ function seed(db: Database.Database) {
         exam_weight: null,
         has_pack: packedUnits.has(unit.number) ? 1 : 0,
       });
-      unit.sections.forEach((s, i) => {
-        upsert(db, "sections", { id: s.id, unit_id: unit.id, title: s.title, hl_only: s.hl_only ? 1 : 0, sort: i });
+      for (const [i, s] of unit.sections.entries()) {
+        await upsert(db, "sections", { id: s.id, unit_id: unit.id, title: s.title, hl_only: s.hl_only ? 1 : 0, sort: i });
         // Units with a pack use the pack's reviewed concepts instead of the auto-extracted ones.
-        if (packedUnits.has(unit.number)) return;
+        if (packedUnits.has(unit.number)) continue;
         const seen = new Set<string>();
         for (const c of s.concepts) {
           let id = `c${unit.number}-${slug(c.term)}`;
           while (seen.has(id)) id += "-x";
           seen.add(id);
-          upsert(db, "concepts", {
+          await upsert(db, "concepts", {
             id, unit_id: unit.id, section_id: s.id, term: c.term,
             definition: c.definition_from_notes ?? null, source: "notes",
           });
         }
-      });
+      }
     }
   }
 
   // Unit packs
   for (const pack of packs) {
     const unitId = pack.unit.id;
-    db.prepare("UPDATE units SET exam_weight = ?, has_pack = 1 WHERE id = ?").run(pack.unit.exam_weight, unitId);
-    pack.unit.sections.forEach((s, i) =>
-      upsert(db, "sections", { id: s.id, unit_id: unitId, title: s.title, hl_only: 0, sort: i }),
-    );
+    await db.run("UPDATE units SET exam_weight = ?, has_pack = 1 WHERE id = ?", pack.unit.exam_weight, unitId);
+    for (const [i, s] of pack.unit.sections.entries()) {
+      await upsert(db, "sections", { id: s.id, unit_id: unitId, title: s.title, hl_only: 0, sort: i });
+    }
     for (const c of pack.concepts) {
-      upsert(db, "concepts", {
+      await upsert(db, "concepts", {
         id: c.id, unit_id: unitId, section_id: c.section, term: c.term, definition: c.definition, source: "pack",
       });
     }
     for (const d of pack.diagram_checklists) {
-      upsert(db, "diagram_checklists", { id: d.id, unit_id: unitId, name: d.name, data: JSON.stringify(d) });
+      await upsert(db, "diagram_checklists", { id: d.id, unit_id: unitId, name: d.name, data: JSON.stringify(d) });
     }
-    db.prepare("DELETE FROM note_corrections WHERE unit_id = ?").run(unitId);
+    await db.run("DELETE FROM note_corrections WHERE unit_id = ?", unitId);
     for (const n of pack.note_corrections) {
-      db.prepare("INSERT INTO note_corrections (unit_id, location, issue) VALUES (?, ?, ?)").run(unitId, n.where, n.issue);
+      await db.run("INSERT INTO note_corrections (unit_id, location, issue) VALUES (?, ?, ?)", unitId, n.where, n.issue);
     }
     for (const q of pack.questions) {
-      upsert(db, "questions", {
+      await upsert(db, "questions", {
         id: q.id, unit_id: unitId, section_id: q.section, format: q.format,
         paper_style: q.paper_style ?? null, command_term: q.command_term, marks: q.marks, prompt: q.prompt,
         data: JSON.stringify(q),
         source: typeof q.source === "string" ? q.source : "original",
         approved_by_tutor: q.approved_by_tutor === false ? 0 : 1,
       });
-      db.prepare("DELETE FROM question_concepts WHERE question_id = ?").run(q.id);
+      await db.run("DELETE FROM question_concepts WHERE question_id = ?", q.id);
       for (const c of q.concepts) {
-        db.prepare("INSERT INTO question_concepts (question_id, concept_id) VALUES (?, ?)").run(q.id, c);
+        await db.run("INSERT INTO question_concepts (question_id, concept_id) VALUES (?, ?)", q.id, c);
       }
     }
-    db.prepare("DELETE FROM unit_past_items WHERE unit_id = ?").run(unitId);
+    await db.run("DELETE FROM unit_past_items WHERE unit_id = ?", unitId);
     for (const [group, ids] of Object.entries(pack.related_past_items)) {
       for (const id of ids) {
-        db.prepare("INSERT OR IGNORE INTO unit_past_items (unit_id, group_name, past_item_id) VALUES (?, ?, ?)")
-          .run(unitId, group, id);
+        await db.run("INSERT INTO unit_past_items (unit_id, group_name, past_item_id) VALUES (?, ?, ?) ON CONFLICT DO NOTHING", unitId, group, id);
       }
     }
   }
@@ -181,7 +182,7 @@ function seed(db: Database.Database) {
   // Past-paper pointers (the CSV has no question text by design).
   const items = parseCsv(fs.readFileSync(path.join(CONTENT, "exam-questions-index.csv"), "utf8"));
   for (const r of items) {
-    upsert(db, "past_items", {
+    await upsert(db, "past_items", {
       id: r.id, session: r.session, paper: Number(r.paper), level: r.level, tz: r.tz || null,
       question: r.question, marks: intOrNull(r.marks), command_term: r.command_term || null,
       diagram_type: r.diagram_type || null, part: r.part || null, unit_number: intOrNull(r.unit),
@@ -190,20 +191,19 @@ function seed(db: Database.Database) {
     });
   }
 
-  seedPastPapers(db, items);
-  seedUnitTests(db);
+  await seedPastPapers(db, items);
+  await seedUnitTests(db);
 
   // Hints Jin edited in the app win over the files.
-  for (const o of db.prepare("SELECT question_id, hint1, hint2 FROM hint_overrides").all() as { question_id: string; hint1: string; hint2: string }[]) {
-    db.prepare("UPDATE questions SET data = json_set(data, '$.hints', json_array(?, ?)) WHERE id = ?").run(o.hint1, o.hint2, o.question_id);
+  for (const o of await db.all<{ question_id: string; hint1: string; hint2: string }>("SELECT question_id, hint1, hint2 FROM hint_overrides")) {
+    await db.run("UPDATE questions SET data = jsonb_set(data::jsonb, '{hints}', jsonb_build_array(?::text, ?::text))::text WHERE id = ?", o.hint1, o.hint2, o.question_id);
   }
 
-  const count = (t: string) => (db.prepare(`SELECT COUNT(*) AS n FROM ${t}`).get() as { n: number }).n;
-  console.log(
-    ["users", "units", "sections", "concepts", "questions", "diagram_checklists", "past_items", "past_papers"]
-      .map((t) => `${t}: ${count(t)}`)
-      .join(" · "),
-  );
+  const counts = [];
+  for (const t of ["users", "units", "sections", "concepts", "questions", "diagram_checklists", "past_items", "past_papers"]) {
+    counts.push(`${t}: ${(await db.one<{ n: number }>(`SELECT COUNT(*) AS n FROM ${t}`))!.n}`);
+  }
+  console.log(counts.join(" · "));
 }
 
 // ---------- past papers ----------
@@ -240,7 +240,7 @@ function paperStyle(r: Record<string, string>): string {
   return r.paper === "2" ? "P2" : "P3";
 }
 
-function seedPastPapers(db: Database.Database, rows: Record<string, string>[]) {
+async function seedPastPapers(db: Queryable, rows: Record<string, string>[]) {
   const tagsPath = path.join(CONTENT, "past-item-tags.csv");
   const tags = new Map<string, Tag>();
   if (fs.existsSync(tagsPath)) {
@@ -251,13 +251,11 @@ function seedPastPapers(db: Database.Database, rows: Record<string, string>[]) {
       });
     }
   }
-  const sectionExists = db.prepare("SELECT 1 FROM sections WHERE id = ?");
+  const sectionIds = new Set((await db.all<{ id: string }>("SELECT id FROM sections")).map((x) => x.id));
   for (const r of rows) {
     const t = tags.get(r.id);
-    db.prepare(
-      `UPDATE past_items SET paper_id = ?, unit_number = COALESCE(?, unit_number), section_id = ?, secondary = ?,
-              topic = ?, skill = ?, tag_confidence = ?, diagram_type = COALESCE(NULLIF(?, ''), diagram_type) WHERE id = ?`,
-    ).run(paperId(r), t?.unit ?? null, t?.section ?? null, t ? t.secondary.join(" ") : null,
+    await db.run(`UPDATE past_items SET paper_id = ?, unit_number = COALESCE(?, unit_number), section_id = ?, secondary = ?,
+              topic = ?, skill = ?, tag_confidence = ?, diagram_type = COALESCE(NULLIF(?, ''), diagram_type) WHERE id = ?`, paperId(r), t?.unit ?? null, t?.section ?? null, t ? t.secondary.join(" ") : null,
       t?.topic ?? null, t?.skill ?? null, t?.confidence ?? null, t?.diagram ?? "", r.id);
   }
 
@@ -278,18 +276,16 @@ function seedPastPapers(db: Database.Database, rows: Record<string, string>[]) {
   for (const [pid, p] of Object.entries(ex.papers)) {
     const r = first.get(pid);
     if (!r) continue;
-    upsert(db, "past_papers", {
+    await upsert(db, "past_papers", {
       id: pid, session: r.session, paper: Number(r.paper), level: r.level, tz: r.tz || null,
       qp_file: p.qp_file, ms_file: p.ms_file, ms_general: JSON.stringify(p.ms_general),
     });
     for (const [num, q] of Object.entries(p.questions)) {
-      upsert(db, "past_questions", { paper_id: pid, number: num, context: JSON.stringify(q.context) }, ["paper_id", "number"]);
+      await upsert(db, "past_questions", { paper_id: pid, number: num, context: JSON.stringify(q.context) }, ["paper_id", "number"]);
     }
   }
 
-  const unitId = new Map(
-    (db.prepare("SELECT id, number FROM units").all() as { id: string; number: number }[]).map((u) => [u.number, u.id]),
-  );
+  const unitId = new Map((await db.all<{ id: string; number: number }>("SELECT id, number FROM units")).map((u) => [u.number, u.id]));
   let loaded = 0;
   for (const r of rows) {
     const it = ex.items[r.id];
@@ -299,7 +295,7 @@ function seedPastPapers(db: Database.Database, rows: Record<string, string>[]) {
     const unitNumber = t?.unit ?? intOrNull(r.unit);
     const uid = unitNumber ? unitId.get(unitNumber) : undefined;
     if (!uid) continue;
-    const section = t?.section && sectionExists.get(t.section) ? t.section : null;
+    const section = t?.section && sectionIds.has(t.section) ? t.section : null;
     const format = pastFormat(r, t, marks);
     const pid = paperId(r);
     const label = `${r.session} P${r.paper}${r.tz ? ` ${r.tz}` : ""} ${r.level} · Q${r.question}`;
@@ -321,7 +317,7 @@ function seedPastPapers(db: Database.Database, rows: Record<string, string>[]) {
       },
       marking: { type: "past_markscheme", text: it.markscheme },
     };
-    upsert(db, "questions", {
+    await upsert(db, "questions", {
       id: `pp-${r.id}`, unit_id: uid, section_id: section, format, paper_style: data.paper_style,
       command_term: r.command_term || null, marks, prompt: it.prompt, data: JSON.stringify(data),
       source: "past", approved_by_tutor: 1,
@@ -336,49 +332,78 @@ function seedPastPapers(db: Database.Database, rows: Record<string, string>[]) {
 
 type UnitTest = { unit: number; title: string; questions: ({ id: string; format: string; section: string; concepts?: string[]; command_term: string; marks: number; prompt: string })[] };
 
-function seedUnitTests(db: Database.Database) {
+async function seedUnitTests(db: Queryable) {
   const dir = path.join(CONTENT, "unit-tests");
   if (!fs.existsSync(dir)) return;
-  const unitId = db.prepare("SELECT id, title FROM units WHERE number = ?");
-  const conceptExists = db.prepare("SELECT 1 FROM concepts WHERE id = ?");
-  const sectionExists = db.prepare("SELECT 1 FROM sections WHERE id = ?");
+  const units = new Map((await db.all<{ id: string; title: string; number: number }>("SELECT id, title, number FROM units")).map((u) => [u.number, u]));
+  const conceptIds = new Set((await db.all<{ id: string }>("SELECT id FROM concepts")).map((x) => x.id));
+  const sectionIds = new Set((await db.all<{ id: string }>("SELECT id FROM sections")).map((x) => x.id));
   let n = 0;
   for (const file of fs.readdirSync(dir).filter((f) => /^unit-\d+\.json$/.test(f)).sort()) {
     const pack = JSON.parse(fs.readFileSync(path.join(dir, file), "utf8")) as UnitTest;
-    const u = unitId.get(pack.unit) as { id: string; title: string } | undefined;
+    const u = units.get(pack.unit);
     if (!u) continue;
     for (const q of pack.questions) {
-      upsert(db, "questions", {
-        id: q.id, unit_id: u.id, section_id: sectionExists.get(q.section) ? q.section : null, format: q.format,
+      await upsert(db, "questions", {
+        id: q.id, unit_id: u.id, section_id: sectionIds.has(q.section) ? q.section : null, format: q.format,
         paper_style: null, command_term: q.command_term, marks: q.marks, prompt: q.prompt,
-        data: JSON.stringify({ ...q, concepts: (q.concepts ?? []).filter((c) => conceptExists.get(c)) }),
+        data: JSON.stringify({ ...q, concepts: (q.concepts ?? []).filter((c) => conceptIds.has(c)) }),
         source: "unit-test", approved_by_tutor: 1,
       });
-      db.prepare("DELETE FROM question_concepts WHERE question_id = ?").run(q.id);
+      await db.run("DELETE FROM question_concepts WHERE question_id = ?", q.id);
       for (const c of q.concepts ?? []) {
-        if (conceptExists.get(c)) db.prepare("INSERT OR IGNORE INTO question_concepts (question_id, concept_id) VALUES (?, ?)").run(q.id, c);
+        if (conceptIds.has(c)) await db.run("INSERT INTO question_concepts (question_id, concept_id) VALUES (?, ?) ON CONFLICT DO NOTHING", q.id, c);
       }
       n++;
     }
     // Preset set: helper off, like a test. Filled once; Jin's later edits are kept.
     const setId = `preset-unit-${String(pack.unit).padStart(2, "0")}`;
-    const filled = db.prepare("SELECT 1 FROM set_items WHERE set_id = ?").get(setId);
-    db.prepare(
-      `INSERT INTO sets (id, title, mode, helper, created_by, preset) VALUES (?, ?, 'assigned', 'off', 'tutor-jin', 'unit-test')
-       ON CONFLICT(id) DO UPDATE SET preset = 'unit-test'`,
-    ).run(setId, `Unit ${pack.unit} test: ${u.title}`.slice(0, 100));
+    const filled = await db.one("SELECT 1 FROM set_items WHERE set_id = ?", setId);
+    await db.run(`INSERT INTO sets (id, title, mode, helper, created_by, preset) VALUES (?, ?, 'assigned', 'off', 'tutor-jin', 'unit-test')
+       ON CONFLICT(id) DO UPDATE SET preset = 'unit-test'`, setId, `Unit ${pack.unit} test: ${u.title}`.slice(0, 100));
     if (!filled) {
-      pack.questions.forEach((q, i) => db.prepare("INSERT INTO set_items (set_id, position, question_id) VALUES (?, ?, ?)").run(setId, i + 1, q.id));
+      for (const [i, q] of pack.questions.entries()) {
+        await db.run("INSERT INTO set_items (set_id, position, question_id) VALUES (?, ?, ?)", setId, i + 1, q.id);
+      }
     }
   }
   console.log(`Unit test questions loaded: ${n}`);
 }
 
-if (process.argv.includes("--reset")) {
-  for (const suffix of ["", "-wal", "-shm"]) fs.rmSync(DB_PATH + suffix, { force: true });
-  console.log(`Deleted ${path.relative(ROOT, DB_PATH)}`);
+// ---------- past-paper figures ----------
+
+async function uploadFigures() {
+  const root = path.join(ROOT, "data", "past-papers", "img");
+  if (!fs.existsSync(root)) return;
+  const storage = createStorageClient();
+  await storage.ensureBucket();
+  const files = fs.readdirSync(root, { recursive: true, withFileTypes: true }).filter((f) => f.isFile() && f.name.endsWith(".png"));
+  let n = 0;
+  for (const f of files) {
+    const rel = path.relative(root, path.join(f.parentPath, f.name)).split(path.sep).join("/");
+    if (await storage.put(`past-img/${rel}`, fs.readFileSync(path.join(f.parentPath, f.name)), "image/png")) n++;
+  }
+  console.log(`Past-paper figures in ${storage.where}: ${files.length} (${n} uploaded)`);
 }
-const db = openDb();
-db.transaction(() => seed(db))();
-db.close();
-console.log(`Seeded ${path.relative(ROOT, DB_PATH)}`);
+
+async function main() {
+  loadEnv();
+  if (process.argv.includes("--reset")) {
+    if (process.env.DATABASE_URL && process.env.ONSIDE_DB !== "local") {
+      throw new Error("db:reset only deletes the local database. It never touches Supabase.");
+    }
+    fs.rmSync(PGLITE_DIR, { recursive: true, force: true });
+    console.log(`Deleted ${path.relative(ROOT, PGLITE_DIR)}`);
+  }
+  const db = await openDb({ migrate: true });
+  console.log(`Database: ${db.kind === "postgres" ? "Supabase (DATABASE_URL)" : path.relative(ROOT, PGLITE_DIR)}`);
+  await db.tx((t) => seed(t));
+  await db.close();
+  await uploadFigures();
+  console.log("Seeded.");
+}
+
+main().catch((e) => {
+  console.error(e);
+  process.exit(1);
+});

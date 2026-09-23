@@ -21,10 +21,10 @@ export default async function ConceptBoardPage({ params, searchParams }: PagePro
   const user = await requireUser("tutor");
   const { id } = await params;
   const { show } = (await searchParams) as { show?: string };
-  const student = getStudent(id);
+  const student = await getStudent(id);
   if (!student) notFound();
   const filter = FILTERS.find((f) => f.key === show)?.key ?? "all";
-  const board = conceptBoard(id);
+  const board = await conceptBoard(id);
   const keep = (r: BoardRow) => filter === "all" || r.status === filter;
   const units = board.units.map((u) => ({ ...u, shown: u.rows.filter(keep) })).filter((u) => u.shown.length > 0);
   const total = board.counts.needs + board.counts.shaky + board.counts.solid;

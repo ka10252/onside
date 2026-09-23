@@ -15,12 +15,12 @@ import { unitTestProgress } from "@/lib/unit-progress";
 export default async function StudentPage({ params }: PageProps<"/tutor/students/[id]">) {
   const user = await requireUser("tutor");
   const { id } = await params;
-  const student = getStudent(id);
+  const student = await getStudent(id);
   if (!student) notFound();
-  const assignments = assignmentsForStudent(id);
-  const progress = unitTestProgress(id);
+  const assignments = await assignmentsForStudent(id);
+  const progress = await unitTestProgress(id);
   const assignedSetIds = new Set(assignments.map((a) => a.set_id));
-  const sets = listSets()
+  const sets = (await listSets())
     .filter((s) => !s.review_of)
     .map((s) => ({
     id: s.id,

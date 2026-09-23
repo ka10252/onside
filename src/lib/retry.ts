@@ -2,7 +2,7 @@ import "server-only";
 import { bankQuestions, type BankQuestion } from "./admin";
 import { sameQuestionKey, skillOf } from "./bank-filter";
 import { isPast, type Question } from "./content";
-import { db } from "./db";
+import { all } from "./db";
 import { loadReview } from "./review";
 
 // Review quiz: every question the student lost marks on, needed help with, or left blank
@@ -20,22 +20,23 @@ export type Proposal = {
   candidates: BankQuestion[];
 };
 
-function seenBy(studentId: string): Set<string> {
-  return new Set(
-    (db().prepare("SELECT DISTINCT question_id FROM responses WHERE student_id = ?").all(studentId) as { question_id: string }[]).map(
-      (r) => r.question_id,
-    ),
-  );
-}
-
-export function proposals(assignmentId: string): Proposal[] {
-  const rv = loadReview(assignmentId);
+export async function proposals(assignmentId: string): Promise<Proposal[]> {
+  const rv = await loadReview(assignmentId);
   if (!rv) return [];
-  const seen = seenBy(rv.a.student_id);
-  const bank = bankQuestions();
+  const [seenRows, bank, links, units] = await Promise.all([
+    all<{ question_id: string }>("SELECT DISTINCT question_id FROM responses WHERE student_id = ?", rv.a.student_id),
+    bankQuestions(),
+    all<{ question_id: string; concept_id: string }>("SELECT question_id, concept_id FROM question_concepts"),
+    all<{ id: string; number: number }>(
+      "SELECT q.id, u.number FROM set_items i JOIN questions q ON q.id = i.question_id JOIN units u ON u.id = q.unit_id WHERE i.set_id = ?",
+      rv.a.set_id,
+    ),
+  ]);
+  const seen = new Set(seenRows.map((r) => r.question_id));
   const byId = new Map(bank.map((q) => [q.id, q]));
-  const conceptsOf = db().prepare("SELECT question_id FROM question_concepts WHERE concept_id = ?");
-  const unitOf = db().prepare("SELECT u.number FROM questions q JOIN units u ON u.id = q.unit_id WHERE q.id = ?");
+  const byConcept = new Map<string, string[]>();
+  for (const l of links) byConcept.set(l.concept_id, [...(byConcept.get(l.concept_id) ?? []), l.question_id]);
+  const unitOf = new Map(units.map((u) => [u.id, u.number]));
   const taken = new Set<string>();
 
   const out: Proposal[] = [];
@@ -56,13 +57,13 @@ export function proposals(assignmentId: string): Proposal[] {
     const q = it.q as Question;
     const self = byId.get(q.id);
     const skill = self ? skillOf(self) : null;
-    const unit = (unitOf.get(q.id) as { number: number } | undefined)?.number ?? 0;
+    const unit = unitOf.get(q.id) ?? 0;
     const pool = new Map<string, number>(); // id -> rank (lower is better)
     const add = (qs: BankQuestion[], rank: number) => {
       for (const c of qs) if (!pool.has(c.id)) pool.set(c.id, rank);
     };
     if (!isPast(q) && q.concepts.length) {
-      const ids = new Set(q.concepts.flatMap((c) => (conceptsOf.all(c) as { question_id: string }[]).map((r) => r.question_id)));
+      const ids = new Set(q.concepts.flatMap((c) => byConcept.get(c) ?? []));
       add(bank.filter((c) => ids.has(c.id)), 0);
     }
     if (q.section) {

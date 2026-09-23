@@ -13,12 +13,12 @@ import { requireUser } from "@/lib/session";
 export default async function SetPage({ params }: PageProps<"/tutor/sets/[id]">) {
   const user = await requireUser("tutor");
   const { id } = await params;
-  const set = getSet(id);
+  const set = await getSet(id);
   if (!set) notFound();
-  const locked = setIsLocked(id);
-  const assignments = assignmentsForSet(id);
+  const locked = await setIsLocked(id);
+  const assignments = await assignmentsForSet(id);
   const sentTo = new Set(assignments.map((a) => a.student_id));
-  const students = listStudents()
+  const students = (await listStudents())
     .filter((s) => !s.archived_at)
     .map((s) => ({
       id: s.id,

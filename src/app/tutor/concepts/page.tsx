@@ -8,7 +8,7 @@ import { requireUser } from "@/lib/session";
 // With one student this goes straight to their board.
 export default async function ConceptsTab() {
   const user = await requireUser("tutor");
-  const students = listStudents().filter((s) => !s.archived_at);
+  const students = (await listStudents()).filter((s) => !s.archived_at);
   if (students.length === 1) redirect(`/tutor/students/${students[0]!.id}/concepts`);
   return (
     <>

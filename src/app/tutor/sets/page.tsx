@@ -5,7 +5,7 @@ import { requireUser } from "@/lib/session";
 
 export default async function SetsPage() {
   const user = await requireUser("tutor");
-  const all = listSets();
+  const all = await listSets();
   const own = all.filter((s) => !s.preset);
   const presets = all.filter((s) => s.preset);
 

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Nav, STUDENT_TABS } from "@/components/Nav";
 import { formatDue } from "@/components/StatusPill";
-import { db } from "@/lib/db";
+import { all } from "@/lib/db";
 import { loadReview } from "@/lib/review";
 import { requireUser } from "@/lib/session";
 import { closeExpiredAssignments, hasAnswerSql } from "@/lib/student";
@@ -24,16 +24,15 @@ const today = () => new Date().toISOString().slice(0, 10);
 
 export default async function AssignmentsPage() {
   const user = await requireUser("student");
-  closeExpiredAssignments();
-  const rows = db()
-    .prepare(
+  await closeExpiredAssignments();
+  const rows = await all<Row>(
       `SELECT a.id, s.title, a.status, a.due_at, a.assigned_at, a.submitted_at, s.helper, s.time_limit_min,
               (SELECT COUNT(*) FROM set_items i WHERE i.set_id = s.id) AS total,
               (SELECT COUNT(*) FROM responses r WHERE r.assignment_id = a.id AND ${hasAnswerSql()}) AS answered
          FROM assignments a JOIN sets s ON s.id = a.set_id
         WHERE a.student_id = ?`,
-    )
-    .all(user.id) as Row[];
+    user.id,
+  );
 
   const todo = rows
     .filter((r) => r.status === "not_started" || r.status === "in_progress")
@@ -41,6 +40,9 @@ export default async function AssignmentsPage() {
   const done = rows
     .filter((r) => r.status === "submitted" || r.status === "reviewed")
     .sort((a, b) => (b.submitted_at ?? "").localeCompare(a.submitted_at ?? ""));
+  const reviews = new Map(
+    await Promise.all(done.filter((r) => r.status === "reviewed").map(async (r) => [r.id, await loadReview(r.id)] as const)),
+  );
 
   return (
     <>
@@ -101,7 +103,7 @@ export default async function AssignmentsPage() {
             ) : (
               <div className="alist">
                 {done.map((r) => {
-                  const rv = r.status === "reviewed" ? loadReview(r.id) : null;
+                  const rv = reviews.get(r.id) ?? null;
                   return (
                     <Link key={r.id} href={`/student/a/${r.id}/done`} className="card acard clickable" style={{ color: "inherit", textDecoration: "none" }}>
                       <div>

@@ -12,7 +12,7 @@ export default async function NewSetPage({ searchParams }: PageProps<"/tutor/set
   const user = await requireUser("tutor");
   const sp = await searchParams;
   const list = (v: string | string[] | undefined) => (v === undefined ? [] : Array.isArray(v) ? v : [v]);
-  const students = listStudents()
+  const students = (await listStudents())
     .filter((s) => !s.archived_at)
     .map((s) => ({ id: s.id, name: s.name }));
   const studentId = list(sp.student)[0];
@@ -34,7 +34,7 @@ export default async function NewSetPage({ searchParams }: PageProps<"/tutor/set
               <h1>New set</h1>
             </div>
           </div>
-          <SetBuilder questions={bankQuestions()} parts={bankParts()} students={students} start={start} />
+          <SetBuilder questions={await bankQuestions()} parts={await bankParts()} students={students} start={start} />
         </div>
       </main>
     </>

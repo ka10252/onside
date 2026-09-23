@@ -1,7 +1,7 @@
 import "server-only";
 import { randomBytes } from "node:crypto";
 import { isPast, pastContext, tableBlock, type Block, type Format, type Question } from "./content";
-import { db, json } from "./db";
+import { all, json, one, run, tx } from "./db";
 import { queueMarking } from "./ai/marking";
 import { hasAnswer } from "./answered";
 import { checkCalculation, HELPER_LOCK_MS, scoreChain } from "./grading";
@@ -21,27 +21,26 @@ export type AssignmentInfo = {
   time_limit_min: number | null;
 };
 
-export function getAssignment(id: string, studentId: string): AssignmentInfo | null {
-  closeExpiredAssignments();
+export async function getAssignment(id: string, studentId: string): Promise<AssignmentInfo | null> {
+  await closeExpiredAssignments();
   return (
-    (db()
-      .prepare(
-        `SELECT a.id, a.set_id, a.student_id, a.status, a.due_at, a.started_at, a.submitted_at,
-                s.title, s.helper, s.time_limit_min
-           FROM assignments a JOIN sets s ON s.id = a.set_id
-          WHERE a.id = ? AND a.student_id = ?`,
-      )
-      .get(id, studentId) as AssignmentInfo | undefined) ?? null
+    (await one<AssignmentInfo>(
+      `SELECT a.id, a.set_id, a.student_id, a.status, a.due_at, a.started_at, a.submitted_at,
+              s.title, s.helper, s.time_limit_min
+         FROM assignments a JOIN sets s ON s.id = a.set_id
+        WHERE a.id = ? AND a.student_id = ?`,
+      id,
+      studentId,
+    )) ?? null
   );
 }
 
-export function setQuestions(setId: string): Question[] {
+export async function setQuestions(setId: string): Promise<Question[]> {
   return (
-    db()
-      .prepare(
-        "SELECT q.data FROM set_items i JOIN questions q ON q.id = i.question_id WHERE i.set_id = ? ORDER BY i.position",
-      )
-      .all(setId) as { data: string }[]
+    await all<{ data: string }>(
+      "SELECT q.data FROM set_items i JOIN questions q ON q.id = i.question_id WHERE i.set_id = ? ORDER BY i.position",
+      setId,
+    )
   ).map((r) => JSON.parse(r.data) as Question);
 }
 
@@ -90,47 +89,56 @@ export function gradeAuto(q: Question, answers: string[]): { value: string; corr
  * Submits an assignment: every answered question is submitted as it is, auto-marked formats are
  * checked once, then AI marking starts. Used by the student's Submit button and when a timed set runs out.
  */
-export function finalizeAssignment(assignmentId: string) {
+export async function finalizeAssignment(assignmentId: string) {
   const now = new Date().toISOString();
-  const changed = db().transaction(() => {
-    const rows = db()
-      .prepare(
-        `SELECT r.*, q.data AS qdata FROM responses r JOIN questions q ON q.id = r.question_id
-          WHERE r.assignment_id = ? AND r.submitted_at IS NULL`,
-      )
-      .all(assignmentId) as (ResponseRow & { qdata: string })[];
-    const setAuto = db().prepare("UPDATE responses SET attempts = ?, auto_correct = ?, auto_marks = ? WHERE id = ?");
-    const submit = db().prepare("UPDATE responses SET submitted_at = ? WHERE id = ?");
-    const event = db().prepare("INSERT INTO events (response_id, type, data) VALUES (?, ?, ?)");
+  const changed = await tx(async (q) => {
+    // Claim the assignment first so two submits never mark twice.
+    const claimed = await q.run(
+      "UPDATE assignments SET status = 'submitted', submitted_at = ? WHERE id = ? AND status IN ('not_started', 'in_progress')",
+      now,
+      assignmentId,
+    );
+    if (!claimed) return 0;
+    const rows = await q.all<ResponseRow & { qdata: string }>(
+      `SELECT r.*, q.data AS qdata FROM responses r JOIN questions q ON q.id = r.question_id
+        WHERE r.assignment_id = ? AND r.submitted_at IS NULL`,
+      assignmentId,
+    );
+    const event = (id: string, type: string, data: object) =>
+      q.run("INSERT INTO events (response_id, type, data) VALUES (?, ?, ?)", id, type, JSON.stringify(data));
     for (const r of rows) {
       if (!hasAnswer(r)) continue;
-      const q = JSON.parse(r.qdata) as Question;
+      const question = JSON.parse(r.qdata) as Question;
       const answers = json.parse<string[]>(r.answers, []);
-      const g = answers.length ? gradeAuto(q, answers) : null;
+      const g = answers.length ? gradeAuto(question, answers) : null;
       if (g) {
-        setAuto.run(JSON.stringify([{ value: g.value, at: now, correct: g.correct }]), g.correct ? 1 : 0, g.marks, r.id);
-        event.run(r.id, "attempt", JSON.stringify({ value: g.value, correct: g.correct, n: 1, ...(g.misconception ? { misconception: g.misconception } : {}) }));
+        await q.run(
+          "UPDATE responses SET attempts = ?, auto_correct = ?, auto_marks = ? WHERE id = ?",
+          JSON.stringify([{ value: g.value, at: now, correct: g.correct }]),
+          g.correct ? 1 : 0,
+          g.marks,
+          r.id,
+        );
+        await event(r.id, "attempt", { value: g.value, correct: g.correct, n: 1, ...(g.misconception ? { misconception: g.misconception } : {}) });
       }
-      submit.run(now, r.id);
-      event.run(r.id, "submit", JSON.stringify({ chars: (r.final_text ?? "").length }));
+      await q.run("UPDATE responses SET submitted_at = ? WHERE id = ?", now, r.id);
+      await event(r.id, "submit", { chars: (r.final_text ?? "").length });
     }
-    return db()
-      .prepare("UPDATE assignments SET status = 'submitted', submitted_at = ? WHERE id = ? AND status IN ('not_started', 'in_progress')")
-      .run(now, assignmentId).changes;
-  })();
+    return claimed;
+  });
   if (changed) queueMarking(assignmentId);
 }
 
 /** Closes timed sets whose time (plus grace) is over, even if the student closed the tab. */
-export function closeExpiredAssignments() {
-  const rows = db()
-    .prepare(
-      `SELECT a.id FROM assignments a JOIN sets s ON s.id = a.set_id
-        WHERE a.status = 'in_progress' AND s.helper = 'off' AND s.time_limit_min IS NOT NULL AND a.started_at IS NOT NULL
-          AND strftime('%s', 'now') * 1000 > strftime('%s', a.started_at) * 1000 + s.time_limit_min * 60000 + ?`,
-    )
-    .all(GRACE_MS * 2) as { id: string }[];
-  for (const r of rows) finalizeAssignment(r.id);
+export async function closeExpiredAssignments() {
+  const rows = await all<{ id: string; started_at: string; time_limit_min: number }>(
+    `SELECT a.id, a.started_at, s.time_limit_min FROM assignments a JOIN sets s ON s.id = a.set_id
+      WHERE a.status = 'in_progress' AND s.helper = 'off' AND s.time_limit_min IS NOT NULL AND a.started_at IS NOT NULL`,
+  );
+  const now = Date.now();
+  for (const r of rows) {
+    if (now > new Date(r.started_at).getTime() + r.time_limit_min * 60_000 + GRACE_MS * 2) await finalizeAssignment(r.id);
+  }
 }
 
 export type ResponseRow = {
@@ -151,53 +159,52 @@ export type ResponseRow = {
   submitted_at: string | null;
 };
 
-export function startAssignment(a: AssignmentInfo) {
+export async function startAssignment(a: AssignmentInfo) {
   if (a.status === "not_started") {
-    db()
-      .prepare("UPDATE assignments SET status = 'in_progress', started_at = ? WHERE id = ? AND status = 'not_started'")
-      .run(new Date().toISOString(), a.id);
+    const now = new Date().toISOString();
+    await run("UPDATE assignments SET status = 'in_progress', started_at = ? WHERE id = ? AND status = 'not_started'", now, a.id);
     a.status = "in_progress";
-    a.started_at = new Date().toISOString();
+    a.started_at = now;
   }
 }
 
-export function ensureResponse(a: AssignmentInfo, q: Question, position: number): ResponseRow {
-  const existing = db()
-    .prepare("SELECT * FROM responses WHERE assignment_id = ? AND question_id = ?")
-    .get(a.id, q.id) as ResponseRow | undefined;
+export async function ensureResponse(a: AssignmentInfo, q: Question, position: number): Promise<ResponseRow> {
+  const existing = await one<ResponseRow>("SELECT * FROM responses WHERE assignment_id = ? AND question_id = ?", a.id, q.id);
   if (existing) {
     if (!existing.first_viewed_at) {
       // a row the tutor created while marking: start the Helper lock now
-      db().prepare("UPDATE responses SET first_viewed_at = ? WHERE id = ?").run(new Date().toISOString(), existing.id);
       existing.first_viewed_at = new Date().toISOString();
+      await run("UPDATE responses SET first_viewed_at = ? WHERE id = ?", existing.first_viewed_at, existing.id);
     }
     return existing;
   }
   const id = `rsp_${randomBytes(6).toString("hex")}`;
   const now = new Date().toISOString();
-  const made = db()
-    .prepare(
-      `INSERT INTO responses (id, assignment_id, student_id, question_id, mode, first_viewed_at, position)
-       VALUES (?, ?, ?, ?, 'assigned', ?, ?) ON CONFLICT (assignment_id, question_id) DO NOTHING`,
-    )
-    .run(id, a.id, a.student_id, q.id, now, position).changes;
-  if (made) db().prepare("INSERT INTO events (response_id, type, data) VALUES (?, 'view', '{}')").run(id);
-  return db().prepare("SELECT * FROM responses WHERE assignment_id = ? AND question_id = ?").get(a.id, q.id) as ResponseRow;
+  const made = await run(
+    `INSERT INTO responses (id, assignment_id, student_id, question_id, mode, first_viewed_at, position)
+     VALUES (?, ?, ?, ?, 'assigned', ?, ?) ON CONFLICT (assignment_id, question_id) DO NOTHING`,
+    id,
+    a.id,
+    a.student_id,
+    q.id,
+    now,
+    position,
+  );
+  if (made) await run("INSERT INTO events (response_id, type, data) VALUES (?, 'view', '{}')", id);
+  return (await one<ResponseRow>("SELECT * FROM responses WHERE assignment_id = ? AND question_id = ?", a.id, q.id))!;
 }
 
-export function responsesFor(assignmentId: string): Map<string, ResponseRow> {
-  const rows = db().prepare("SELECT * FROM responses WHERE assignment_id = ?").all(assignmentId) as ResponseRow[];
+export async function responsesFor(assignmentId: string): Promise<Map<string, ResponseRow>> {
+  const rows = await all<ResponseRow>("SELECT * FROM responses WHERE assignment_id = ?", assignmentId);
   return new Map(rows.map((r) => [r.question_id, r]));
 }
 
 /** Loads a response the signed-in student owns, with its assignment and question. */
-export function ownedResponse(responseId: string, studentId: string) {
-  const r = db()
-    .prepare("SELECT * FROM responses WHERE id = ? AND student_id = ?")
-    .get(responseId, studentId) as ResponseRow | undefined;
+export async function ownedResponse(responseId: string, studentId: string) {
+  const r = await one<ResponseRow>("SELECT * FROM responses WHERE id = ? AND student_id = ?", responseId, studentId);
   if (!r) return null;
-  const a = getAssignment(r.assignment_id, studentId);
-  const qrow = db().prepare("SELECT data FROM questions WHERE id = ?").get(r.question_id) as { data: string } | undefined;
+  const a = await getAssignment(r.assignment_id, studentId);
+  const qrow = await one<{ data: string }>("SELECT data FROM questions WHERE id = ?", r.question_id);
   if (!a || !qrow) return null;
   return { r, a, q: JSON.parse(qrow.data) as Question };
 }
@@ -245,7 +252,7 @@ function seededShuffle<T>(xs: T[], seed: string): T[] {
 }
 
 /** `seed` (the response id) keeps the step order stable for one student. */
-export function studentView(q: Question, seed = ""): StudentQuestion {
+export async function studentView(q: Question, seed = ""): Promise<StudentQuestion> {
   const base = {
     id: q.id,
     format: q.format,
@@ -258,7 +265,7 @@ export function studentView(q: Question, seed = ""): StudentQuestion {
     return {
       ...base,
       label: q.past.label,
-      context: pastContext(q.past.paper, q.past.question),
+      context: await pastContext(q.past.paper, q.past.question),
       lead: q.past.lead,
       mode: "written",
       planPrompts: q.format === "essay" ? DEFAULT_PLAN_PROMPTS : undefined,
@@ -305,11 +312,12 @@ export type StudentResponse = {
   unlockAt: number;
 };
 
-export function studentResponse(r: ResponseRow, q: Question): StudentResponse {
+export async function studentResponse(r: ResponseRow, q: Question): Promise<StudentResponse> {
   const hints = hintsFor(q);
-  const events = db()
-    .prepare("SELECT type, data FROM events WHERE response_id = ? AND type IN ('ai_message_student', 'ai_message_helper', 'hint_open') ORDER BY id")
-    .all(r.id) as { type: string; data: string }[];
+  const events = await all<{ type: string; data: string }>(
+    "SELECT type, data FROM events WHERE response_id = ? AND type IN ('ai_message_student', 'ai_message_helper', 'hint_open') ORDER BY id",
+    r.id,
+  );
   const chat: ChatMsg[] = events.map((e) => {
     const d = json.parse<{ text?: string; level?: number }>(e.data, {});
     if (e.type === "hint_open") return { who: "marker", text: `Hint ${d.level} opened` };

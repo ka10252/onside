@@ -17,7 +17,7 @@ export default async function UnitPage({ params, searchParams }: PageProps<"/tut
   const user = await requireUser("tutor");
   const { unit: unitParam } = await params;
   const { paper = "all", level = "all" } = (await searchParams) as { paper?: string; level?: string };
-  const data = getUnit(Number(unitParam));
+  const data = await getUnit(Number(unitParam));
   if (!data) notFound();
   const { unit, part, sections, concepts, questions, pastQuestions, checklists, corrections } = data;
   const past = pastQuestions.filter(
@@ -25,11 +25,15 @@ export default async function UnitPage({ params, searchParams }: PageProps<"/tut
       (paper === "all" || q.paper_style?.startsWith(`P${paper}`)) &&
       (level === "all" || (level === "HL" ? !q.past.paper.includes("-SL") : q.past.paper.includes("SL"))),
   );
-  const contexts = new Map<string, Block[]>();
-  for (const q of past) {
-    const key = `${q.past.paper}|${q.past.question}`;
-    if (!contexts.has(key)) contexts.set(key, pastContext(q.past.paper, q.past.question));
-  }
+  const keys = [...new Set(past.map((q) => `${q.past.paper}|${q.past.question}`))];
+  const contexts = new Map<string, Block[]>(
+    await Promise.all(
+      keys.map(async (key) => {
+        const [paper, question] = key.split("|") as [string, string];
+        return [key, await pastContext(paper, question)] as const;
+      }),
+    ),
+  );
   const href = (p: string, l: string) => `/tutor/bank/${unit.number}?paper=${p}&level=${l}#past`;
   const conceptMap = new Map(concepts.map((c) => [c.id, c]));
   const checklistMap = new Map(checklists.map((c) => [c.id, c]));

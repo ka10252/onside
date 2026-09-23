@@ -8,9 +8,9 @@ import { requireUser } from "@/lib/session";
 export default async function EditSetPage({ params }: PageProps<"/tutor/sets/[id]/edit">) {
   const user = await requireUser("tutor");
   const { id } = await params;
-  const set = getSet(id);
+  const set = await getSet(id);
   if (!set) notFound();
-  if (setIsLocked(id)) redirect(`/tutor/sets/${id}`);
+  if (await setIsLocked(id)) redirect(`/tutor/sets/${id}`);
 
   return (
     <>
@@ -24,8 +24,8 @@ export default async function EditSetPage({ params }: PageProps<"/tutor/sets/[id
             </div>
           </div>
           <SetBuilder
-            questions={bankQuestions()}
-            parts={bankParts()}
+            questions={await bankQuestions()}
+            parts={await bankParts()}
             initial={{
               id,
               title: set.title,

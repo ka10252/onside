@@ -11,9 +11,13 @@ import { requireUser } from "@/lib/session";
 
 export default async function StudentsPage() {
   const user = await requireUser("tutor");
-  const all = listStudents();
+  const all = await listStudents();
   const rows = all.filter((r) => !r.archived_at);
   const archived = all.filter((r) => r.archived_at);
+  const [summaries, boards] = await Promise.all([
+    Promise.all(rows.map((r) => latestSummary(r.id))),
+    Promise.all(rows.map((r) => conceptBoard(r.id))),
+  ]);
   const needReview = rows.reduce((n, r) => n + r.pending_review, 0);
 
   return (
@@ -51,9 +55,9 @@ export default async function StudentsPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {rows.map((r) => {
-                    const sum = latestSummary(r.id);
-                    const board = conceptBoard(r.id).counts;
+                  {rows.map((r, i) => {
+                    const sum = summaries[i]!;
+                    const board = boards[i]!.counts;
                     const tested = board.needs + board.shaky + board.solid;
                     return (
                     <tr key={r.id} className="hov">

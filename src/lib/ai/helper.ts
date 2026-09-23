@@ -49,9 +49,9 @@ export function referenceFor(q: Question): string {
   }
 }
 
-function questionText(q: Question): string {
+function questionText(q: Question, context: Block[]): string {
   if (isPast(q)) {
-    const ctx = blocksText(pastContext(q.past.paper, q.past.question)).slice(0, 3500);
+    const ctx = blocksText(context).slice(0, 3500);
     return `${ctx ? `Extracts and data:\n${ctx}\n\n` : ""}${q.past.lead.length ? `${blocksText(q.past.lead)}\n` : ""}${q.prompt}`;
   }
   const opts = q.format === "mcq" ? `\nOptions:\n${q.options.map((o) => `${o.id.toUpperCase()}. ${o.text}`).join("\n")}` : "";
@@ -68,7 +68,7 @@ export type HelperInput = {
   message: string;
 };
 
-function systemPrompt({ q, hints, hintLevel, working }: HelperInput): string {
+function systemPrompt({ q, hints, hintLevel, working }: HelperInput, context: Block[]): string {
   const opened = hints ? hints.slice(0, hintLevel) : [];
   const next =
     hints && hintLevel < 2
@@ -83,7 +83,7 @@ Rules:
 - Stay on this question. If asked about something else, say you can only help with this question.
 - If a hint is open and the student says they don't understand it, rephrase that hint more simply without adding new content.
 Question (${q.format}; command term: ${q.command_term}; marks: ${q.marks}):
-${questionText(q)}
+${questionText(q, context)}
 Hints opened: ${hintLevel}${opened.length ? `\n${opened.map((h, i) => `Hint ${i + 1}: ${h}`).join("\n")}` : ""}
 Reference answer (NEVER reveal, confirm or paraphrase): ${referenceFor(q)}
 Student's current working (may be empty): ${working.slice(0, 2000)}
@@ -128,7 +128,8 @@ export type HelperResult = { reply: string; askedForAnswer: boolean; blocked: bo
 
 export async function helperReply(input: HelperInput): Promise<HelperResult> {
   const turns: ChatTurn[] = [...input.history, { role: "user", text: input.message }];
-  const system = systemPrompt(input);
+  const context = isPast(input.q) ? await pastContext(input.q.past.paper, input.q.past.question) : [];
+  const system = systemPrompt(input, context);
   let res = await generateJson({ task: "helper", system, turns, temperature: 0.3 }, isHelperJson);
   for (let attempt = 0; attempt < 2; attempt++) {
     const check = await leakCheck(input.q, res.reply);

@@ -1,5 +1,5 @@
 import "server-only";
-import { db } from "./db";
+import { all } from "./db";
 import { loadReview } from "./review";
 import { conceptStatus, weakSpot, type ConceptRow, type ConceptStatus, type ScoredQuestion } from "./scoring";
 
@@ -29,18 +29,18 @@ type Entry = {
   sets: { assignmentId: string; title: string; date: string; qs: ScoredQuestion[]; labels: string[] }[];
 };
 
-export function conceptBoard(studentId: string) {
-  const assignments = db()
-    .prepare(
-      `SELECT id FROM assignments WHERE student_id = ? AND status = 'reviewed'
-        ORDER BY COALESCE(reviewed_at, submitted_at, assigned_at) DESC`,
-    )
-    .all(studentId) as { id: string }[];
+export async function conceptBoard(studentId: string) {
+  const assignments = await all<{ id: string }>(
+    `SELECT id FROM assignments WHERE student_id = ? AND status = 'reviewed'
+      ORDER BY COALESCE(reviewed_at, submitted_at, assigned_at) DESC`,
+    studentId,
+  );
+  const reviews = await Promise.all(assignments.map((a) => loadReview(a.id)));
 
   const entries = new Map<string, Entry>();
-  for (const { id } of assignments) {
-    const rv = loadReview(id);
+  for (const rv of reviews) {
     if (!rv) continue;
+    const id = rv.a.id;
     const date = rv.a.reviewed_at ?? rv.a.submitted_at ?? "";
     rv.scored.forEach((q, i) => {
       if (q.confirmed === null) return;
@@ -59,7 +59,7 @@ export function conceptBoard(studentId: string) {
     });
   }
 
-  const { unitOf, sectionOf } = lookups();
+  const { unitOf, sectionOf } = await lookups();
   const rows: BoardRow[] = [];
   for (const [key, e] of entries) {
     const sets = [...e.sets].reverse(); // oldest first
@@ -80,12 +80,10 @@ export function conceptBoard(studentId: string) {
   }
 
   const units = (
-    db()
-      .prepare(
-        `SELECT u.id, u.number, u.title, (SELECT COUNT(*) FROM sections x WHERE x.unit_id = u.id) AS total
-           FROM units u ORDER BY u.number`,
-      )
-      .all() as { id: string; number: number; title: string; total: number }[]
+    await all<{ id: string; number: number; title: string; total: number }>(
+      `SELECT u.id, u.number, u.title, (SELECT COUNT(*) FROM sections x WHERE x.unit_id = u.id) AS total
+         FROM units u ORDER BY u.number`,
+    )
   )
     .map((u): BoardUnit => {
       const unitRows = rows.filter((r) => r.unitId === u.id);
@@ -103,17 +101,15 @@ export function conceptBoard(studentId: string) {
   };
 }
 
-export type ConceptBoard = ReturnType<typeof conceptBoard>;
+export type ConceptBoard = Awaited<ReturnType<typeof conceptBoard>>;
 
-function lookups() {
-  const sections = new Map(
-    (db().prepare("SELECT id, unit_id FROM sections").all() as { id: string; unit_id: string }[]).map((s) => [s.id, s.unit_id]),
-  );
-  const concepts = new Map(
-    (db().prepare("SELECT id, unit_id, section_id FROM concepts").all() as { id: string; unit_id: string; section_id: string | null }[]).map(
-      (c) => [c.id, c],
-    ),
-  );
+async function lookups() {
+  const [sectionRows, conceptRows] = await Promise.all([
+    all<{ id: string; unit_id: string }>("SELECT id, unit_id FROM sections"),
+    all<{ id: string; unit_id: string; section_id: string | null }>("SELECT id, unit_id, section_id FROM concepts"),
+  ]);
+  const sections = new Map(sectionRows.map((s) => [s.id, s.unit_id]));
+  const concepts = new Map(conceptRows.map((c) => [c.id, c]));
   return {
     unitOf: (key: string) => (key.startsWith("s:") ? (sections.get(key.slice(2)) ?? "") : (concepts.get(key)?.unit_id ?? "")),
     sectionOf: (key: string) => (key.startsWith("s:") ? key.slice(2) : (concepts.get(key)?.section_id ?? "")),

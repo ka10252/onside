@@ -1,6 +1,6 @@
 import "server-only";
 import { randomBytes } from "node:crypto";
-import { db } from "../db";
+import { all, one, run } from "../db";
 import { generateJson } from "./index";
 
 /** Models sometimes return {point, marks} objects instead of strings. */
@@ -107,19 +107,18 @@ function valid(q: GenQuestion, sections: Set<string>): string | null {
 }
 
 export async function generateForUnit(unitNumber: number, count: number, formats: GenFormat[]): Promise<string[]> {
-  const unit = db().prepare("SELECT id, number, title FROM units WHERE number = ?").get(unitNumber) as
-    | { id: string; number: number; title: string }
-    | undefined;
+  const unit = await one<{ id: string; number: number; title: string }>("SELECT id, number, title FROM units WHERE number = ?", unitNumber);
   if (!unit) return [];
-  const sections = db().prepare("SELECT id, title FROM sections WHERE unit_id = ? ORDER BY sort").all(unit.id) as { id: string; title: string }[];
-  const concepts = db()
-    .prepare("SELECT term, definition FROM concepts WHERE unit_id = ? AND definition IS NOT NULL LIMIT 60")
-    .all(unit.id) as { term: string; definition: string }[];
-  const styleRefs = (
-    db()
-      .prepare("SELECT data FROM questions WHERE source = 'original' AND format IN ('mcq','short_answer','calculation') LIMIT 3")
-      .all() as { data: string }[]
-  ).map((r) => r.data);
+  const [sections, concepts, styleRows, pastRows] = await Promise.all([
+    all<{ id: string; title: string }>("SELECT id, title FROM sections WHERE unit_id = ? ORDER BY sort", unit.id),
+    all<{ term: string; definition: string }>(
+      "SELECT term, definition FROM concepts WHERE unit_id = ? AND definition IS NOT NULL ORDER BY seq LIMIT 60",
+      unit.id,
+    ),
+    all<{ data: string }>("SELECT data FROM questions WHERE source = 'original' AND format IN ('mcq','short_answer','calculation') ORDER BY seq LIMIT 3"),
+    all<{ prompt: string }>("SELECT prompt FROM questions WHERE unit_id = ? AND source = 'past'", unit.id),
+  ]);
+  const styleRefs = styleRows.map((r) => r.data);
 
   const res = await generateJson(
     {
@@ -156,12 +155,8 @@ Return JSON: {"questions": [{"format","section","command_term","marks","prompt",
   );
 
   const sectionIds = new Set(sections.map((s) => s.id));
-  const pastPrompts = (db().prepare("SELECT prompt FROM questions WHERE unit_id = ? AND source = 'past'").all(unit.id) as { prompt: string }[]).map((r) => r.prompt);
+  const pastPrompts = pastRows.map((r) => r.prompt);
   const ids: string[] = [];
-  const insert = db().prepare(
-    `INSERT INTO questions (id, unit_id, section_id, format, command_term, marks, prompt, data, source, approved_by_tutor)
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'ai', 0)`,
-  );
   for (const raw of res.questions.slice(0, count)) {
     const q = { ...raw, marking_points: Array.isArray(raw.marking_points) ? raw.marking_points.map(pointText) : raw.marking_points };
     if (valid(q, sectionIds)) continue;
@@ -202,7 +197,18 @@ Return JSON: {"questions": [{"format","section","command_term","marks","prompt",
         : {}),
       ...(q.table ? { table: { caption: q.table.caption, columns: q.table.columns.map(String), rows: q.table.rows.map((r) => r.map(String)) } } : {}),
     };
-    insert.run(id, unit.id, q.section, q.format, q.command_term, q.marks, q.prompt, JSON.stringify(data));
+    await run(
+      `INSERT INTO questions (id, unit_id, section_id, format, command_term, marks, prompt, data, source, approved_by_tutor)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'ai', 0)`,
+      id,
+      unit.id,
+      q.section,
+      q.format,
+      q.command_term,
+      q.marks,
+      q.prompt,
+      JSON.stringify(data),
+    );
     ids.push(id);
   }
   return ids;

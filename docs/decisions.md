@@ -101,3 +101,13 @@ These override HANDOFF §6 and answer §8 where they differ.
 - Each concept or section is judged on the last 3 sets with sent marks that tested it, using the rules in docs/scoring-rules.md. The Students list uses the same counts; the review page still shows the one set.
 - The board shows counts, the weak spot, a unit overview (sections not tested yet), a status filter, and per concept the last 3 sets as coloured squares linking to each review.
 - Accounts stay as they are: Jin adds the student. No sign-up page (one student).
+
+## Vercel + Supabase (2026-09-18)
+- Jin chose Vercel for hosting, with a new Supabase account for the database and files (free tiers).
+- The database moved from SQLite to Postgres. Local development and tests use an embedded Postgres (PGlite) in `data/pglite`.
+- Extracted past-paper text and figures now also live in the private Supabase database and storage bucket (needed for the hosted app). They are still never committed. Row level security blocks Supabase's public API.
+- Sign-in lockout (5 wrong passwords → 5 minutes) is stored in the database, since Vercel runs many short-lived server instances.
+- AI marking runs with `after()`; "marking in progress" is stored on the assignment. Batch results are collected when the tutor opens pages (no always-on timer).
+- The Helper's daily limit counts from midnight Singapore time.
+- Diagram photos are shrunk in the browser (≤ 2000 px JPEG) before upload because of Vercel's request size limit.
+- Steps: docs/deploy.md.

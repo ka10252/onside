@@ -3,7 +3,7 @@ import { Crumbs } from "@/components/Crumbs";
 import { Nav, TUTOR_TABS } from "@/components/Nav";
 import { ReviewBuilder } from "@/components/review/ReviewBuilder";
 import { getStudent } from "@/lib/admin";
-import { db } from "@/lib/db";
+import { all, one } from "@/lib/db";
 import { proposals } from "@/lib/retry";
 import { requireUser } from "@/lib/session";
 
@@ -11,21 +11,26 @@ export default async function ReviewQuizPage({ params, searchParams }: PageProps
   const user = await requireUser("tutor");
   const { id } = await params;
   const { from } = (await searchParams) as { from?: string };
-  const student = getStudent(id);
+  const student = await getStudent(id);
   if (!student || !from) notFound();
-  const a = db()
-    .prepare("SELECT a.id, a.status, s.title FROM assignments a JOIN sets s ON s.id = a.set_id WHERE a.id = ? AND a.student_id = ?")
-    .get(from, id) as { id: string; status: string; title: string } | undefined;
+  const a = await one<{ id: string; status: string; title: string }>(
+    "SELECT a.id, a.status, s.title FROM assignments a JOIN sets s ON s.id = a.set_id WHERE a.id = ? AND a.student_id = ?",
+    from,
+    id,
+  );
   if (!a) notFound();
   // A review quiz is built from confirmed marks, so the marks must be sent first.
   if (a.status !== "reviewed") redirect(`/tutor/students/${id}/a/${a.id}`);
-  const sent = db().prepare("SELECT created_at FROM sets WHERE review_of = ? ORDER BY created_at DESC LIMIT 1").get(a.id) as
-    | { created_at: string }
-    | undefined;
-  const formats = new Map(
-    (db().prepare("SELECT q.id, q.format FROM set_items i JOIN questions q ON q.id = i.question_id JOIN assignments a ON a.set_id = i.set_id WHERE a.id = ?").all(a.id) as { id: string; format: string }[]).map((r) => [r.id, r.format]),
-  );
-  const list = proposals(a.id).map((p) => ({ ...p, format: formats.get(p.questionId) ?? "short_answer" }));
+  const [sent, formatRows, props] = await Promise.all([
+    one<{ created_at: string }>("SELECT created_at FROM sets WHERE review_of = ? ORDER BY created_at DESC LIMIT 1", a.id),
+    all<{ id: string; format: string }>(
+      "SELECT q.id, q.format FROM set_items i JOIN questions q ON q.id = i.question_id JOIN assignments a ON a.set_id = i.set_id WHERE a.id = ?",
+      a.id,
+    ),
+    proposals(a.id),
+  ]);
+  const formats = new Map(formatRows.map((r) => [r.id, r.format]));
+  const list = props.map((p) => ({ ...p, format: formats.get(p.questionId) ?? "short_answer" }));
   const first = student.name.split(" ")[0];
 
   return (

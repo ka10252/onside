@@ -1,13 +1,11 @@
 "use server";
 
-import fs from "node:fs/promises";
-import path from "node:path";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { db } from "./db";
-import { DATA_DIR } from "./db-core";
+import { run } from "./db";
 import { HELPER_LOCK_MS, hintCap } from "./grading";
 import { requireUser } from "./session";
+import { putFile } from "./storage";
 import { finalizeAssignment, getAssignment, GRACE_MS, hintsFor, isLocked, ownedResponse } from "./student";
 
 type Fail = { error: string };
@@ -15,13 +13,13 @@ const TIME_UP: Fail = { error: "Time is up for this set." };
 
 async function load(responseId: string) {
   const user = await requireUser("student");
-  const found = ownedResponse(responseId, user.id);
+  const found = await ownedResponse(responseId, user.id);
   if (!found) throw new Error("Not found");
   return found;
 }
 
-function event(responseId: string, type: string, data: object = {}) {
-  db().prepare("INSERT INTO events (response_id, type, data) VALUES (?, ?, ?)").run(responseId, type, JSON.stringify(data));
+async function event(responseId: string, type: string, data: object = {}) {
+  await run("INSERT INTO events (response_id, type, data) VALUES (?, ?, ?)", responseId, type, JSON.stringify(data));
 }
 
 // ---------- saving answers (nothing is marked until the set is submitted) ----------
@@ -35,18 +33,25 @@ export async function saveDraft(responseId: string, draft: Draft, snapshot: bool
   if (r.submitted_at) return { error: "Already submitted." };
   const plan = draft.plan !== undefined && isBlankPlan(draft.plan) ? "" : draft.plan;
   const d = { working: clip(draft.working), finalText: clip(draft.finalText), plan: clip(plan) };
-  db()
-    .prepare(
-      `UPDATE responses SET working_text = COALESCE(?, working_text), final_text = COALESCE(?, final_text),
-              plan_text = COALESCE(?, plan_text) WHERE id = ?`,
-    )
-    .run(d.working ?? null, d.finalText ?? null, d.plan ?? null, r.id);
+  // "AND submitted_at IS NULL": a save that arrives after the set was submitted changes nothing.
+  await run(
+    `UPDATE responses SET working_text = COALESCE(?, working_text), final_text = COALESCE(?, final_text),
+            plan_text = COALESCE(?, plan_text) WHERE id = ? AND submitted_at IS NULL`,
+    d.working ?? null,
+    d.finalText ?? null,
+    d.plan ?? null,
+    r.id,
+  );
   if (draft.answers) {
     const answers = draft.answers.slice(0, 20).map((x) => String(x).slice(0, 60));
     // No answer yet (e.g. blank calculation boxes) is stored as null, so the question shows as not answered.
-    db().prepare("UPDATE responses SET answers = ? WHERE id = ?").run(answers.some((x) => x.trim()) ? JSON.stringify(answers) : null, r.id);
+    await run(
+      "UPDATE responses SET answers = ? WHERE id = ? AND submitted_at IS NULL",
+      answers.some((x) => x.trim()) ? JSON.stringify(answers) : null,
+      r.id,
+    );
   }
-  if (snapshot) event(r.id, "snapshot", { final: d.finalText ?? r.final_text ?? "", plan: d.plan ?? undefined });
+  if (snapshot) await event(r.id, "snapshot", { final: d.finalText ?? r.final_text ?? "", plan: d.plan ?? undefined });
   return { ok: true };
 }
 
@@ -70,12 +75,15 @@ export async function uploadPhoto(fd: FormData): Promise<{ ok: true } | Fail> {
   if (!(file instanceof File) || file.size === 0) return { error: "Choose a photo." };
   const ext = PHOTO_TYPES[file.type];
   if (!ext) return { error: "Use a JPG or PNG photo. On an iPhone, set Camera → Formats → Most Compatible." };
-  if (file.size > 12 * 1024 * 1024) return { error: "The photo must be under 12 MB." };
-  const rel = path.join("uploads", a.id, `${r.id}.${ext}`);
-  const abs = path.join(DATA_DIR, rel);
-  await fs.mkdir(path.dirname(abs), { recursive: true });
-  await fs.writeFile(abs, Buffer.from(await file.arrayBuffer()));
-  db().prepare("UPDATE responses SET photo_path = ? WHERE id = ?").run(rel, r.id);
+  // The browser shrinks photos first; Vercel accepts request bodies up to about 4.5 MB.
+  if (file.size > 4 * 1024 * 1024) return { error: "The photo is too large. Try a smaller photo." };
+  const key = `uploads/${a.id}/${r.id}.${ext}`;
+  try {
+    await putFile(key, Buffer.from(await file.arrayBuffer()), file.type);
+  } catch {
+    return { error: "The photo didn't upload. Try again." };
+  }
+  await run("UPDATE responses SET photo_path = ? WHERE id = ? AND submitted_at IS NULL", key, r.id);
   return { ok: true };
 }
 
@@ -90,8 +98,8 @@ export async function openHint(responseId: string, level: 1 | 2): Promise<{ hint
   if (!hints) return { error: "No hints for this question yet." };
   if (Date.now() < new Date(r.first_viewed_at ?? 0).getTime() + HELPER_LOCK_MS) return { error: "Give it a proper try first." };
   if (level !== r.hint_level + 1) return level <= r.hint_level ? { hint: hints[level - 1], cap: hintCap(r.hint_level) } : { error: "Open Hint 1 first." };
-  db().prepare("UPDATE responses SET hint_level = ? WHERE id = ?").run(level, r.id);
-  event(r.id, "hint_open", { level });
+  const changed = await run("UPDATE responses SET hint_level = ? WHERE id = ? AND hint_level = ?", level, r.id, level - 1);
+  if (changed) await event(r.id, "hint_open", { level });
   return { hint: hints[level - 1], cap: hintCap(level) };
 }
 
@@ -99,9 +107,9 @@ export async function openHint(responseId: string, level: 1 | 2): Promise<{ hint
 
 export async function submitAssignment(assignmentId: string) {
   const user = await requireUser("student");
-  const a = getAssignment(assignmentId, user.id);
+  const a = await getAssignment(assignmentId, user.id);
   if (!a) redirect("/student");
-  if (a.status === "in_progress" || a.status === "not_started") finalizeAssignment(a.id);
+  if (a.status === "in_progress" || a.status === "not_started") await finalizeAssignment(a.id);
   revalidatePath("/student");
   revalidatePath("/tutor", "layout");
   redirect(`/student/a/${a.id}/done`);

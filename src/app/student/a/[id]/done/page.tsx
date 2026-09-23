@@ -4,7 +4,7 @@ import { CheckIcon, CrossIcon } from "@/components/Icons";
 import { Nav, STUDENT_TABS } from "@/components/Nav";
 import { Blocks, Rich } from "@/components/Rich";
 import { answerText } from "@/lib/answer-text";
-import { isPast, pastContext, tableBlock, type Question } from "@/lib/content";
+import { isPast, pastContext, tableBlock, type Block, type Question } from "@/lib/content";
 import { json } from "@/lib/db";
 import { FORMAT_LABEL } from "@/lib/format";
 import { loadReview, type ReviewItem } from "@/lib/review";
@@ -17,11 +17,11 @@ import { finalizeAssignment, getAssignment, isLocked } from "@/lib/student";
 export default async function ResultsPage({ params }: PageProps<"/student/a/[id]/done">) {
   const user = await requireUser("student");
   const { id } = await params;
-  let a = getAssignment(id, user.id);
+  let a = await getAssignment(id, user.id);
   if (!a) notFound();
   if (isLocked(a) && (a.status === "in_progress" || a.status === "not_started")) {
-    finalizeAssignment(a.id); // time ran out
-    a = getAssignment(id, user.id)!;
+    await finalizeAssignment(a.id); // time ran out
+    a = (await getAssignment(id, user.id))!;
   }
   if (!isLocked(a)) {
     return (
@@ -41,7 +41,15 @@ export default async function ResultsPage({ params }: PageProps<"/student/a/[id]
     );
   }
 
-  const rv = loadReview(a.id)!;
+  const rv = (await loadReview(a.id))!;
+  const contexts = new Map(
+    await Promise.all(
+      rv.items.filter((it) => isPast(it.q)).map(async (it) => {
+        const q = it.q as Extract<Question, { past: unknown }>;
+        return [q.id, await pastContext(q.past.paper, q.past.question)] as const;
+      }),
+    ),
+  );
   const marked = a.status === "reviewed";
   const answered = rv.items.filter((it) => it.result !== "No answer" && it.result !== "Not opened").length;
 
@@ -94,7 +102,7 @@ export default async function ResultsPage({ params }: PageProps<"/student/a/[id]
 
           <div className="stack" style={{ gap: 14 }}>
             {rv.items.map((it) => (
-              <ResultCard key={it.q.id} it={it} marked={marked} />
+              <ResultCard key={it.q.id} it={it} marked={marked} context={contexts.get(it.q.id) ?? []} />
             ))}
           </div>
 
@@ -109,7 +117,7 @@ export default async function ResultsPage({ params }: PageProps<"/student/a/[id]
   );
 }
 
-function ResultCard({ it, marked }: { it: ReviewItem; marked: boolean }) {
+function ResultCard({ it, marked, context }: { it: ReviewItem; marked: boolean; context: Block[] }) {
   const { q, r } = it;
   const past = isPast(q);
   const attempts = json.parse<{ value: string; correct: boolean }[]>(r?.attempts, []);
@@ -123,7 +131,6 @@ function ResultCard({ it, marked }: { it: ReviewItem; marked: boolean }) {
       : it.result === "No answer" || it.result === "Not opened"
         ? "No answer"
         : "Waiting for marks";
-  const context = past ? pastContext(q.past.paper, q.past.question) : [];
   const hintsUsed = r?.hint_level ?? 0;
 
   return (

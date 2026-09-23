@@ -10,12 +10,12 @@ import { getAssignment, hasAnswer, isLocked, responsesFor, setQuestions } from "
 export default async function AssignmentStart({ params }: PageProps<"/student/a/[id]">) {
   const user = await requireUser("student");
   const { id } = await params;
-  const a = getAssignment(id, user.id);
+  const a = await getAssignment(id, user.id);
   if (!a) notFound();
   if (isLocked(a)) redirect(`/student/a/${id}/done`);
-  const questions = setQuestions(a.set_id);
+  const questions = await setQuestions(a.set_id);
   if (a.status === "in_progress") {
-    const responses = responsesFor(a.id);
+    const responses = await responsesFor(a.id);
     const next = questions.findIndex((q) => {
       const row = responses.get(q.id);
       return !row || !hasAnswer(row);

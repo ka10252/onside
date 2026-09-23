@@ -1,6 +1,6 @@
 import "server-only";
 import { hasAnswerSql } from "./answered";
-import { db } from "./db";
+import { all, one } from "./db";
 import type { Format } from "./content";
 
 export type AssignmentStatus = "not_started" | "in_progress" | "submitted" | "reviewed";
@@ -20,9 +20,8 @@ export type StudentRow = {
   oldest_submitted: string | null;
 };
 
-export function listStudents(): StudentRow[] {
-  return db()
-    .prepare(
+export function listStudents(): Promise<StudentRow[]> {
+  return all<StudentRow>(
       `SELECT u.id, u.name, u.subtitle, u.archived_at, u.username, s.title AS set_title, a.status,
               (SELECT COUNT(*) FROM responses r WHERE r.assignment_id = a.id AND ${hasAnswerSql()}) AS answered,
               (SELECT COUNT(*) FROM set_items i WHERE i.set_id = a.set_id) AS total,
@@ -34,19 +33,14 @@ export function listStudents(): StudentRow[] {
            SELECT id FROM assignments WHERE student_id = u.id ORDER BY assigned_at DESC LIMIT 1)
          LEFT JOIN sets s ON s.id = a.set_id
         WHERE u.role = 'student'
-        ORDER BY u.archived_at IS NOT NULL, u.name COLLATE NOCASE`,
-    )
-    .all() as StudentRow[];
+        ORDER BY u.archived_at IS NOT NULL, lower(u.name)`,
+  );
 }
 
 export type Student = { id: string; name: string; subtitle: string | null; archived_at: string | null; username: string | null };
 
-export function getStudent(id: string): Student | null {
-  return (
-    (db()
-      .prepare("SELECT id, name, subtitle, archived_at, username FROM users WHERE id = ? AND role = 'student'")
-      .get(id) as Student | undefined) ?? null
-  );
+export async function getStudent(id: string): Promise<Student | null> {
+  return (await one<Student>("SELECT id, name, subtitle, archived_at, username FROM users WHERE id = ? AND role = 'student'", id)) ?? null;
 }
 
 export type AssignmentRow = {
@@ -72,16 +66,12 @@ const ASSIGNMENT_SELECT = `
     JOIN sets s ON s.id = a.set_id
     JOIN users u ON u.id = a.student_id`;
 
-export function assignmentsForStudent(studentId: string): AssignmentRow[] {
-  return db()
-    .prepare(`${ASSIGNMENT_SELECT} WHERE a.student_id = ? ORDER BY a.assigned_at DESC`)
-    .all(studentId) as AssignmentRow[];
+export function assignmentsForStudent(studentId: string): Promise<AssignmentRow[]> {
+  return all<AssignmentRow>(`${ASSIGNMENT_SELECT} WHERE a.student_id = ? ORDER BY a.assigned_at DESC`, studentId);
 }
 
-export function assignmentsForSet(setId: string): AssignmentRow[] {
-  return db()
-    .prepare(`${ASSIGNMENT_SELECT} WHERE a.set_id = ? ORDER BY u.name COLLATE NOCASE`)
-    .all(setId) as AssignmentRow[];
+export function assignmentsForSet(setId: string): Promise<AssignmentRow[]> {
+  return all<AssignmentRow>(`${ASSIGNMENT_SELECT} WHERE a.set_id = ? ORDER BY lower(u.name)`, setId);
 }
 
 export type SetRow = {
@@ -98,9 +88,8 @@ export type SetRow = {
   review_of: string | null;
 };
 
-export function listSets(): SetRow[] {
-  return db()
-    .prepare(
+export function listSets(): Promise<SetRow[]> {
+  return all<SetRow>(
       `SELECT s.id, s.title, s.helper, s.time_limit_min, s.created_at, s.preset, s.review_of,
               (SELECT COUNT(*) FROM set_items i WHERE i.set_id = s.id) AS question_count,
               (SELECT COALESCE(SUM(q.marks), 0) FROM set_items i JOIN questions q ON q.id = i.question_id WHERE i.set_id = s.id) AS marks,
@@ -109,8 +98,7 @@ export function listSets(): SetRow[] {
          FROM sets s
         WHERE s.mode = 'assigned'
         ORDER BY s.preset IS NOT NULL, CASE WHEN s.preset IS NULL THEN s.created_at END DESC, s.id`,
-    )
-    .all() as SetRow[];
+  );
 }
 
 export type BankQuestion = {
@@ -134,47 +122,39 @@ export type BankQuestion = {
 
 const BANK_SELECT = `
   SELECT q.id, u.number AS unit_number, u.title AS unit_title, q.section_id, q.format, q.paper_style,
-         q.command_term, q.marks, q.prompt, json_extract(q.data, '$.targets') AS targets,
-         q.source, json_extract(q.data, '$.past.label') AS past_label,
+         q.command_term, q.marks, q.prompt, ((q.data::jsonb) -> 'targets')::text AS targets,
+         q.source, (q.data::jsonb) #>> '{past,label}' AS past_label,
          u.part_id, p.level, p.session, p.skill
     FROM questions q JOIN units u ON u.id = q.unit_id
     LEFT JOIN past_items p ON q.source = 'past' AND p.id = substr(q.id, 4)`;
 
-export function bankParts(): { id: string; name: string; units: { number: number; title: string }[] }[] {
-  const parts = db().prepare("SELECT id, name FROM parts ORDER BY sort").all() as { id: string; name: string }[];
-  const units = db().prepare("SELECT number, title, part_id FROM units ORDER BY number").all() as {
-    number: number;
-    title: string;
-    part_id: string;
-  }[];
+export async function bankParts(): Promise<{ id: string; name: string; units: { number: number; title: string }[] }[]> {
+  const [parts, units] = await Promise.all([
+    all<{ id: string; name: string }>("SELECT id, name FROM parts ORDER BY sort"),
+    all<{ number: number; title: string; part_id: string }>("SELECT number, title, part_id FROM units ORDER BY number"),
+  ]);
   return parts.map((p) => ({ ...p, units: units.filter((u) => u.part_id === p.id) }));
 }
 
 /** Approved questions; `withDrafts` also returns AI drafts (for the builder right after generating). */
-export function bankQuestions(withDrafts = false): BankQuestion[] {
-  return db()
-    .prepare(
-      `${BANK_SELECT} WHERE q.approved_by_tutor = 1 ${withDrafts ? "OR q.source = 'ai'" : ""}
-        ORDER BY u.number, q.source = 'past', q.rowid`,
-    )
-    .all() as BankQuestion[];
+export function bankQuestions(withDrafts = false): Promise<BankQuestion[]> {
+  return all<BankQuestion>(
+    `${BANK_SELECT} WHERE q.approved_by_tutor = 1 ${withDrafts ? "OR q.source = 'ai'" : ""}
+      ORDER BY u.number, q.source = 'past', q.seq`,
+  );
 }
 
 export type SetDetail = SetRow & { items: BankQuestion[] };
 
-export function getSet(id: string): SetDetail | null {
-  const set = listSets().find((s) => s.id === id);
+export async function getSet(id: string): Promise<SetDetail | null> {
+  const set = (await listSets()).find((s) => s.id === id);
   if (!set) return null;
-  const items = db()
-    .prepare(`${BANK_SELECT} JOIN set_items i ON i.question_id = q.id WHERE i.set_id = ? ORDER BY i.position`)
-    .all(id) as BankQuestion[];
+  const items = await all<BankQuestion>(`${BANK_SELECT} JOIN set_items i ON i.question_id = q.id WHERE i.set_id = ? ORDER BY i.position`, id);
   return { ...set, items };
 }
 
 /** A set can be edited or deleted only while nobody has started it. */
-export function setIsLocked(setId: string): boolean {
-  const row = db()
-    .prepare("SELECT COUNT(*) AS n FROM assignments WHERE set_id = ? AND status <> 'not_started'")
-    .get(setId) as { n: number };
-  return row.n > 0;
+export async function setIsLocked(setId: string): Promise<boolean> {
+  const row = await one<{ n: number }>("SELECT COUNT(*) AS n FROM assignments WHERE set_id = ? AND status <> 'not_started'", setId);
+  return (row?.n ?? 0) > 0;
 }

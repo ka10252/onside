@@ -5,7 +5,7 @@ import { requireUser } from "@/lib/session";
 
 export default async function BankPage() {
   const user = await requireUser("tutor");
-  const parts = listParts();
+  const parts = await listParts();
 
   return (
     <>

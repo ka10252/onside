@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { after } from "next/server";
 import { notFound } from "next/navigation";
 import { Blocks, Rich } from "@/components/Rich";
 import { Crumbs } from "@/components/Crumbs";
@@ -10,7 +11,7 @@ import { HelpPill, StatusBadge } from "@/components/review/StatusBadge";
 import { hasPendingBatches, isMarking, pollMarkingBatches, queueMarking } from "@/lib/ai/marking";
 import { isPast, pastContext, type Question } from "@/lib/content";
 import { ConfirmForm } from "@/components/ConfirmForm";
-import { db, json } from "@/lib/db";
+import { all, json } from "@/lib/db";
 import { FORMAT_LABEL, initials } from "@/lib/format";
 import { acceptAiMarks, markReviewed, rerunMarking } from "@/lib/review-actions";
 import { loadReview, type ReviewItem } from "@/lib/review";
@@ -21,24 +22,23 @@ import { answerText } from "@/lib/answer-text";
 export default async function ReviewPage({ params }: PageProps<"/tutor/students/[id]/a/[assignmentId]">) {
   const user = await requireUser("tutor");
   const { id, assignmentId } = await params;
-  const rv = loadReview(assignmentId);
+  const rv = await loadReview(assignmentId);
   if (!rv || rv.a.student_id !== id) notFound();
   const { a, items, score, concepts, weak, facts } = rv;
   // Written answers submitted before marking existed, or never marked: start now.
   const unmarked = items.some((it) => it.r?.submitted_at && !it.auto && it.confirmed === null && !it.aiMark);
   if (rv.closed && unmarked) queueMarking(a.id);
-  const batching = hasPendingBatches(a.id);
-  if (batching) void pollMarkingBatches().catch(() => {});
-  const marking = isMarking(a.id);
+  const batching = await hasPendingBatches(a.id);
+  if (batching) after(() => pollMarkingBatches().catch((e) => console.error("batch poll failed", e)));
+  const marking = await isMarking(a.id);
   const aiWaiting = items.filter((it) => it.confirmed === null && it.aiMark?.status === "done").length;
   const aiErrors = items.filter((it) => it.confirmed === null && it.aiMark?.status === "error").length;
   const first = a.student_name.split(" ")[0];
-  const quizzes = db()
-    .prepare(
-      `SELECT s.created_at, q.id AS assignment_id, q.status FROM sets s JOIN assignments q ON q.set_id = s.id
-        WHERE s.review_of = ? ORDER BY s.created_at`,
-    )
-    .all(a.id) as { created_at: string; assignment_id: string; status: string }[];
+  const quizzes = await all<{ created_at: string; assignment_id: string; status: string }>(
+    `SELECT s.created_at, q.id AS assignment_id, q.status FROM sets s JOIN assignments q ON q.set_id = s.id
+      WHERE s.review_of = ? ORDER BY s.created_at`,
+    a.id,
+  );
   const lastQuiz = quizzes.at(-1);
   const reviewed = a.status === "reviewed";
   const statusLabel = { not_started: "Not started", in_progress: "In progress", submitted: "Submitted", reviewed: "Reviewed" }[a.status];
@@ -448,13 +448,13 @@ function planText(plan: string) {
   }
 }
 
-function QuestionAndScheme({ q }: { q: Question }) {
+async function QuestionAndScheme({ q }: { q: Question }) {
   if (isPast(q)) {
     return (
       <div className="stack" style={{ gap: 10 }}>
         <details className="sub">
           <summary>Extracts and data</summary>
-          <Blocks blocks={pastContext(q.past.paper, q.past.question)} />
+          <Blocks blocks={await pastContext(q.past.paper, q.past.question)} />
         </details>
         {q.past.lead.length > 0 && <Blocks blocks={q.past.lead} />}
         <p className="qtext" style={{ margin: 0 }}>

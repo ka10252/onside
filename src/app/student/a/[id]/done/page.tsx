@@ -5,7 +5,7 @@ import { Nav, STUDENT_TABS } from "@/components/Nav";
 import { Blocks, Rich } from "@/components/Rich";
 import { answerText } from "@/lib/answer-text";
 import { isPast, pastContext, tableBlock, type Block, type Question } from "@/lib/content";
-import { json } from "@/lib/db";
+import { all, json } from "@/lib/db";
 import { FORMAT_LABEL } from "@/lib/format";
 import { loadReview, type ReviewItem } from "@/lib/review";
 import { pct } from "@/lib/scoring";
@@ -14,9 +14,10 @@ import { finalizeAssignment, getAssignment, isLocked } from "@/lib/student";
 
 // A finished set, for review: the student's own answers, results, and (once the tutor has sent marks)
 // marks, the tutor's comments and the answers.
-export default async function ResultsPage({ params }: PageProps<"/student/a/[id]/done">) {
+export default async function ResultsPage({ params, searchParams }: PageProps<"/student/a/[id]/done">) {
   const user = await requireUser("student");
   const { id } = await params;
+  const { show, unit } = (await searchParams) as { show?: string; unit?: string };
   let a = await getAssignment(id, user.id);
   if (!a) notFound();
   if (isLocked(a) && (a.status === "in_progress" || a.status === "not_started")) {
@@ -42,6 +43,12 @@ export default async function ResultsPage({ params }: PageProps<"/student/a/[id]
   }
 
   const rv = (await loadReview(a.id))!;
+  const unitRows = await all<{ id: string; number: number; title: string }>(
+    `SELECT q.id, u.number, u.title FROM set_items i JOIN questions q ON q.id = i.question_id JOIN units u ON u.id = q.unit_id
+      WHERE i.set_id = ? ORDER BY u.number`,
+    a.set_id,
+  );
+  const unitOf = new Map(unitRows.map((u) => [u.id, u]));
   const contexts = new Map(
     await Promise.all(
       rv.items.filter((it) => isPast(it.q)).map(async (it) => {
@@ -52,6 +59,23 @@ export default async function ResultsPage({ params }: PageProps<"/student/a/[id]
   );
   const marked = a.status === "reviewed";
   const answered = rv.items.filter((it) => it.result !== "No answer" && it.result !== "Not opened").length;
+
+  const unitPick = Number(unit) || null;
+  const units = [...new Map(unitRows.map((u) => [u.number, u])).values()];
+  const lost = (it: ReviewItem) => marked && (it.confirmed ?? 0) < it.q.marks;
+  const helped = (it: ReviewItem) => (it.r?.hint_level ?? 0) > 0 || (it.r?.ai_questions ?? 0) > 0;
+  const filters = [
+    { key: "all", label: "All questions", keep: () => true },
+    { key: "lost", label: "Lost marks", keep: lost },
+    { key: "help", label: "Used help", keep: helped },
+  ] as const;
+  const picked = filters.find((f) => f.key === show) ?? filters[0];
+  const items = rv.items.filter((it) => picked.keep(it) && (!unitPick || unitOf.get(it.q.id)?.number === unitPick));
+  const link = (k: string, u: number | null) => {
+    const q = [k === "all" ? "" : `show=${k}`, u ? `unit=${u}` : ""].filter(Boolean).join("&");
+    return `/student/a/${a.id}/done${q ? `?${q}` : ""}`;
+  };
+  const percent = rv.score.total ? Math.round((rv.score.marks / rv.score.total) * 100) : 0;
 
   return (
     <>
@@ -76,11 +100,14 @@ export default async function ResultsPage({ params }: PageProps<"/student/a/[id]
 
           {marked && (
             <section className="card hero">
-              <h2 className="headline">
-                <span>
-                  {rv.score.marks}/{rv.score.total} marks
+              <div className="resulttop">
+                <span className="bigmark">
+                  <b>{rv.score.marks}</b>
+                  <span className="of">/{rv.score.total}</span>
                 </span>
-              </h2>
+                <span className="bigpc">{percent}%</span>
+                <span className="muted">marks in this set</span>
+              </div>
               <div className="scores">
                 <div className="score ind">
                   <div>
@@ -100,10 +127,42 @@ export default async function ResultsPage({ params }: PageProps<"/student/a/[id]
             </section>
           )}
 
+          {marked && (
+            <nav className="filters" aria-label="Which questions to show">
+              {filters.map((f) => {
+                const n = rv.items.filter((it) => f.keep(it)).length;
+                return (
+                  <Link key={f.key} href={link(f.key, unitPick)} className={`chip${picked.key === f.key ? " on" : ""}`}>
+                    {f.label} · {n}
+                  </Link>
+                );
+              })}
+              {units.length > 1 && (
+                <>
+                  <span className="filtersep" aria-hidden />
+                  <Link href={link(picked.key, null)} className={`chip${unitPick ? "" : " on"}`}>
+                    All units
+                  </Link>
+                  {units.map((u) => (
+                    <Link key={u.number} href={link(picked.key, u.number)} className={`chip${unitPick === u.number ? " on" : ""}`}>
+                      Unit {u.number}
+                    </Link>
+                  ))}
+                </>
+              )}
+            </nav>
+          )}
+
           <div className="stack" style={{ gap: 14 }}>
-            {rv.items.map((it) => (
-              <ResultCard key={it.q.id} it={it} marked={marked} context={contexts.get(it.q.id) ?? []} />
-            ))}
+            {items.length === 0 ? (
+              <div className="card empty-state">
+                <p className="muted">Nothing here. Try another filter.</p>
+              </div>
+            ) : (
+              items.map((it) => (
+                <ResultCard key={it.q.id} it={it} marked={marked} context={contexts.get(it.q.id) ?? []} unit={unitOf.get(it.q.id)?.number ?? null} />
+              ))
+            )}
           </div>
 
           <div>
@@ -117,7 +176,7 @@ export default async function ResultsPage({ params }: PageProps<"/student/a/[id]
   );
 }
 
-function ResultCard({ it, marked, context }: { it: ReviewItem; marked: boolean; context: Block[] }) {
+function ResultCard({ it, marked, context, unit }: { it: ReviewItem; marked: boolean; context: Block[]; unit: number | null }) {
   const { q, r } = it;
   const past = isPast(q);
   const attempts = json.parse<{ value: string; correct: boolean }[]>(r?.attempts, []);
@@ -138,9 +197,11 @@ function ResultCard({ it, marked, context }: { it: ReviewItem; marked: boolean; 
       <summary>
         <span className="meta">
           <span className="pill gray">Q{it.n}</span>
+          {unit && <span>Unit {unit}</span>}
           {past && <span>{q.past.label}</span>}
           <span>{FORMAT_LABEL[q.format]}</span>
           <span className={`pill ${statusClass(marked, it, autoResult)}`}>{status}</span>
+          {marked && <span className="muted">of {q.marks}</span>}
           {hintsUsed > 0 && <span className="pill hl">Hint {hintsUsed === 2 ? "1 + 2" : "1"} used</span>}
         </span>
         <span className="qtext clamp">

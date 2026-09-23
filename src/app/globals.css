@@ -188,3 +188,17 @@ table.board { table-layout: fixed; min-width: 860px; }
 
 /* Shown when the page is older than the running version of the site. */
 .stalebar { position: sticky; top: 0; z-index: 60; display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; padding: 10px 16px; background: var(--ambertint); color: var(--amber); font-size: 14px; font-weight: 600; border-bottom: 1px solid var(--amber); }
+
+/* Marks on a finished assignment card */
+.acard-right { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
+.bigscore { display: flex; align-items: baseline; gap: 8px; }
+.bigscore b { font-family: var(--serif); font-size: 34px; font-weight: 400; line-height: 1; }
+.bigscore .of { font-size: 20px; color: var(--ink2); }
+.bigscore .pc { font-size: 15px; font-weight: 600; color: var(--ink2); }
+
+/* Result hero */
+.resulttop { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; }
+.bigmark b { font-family: var(--serif); font-size: 64px; font-weight: 400; line-height: 1; }
+.bigmark .of { font-family: var(--serif); font-size: 32px; color: var(--ink2); }
+.bigpc { font-size: 24px; font-weight: 700; }
+.filtersep { width: 1px; align-self: stretch; background: var(--line2); margin: 0 4px; }

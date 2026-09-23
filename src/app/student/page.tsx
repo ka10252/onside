@@ -2,7 +2,6 @@ import Link from "next/link";
 import { Nav, STUDENT_TABS } from "@/components/Nav";
 import { formatDue } from "@/components/StatusPill";
 import { all } from "@/lib/db";
-import { loadReview } from "@/lib/review";
 import { requireUser } from "@/lib/session";
 import { closeExpiredAssignments, hasAnswerSql } from "@/lib/student";
 
@@ -17,7 +16,11 @@ type Row = {
   answered: number;
   helper: "on" | "off";
   time_limit_min: number | null;
+  marks_got: number;
+  marks_total: number;
 };
+
+type UnitRow = { assignment_id: string; number: number; title: string };
 
 const shortDate = (iso: string) => new Date(iso).toLocaleDateString("en-SG", { day: "numeric", month: "short" });
 const today = () => new Date().toISOString().slice(0, 10);
@@ -25,15 +28,31 @@ const today = () => new Date().toISOString().slice(0, 10);
 export default async function AssignmentsPage({ searchParams }: PageProps<"/student">) {
   const user = await requireUser("student");
   await closeExpiredAssignments();
-  const { tab } = (await searchParams) as { tab?: string };
+  const { tab, unit } = (await searchParams) as { tab?: string; unit?: string };
   const rows = await all<Row>(
     `SELECT a.id, s.title, a.status, a.due_at, a.assigned_at, a.submitted_at, s.helper, s.time_limit_min,
             (SELECT COUNT(*) FROM set_items i WHERE i.set_id = s.id) AS total,
-            (SELECT COUNT(*) FROM responses r WHERE r.assignment_id = a.id AND ${hasAnswerSql()}) AS answered
+            (SELECT COUNT(*) FROM responses r WHERE r.assignment_id = a.id AND ${hasAnswerSql()}) AS answered,
+            (SELECT COALESCE(SUM(q.marks), 0) FROM set_items i JOIN questions q ON q.id = i.question_id WHERE i.set_id = s.id) AS marks_total,
+            (SELECT COALESCE(SUM(COALESCE((r.tutor_mark::jsonb ->> 'marks')::float, r.auto_marks, 0)), 0)
+               FROM responses r WHERE r.assignment_id = a.id) AS marks_got
        FROM assignments a JOIN sets s ON s.id = a.set_id
       WHERE a.student_id = ?`,
     user.id,
   );
+  // Units each set covers, for the filter and the labels on each card.
+  const unitRows = await all<UnitRow>(
+    `SELECT DISTINCT a.id AS assignment_id, u.number, u.title
+       FROM assignments a
+       JOIN set_items i ON i.set_id = a.set_id
+       JOIN questions q ON q.id = i.question_id
+       JOIN units u ON u.id = q.unit_id
+      WHERE a.student_id = ?
+      ORDER BY u.number`,
+    user.id,
+  );
+  const unitsOf = new Map<string, UnitRow[]>();
+  for (const u of unitRows) unitsOf.set(u.assignment_id, [...(unitsOf.get(u.assignment_id) ?? []), u]);
 
   const todo = rows
     .filter((r) => r.status === "not_started" || r.status === "in_progress")
@@ -42,10 +61,12 @@ export default async function AssignmentsPage({ searchParams }: PageProps<"/stud
     .filter((r) => r.status === "submitted" || r.status === "reviewed")
     .sort((a, b) => (b.submitted_at ?? "").localeCompare(a.submitted_at ?? ""));
   const showDone = tab === "done";
-  const list = showDone ? done : todo;
-  const reviews = new Map(
-    showDone ? await Promise.all(done.filter((r) => r.status === "reviewed").map(async (r) => [r.id, await loadReview(r.id)] as const)) : [],
-  );
+  const shown = showDone ? done : todo;
+  const unitPick = Number(unit) || null;
+  const units = [...new Map(shown.flatMap((r) => unitsOf.get(r.id) ?? []).map((u) => [u.number, u])).values()].sort((a, b) => a.number - b.number);
+  const list = unitPick ? shown.filter((r) => (unitsOf.get(r.id) ?? []).some((u) => u.number === unitPick)) : shown;
+  const tabLink = (to: "todo" | "done", u: number | null) =>
+    `/student${to === "done" ? "?tab=done" : "?"}${u ? `${to === "done" ? "&" : ""}unit=${u}` : ""}`.replace(/\?$/, "");
 
   return (
     <>
@@ -62,13 +83,31 @@ export default async function AssignmentsPage({ searchParams }: PageProps<"/stud
           </div>
 
           <nav className="filters" aria-label="Which assignments to show">
-            <Link href="/student" className={`chip${showDone ? "" : " on"}`} aria-current={showDone ? undefined : "page"}>
+            <Link href={tabLink("todo", unitPick)} className={`chip${showDone ? "" : " on"}`} aria-current={showDone ? undefined : "page"}>
               To do · {todo.length}
             </Link>
-            <Link href="/student?tab=done" className={`chip${showDone ? " on" : ""}`} aria-current={showDone ? "page" : undefined}>
+            <Link href={tabLink("done", unitPick)} className={`chip${showDone ? " on" : ""}`} aria-current={showDone ? "page" : undefined}>
               Done · {done.length}
             </Link>
           </nav>
+
+          {units.length > 1 && (
+            <nav className="filters" aria-label="Filter by unit">
+              <Link href={tabLink(showDone ? "done" : "todo", null)} className={`chip${unitPick ? "" : " on"}`}>
+                All units
+              </Link>
+              {units.map((u) => (
+                <Link
+                  key={u.number}
+                  href={tabLink(showDone ? "done" : "todo", u.number)}
+                  className={`chip${unitPick === u.number ? " on" : ""}`}
+                  aria-current={unitPick === u.number ? "page" : undefined}
+                >
+                  Unit {u.number} · {u.title}
+                </Link>
+              ))}
+            </nav>
+          )}
 
           {list.length === 0 ? (
             <div className="card empty-state">
@@ -80,7 +119,8 @@ export default async function AssignmentsPage({ searchParams }: PageProps<"/stud
             <div className="alist">
               {list.map((r) => {
                 const overdue = !showDone && r.due_at !== null && r.due_at < today();
-                const rv = reviews.get(r.id) ?? null;
+                const marked = r.status === "reviewed";
+                const pct = marked && r.marks_total ? Math.round((r.marks_got / r.marks_total) * 100) : null;
                 return (
                   <Link
                     key={r.id}
@@ -101,31 +141,37 @@ export default async function AssignmentsPage({ searchParams }: PageProps<"/stud
                         <span>Sent {shortDate(r.assigned_at)}</span>
                         <span>{r.due_at ? `Due ${formatDue(r.due_at)}` : "No due date"}</span>
                         {showDone && r.submitted_at && <span>Submitted {shortDate(r.submitted_at)}</span>}
-                        {rv && (
-                          <span>
-                            <b style={{ color: "var(--ink)" }}>
-                              {rv.score.marks}/{rv.score.total}
-                            </b>{" "}
-                            marks
-                          </span>
-                        )}
+                        {(unitsOf.get(r.id) ?? []).slice(0, 3).map((u) => (
+                          <span key={u.number}>Unit {u.number}</span>
+                        ))}
                       </div>
                     </div>
-                    <span
-                      className={`pill ${
-                        showDone ? (r.status === "reviewed" ? "green" : "gray") : overdue ? "red" : r.status === "in_progress" ? "amber" : "gray"
-                      }`}
-                    >
-                      {showDone
-                        ? r.status === "reviewed"
-                          ? "Marked · Review"
-                          : "Waiting for marks"
-                        : overdue
-                          ? "Overdue"
-                          : r.status === "in_progress"
-                            ? "Continue"
-                            : "Start"}
-                    </span>
+                    <div className="acard-right">
+                      {marked && (
+                        <span className="bigscore">
+                          <b>
+                            {Math.round(r.marks_got * 10) / 10}
+                            <span className="of">/{r.marks_total}</span>
+                          </b>
+                          <span className="pc">{pct}%</span>
+                        </span>
+                      )}
+                      <span
+                        className={`pill ${
+                          showDone ? (marked ? "green" : "gray") : overdue ? "red" : r.status === "in_progress" ? "amber" : "gray"
+                        }`}
+                      >
+                        {showDone
+                          ? marked
+                            ? "See your marks"
+                            : "Waiting for marks"
+                          : overdue
+                            ? "Overdue"
+                            : r.status === "in_progress"
+                              ? "Continue"
+                              : "Start"}
+                      </span>
+                    </div>
                   </Link>
                 );
               })}

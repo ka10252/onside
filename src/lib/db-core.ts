@@ -199,6 +199,7 @@ CREATE TABLE IF NOT EXISTS schedules (
   due_time     TEXT,                               -- HH:MM, Singapore time
   plan         TEXT NOT NULL DEFAULT '[]',         -- units in order, repeats allowed; empty = the units above
   plan_index   INTEGER NOT NULL DEFAULT 0,
+  overrides    TEXT NOT NULL DEFAULT '{}',         -- one date at a time: {"2026-09-26": 3} or {"2026-09-26": "skip"}
   last_sent_on TEXT,                              -- Singapore date, so it sends once a day
   updated_at   TEXT NOT NULL DEFAULT (${NOW_SQL})
 );
@@ -292,6 +293,7 @@ ALTER TABLE schedules ADD COLUMN IF NOT EXISTS send_at TEXT NOT NULL DEFAULT '07
 ALTER TABLE schedules ADD COLUMN IF NOT EXISTS due_time TEXT;
 ALTER TABLE schedules ADD COLUMN IF NOT EXISTS plan TEXT NOT NULL DEFAULT '[]';
 ALTER TABLE schedules ADD COLUMN IF NOT EXISTS plan_index INTEGER NOT NULL DEFAULT 0;
+ALTER TABLE schedules ADD COLUMN IF NOT EXISTS overrides TEXT NOT NULL DEFAULT '{}';
 `;
 
 export type Params = unknown[];

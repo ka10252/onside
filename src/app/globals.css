@@ -289,3 +289,31 @@ table.board { table-layout: fixed; min-width: 860px; }
 @media (min-width: 900px) {
   .dash.split { grid-template-columns: minmax(0, 2.2fr) minmax(260px, 1fr); }
 }
+
+/* Daily practice fills the row now that details live behind the student's name */
+.dash.full { grid-template-columns: minmax(0, 1fr); }
+.whodetails > summary { list-style: none; cursor: pointer; }
+.whodetails > summary::-webkit-details-marker { display: none; }
+.whodetails .nameline { display: flex; align-items: baseline; gap: 8px; }
+.whodetails .nameline h1 { margin: 0; }
+.whodetails .caret { color: var(--ink2); font-size: 16px; transition: transform .15s; }
+.whodetails[open] .caret { transform: rotate(180deg); }
+.whodetails .sub { display: block; color: var(--ink2); }
+.whodetails .who-cell { align-items: center; }
+
+/* One height and one width for every control in these forms */
+.formgrid .answer, .formgrid select, .dayedit .answer, .dayedit select { width: 100%; height: 44px; padding: 0 12px; border: 1px solid var(--line2); border-radius: 10px; background: var(--surface); font: inherit; color: var(--ink); }
+.formgrid textarea.answer { height: auto; padding: 12px; }
+.formgrid .two-up { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; }
+.formgrid .field { min-width: 0; }
+
+/* Setting one day on the calendar */
+.calgrid .cell { text-align: left; cursor: pointer; font: inherit; color: inherit; }
+.calgrid .cell:hover { border-color: var(--ink); }
+.calgrid .cell.past { opacity: .55; }
+.calgrid .cell.picked { border-color: var(--ink); box-shadow: 0 0 0 2px var(--hl); }
+.calgrid .chip.planned.byhand { background: var(--hl); color: var(--ink); }
+.dayedit { margin-top: 14px; padding: 14px 16px; border: 1px solid var(--line2); border-radius: 12px; background: var(--sunk); display: flex; flex-direction: column; gap: 12px; }
+.dayedit .dayrow { display: flex; gap: 12px; align-items: flex-end; flex-wrap: wrap; }
+.dayedit .field { min-width: 220px; }
+.nextline { margin: 0; padding: 10px 0 0; font-size: 14px; }

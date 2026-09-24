@@ -19,6 +19,8 @@ export type Schedule = {
   plan: string;
   /** Where the plan is up to. */
   plan_index: number;
+  /** Days the tutor set by hand: {"2026-09-26": 3} for a unit, or "skip" for no set that day. */
+  overrides: string;
   last_sent_on: string | null;
 };
 
@@ -34,6 +36,7 @@ export const DEFAULT_SCHEDULE: Omit<Schedule, "student_id"> = {
   due_time: null,
   plan: "[]",
   plan_index: 0,
+  overrides: "{}",
   last_sent_on: null,
 };
 

@@ -2,7 +2,8 @@
 
 import { revalidatePath } from "next/cache";
 import { all } from "./db";
-import { getSchedule, saveSchedule, sendDailySet, type Schedule } from "./schedule";
+import type { BankQuestion } from "./admin";
+import { getSchedule, pickForSchedule, saveSchedule, sendDailySet, unitsForNextSend, type Schedule } from "./schedule";
 import { requireUser } from "./session";
 
 export type ScheduleState = { error?: string; ok?: string };
@@ -68,4 +69,34 @@ export async function sendPracticeNow(_prev: ScheduleState, fd: FormData): Promi
   revalidatePath("/student", "layout");
   if ("skipped" in res) return { error: `Nothing sent: ${res.skipped}.` };
   return { ok: `Sent ${res.sent} questions: ${res.title}` };
+}
+
+const DATE = /^\d{4}-\d{2}-\d{2}$/;
+
+/** Sets, clears or skips one day on the calendar. */
+export async function setPracticeDay(studentId: string, date: string, choice: "plan" | "skip" | number): Promise<ScheduleState> {
+  await requireUser("tutor");
+  if (!DATE.test(date)) return { error: "That date doesn't look right." };
+  if (typeof choice === "number" && !(Number.isInteger(choice) && choice >= 0 && choice <= 20)) return { error: "Choose a unit." };
+  const s = await getSchedule(studentId);
+  const overrides = JSON.parse(s.overrides) as Record<string, number | "skip">;
+  if (choice === "plan") delete overrides[date];
+  else overrides[date] = choice;
+  await saveSchedule({ ...s, overrides: JSON.stringify(overrides) });
+  revalidatePath(`/tutor/students/${studentId}`);
+  return { ok: choice === "plan" ? "Back to the plan for that day." : choice === "skip" ? "No set that day." : "Saved." };
+}
+
+export type DayPreview = { unitLabel: string; questions: BankQuestion[] };
+
+/** The questions that day would send, so the tutor can look before it goes out. */
+export async function previewPracticeDay(studentId: string, date: string): Promise<DayPreview> {
+  await requireUser("tutor");
+  const s = await getSchedule(studentId);
+  if (!DATE.test(date)) return { unitLabel: "", questions: [] };
+  const units = unitsForNextSend(s, date);
+  return {
+    unitLabel: units.length === 0 ? "Every unit" : `Unit ${units[0]}`,
+    questions: await pickForSchedule(s, date),
+  };
 }

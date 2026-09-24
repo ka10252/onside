@@ -49,6 +49,7 @@ export default async function StudentPage({ params, searchParams }: PageProps<"/
   // What the next automatic set would hold, so the tutor can look before it goes out.
   const upcoming = nextSend(schedule);
   const nextQuestions = student.archived_at ? [] : await pickForSchedule(schedule, upcoming?.date);
+
   const nextUnits = unitsForNextSend(schedule);
 
   // Four weeks from this Monday: what already went out, and what the schedule will send.
@@ -70,8 +71,9 @@ export default async function StudentPage({ params, searchParams }: PageProps<"/
       date: iso,
       day: d.getUTCDate(),
       today: iso === todaySg,
+      past: iso < todaySg,
       sent: sent.get(iso) ?? null,
-      planned: schedule.enabled && p ? { time: schedule.send_at, unitLabel: unitName(p.unit), count: schedule.count } : null,
+      planned: p ? { unitLabel: unitName(p.unit), short: p.unit === null ? "All" : `U${p.unit}`, unit: p.unit, byHand: p.source === "override" } : null,
     };
   });
   const monthLabel = `${new Date(cells[0]!.date).toLocaleDateString("en-SG", { month: "long", year: "numeric" })}`;
@@ -111,16 +113,40 @@ export default async function StudentPage({ params, searchParams }: PageProps<"/
           <div>
             <Crumbs items={[{ href: "/tutor", label: "Students" }, { label: student.name }]} />
             <div className="phead" style={{ marginBottom: 0, alignItems: "center" }}>
-              <div className="who-cell">
-                <span className="avatar lg" aria-hidden>{initials(student.name)}</span>
-                <div>
-                  <h1 style={{ fontSize: 36 }}>{student.name}</h1>
-                  <p style={{ margin: 0 }}>
-                    {student.subtitle ?? "No class set"}
-                    {student.archived_at && " · Archived"} · Last worked {daysAgo(stats.last_active)}
-                  </p>
+              <details className="whodetails">
+                <summary>
+                  <span className="who-cell">
+                    <span className="avatar lg" aria-hidden>{initials(student.name)}</span>
+                    <span>
+                      <span className="nameline">
+                        <h1 style={{ fontSize: 36 }}>{student.name}</h1>
+                        <span className="caret" aria-hidden>▾</span>
+                      </span>
+                      <span className="sub">
+                        {student.subtitle ?? "No class set"}
+                        {student.archived_at && " · Archived"} · Last worked {daysAgo(stats.last_active)}
+                      </span>
+                    </span>
+                  </span>
+                </summary>
+                <div className="card cardbody stack" style={{ gap: 16, marginTop: 14, maxWidth: 460 }}>
+                  <StudentForm action={updateStudent} student={student} submitLabel="Save" />
+                  <ConfirmForm
+                    action={setStudentArchived}
+                    hidden={{ id: student.id, archive: student.archived_at ? "0" : "1" }}
+                    label={student.archived_at ? "Restore student" : "Archive student"}
+                    className="btn ghost sm"
+                    title={student.archived_at ? `Restore ${student.name}?` : `Archive ${student.name}?`}
+                    body={
+                      student.archived_at
+                        ? "They can sign in again."
+                        : "They are signed out and can't sign in. Their work is kept, and you can restore them later."
+                    }
+                    confirmLabel={student.archived_at ? "Restore" : "Archive"}
+                    danger={!student.archived_at}
+                  />
                 </div>
-              </div>
+              </details>
               <div className="rowacts">
                 <Link href={`/tutor/students/${student.id}/concepts`} className="btn">Concept board</Link>
                 <Link href="/tutor/sets" className="btn">Sets</Link>
@@ -355,7 +381,7 @@ export default async function StudentPage({ params, searchParams }: PageProps<"/
             )}
           </section>
 
-          <div className="dash split">
+          <div className="dash full">
             {!student.archived_at && (
               <section className="card">
                 <div className="card-hd">
@@ -364,45 +390,27 @@ export default async function StudentPage({ params, searchParams }: PageProps<"/
                     {schedule.enabled ? `On · ${schedule.send_at}` : "Off"}
                   </span>
                 </div>
-                <PracticeCalendar cells={cells} monthLabel={monthLabel} />
+                <PracticeCalendar
+                  cells={cells}
+                  monthLabel={monthLabel}
+                  units={allUnits}
+                  studentId={student.id}
+                  sendTime={schedule.send_at}
+                  count={schedule.count}
+                />
                 <DailyPractice
                   schedule={schedule}
                   units={allUnits}
                   studentName={student.name}
                   next={{
                     date: upcoming?.date ?? null,
-                    unitLabel:
-                      nextUnits.length === 0
-                        ? "Every unit"
-                        : nextUnits.map((n) => `Unit ${n} · ${allUnits.find((u) => u.number === n)?.title ?? ""}`).join(", "),
-                    questions: nextQuestions,
+                    unitLabel: nextUnits.length === 0 ? "Every unit" : unitName(nextUnits[0]!),
+                    count: nextQuestions.length,
                   }}
                 />
               </section>
             )}
 
-            <section className="card">
-              <div className="card-hd">
-                <h2>Details</h2>
-              </div>
-              <div className="cardbody stack" style={{ gap: 16 }}>
-                <StudentForm action={updateStudent} student={student} submitLabel="Save" />
-                <ConfirmForm
-                  action={setStudentArchived}
-                  hidden={{ id: student.id, archive: student.archived_at ? "0" : "1" }}
-                  label={student.archived_at ? "Restore student" : "Archive student"}
-                  className="btn ghost sm"
-                  title={student.archived_at ? `Restore ${student.name}?` : `Archive ${student.name}?`}
-                  body={
-                    student.archived_at
-                      ? "They can sign in again."
-                      : "They are signed out and can't sign in. Their work is kept, and you can restore them later."
-                  }
-                  confirmLabel={student.archived_at ? "Restore" : "Archive"}
-                  danger={!student.archived_at}
-                />
-              </div>
-            </section>
           </div>
 
           <details className="card">

@@ -120,3 +120,8 @@ These override HANDOFF §6 and answer §8 where they differ.
 ## Daily practice: time and unit plan (2026-09-24)
 - The schedule holds a send time and a deadline (days ahead plus an optional time of day), both Singapore time. A due date can now carry a time (`2026-09-26T21:00`); `src/lib/due.ts` reads and formats both shapes.
 - The units rotate through a plan the tutor writes, one entry per send, repeats allowed (Unit 1, Unit 2, Unit 2, …). It starts again at the top, and the schedule remembers its place. With no plan, questions come from every unit (or the single unit set below it).
+
+## Daily practice: the calendar is the schedule (2026-09-24)
+- The student's page shows four weeks. A day is set by clicking it: a unit for that day, "don't send", or back to the plan. Those choices are kept per date in `schedules.overrides` and win over the weekly days and the rotation; a hand-set day doesn't move the rotation along.
+- The questions for a day are only shown when the tutor asks for them, from the day they clicked.
+- The student's details (name, login, password, archive) sit behind their name at the top of the page, so the rest of the page is about their work.

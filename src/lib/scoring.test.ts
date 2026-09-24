@@ -34,6 +34,18 @@ describe("scoreSet", () => {
     expect([s.withoutAi, s.noAnswer]).toEqual([1, 1]);
     expect(s.independent).toBeCloseTo(0.5);
   });
+  it("splits marks into with help and without", () => {
+    const s = scoreSet([
+      q({ id: "a", confirmed: 4 }), // no help
+      q({ id: "b", confirmed: 3, hintLevel: 1 }), // hint
+      q({ id: "c", confirmed: 1, aiQuestions: 2 }), // asked the Helper
+      q({ id: "d", confirmed: 2, flags: ["paste"] }), // no help, but flagged
+      q({ id: "e", confirmed: 0, answered: false }), // blank
+    ]);
+    expect(s.split.withoutAi).toEqual({ got: 6, available: 8, questions: 2 });
+    expect(s.split.withAi).toEqual({ got: 4, available: 8, questions: 2 });
+    expect(s.split.withoutAi.got + s.split.withAi.got).toBe(s.marks);
+  });
   it("applies the Hint 2 cap", () => {
     expect(scoreSet([q({ hintLevel: 2, confirmed: 4 })]).supported).toBeCloseTo(0.7);
   });

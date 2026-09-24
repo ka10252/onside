@@ -364,3 +364,5 @@ table.board { table-layout: fixed; min-width: 860px; }
 .slotlist li.picked { border-color: var(--ink); box-shadow: 0 0 0 2px var(--hl); }
 .sentset { padding: 12px 14px; border: 1px solid var(--line2); border-radius: 12px; background: var(--surface); }
 .sentset.open { border-color: var(--ink); }
+.sv.frac { font-size: 46px; }
+.sv .of { font-family: var(--serif); font-size: 0.55em; color: var(--ink2); }

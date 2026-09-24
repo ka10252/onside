@@ -45,7 +45,11 @@ export type SetScore = {
   noAnswer: number;
   count: number;
   questions: QuestionScore[];
+  /** Marks got and available, split by whether the student used a hint or the Helper. */
+  split: { withoutAi: MarkSplit; withAi: MarkSplit };
 };
+
+export type MarkSplit = { got: number; available: number; questions: number };
 
 export function scoreSet(qs: ScoredQuestion[]): SetScore {
   const questions = qs.map(scoreQuestion);
@@ -68,6 +72,20 @@ export function scoreSet(qs: ScoredQuestion[]): SetScore {
     noAnswer: questions.filter((q) => q.category === "no_answer").length,
     count: qs.length,
     questions,
+    split: {
+      // "Unverified" questions had no help either, so they count as done alone.
+      withoutAi: splitOf(qs, questions, (c) => c === "without_ai" || c === "unverified"),
+      withAi: splitOf(qs, questions, (c) => c === "with_ai"),
+    },
+  };
+}
+
+function splitOf(qs: ScoredQuestion[], scores: QuestionScore[], keep: (c: QuestionScore["category"]) => boolean): MarkSplit {
+  const rows = qs.map((q, i) => ({ q, s: scores[i]! })).filter((x) => keep(x.s.category));
+  return {
+    got: rows.reduce((n, x) => n + Math.min(x.q.confirmed ?? 0, x.q.marks), 0),
+    available: rows.reduce((n, x) => n + x.q.marks, 0),
+    questions: rows.length,
   };
 }
 

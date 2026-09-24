@@ -8,7 +8,7 @@ import { isPast, pastContext, tableBlock, type Block, type Question } from "@/li
 import { all, json } from "@/lib/db";
 import { FORMAT_LABEL } from "@/lib/format";
 import { loadReview, type ReviewItem } from "@/lib/review";
-import { pct } from "@/lib/scoring";
+import { pct, type MarkSplit } from "@/lib/scoring";
 import { requireUser } from "@/lib/session";
 import { finalizeAssignment, getAssignment, isLocked } from "@/lib/student";
 
@@ -92,7 +92,10 @@ export default async function ResultsPage({ params, searchParams }: PageProps<"/
               <div>
                 <h1>{a.title}</h1>
                 <p>
-                  {marked ? "Marked" : "Submitted · waiting for your tutor's marks"} · {answered} of {rv.items.length} answered
+                  {marked
+                    ? `${rv.score.marks}/${rv.score.total} marks · ${percent}%`
+                    : "Submitted · waiting for your tutor's marks"}{" "}
+                  · {answered} of {rv.items.length} answered
                 </p>
               </div>
             </div>
@@ -109,21 +112,25 @@ export default async function ResultsPage({ params, searchParams }: PageProps<"/
                 <span className="muted">marks in this set</span>
               </div>
               <div className="scores">
-                <div className="score ind">
-                  <div>
-                    <span className="sl">Independent score</span>
-                    <span className="sv">{pct(rv.score.independent)}</span>
-                    <span className="ss">Marks on questions you did without hints or the Helper</span>
-                  </div>
-                </div>
-                <div className="score sup">
-                  <div>
-                    <span className="sl">Supported score</span>
-                    <span className="sv">{pct(rv.score.supported)}</span>
-                    <span className="ss">All marks, after the hint limits</span>
-                  </div>
-                </div>
+                <Split
+                  kind="ind"
+                  label="Without help"
+                  split={rv.score.split.withoutAi}
+                  note="Answered with no hint and without asking the Helper"
+                />
+                <Split
+                  kind="sup"
+                  label="With the Helper"
+                  split={rv.score.split.withAi}
+                  note="You used a hint or asked the Helper on these"
+                />
               </div>
+              <p className="ss" style={{ marginTop: 16 }}>
+                Independent score <b>{pct(rv.score.independent)}</b> · Supported score <b>{pct(rv.score.supported)}</b>
+                {rv.score.noAnswer > 0
+                  ? ` · ${rv.score.noAnswer} left blank`
+                  : ""}
+              </p>
             </section>
           )}
 
@@ -176,13 +183,32 @@ export default async function ResultsPage({ params, searchParams }: PageProps<"/
   );
 }
 
+/** Marks got out of marks available on the questions done with, or without, help. */
+function Split({ kind, label, split, note }: { kind: "ind" | "sup"; label: string; split: MarkSplit; note: string }) {
+  const none = split.questions === 0;
+  return (
+    <div className={`score ${kind}`}>
+      <div>
+        <span className="sl">{label}</span>
+        <span className="sv frac">
+          {none ? "—" : split.got}
+          {!none && <span className="of">/{split.available}</span>}
+        </span>
+        <span className="ss">
+          {none ? "No questions" : `${split.questions} ${split.questions === 1 ? "question" : "questions"}`} · {note}
+        </span>
+      </div>
+    </div>
+  );
+}
+
 function ResultCard({ it, marked, context, unit }: { it: ReviewItem; marked: boolean; context: Block[]; unit: number | null }) {
   const { q, r } = it;
   const past = isPast(q);
   const attempts = json.parse<{ value: string; correct: boolean }[]>(r?.attempts, []);
   const autoResult = it.auto && attempts.length ? attempts.some((x) => x.correct) : null;
   const status = marked
-    ? `${it.confirmed ?? 0}/${q.marks}`
+    ? `${it.confirmed ?? 0}/${q.marks} marks`
     : autoResult !== null
       ? autoResult
         ? "Correct"
@@ -191,6 +217,8 @@ function ResultCard({ it, marked, context, unit }: { it: ReviewItem; marked: boo
         ? "No answer"
         : "Waiting for marks";
   const hintsUsed = r?.hint_level ?? 0;
+  const asked = r?.ai_questions ?? 0;
+  const noHelp = hintsUsed === 0 && asked === 0;
 
   return (
     <details className="card qc result" open={marked && (it.confirmed ?? 0) < q.marks}>
@@ -201,8 +229,13 @@ function ResultCard({ it, marked, context, unit }: { it: ReviewItem; marked: boo
           {past && <span>{q.past.label}</span>}
           <span>{FORMAT_LABEL[q.format]}</span>
           <span className={`pill ${statusClass(marked, it, autoResult)}`}>{status}</span>
-          {marked && <span className="muted">of {q.marks}</span>}
           {hintsUsed > 0 && <span className="pill hl">Hint {hintsUsed === 2 ? "1 + 2" : "1"} used</span>}
+          {asked > 0 && (
+            <span className="pill hl">
+              Helper · {asked} {asked === 1 ? "question" : "questions"}
+            </span>
+          )}
+          {marked && noHelp && <span className="pill gray">No help</span>}
         </span>
         <span className="qtext clamp">
           <Rich text={q.prompt} />

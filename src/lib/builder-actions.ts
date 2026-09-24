@@ -1,6 +1,6 @@
 "use server";
 
-import { bankQuestions, type BankQuestion } from "./admin";
+import { bankQuestions, bankRange, type BankQuestion } from "./admin";
 import { generateForUnit } from "./ai/generate";
 import { AiNotConfiguredError } from "./ai/provider";
 import { answerText } from "./answer-text";
@@ -64,6 +64,16 @@ export async function generateQuestions(
   if (!ids.length) return { error: "The AI returned no usable questions. Try again." };
   const set = new Set(ids);
   return { questions: (await bankQuestions(true)).filter((q) => set.has(q.id)) };
+}
+
+/**
+ * The questions of the units the tutor is looking at. The builder asks for a range as the unit
+ * boxes are ticked, so opening it no longer ships the whole bank to the browser.
+ */
+export async function loadBankRange(units: number[]): Promise<BankQuestion[]> {
+  await requireUser("tutor");
+  const clean = [...new Set(units)].filter((u) => Number.isInteger(u) && u > 0 && u <= 99).slice(0, 40);
+  return bankRange(clean);
 }
 
 export type SeenState = { state: "answered" | "sent"; at: string; set: string };

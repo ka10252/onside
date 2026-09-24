@@ -49,7 +49,7 @@ export const SESSIONS = [22, 23, 24, 25].flatMap((y) => [
   { yymm: y * 100 + 11, label: `${y}11 · Nov 20${y}` },
 ]);
 
-export function sourceOf(q: BankItem): Source {
+export function sourceOf(q: Pick<BankItem, "source" | "paper_style">): Source {
   if (q.source === "ai") return "ai";
   if (q.source === "unit-test") return "test";
   if (q.source !== "past") return "onside";

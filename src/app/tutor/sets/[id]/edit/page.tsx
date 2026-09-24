@@ -2,7 +2,7 @@ import { notFound, redirect } from "next/navigation";
 import { Crumbs } from "@/components/Crumbs";
 import { Nav, TUTOR_TABS } from "@/components/Nav";
 import { SetBuilder } from "@/components/SetBuilder";
-import { bankParts, bankQuestions, getSet, setIsLocked } from "@/lib/admin";
+import { bankCounts, bankParts, getSet, setIsLocked } from "@/lib/admin";
 import { requireUser } from "@/lib/session";
 
 export default async function EditSetPage({ params }: PageProps<"/tutor/sets/[id]/edit">) {
@@ -24,7 +24,8 @@ export default async function EditSetPage({ params }: PageProps<"/tutor/sets/[id
             </div>
           </div>
           <SetBuilder
-            questions={await bankQuestions()}
+            questions={set.items}
+            counts={await bankCounts()}
             parts={await bankParts()}
             initial={{
               id,

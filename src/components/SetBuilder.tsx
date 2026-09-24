@@ -3,8 +3,8 @@
 import { useCallback, useEffect, useMemo, useRef, useState, useTransition } from "react";
 import type { BankQuestion } from "@/lib/admin";
 import { saveSet } from "@/lib/admin-actions";
-import { EMPTY_FILTER, matches, pickRandom, sameQuestionKey, SESSIONS, SKILLS, type BankFilter, type Source } from "@/lib/bank-filter";
-import { generateQuestions, studentHistory, type SeenState } from "@/lib/builder-actions";
+import { EMPTY_FILTER, matches, pickRandom, sameQuestionKey, SESSIONS, SKILLS, sourceOf, type BankFilter, type Source } from "@/lib/bank-filter";
+import { generateQuestions, loadBankRange, studentHistory, type SeenState } from "@/lib/builder-actions";
 import { PreviewPanel, QuestionLine } from "./QuestionPreview";
 
 type Initial = { id: string; title: string; helper: "on" | "off"; timeLimitMin: number | null; questionIds: string[] };
@@ -23,6 +23,9 @@ const FORMATS: { key: string; label: string }[] = [
 
 export type BuilderStart = { studentId?: string; units?: number[]; sources?: Source[]; count?: number; mode?: Mode };
 
+/** How many approved questions each unit holds, one row per source. */
+export type BankCount = { unit_number: number; source: string; paper_style: string | null; n: number };
+
 const SOURCES: { key: Source; label: string }[] = [
   { key: "test", label: "Unit test questions" },
   { key: "P1", label: "Paper 1" },
@@ -32,6 +35,8 @@ const SOURCES: { key: Source; label: string }[] = [
   { key: "ai", label: "AI-made (approved)" },
 ];
 const PAST: Source[] = ["P1", "P2", "P3"];
+/** Stands for "every unit is loaded" in the list of loaded units. */
+const ALL = 0;
 const AI_FORMATS: { key: AiFormat; label: string }[] = [
   { key: "short_answer", label: "Short answer" },
   { key: "calculation", label: "Calculation" },
@@ -41,18 +46,24 @@ const AI_FORMATS: { key: AiFormat; label: string }[] = [
 
 export function SetBuilder({
   questions,
+  counts,
   parts,
   initial,
   students = [],
   start,
 }: {
+  /** Only the questions already in the set; the rest arrive unit by unit. */
   questions: BankQuestion[];
+  counts: BankCount[];
   parts: Part[];
   initial?: Initial;
   students?: { id: string; name: string }[];
   start?: BuilderStart;
 }) {
   const [bank, setBank] = useState(questions);
+  // Which units' questions are in `bank`. The whole bank is 600 KB, so it is fetched a unit at a time.
+  const [loadedUnits, setLoadedUnits] = useState<number[]>([]);
+  const [loadingUnits, setLoadingUnits] = useState(false);
   const byId = useMemo(() => new Map(bank.map((q) => [q.id, q])), [bank]);
   const unitTitle = useMemo(() => new Map(parts.flatMap((p) => p.units.map((u) => [u.number, u.title] as const))), [parts]);
   const [title, setTitle] = useState(initial?.title ?? "");
@@ -107,11 +118,16 @@ export function SetBuilder({
           : { ...filter, sources: filter.sources.length ? filter.sources.filter((s) => PAST.includes(s)) : PAST },
     [mode, filter],
   );
+  // Counted on the server, so the numbers are right for units whose questions aren't loaded yet.
   const unitCounts = useMemo(() => {
     const m = new Map<number, number>();
-    for (const q of bank) if (matches(q, { ...effective, units: [] })) m.set(q.unit_number, (m.get(q.unit_number) ?? 0) + 1);
+    for (const c of counts) {
+      if (effective.sources.length && !effective.sources.includes(sourceOf(c))) continue;
+      m.set(c.unit_number, (m.get(c.unit_number) ?? 0) + c.n);
+    }
     return m;
-  }, [bank, effective]);
+  }, [counts, effective.sources]);
+  const bankTotal = useMemo(() => counts.reduce((n, c) => n + c.n, 0), [counts]);
   // What the chosen student already had (same question in another time zone counts too).
   const seenKeys = useMemo(() => {
     const m = new Map<string, SeenState>();
@@ -127,6 +143,8 @@ export function SetBuilder({
     [bank, effective, studentId, hideSeen, seenOf],
   );
   const shown = visible.slice(0, 150);
+  const everyUnit = loadedUnits.includes(ALL);
+  const poolReady = filter.units.length ? filter.units.every((u) => loadedUnits.includes(u)) : everyUnit;
 
   const set = <K extends keyof BankFilter>(k: K, v: BankFilter[K]) => setFilter((f) => ({ ...f, [k]: v }));
   const toggleIn = <T,>(list: T[], v: T) => (list.includes(v) ? list.filter((x) => x !== v) : [...list, v]);
@@ -140,21 +158,62 @@ export function SetBuilder({
       return next;
     });
 
+  // The bank arrives a unit at a time. These refs hold what is loaded right now, so a click can
+  // wait for the units it needs without reading stale state.
+  const bankRef = useRef(bank);
+  const loadedRef = useRef<number[]>([]);
+  useEffect(() => {
+    bankRef.current = bank;
+  }, [bank]);
+
+  /** Fetches the questions of these units (none = the whole bank) and returns the bank with them in. */
+  const ensureLoaded = useCallback(async (units: number[]): Promise<BankQuestion[]> => {
+    if (loadedRef.current.includes(ALL)) return bankRef.current;
+    const whole = units.length === 0;
+    const missing = whole ? [ALL] : units.filter((u) => !loadedRef.current.includes(u));
+    if (!missing.length) return bankRef.current;
+    const before = loadedRef.current;
+    loadedRef.current = [...before, ...missing];
+    setLoadedUnits(loadedRef.current);
+    setLoadingUnits(true);
+    try {
+      const rows = await loadBankRange(whole ? [] : missing);
+      const have = new Set(bankRef.current.map((q) => q.id));
+      const merged = [...bankRef.current, ...rows.filter((q) => !have.has(q.id))];
+      bankRef.current = merged;
+      setBank(merged);
+      return merged;
+    } catch {
+      loadedRef.current = before;
+      setLoadedUnits(before);
+      return bankRef.current;
+    } finally {
+      setLoadingUnits(false);
+    }
+  }, []);
+
+  // Ticking a unit loads it. Nothing ticked means the whole bank, which only happens on request.
+  useEffect(() => {
+    if (filter.units.length) void ensureLoaded(filter.units);
+  }, [filter.units, ensureLoaded]);
+
   // Prefilled links (?student=…&count=10) pick new questions once the student's history is in.
   const autofill = useRef(Boolean(start?.count && start?.studentId));
-  const latest = useRef({ bank, effective, count, spread });
+  const latest = useRef({ effective, count, spread });
   useEffect(() => {
-    latest.current = { bank, effective, count, spread };
-  }, [bank, effective, count, spread]);
+    latest.current = { effective, count, spread };
+  }, [effective, count, spread]);
   useEffect(() => {
     let live = true;
     if (!studentId) return;
-    void studentHistory(studentId).then((h) => {
+    void studentHistory(studentId).then(async (h) => {
       if (!live) return;
       setHistory(h);
       if (!autofill.current) return;
       autofill.current = false;
-      const { bank: b, effective: f, count: c, spread: sp } = latest.current;
+      const { effective: f, count: c, spread: sp } = latest.current;
+      const b = await ensureLoaded(f.units);
+      if (!live) return;
       const byIdNow = new Map(b.map((q) => [q.id, q]));
       const seen = new Set(Object.keys(h).flatMap((id) => (byIdNow.get(id) ? [sameQuestionKey(byIdNow.get(id)!)] : [])));
       const pool = b.filter((q) => matches(q, f) && !h[q.id] && !seen.has(sameQuestionKey(q)));
@@ -166,11 +225,13 @@ export function SetBuilder({
     return () => {
       live = false;
     };
-  }, [studentId]);
+  }, [studentId, ensureLoaded]);
 
-  function addRandom() {
+  async function addRandom() {
     const n = Math.max(1, Math.min(40, Number(count) || 0));
-    const picked = pickRandom(visible, n, chosen, spread && filter.units.length !== 1);
+    const b = await ensureLoaded(filter.units);
+    const pool = b.filter((q) => matches(q, effective) && !(studentId && hideSeen && seenOf(q)));
+    const picked = pickRandom(pool, n, chosen, spread && filter.units.length !== 1);
     setSelected((s) => [...s, ...picked.map((q) => q.id)]);
     setNote(
       picked.length === n
@@ -371,7 +432,9 @@ export function SetBuilder({
         <section className="card">
           <div className="card-hd">
             <h2>Question bank</h2>
-            <span className="muted" style={{ fontSize: 14 }}>{visible.length} match</span>
+            <span className="muted" style={{ fontSize: 14 }}>
+              {loadingUnits ? "Loading…" : poolReady ? `${visible.length} match` : `${bankTotal} questions`}
+            </span>
           </div>
 
           <div className="cardbody modes">
@@ -529,8 +592,14 @@ export function SetBuilder({
               <input type="checkbox" checked={spread} onChange={(e) => setSpread(e.target.checked)} />
               <span>Spread across units</span>
             </label>
-            <button id="add-random" type="button" className="btn sm" onClick={addRandom} disabled={visible.length === 0}>
-              Add
+            <button
+              id="add-random"
+              type="button"
+              className="btn sm"
+              onClick={() => void addRandom()}
+              disabled={loadingUnits || (poolReady && visible.length === 0)}
+            >
+              {loadingUnits ? "Loading…" : "Add"}
             </button>
             {note && <span className="muted" role="status">{note}</span>}
           </div>
@@ -559,7 +628,20 @@ export function SetBuilder({
             </div>
           )}
 
-          {visible.length === 0 ? (
+          {!poolReady ? (
+            <div className="cardbody stack" style={{ gap: 10, alignItems: "flex-start" }}>
+              <p className="muted" style={{ margin: 0 }}>
+                {loadingUnits
+                  ? "Loading the questions…"
+                  : "Tick one or more units above to see their questions. Only what you tick is loaded, which keeps this page quick."}
+              </p>
+              {!loadingUnits && (
+                <button type="button" className="btn sm" onClick={() => void ensureLoaded([])}>
+                  Show every unit ({bankTotal} questions)
+                </button>
+              )}
+            </div>
+          ) : visible.length === 0 ? (
             <p className="cardbody muted" style={{ margin: 0 }}>
               {mode === "ai" ? "No AI questions yet. Choose units and generate some." : "No questions match."}
             </p>

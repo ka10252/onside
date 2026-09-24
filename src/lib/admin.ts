@@ -169,20 +169,41 @@ export const bankParts = memo(5 * 60_000, async (): Promise<{ id: string; name: 
   return parts.map((p) => ({ ...p, units: units.filter((u) => u.part_id === p.id) }));
 });
 
-// The bank is 1,200-odd questions and changes only when questions are added or edited, so reading
-// it again on every preview is the slowest thing a page can do. Held for a few minutes per instance.
+const BANK_ORDER = "ORDER BY u.number, q.source = 'past', q.seq";
+
+// The whole bank is 1,200-odd questions, about 600 KB. Daily practice and the retry picker read it
+// on the server, where it changes only when questions are added or edited; held for a few minutes
+// per instance. Screens read a range instead (bankRange), so nothing that big crosses the wire.
 const approvedBank = memo(3 * 60_000, () =>
-  all<BankQuestion>(`${BANK_SELECT} WHERE q.approved_by_tutor = 1 ORDER BY u.number, q.source = 'past', q.seq`),
+  all<BankQuestion>(`${BANK_SELECT} WHERE q.approved_by_tutor = 1 ${BANK_ORDER}`),
 );
 
 /** Approved questions; `withDrafts` also returns AI drafts (for the builder right after generating). */
 export function bankQuestions(withDrafts = false): Promise<BankQuestion[]> {
   if (!withDrafts) return approvedBank();
-  return all<BankQuestion>(
-    `${BANK_SELECT} WHERE q.approved_by_tutor = 1 OR q.source = 'ai'
-      ORDER BY u.number, q.source = 'past', q.seq`,
-  );
+  return all<BankQuestion>(`${BANK_SELECT} WHERE q.approved_by_tutor = 1 OR q.source = 'ai' ${BANK_ORDER}`);
 }
+
+/**
+ * The questions of a few units, read fresh. A unit holds 37 to 130 questions, so the set builder
+ * fetches what the tutor is looking at rather than the whole bank. No units means all of them.
+ */
+export function bankRange(units: number[], withDrafts = false): Promise<BankQuestion[]> {
+  const approved = withDrafts ? "(q.approved_by_tutor = 1 OR q.source = 'ai')" : "q.approved_by_tutor = 1";
+  if (units.length === 0) return all<BankQuestion>(`${BANK_SELECT} WHERE ${approved} ${BANK_ORDER}`);
+  const holes = units.map(() => "?").join(", ");
+  return all<BankQuestion>(`${BANK_SELECT} WHERE ${approved} AND u.number IN (${holes}) ${BANK_ORDER}`, ...units);
+}
+
+/** How many approved questions each unit holds, per source, for the counts beside the unit list. */
+export const bankCounts = memo(5 * 60_000, () =>
+  all<{ unit_number: number; source: string; paper_style: string | null; n: number }>(
+    `SELECT u.number AS unit_number, q.source, q.paper_style, COUNT(*)::int AS n
+       FROM questions q JOIN units u ON u.id = q.unit_id
+      WHERE q.approved_by_tutor = 1
+      GROUP BY 1, 2, 3 ORDER BY 1`,
+  ),
+);
 
 export type SetDetail = SetRow & { items: BankQuestion[] };
 

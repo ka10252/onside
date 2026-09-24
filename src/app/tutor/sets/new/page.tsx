@@ -1,7 +1,7 @@
 import { Crumbs } from "@/components/Crumbs";
 import { Nav, TUTOR_TABS } from "@/components/Nav";
 import { SetBuilder, type BuilderStart } from "@/components/SetBuilder";
-import { bankParts, bankQuestions, listStudents } from "@/lib/admin";
+import { bankCounts, bankParts, listStudents } from "@/lib/admin";
 import type { Source } from "@/lib/bank-filter";
 import { requireUser } from "@/lib/session";
 
@@ -35,7 +35,7 @@ export default async function NewSetPage({ searchParams }: PageProps<"/tutor/set
               <h1>New set</h1>
             </div>
           </div>
-          <SetBuilder questions={await bankQuestions()} parts={await bankParts()} students={students} start={start} />
+          <SetBuilder questions={[]} counts={await bankCounts()} parts={await bankParts()} students={students} start={start} />
         </div>
       </main>
     </>

@@ -301,3 +301,11 @@ table.t tr.hov:hover td { background: var(--surface2); }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }
+
+/* Shown while a page's data is still coming, so a navigation is never a blank wait. */
+.skel { border-radius: 6px; background: var(--line); animation: skelpulse 1.4s ease-in-out infinite; }
+.skel.line { height: 14px; }
+.skel.head { height: 40px; width: 280px; border-radius: 8px; }
+.skel.block { height: 120px; border-radius: 12px; }
+@keyframes skelpulse { 0%, 100% { opacity: 0.55; } 50% { opacity: 0.25; } }
+@media (prefers-reduced-motion: reduce) { .skel { animation: none; } }

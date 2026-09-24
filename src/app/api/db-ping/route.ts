@@ -7,6 +7,8 @@ import { conceptBoard } from "@/lib/concept-board";
 import { latestSummary } from "@/lib/review";
 import { unitTestProgress } from "@/lib/unit-progress";
 import { getSchedule, upcomingSends } from "@/lib/schedule";
+import { loadReview } from "@/lib/review";
+import { closeExpiredAssignments } from "@/lib/student";
 
 export const maxDuration = 60;
 
@@ -40,6 +42,10 @@ export async function GET(req: Request) {
         await time("bankParts again", () => bankParts());
         const s = await getSchedule(id);
         await time("upcomingSends (28 days)", async () => upcomingSends(s, 28));
+        // The student's own screens, for comparison.
+        await time("student: closeExpiredAssignments", () => closeExpiredAssignments());
+        const asg = await one<{ id: string }>("SELECT id FROM assignments WHERE student_id = ? ORDER BY assigned_at DESC LIMIT 1", id);
+        if (asg) await time("student: loadReview (results screen)", () => loadReview(asg.id));
       }
     }
     return Response.json({ ok: true, totalMs: Date.now() - started, ms });

@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { PreviewPanel, QuestionLine } from "@/components/QuestionPreview";
-import { previewPracticeDay, setPracticeDay, type DayPreview, type DaySlotInput } from "@/lib/schedule-actions";
+import { previewPracticeDay, sendSetNow, setPracticeDay, type DayPreview, type DaySlotInput } from "@/lib/schedule-actions";
 
 const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
@@ -16,7 +16,7 @@ export type CalendarCell = {
   today: boolean;
   past: boolean;
   /** Sets that already went out that day. */
-  sent: { title: string; status: string; time: string; count: number; short: string; done: boolean }[];
+  sent: { id: string; title: string; status: string; time: string; count: number; short: string; done: boolean }[];
   /** Sets the schedule will still send that day. */
   planned: CalendarSlot[];
 };
@@ -76,6 +76,17 @@ export function PracticeCalendar({
     });
   }
 
+  function sendNow() {
+    if (!picked) return;
+    const first = slots[0];
+    if (!first) return;
+    start(async () => {
+      const res = await sendSetNow(studentId, { unit: first.unit, count: first.count });
+      setNote(res.error ?? res.ok ?? null);
+      if (!res.error) router.refresh();
+    });
+  }
+
   function look() {
     if (!picked) return;
     start(async () => {
@@ -113,7 +124,7 @@ export function PracticeCalendar({
             >
               <span className="d">{c.day}</span>
               {c.sent.map((x) => (
-                <span key={`s${x.time}`} className={`chip ${x.done ? "done" : "waiting"}`}>
+                <span key={x.id} className={`chip ${x.done ? "done" : "waiting"}`}>
                   {x.time} · {x.short} · {x.count}
                 </span>
               ))}
@@ -215,6 +226,9 @@ export function PracticeCalendar({
                 </button>
                 <button type="button" className="btn primary" onClick={() => apply(slots)} disabled={pending}>
                   {pending ? "Saving…" : slots.length > 1 ? `Set these ${slots.length} sets` : "Set this day"}
+                </button>
+                <button type="button" className="btn accent" onClick={sendNow} disabled={pending} title="Sends the first row's unit and count straight away">
+                  Send now
                 </button>
                 <button type="button" className="btn sm" onClick={look} disabled={pending}>
                   {pending ? "Loading…" : "Show the questions"}

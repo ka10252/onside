@@ -9,6 +9,7 @@ import {
   pickForSlot,
   saveSchedule,
   sendDailySet,
+  sendNow,
   sentTimes,
   singaporeToday,
   slotsForDate,
@@ -89,11 +90,26 @@ export async function sendPracticeNow(_prev: ScheduleState, fd: FormData): Promi
   const studentId = String(fd.get("studentId") ?? "");
   const student = await all("SELECT 1 FROM users WHERE id = ? AND role = 'student' AND archived_at IS NULL", studentId);
   if (!student.length) return { error: "That student can't receive sets." };
-  const res = await sendDailySet(await getSchedule(studentId), tutor.id);
+  const s = await getSchedule(studentId);
+  const res = await sendDailySet(s, tutor.id);
   revalidatePath(`/tutor/students/${studentId}`);
   revalidatePath("/student", "layout");
   if ("skipped" in res) return { error: `Nothing sent: ${res.skipped}.` };
   return { ok: `Sent ${res.sent} questions: ${res.title}` };
+}
+
+/** Sends a set right now, as many times as the tutor likes, whatever the schedule says. */
+export async function sendSetNow(studentId: string, choice: { unit: number; count: number }): Promise<ScheduleState> {
+  const tutor = await requireUser("tutor");
+  const student = await all("SELECT 1 FROM users WHERE id = ? AND role = 'student' AND archived_at IS NULL", studentId);
+  if (!student.length) return { error: "That student can't receive sets." };
+  if (!(Number.isInteger(choice.unit) && choice.unit >= 0 && choice.unit <= 20)) return { error: "Choose a unit." };
+  if (!(Number.isInteger(choice.count) && choice.count >= 1 && choice.count <= 20)) return { error: "Send between 1 and 20 questions." };
+  const res = await sendNow(await getSchedule(studentId), tutor.id, { unit: choice.unit === 0 ? null : choice.unit, count: choice.count });
+  revalidatePath(`/tutor/students/${studentId}`);
+  revalidatePath("/student", "layout");
+  if ("skipped" in res) return { error: `Nothing sent: ${res.skipped}.` };
+  return { ok: `Sent now: ${res.sent} questions.` };
 }
 
 const DATE = /^\d{4}-\d{2}-\d{2}$/;

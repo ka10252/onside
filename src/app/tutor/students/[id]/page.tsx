@@ -56,8 +56,8 @@ export default async function StudentPage({ params, searchParams }: PageProps<"/
   const plannedByDate = new Map<string, ReturnType<typeof upcomingSends>>();
   for (const u of upcomingSends(schedule, 42)) plannedByDate.set(u.date, [...(plannedByDate.get(u.date) ?? []), u]);
   // Sets that already went out, with the time (Singapore), how many questions and which units.
-  const sentRows = await all<{ on: string; at: string; title: string; status: string; n: number; units: string | null }>(
-    `SELECT substr(a.assigned_at, 1, 10) AS on, a.assigned_at AS at, s.title, a.status,
+  const sentRows = await all<{ id: string; at: string; title: string; status: string; n: number; units: string | null }>(
+    `SELECT a.id, a.assigned_at AS at, s.title, a.status,
             (SELECT COUNT(*)::int FROM set_items i WHERE i.set_id = s.id) AS n,
             (SELECT string_agg(DISTINCT u.number::text, ',' ORDER BY u.number::text)
                FROM set_items i JOIN questions q ON q.id = i.question_id JOIN units u ON u.id = q.unit_id
@@ -73,6 +73,7 @@ export default async function StudentPage({ params, searchParams }: PageProps<"/
     sentByDate.set(on, [
       ...(sentByDate.get(on) ?? []),
       {
+        id: r.id,
         title: r.title,
         status: r.status,
         time: sgTime(r.at),

@@ -253,6 +253,7 @@ export async function sendSet(
   date: string,
   slot: Slot,
   advancePlan: boolean,
+  claim = true,
 ): Promise<{ sent: number; title: string } | { skipped: string }> {
   const questions = await pickForSlot(s, date, slot);
   if (questions.length === 0) return { skipped: "no unseen questions left for these units" };
@@ -275,11 +276,11 @@ export async function sendSet(
     // "Send one now" can run before the schedule was ever saved.
     if (!fresh) await t.run("INSERT INTO schedules (student_id) VALUES (?) ON CONFLICT (student_id) DO NOTHING", s.student_id);
     const log = json.parse<Record<string, string[]>>(fresh?.sent_slots ?? s.sent_slots, {});
-    if ((log[date] ?? []).includes(slot.time)) {
+    if (claim && (log[date] ?? []).includes(slot.time)) {
       clash = true;
       return;
     }
-    const times = [...new Set([...(log[date] ?? []), slot.time])].sort();
+    const times = claim ? [...new Set([...(log[date] ?? []), slot.time])].sort() : (log[date] ?? []);
     // Keep the log to the last few weeks.
     const trimmed = Object.fromEntries(
       Object.entries({ ...log, [date]: times }).filter(([d]) => d >= new Date(Date.now() - 30 * 86_400_000).toISOString().slice(0, 10)),
@@ -308,6 +309,20 @@ export async function sendSet(
   });
   if (clash) return { skipped: "another run sent this one" };
   return { sent: questions.length, title };
+}
+
+/**
+ * Sends a set straight away, whatever the schedule says. Used by the tutor's "Send now" button,
+ * so it neither claims a scheduled time nor moves the rotation along.
+ */
+export async function sendNow(
+  s: Schedule,
+  tutorId: string,
+  choice: { unit: number | null; count: number },
+  now = new Date(),
+): Promise<{ sent: number; title: string } | { skipped: string }> {
+  const { date, time } = singaporeToday(now);
+  return sendSet(s, tutorId, date, { time, unit: choice.unit, count: choice.count, source: "override" }, false, false);
 }
 
 /** Sends the next set that is due, for trying it out by hand. */

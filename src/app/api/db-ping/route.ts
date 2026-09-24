@@ -69,11 +69,30 @@ export async function GET(req: Request) {
           );
       }
     }
-    return Response.json({ ok: true, totalMs: Date.now() - started, ms });
+    return Response.json({ ok: true, totalMs: Date.now() - started, ms, env: whereAmI() });
   } catch (e) {
     return Response.json(
       { ok: false, totalMs: Date.now() - started, ms, error: e instanceof Error ? e.message.slice(0, 200) : "unknown" },
       { status: 503 },
     );
   }
+}
+
+/**
+ * Which project and environment this deployment is, and whether the settings it needs are there.
+ * Names and yes/no only — never a value.
+ */
+function whereAmI() {
+  return {
+    vercelEnv: process.env.VERCEL_ENV ?? "(not on Vercel)",
+    project: process.env.VERCEL_PROJECT_PRODUCTION_URL ?? "(unknown)",
+    branch: process.env.VERCEL_GIT_COMMIT_REF ?? "(unknown)",
+    has: {
+      CRON_SECRET: Boolean(process.env.CRON_SECRET),
+      DATABASE_URL: Boolean(process.env.DATABASE_URL),
+      ANTHROPIC_API_KEY: Boolean(process.env.ANTHROPIC_API_KEY),
+    },
+    // Anything whose name looks like it was meant to be the cron secret, so a typo shows up.
+    namesLikeCron: Object.keys(process.env).filter((k) => /cron|secret/i.test(k)).sort(),
+  };
 }

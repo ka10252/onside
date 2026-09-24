@@ -80,9 +80,10 @@ export const MarkStamp = ({ kind, label }: { kind: "circle" | "triangle" | "cros
         />
       )}
       {kind === "cross" && (
+        // Drawn with a gap where the strokes would meet, so the question number still reads through.
         <>
-          <path d="M11.4 10.6 37.8 38.2" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" />
-          <path d="M38.2 11.2 10.8 37.6" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" />
+          <path d="M11.4 10.6 20.4 20.1M28.7 28.7 37.8 38.2" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" />
+          <path d="M38.2 11.2 28.8 20.2M20.2 28.6 10.8 37.6" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" />
         </>
       )}
     </svg>

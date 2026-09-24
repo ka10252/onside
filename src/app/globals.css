@@ -365,10 +365,13 @@ table.board { table-layout: fixed; min-width: 860px; }
 .sv.frac { font-size: 46px; }
 .sv .of { font-family: var(--serif); font-size: 0.55em; color: var(--ink2); }
 /* The marked answer paper: one sheet, the questions divided by a rule, the marks in a margin. */
-.qsheet > li { display: grid; grid-template-columns: 26px minmax(0, 1fr) 104px; gap: 0 18px; padding: 22px 26px; border-top: 1px solid var(--line); }
+.qsheet > li { display: grid; grid-template-columns: 50px minmax(0, 1fr) 96px; gap: 0 16px; padding: 22px 26px; border-top: 1px solid var(--line); }
 .qsheet > li:first-child { border-top: 0; }
 .qsheet > li.lost { background: var(--surface2); }
-.qsheet .qn { font-family: var(--serif); font-size: 24px; line-height: 1.15; color: var(--ink2); }
+/* The mark is drawn over the question number, the way a paper is marked. */
+.qsheet .qn { position: relative; width: 50px; height: 48px; display: flex; align-items: center; justify-content: center; }
+.qsheet .qn b { font-family: var(--serif); font-size: 25px; font-weight: 400; line-height: 1; color: var(--ink); }
+.qsheet .qn .markstamp { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
 .qsheet .qbody { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
 .qsheet .qlabel { font-size: 13px; color: var(--ink2); }
 .qsheet .qtext { margin: 0; font-size: 18px; font-weight: 500; line-height: 1.4; }
@@ -378,7 +381,18 @@ table.board { table-layout: fixed; min-width: 860px; }
 .qmargin .m .of { font-size: 0.66em; color: var(--ink2); }
 .qmargin .m .waiting { font-family: var(--sans); font-size: 12px; font-weight: 600; color: var(--ink2); }
 .qmargin .h { font-size: 12px; line-height: 1.35; color: var(--ink2); }
-.markstamp { color: var(--red); transform: rotate(-7deg); line-height: 0; }
+.markstamp { color: var(--red); transform: rotate(-7deg); line-height: 0; pointer-events: none; }
+/* Multiple choice, read back: every option, what the student chose, and the right one. */
+.qsheet .choices { gap: 6px; }
+.qsheet .choice { cursor: default; min-height: 44px; font-size: 16px; }
+.qsheet .choice:hover { border-color: var(--line2); }
+.qsheet .choice .grow { flex-grow: 1; min-width: 0; }
+.qsheet .choice .tag { flex-shrink: 0; font-size: 12px; font-weight: 600; color: var(--ink2); }
+.qsheet .choice.picked { border: 2px solid var(--ink); padding: 7px 13px; }
+.qsheet .choice.picked .k { background: var(--ink); border-color: var(--ink); color: #FFFFFF; }
+.qsheet .choice.right { border: 2px solid var(--green); padding: 7px 13px; background: var(--greentint); }
+.qsheet .choice.right .k { background: var(--green); border-color: var(--green); color: #FFFFFF; }
+.qsheet .choice .tag.good { color: var(--green); }
 /* The tutor's comment stays quiet on the student's side: pink is for the tutor's screens. */
 .qsheet .why { padding: 2px 0 2px 14px; border-radius: 0; border-left: 2px solid var(--line2); background: transparent; }
 .qsheet .why b { color: var(--ink2); }

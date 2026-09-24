@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { CheckIcon, CrossIcon, MarkStamp } from "@/components/Icons";
+import { MarkStamp } from "@/components/Icons";
 import { Nav, STUDENT_TABS } from "@/components/Nav";
 import { Blocks, Rich } from "@/components/Rich";
 import { answerText } from "@/lib/answer-text";
@@ -243,7 +243,10 @@ function ResultRow({ it, marked, context, unit }: { it: ReviewItem; marked: bool
 
   return (
     <li className={marked && (it.confirmed ?? 0) < q.marks ? "lost" : undefined}>
-      <span className="qn">{it.n}</span>
+      <span className="qn">
+        {stamp && <MarkStamp kind={stamp.kind} label={stamp.label} />}
+        <b>{it.n}</b>
+      </span>
 
       <div className="qbody">
         {(unit || past) && (
@@ -264,7 +267,7 @@ function ResultRow({ it, marked, context, unit }: { it: ReviewItem; marked: bool
 
         <div className="stack" style={{ gap: 6 }}>
           <span className="qlabel">Your answer</span>
-          <YourAnswer q={q} it={it} />
+          <YourAnswer q={q} it={it} marked={marked} />
         </div>
 
         {marked && it.tutorMark?.note && it.tutorMark.note !== "Accepted AI suggestion" && (
@@ -285,7 +288,6 @@ function ResultRow({ it, marked, context, unit }: { it: ReviewItem; marked: bool
       </div>
 
       <div className="qmargin">
-        {stamp && <MarkStamp kind={stamp.kind} label={stamp.label} />}
         <span className="m">
           {marked ? (
             <>
@@ -312,25 +314,39 @@ function stampFor(got: number, marks: number): { kind: "circle" | "triangle" | "
   return { kind: "cross", label: `No marks: 0 of ${marks}` };
 }
 
-function YourAnswer({ q, it }: { q: Question; it: ReviewItem }) {
+function YourAnswer({ q, it, marked }: { q: Question; it: ReviewItem; marked: boolean }) {
   const r = it.r;
   if (!r || it.result === "Not opened") return <p className="muted" style={{ margin: 0 }}>Not opened.</p>;
   const attempts = json.parse<{ value: string; correct: boolean }[]>(r.attempts, []);
   const parts: React.ReactNode[] = [];
 
   if (!isPast(q) && q.format === "mcq") {
-    const pick = attempts[0]?.value;
-    const opt = q.options.find((o) => o.id === pick);
+    const tried = attempts.map((a) => a.value);
     parts.push(
-      pick ? (
-        <p key="mcq" className="att" style={{ margin: 0 }}>
-          {attempts[0]!.correct ? <CheckIcon /> : <CrossIcon />}
-          <span>
-            {pick.toUpperCase()}. {opt?.text}
-          </span>
-        </p>
-      ) : (
+      tried.length === 0 ? (
         <p key="none" className="muted" style={{ margin: 0 }}>No answer.</p>
+      ) : (
+        <ol key="mcq" className="choices">
+          {q.options.map((o) => {
+            const at = tried.indexOf(o.id);
+            const chose = at >= 0;
+            // The right answer is only named once the tutor has confirmed the marks.
+            const right = marked && o.id === q.answer;
+            return (
+              <li key={o.id} className={`choice${chose ? " picked" : ""}${right ? " right" : ""}`}>
+                <span className="k">{o.id.toUpperCase()}</span>
+                <span className="grow">{o.text}</span>
+                {chose && (
+                  <span className="tag">
+                    {tried.length > 1 ? `Try ${at + 1}` : "You chose this"}
+                    {right ? "" : marked ? " · wrong" : ""}
+                  </span>
+                )}
+                {right && <span className="tag good">Right answer</span>}
+              </li>
+            );
+          })}
+        </ol>
       ),
     );
   } else if (!isPast(q) && q.format === "analysis_chain") {

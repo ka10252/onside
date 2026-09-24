@@ -66,9 +66,26 @@ function inSource(q: BankQuestion, source: Schedule["source"]) {
   return s === "test" || s === "P1" || s === "P2" || s === "P3" || s === "onside";
 }
 
-export type DayPlan = { date: string; unit: number | null; source: "override" | "plan" };
+export type DayPlan = { date: string; unit: number | null; count: number; source: "override" | "plan" };
 
-const overridesOf = (s: Schedule) => json.parse<Record<string, number | "skip">>(s.overrides, {});
+/** One day the tutor set by hand: a unit (null = every unit) and how many questions, or "skip". */
+export type DayChoice = { unit: number | null; count: number | null } | "skip";
+
+type StoredChoice = number | "skip" | { u: number | null; n?: number | null };
+
+/** Reads both the old shape (just a unit number) and the new one. */
+function readChoice(v: StoredChoice | undefined): DayChoice | undefined {
+  if (v === undefined) return undefined;
+  if (v === "skip") return "skip";
+  if (typeof v === "number") return { unit: v === 0 ? null : v, count: null };
+  return { unit: v.u === 0 ? null : v.u, count: v.n ?? null };
+}
+
+const overridesOf = (s: Schedule) => json.parse<Record<string, StoredChoice>>(s.overrides, {});
+
+export function dayChoice(s: Schedule, date: string): DayChoice | undefined {
+  return readChoice(overridesOf(s)[date]);
+}
 
 /** What the plan says for the nth send from now (before overrides). */
 function planUnit(s: Schedule, step: number): number | null {
@@ -83,13 +100,17 @@ function planUnit(s: Schedule, step: number): number | null {
 
 /** The unit the next send covers. */
 export function unitsForNextSend(s: Schedule, date?: string): number[] {
-  if (date) {
-    const o = overridesOf(s)[date];
-    if (o === "skip") return [];
-    if (typeof o === "number") return o === 0 ? [] : [o];
-  }
+  const chosen = date ? dayChoice(s, date) : undefined;
+  if (chosen === "skip") return [];
+  if (chosen) return chosen.unit === null ? [] : [chosen.unit];
   const unit = planUnit(s, 0);
   return unit === null ? [] : [unit];
+}
+
+/** How many questions that day sends. */
+export function countForDay(s: Schedule, date?: string): number {
+  const chosen = date ? dayChoice(s, date) : undefined;
+  return chosen && chosen !== "skip" && chosen.count ? chosen.count : s.count;
 }
 
 /** Same seed, same questions: the tutor's preview shows what will actually be sent. */
@@ -106,14 +127,15 @@ function seeded(seed: string) {
  * The questions the next send would use: spread over the chosen units, and the same every time
  * for a given student, date and place in the plan.
  */
-export async function pickForSchedule(s: Schedule, forDate?: string, unitOverride?: number | null): Promise<BankQuestion[]> {
-  const units = unitOverride === undefined ? unitsForNextSend(s, forDate) : unitOverride === null ? [] : [unitOverride];
+export async function pickForSchedule(s: Schedule, forDate?: string): Promise<BankQuestion[]> {
+  const units = unitsForNextSend(s, forDate);
+  const count = countForDay(s, forDate);
   const [bank, seen] = await Promise.all([bankQuestions(), seenIds(s.student_id)]);
   const pool = bank.filter(
     (q) => !seen.has(q.id) && inSource(q, s.source) && (units.length === 0 || units.includes(q.unit_number)) && q.format !== "essay",
   );
-  const rand = seeded(`${s.student_id}|${forDate ?? singaporeToday().date}|${units.join(",")}|${s.count}|${s.source}`);
-  return pickRandom(pool, Math.max(1, Math.min(20, s.count)), [], units.length > 1, rand) as BankQuestion[];
+  const rand = seeded(`${s.student_id}|${forDate ?? singaporeToday().date}|${units.join(",")}|${count}|${s.source}`);
+  return pickRandom(pool, Math.max(1, Math.min(20, count)), [], units.length > 1, rand) as BankQuestion[];
 }
 
 /** When the next set goes out, following the days and the send time. */
@@ -141,10 +163,11 @@ export function upcomingSends(s: Schedule, days = 42, now = new Date()): DayPlan
     const onPlan = wanted.includes(day.getUTCDay());
     if (o === undefined && !onPlan) continue;
     if (i === 0 && (s.last_sent_on === date || time >= s.send_at)) continue; // today has gone
-    if (typeof o === "number") {
-      out.push({ date: iso, unit: o === 0 ? null : o, source: "override" });
+    const chosen = readChoice(o);
+    if (chosen && chosen !== "skip") {
+      out.push({ date: iso, unit: chosen.unit, count: chosen.count ?? s.count, source: "override" });
     } else {
-      out.push({ date: iso, unit: planUnit(s, step), source: "plan" });
+      out.push({ date: iso, unit: planUnit(s, step), count: s.count, source: "plan" });
       step++;
     }
   }
@@ -152,13 +175,8 @@ export function upcomingSends(s: Schedule, days = 42, now = new Date()): DayPlan
 }
 
 /** Builds the set and sends it. Returns what was sent, or why nothing was. */
-export async function sendDailySet(
-  s: Schedule,
-  tutorId: string,
-  now = new Date(),
-  unitOverride?: number | null,
-): Promise<{ sent: number; title: string } | { skipped: string }> {
-  const questions = await pickForSchedule(s, singaporeToday(now).date, unitOverride);
+export async function sendDailySet(s: Schedule, tutorId: string, now = new Date()): Promise<{ sent: number; title: string } | { skipped: string }> {
+  const questions = await pickForSchedule(s, singaporeToday(now).date);
   if (questions.length === 0) return { skipped: "no unseen questions left for these units" };
   const { date } = singaporeToday(now);
   const unitNumbers = [...new Set(questions.map((q) => q.unit_number))].sort((a, b) => a - b);
@@ -185,7 +203,7 @@ export async function sendDailySet(
     );
     await t.run("INSERT INTO assignments (id, set_id, student_id, due_at) VALUES (?, ?, ?, ?)", newId("asg"), setId, s.student_id, due);
     const plan = json.parse<number[]>(s.plan, []);
-    const advance = unitOverride === undefined && plan.length > 0;
+    const advance = dayChoice(s, date) === undefined && plan.length > 0;
     await t.run(
       "UPDATE schedules SET last_sent_on = ?, plan_index = ? WHERE student_id = ?",
       date,
@@ -213,7 +231,7 @@ export async function runSchedules(now = new Date()): Promise<RunResult[]> {
       out.push({ student: s.name, result: "already sent today" });
       continue;
     }
-    const dayChosen = json.parse<Record<string, number | "skip">>(s.overrides, {})[date] !== undefined;
+    const dayChosen = dayChoice(s, date) !== undefined;
     if (!dayChosen && !json.parse<number[]>(s.days, []).includes(weekday)) {
       out.push({ student: s.name, result: "not a practice day" });
       continue;
@@ -222,13 +240,12 @@ export async function runSchedules(now = new Date()): Promise<RunResult[]> {
       out.push({ student: s.name, result: `waits until ${s.send_at}` });
       continue;
     }
-    const override = json.parse<Record<string, number | "skip">>(s.overrides, {})[date];
-    if (override === "skip") {
+    if (dayChoice(s, date) === "skip") {
       out.push({ student: s.name, result: "set aside for today" });
       continue;
     }
     try {
-      const res = await sendDailySet(s, tutor.id, now, typeof override === "number" ? (override === 0 ? null : override) : undefined);
+      const res = await sendDailySet(s, tutor.id, now);
       out.push({ student: s.name, result: "sent" in res ? `sent ${res.sent} questions` : `skipped: ${res.skipped}` });
     } catch (e) {
       console.error("daily practice failed", e);

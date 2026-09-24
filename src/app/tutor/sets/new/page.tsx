@@ -21,6 +21,7 @@ export default async function NewSetPage({ searchParams }: PageProps<"/tutor/set
     units: list(sp.unit).map(Number).filter((n) => Number.isInteger(n) && n >= 1 && n <= 20),
     sources: list(sp.source).filter((s): s is Source => SOURCES.includes(s as Source)),
     count: Math.min(30, Math.max(0, Number(list(sp.count)[0]) || 0)) || undefined,
+    mode: (["all", "past", "mix", "ai"] as const).find((m) => m === list(sp.mode)[0]),
   };
 
   return (

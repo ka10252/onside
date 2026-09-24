@@ -21,7 +21,7 @@ const FORMATS: { key: string; label: string }[] = [
   { key: "analysis_chain", label: "Analysis chain" },
 ];
 
-export type BuilderStart = { studentId?: string; units?: number[]; sources?: Source[]; count?: number };
+export type BuilderStart = { studentId?: string; units?: number[]; sources?: Source[]; count?: number; mode?: Mode };
 
 const SOURCES: { key: Source; label: string }[] = [
   { key: "test", label: "Unit test questions" },
@@ -69,7 +69,7 @@ export function SetBuilder({
   const [due, setDue] = useState("");
   const [hideSeen, setHideSeen] = useState(true);
   const [history, setHistory] = useState<Record<string, SeenState>>({});
-  const [mode, setMode] = useState<Mode>("all");
+  const [mode, setMode] = useState<Mode>(start?.mode ?? "all");
   const [count, setCount] = useState(String(start?.count ?? 5));
   const [aiCount, setAiCount] = useState("3");
   const [aiFormats, setAiFormats] = useState<AiFormat[]>(["short_answer", "calculation"]);

@@ -73,7 +73,9 @@ export default async function StudentPage({ params, searchParams }: PageProps<"/
       today: iso === todaySg,
       past: iso < todaySg,
       sent: sent.get(iso) ?? null,
-      planned: p ? { unitLabel: unitName(p.unit), short: p.unit === null ? "All" : `U${p.unit}`, unit: p.unit, byHand: p.source === "override" } : null,
+      planned: p
+        ? { unitLabel: unitName(p.unit), short: p.unit === null ? "All" : `U${p.unit}`, unit: p.unit, count: p.count, byHand: p.source === "override" }
+        : null,
     };
   });
   const monthLabel = `${new Date(cells[0]!.date).toLocaleDateString("en-SG", { month: "long", year: "numeric" })}`;
@@ -102,6 +104,9 @@ export default async function StudentPage({ params, searchParams }: PageProps<"/
       : b.assigned_at.localeCompare(a.assigned_at),
   );
 
+  const newestMarked = [...marked].sort((a, b) => (b.submitted_at ?? "").localeCompare(a.submitted_at ?? ""))[0];
+  const weakUnit = board.units.find((u) => u.rows.some((r) => r.status === "needs"))?.number;
+
   const trend = [...marked].sort((a, b) => (a.submitted_at ?? "").localeCompare(b.submitted_at ?? "")).slice(-8);
   const weakest = board.units.flatMap((u) => u.rows.map((r) => ({ row: r, unit: u.number }))).filter((x) => x.row.status === "needs").slice(0, 3);
 
@@ -129,7 +134,7 @@ export default async function StudentPage({ params, searchParams }: PageProps<"/
                     </span>
                   </span>
                 </summary>
-                <div className="card cardbody stack" style={{ gap: 16, marginTop: 14, maxWidth: 460 }}>
+                <div className="card cardbody detailsopen" style={{ marginTop: 14 }}>
                   <StudentForm action={updateStudent} student={student} submitLabel="Save" />
                   <ConfirmForm
                     action={setStudentArchived}
@@ -231,6 +236,23 @@ export default async function StudentPage({ params, searchParams }: PageProps<"/
                   ))
                 )}
               </ul>
+              {!student.archived_at && (
+                <div className="cardbody rowacts" style={{ paddingTop: 0 }}>
+                  {newestMarked ? (
+                    <Link href={`/tutor/students/${student.id}/review?from=${newestMarked.id}`} className="btn sm">
+                      Review set from what they got wrong
+                    </Link>
+                  ) : (
+                    <span className="muted" style={{ fontSize: 14 }}>A review set needs a marked set first.</span>
+                  )}
+                  <Link
+                    href={`/tutor/sets/new?student=${student.id}&mode=ai${weakUnit ? `&unit=${weakUnit}` : ""}&count=5`}
+                    className="btn sm"
+                  >
+                    New AI questions{weakUnit ? ` on unit ${weakUnit}` : ""}
+                  </Link>
+                </div>
+              )}
             </section>
 
             <section className="card">

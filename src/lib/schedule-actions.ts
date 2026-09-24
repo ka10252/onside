@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { all } from "./db";
 import type { BankQuestion } from "./admin";
-import { getSchedule, pickForSchedule, saveSchedule, sendDailySet, unitsForNextSend, type Schedule } from "./schedule";
+import { countForDay, dayChoice, getSchedule, pickForSchedule, saveSchedule, sendDailySet, unitsForNextSend, type Schedule } from "./schedule";
 import { requireUser } from "./session";
 
 export type ScheduleState = { error?: string; ok?: string };
@@ -74,29 +74,43 @@ export async function sendPracticeNow(_prev: ScheduleState, fd: FormData): Promi
 const DATE = /^\d{4}-\d{2}-\d{2}$/;
 
 /** Sets, clears or skips one day on the calendar. */
-export async function setPracticeDay(studentId: string, date: string, choice: "plan" | "skip" | number): Promise<ScheduleState> {
+export async function setPracticeDay(
+  studentId: string,
+  date: string,
+  choice: "plan" | "skip" | { unit: number; count: number },
+): Promise<ScheduleState> {
   await requireUser("tutor");
   if (!DATE.test(date)) return { error: "That date doesn't look right." };
-  if (typeof choice === "number" && !(Number.isInteger(choice) && choice >= 0 && choice <= 20)) return { error: "Choose a unit." };
   const s = await getSchedule(studentId);
-  const overrides = JSON.parse(s.overrides) as Record<string, number | "skip">;
-  if (choice === "plan") delete overrides[date];
-  else overrides[date] = choice;
+  const overrides = JSON.parse(s.overrides) as Record<string, unknown>;
+  if (choice === "plan") {
+    delete overrides[date];
+  } else if (choice === "skip") {
+    overrides[date] = "skip";
+  } else {
+    if (!(Number.isInteger(choice.unit) && choice.unit >= 0 && choice.unit <= 20)) return { error: "Choose a unit." };
+    if (!(Number.isInteger(choice.count) && choice.count >= 1 && choice.count <= 20)) return { error: "Send between 1 and 20 questions." };
+    overrides[date] = { u: choice.unit, n: choice.count };
+  }
   await saveSchedule({ ...s, overrides: JSON.stringify(overrides) });
   revalidatePath(`/tutor/students/${studentId}`);
   return { ok: choice === "plan" ? "Back to the plan for that day." : choice === "skip" ? "No set that day." : "Saved." };
 }
 
-export type DayPreview = { unitLabel: string; questions: BankQuestion[] };
+export type DayPreview = { unitLabel: string; questions: BankQuestion[]; unit: number; count: number; byHand: boolean };
 
-/** The questions that day would send, so the tutor can look before it goes out. */
+/** What that day holds: the questions, and the settings the editor starts from. */
 export async function previewPracticeDay(studentId: string, date: string): Promise<DayPreview> {
   await requireUser("tutor");
   const s = await getSchedule(studentId);
-  if (!DATE.test(date)) return { unitLabel: "", questions: [] };
+  if (!DATE.test(date)) return { unitLabel: "", questions: [], unit: 0, count: s.count, byHand: false };
   const units = unitsForNextSend(s, date);
+  const chosen = dayChoice(s, date);
   return {
     unitLabel: units.length === 0 ? "Every unit" : `Unit ${units[0]}`,
     questions: await pickForSchedule(s, date),
+    unit: units[0] ?? 0,
+    count: countForDay(s, date),
+    byHand: chosen !== undefined && chosen !== "skip",
   };
 }

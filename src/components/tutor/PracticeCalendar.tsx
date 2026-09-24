@@ -15,7 +15,7 @@ export type CalendarCell = {
   /** A set that already went out that day. */
   sent?: { title: string; status: string } | null;
   /** What the schedule will send that day. */
-  planned?: { unitLabel: string; short: string; unit: number | null; byHand: boolean } | null;
+  planned?: { unitLabel: string; short: string; unit: number | null; count: number; byHand: boolean } | null;
 };
 
 type Unit = { number: number; title: string };
@@ -41,7 +41,9 @@ export function PracticeCalendar({
 }) {
   const [picked, setPicked] = useState<CalendarCell | null>(null);
   const [preview, setPreview] = useState<DayPreview | null>(null);
-  const [openQ, setOpenQ] = useState<string | null>(null);
+  const [showQuestions, setShowQuestions] = useState(false);
+  const [unit, setUnit] = useState(0);
+  const [howMany, setHowMany] = useState(count);
   const [note, setNote] = useState<string | null>(null);
   const [pending, start] = useTransition();
   const weeks: CalendarCell[][] = [];
@@ -50,22 +52,27 @@ export function PracticeCalendar({
   function choose(cell: CalendarCell) {
     setPicked(cell);
     setPreview(null);
-    setOpenQ(null);
+    setShowQuestions(false);
     setNote(null);
+    setUnit(cell.planned?.unit ?? 0);
+    setHowMany(cell.planned?.count ?? count);
   }
 
-  function apply(choice: "plan" | "skip" | number) {
+  function apply(choice: "plan" | "skip" | { unit: number; count: number }) {
     if (!picked) return;
     start(async () => {
       const res = await setPracticeDay(studentId, picked.date, choice);
       setNote(res.error ?? res.ok ?? null);
-      setPreview(null);
+      if (!res.error) setPreview(await previewPracticeDay(studentId, picked.date));
     });
   }
 
   function look() {
     if (!picked) return;
-    start(async () => setPreview(await previewPracticeDay(studentId, picked.date)));
+    start(async () => {
+      setPreview(await previewPracticeDay(studentId, picked.date));
+      setShowQuestions(true);
+    });
   }
 
   return (
@@ -114,64 +121,69 @@ export function PracticeCalendar({
             {picked.sent
               ? "A set already went out this day."
               : picked.planned
-                ? `${picked.planned.unitLabel} · ${count} questions at ${sendTime}${picked.planned.byHand ? " · set by hand" : " · from the plan"}`
+                ? `${picked.planned.unitLabel} · ${picked.planned.count} questions at ${sendTime}${picked.planned.byHand ? " · set by hand" : " · from the plan"}`
                 : "Nothing planned for this day."}
           </p>
 
           {!picked.past && (
-            <div className="dayrow">
-              <label className="field" style={{ margin: 0 }}>
-                <span className="lab">Send this day</span>
-                <select
-                  className="answer"
-                  value={picked.planned?.byHand ? (picked.planned.unit ?? 0) : ""}
-                  disabled={pending}
-                  onChange={(e) => apply(Number(e.target.value))}
-                >
-                  <option value="" disabled>
-                    Choose a unit…
-                  </option>
-                  <option value={0}>Every unit</option>
-                  {units.map((u) => (
-                    <option key={u.number} value={u.number}>
-                      Unit {u.number} · {u.title}
-                    </option>
-                  ))}
-                </select>
-              </label>
+            <>
+              <div className="dayrow">
+                <label className="field" style={{ margin: 0 }}>
+                  <span className="lab">Unit</span>
+                  <select className="answer" value={unit} disabled={pending} onChange={(e) => setUnit(Number(e.target.value))}>
+                    <option value={0}>Every unit</option>
+                    {units.map((u) => (
+                      <option key={u.number} value={u.number}>
+                        Unit {u.number} · {u.title}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                <label className="field howmany" style={{ margin: 0 }}>
+                  <span className="lab">Questions</span>
+                  <input
+                    className="answer"
+                    type="number"
+                    min={1}
+                    max={20}
+                    value={howMany}
+                    disabled={pending}
+                    onChange={(e) => setHowMany(Number(e.target.value))}
+                  />
+                </label>
+                <button type="button" className="btn primary" onClick={() => apply({ unit, count: howMany })} disabled={pending}>
+                  {pending ? "Saving…" : "Set this day"}
+                </button>
+              </div>
               <div className="rowacts">
+                <button type="button" className="btn sm" onClick={look} disabled={pending}>
+                  {pending ? "Loading…" : "Show the questions"}
+                </button>
                 <button type="button" className="btn sm" onClick={() => apply("plan")} disabled={pending}>
                   Follow the plan
                 </button>
                 <button type="button" className="btn ghost sm" onClick={() => apply("skip")} disabled={pending}>
                   Don&apos;t send
                 </button>
-                {picked.planned && (
-                  <button type="button" className="btn sm" onClick={look} disabled={pending}>
-                    {pending ? "Loading…" : "Show the questions"}
-                  </button>
-                )}
               </div>
-            </div>
+            </>
           )}
           {note && <p className="formmsg good" role="status">{note}</p>}
 
-          {preview && (
+          {preview && showQuestions && (
             <div className="stack" style={{ gap: 8 }}>
               <p className="note" style={{ margin: 0 }}>
-                {preview.unitLabel} · {preview.questions.length} question{preview.questions.length === 1 ? "" : "s"}
+                {preview.unitLabel} · {preview.questions.length} question{preview.questions.length === 1 ? "" : "s"} · answers shown
               </p>
               {preview.questions.length === 0 ? (
                 <p className="formmsg bad" style={{ margin: 0 }}>No unseen questions left for this unit.</p>
               ) : (
-                <ol className="pick">
+                <ol className="fullpreview">
                   {preview.questions.map((q, i) => (
-                    <li key={q.id} className={openQ === q.id ? "expanded" : undefined}>
-                      <span className="n">{i + 1}</span>
-                      <button type="button" className="pickopen" onClick={() => setOpenQ(openQ === q.id ? null : q.id)}>
-                        <QuestionLine q={q} />
-                      </button>
-                      {openQ === q.id && <PreviewPanel id={q.id} />}
+                    <li key={q.id}>
+                      <span className="n">Question {i + 1}</span>
+                      <QuestionLine q={q} />
+                      <PreviewPanel id={q.id} />
                     </li>
                   ))}
                 </ol>

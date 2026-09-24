@@ -219,3 +219,15 @@ table.board { table-layout: fixed; min-width: 860px; }
 .trend .tbar { display: flex; flex-direction: column; justify-content: flex-end; align-items: center; gap: 6px; width: 44px; height: 100%; }
 .trend .fill { width: 100%; background: var(--ink); border-radius: 4px 4px 0 0; }
 .trend .tl { font-size: 12px; color: var(--ink2); font-variant-numeric: tabular-nums; }
+
+/* Grouped lists, unit picker, due date */
+.grouphead { display: flex; align-items: center; gap: 12px; margin: 10px 0 0; font-size: 15px; font-weight: 700; color: var(--ink2); text-transform: uppercase; letter-spacing: .04em; }
+.grouphead .rule { flex: 1; height: 1px; background: var(--line2); }
+.grouphead .n { font-weight: 600; letter-spacing: 0; text-transform: none; }
+.unitpick { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; color: var(--ink2); margin-left: auto; }
+.unitpick select { height: 36px; padding: 0 10px; border: 1px solid var(--line2); border-radius: 999px; background: var(--surface); font: inherit; color: var(--ink); }
+.duebox { display: flex; flex-direction: column; align-items: flex-end; line-height: 1.15; }
+.duebox .dl { font-size: 12px; font-weight: 600; color: var(--ink2); text-transform: uppercase; letter-spacing: .04em; }
+.duebox b { font-size: 22px; font-weight: 700; }
+.duebox.late { color: var(--red); }
+.duebox.late .dl { color: var(--red); }

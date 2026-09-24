@@ -22,6 +22,8 @@ import { requireUser } from "@/lib/session";
 import { unitTestProgress } from "@/lib/unit-progress";
 
 const day = (iso: string) => new Date(iso).toLocaleDateString("en-SG", { day: "numeric", month: "short" });
+/** The Singapore date a set went out. */
+const substrDay = (iso: string) => new Date(new Date(iso).getTime() + 8 * 3600_000).toISOString().slice(0, 10);
 const percent = (a: AssignmentRow) => (a.marks_total ? Math.round((a.marks_got / a.marks_total) * 100) : 0);
 
 function daysAgo(iso: string | null) {
@@ -56,12 +58,31 @@ export default async function StudentPage({ params, searchParams }: PageProps<"/
   const { date: todaySg } = singaporeToday();
   const monday = new Date(new Date(`${todaySg}T00:00:00Z`).getTime() - ((new Date(`${todaySg}T00:00:00Z`).getUTCDay() + 6) % 7) * 86_400_000);
   const planned = new Map(upcomingSends(schedule, 42).map((u) => [u.date, u]));
-  const sentRows = await all<{ on: string; title: string; status: string }>(
-    `SELECT substr(a.assigned_at, 1, 10) AS on, s.title, a.status FROM assignments a JOIN sets s ON s.id = a.set_id
+  // Sets that already went out, with the time (Singapore), how many questions and which units.
+  const sentRows = await all<{ on: string; at: string; title: string; status: string; n: number; units: string | null }>(
+    `SELECT substr(a.assigned_at, 1, 10) AS on, a.assigned_at AS at, s.title, a.status,
+            (SELECT COUNT(*)::int FROM set_items i WHERE i.set_id = s.id) AS n,
+            (SELECT string_agg(DISTINCT u.number::text, ',' ORDER BY u.number::text)
+               FROM set_items i JOIN questions q ON q.id = i.question_id JOIN units u ON u.id = q.unit_id
+              WHERE i.set_id = s.id) AS units
+       FROM assignments a JOIN sets s ON s.id = a.set_id
       WHERE a.student_id = ? AND s.title LIKE 'Daily practice%'`,
     id,
   );
-  const sent = new Map(sentRows.map((r) => [r.on, r]));
+  const sgTime = (iso: string) => new Date(new Date(iso).getTime() + 8 * 3600_000).toISOString().slice(11, 16);
+  const sent = new Map(
+    sentRows.map((r) => [
+      substrDay(r.at),
+      {
+        title: r.title,
+        status: r.status,
+        time: sgTime(r.at),
+        count: r.n,
+        short: r.units ? `U${r.units.split(",").join("/")}` : "All",
+        done: r.status === "submitted" || r.status === "reviewed",
+      },
+    ]),
+  );
   const unitName = (n: number | null) => (n === null ? "Every unit" : `Unit ${n} · ${allUnits.find((u) => u.number === n)?.title ?? ""}`);
   const cells: CalendarCell[] = Array.from({ length: 28 }, (_, i) => {
     const d = new Date(monday.getTime() + i * 86_400_000);

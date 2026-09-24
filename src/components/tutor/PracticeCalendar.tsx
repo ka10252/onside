@@ -13,7 +13,7 @@ export type CalendarCell = {
   today: boolean;
   past: boolean;
   /** A set that already went out that day. */
-  sent?: { title: string; status: string } | null;
+  sent?: { title: string; status: string; time: string; count: number; short: string; done: boolean } | null;
   /** What the schedule will send that day. */
   planned?: { unitLabel: string; short: string; unit: number | null; count: number; byHand: boolean } | null;
 };
@@ -79,8 +79,13 @@ export function PracticeCalendar({
     <div className="calendar">
       <div className="calhead">
         <span className="month">{monthLabel}</span>
-        <span className="key">Click a day to set the unit or look at the questions</span>
+        <span className="key">
+          <span className="chip planned">To come</span>
+          <span className="chip waiting">Sent, not finished</span>
+          <span className="chip done">Finished</span>
+        </span>
       </div>
+      <p className="note" style={{ margin: "0 0 8px" }}>Click a day to set its unit and how many questions, or to see them.</p>
       <div className="calgrid">
         {DAYS.map((d) => (
           <span key={d} className="dow">
@@ -96,10 +101,14 @@ export function PracticeCalendar({
               className={`cell${c.today ? " today" : ""}${c.past ? " past" : ""}${picked?.date === c.date ? " picked" : ""}`}
             >
               <span className="d">{c.day}</span>
-              {c.sent && <span className="chip sent">Sent</span>}
+              {c.sent && (
+                <span className={`chip ${c.sent.done ? "done" : "waiting"}`}>
+                  {c.sent.time} · {c.sent.short} · {c.sent.count}
+                </span>
+              )}
               {c.planned && (
                 <span className={`chip planned${c.planned.byHand ? " byhand" : ""}`}>
-                  {sendTime} · {c.planned.short}
+                  {sendTime} · {c.planned.short} · {c.planned.count}
                 </span>
               )}
             </button>
@@ -119,7 +128,15 @@ export function PracticeCalendar({
           </div>
           <p className="note" style={{ margin: 0 }}>
             {picked.sent
-              ? "A set already went out this day."
+              ? `${picked.sent.title} · sent ${picked.sent.time} · ${picked.sent.count} questions · ${
+                  picked.sent.status === "reviewed"
+                    ? "marked"
+                    : picked.sent.status === "submitted"
+                      ? "finished, waiting for marks"
+                      : picked.sent.status === "in_progress"
+                        ? "started"
+                        : "not opened yet"
+                }`
               : picked.planned
                 ? `${picked.planned.unitLabel} · ${picked.planned.count} questions at ${sendTime}${picked.planned.byHand ? " · set by hand" : " · from the plan"}`
                 : "Nothing planned for this day."}

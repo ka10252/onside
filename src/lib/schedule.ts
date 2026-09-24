@@ -66,19 +66,19 @@ function inSource(q: BankQuestion, source: Schedule["source"]) {
   return s === "test" || s === "P1" || s === "P2" || s === "P3" || s === "onside";
 }
 
-export type DayPlan = { date: string; unit: number | null; count: number; source: "override" | "plan" };
+export type DayPlan = { date: string; unit: number | null; count: number; time: string; source: "override" | "plan" };
 
-/** One day the tutor set by hand: a unit (null = every unit) and how many questions, or "skip". */
-export type DayChoice = { unit: number | null; count: number | null } | "skip";
+/** One day the tutor set by hand: a unit (null = every unit), how many questions and when, or "skip". */
+export type DayChoice = { unit: number | null; count: number | null; time: string | null } | "skip";
 
-type StoredChoice = number | "skip" | { u: number | null; n?: number | null };
+type StoredChoice = number | "skip" | { u: number | null; n?: number | null; t?: string | null };
 
 /** Reads both the old shape (just a unit number) and the new one. */
 function readChoice(v: StoredChoice | undefined): DayChoice | undefined {
   if (v === undefined) return undefined;
   if (v === "skip") return "skip";
-  if (typeof v === "number") return { unit: v === 0 ? null : v, count: null };
-  return { unit: v.u === 0 ? null : v.u, count: v.n ?? null };
+  if (typeof v === "number") return { unit: v === 0 ? null : v, count: null, time: null };
+  return { unit: v.u === 0 ? null : v.u, count: v.n ?? null, time: v.t ?? null };
 }
 
 const overridesOf = (s: Schedule) => json.parse<Record<string, StoredChoice>>(s.overrides, {});
@@ -111,6 +111,12 @@ export function unitsForNextSend(s: Schedule, date?: string): number[] {
 export function countForDay(s: Schedule, date?: string): number {
   const chosen = date ? dayChoice(s, date) : undefined;
   return chosen && chosen !== "skip" && chosen.count ? chosen.count : s.count;
+}
+
+/** When that day goes out. */
+export function timeForDay(s: Schedule, date?: string): string {
+  const chosen = date ? dayChoice(s, date) : undefined;
+  return chosen && chosen !== "skip" && chosen.time ? chosen.time : s.send_at;
 }
 
 /** Same seed, same questions: the tutor's preview shows what will actually be sent. */
@@ -162,12 +168,13 @@ export function upcomingSends(s: Schedule, days = 42, now = new Date()): DayPlan
     if (o === "skip") continue;
     const onPlan = wanted.includes(day.getUTCDay());
     if (o === undefined && !onPlan) continue;
-    if (i === 0 && (s.last_sent_on === date || time >= s.send_at)) continue; // today has gone
     const chosen = readChoice(o);
+    const at = chosen && chosen !== "skip" && chosen.time ? chosen.time : s.send_at;
+    if (i === 0 && (s.last_sent_on === date || time >= at)) continue; // today's slot has gone
     if (chosen && chosen !== "skip") {
-      out.push({ date: iso, unit: chosen.unit, count: chosen.count ?? s.count, source: "override" });
+      out.push({ date: iso, unit: chosen.unit, count: chosen.count ?? s.count, time: at, source: "override" });
     } else {
-      out.push({ date: iso, unit: planUnit(s, step), count: s.count, source: "plan" });
+      out.push({ date: iso, unit: planUnit(s, step), count: s.count, time: at, source: "plan" });
       step++;
     }
   }
@@ -236,8 +243,9 @@ export async function runSchedules(now = new Date()): Promise<RunResult[]> {
       out.push({ student: s.name, result: "not a practice day" });
       continue;
     }
-    if (time < s.send_at) {
-      out.push({ student: s.name, result: `waits until ${s.send_at}` });
+    const at = timeForDay(s, date);
+    if (time < at) {
+      out.push({ student: s.name, result: `waits until ${at}` });
       continue;
     }
     if (dayChoice(s, date) === "skip") {

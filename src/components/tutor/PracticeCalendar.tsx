@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { PreviewPanel, QuestionLine } from "@/components/QuestionPreview";
 import { previewPracticeDay, setPracticeDay, type DayPreview } from "@/lib/schedule-actions";
@@ -15,7 +16,7 @@ export type CalendarCell = {
   /** A set that already went out that day. */
   sent?: { title: string; status: string; time: string; count: number; short: string; done: boolean } | null;
   /** What the schedule will send that day. */
-  planned?: { unitLabel: string; short: string; unit: number | null; count: number; byHand: boolean } | null;
+  planned?: { unitLabel: string; short: string; unit: number | null; count: number; time: string; byHand: boolean } | null;
 };
 
 type Unit = { number: number; title: string };
@@ -44,8 +45,10 @@ export function PracticeCalendar({
   const [showQuestions, setShowQuestions] = useState(false);
   const [unit, setUnit] = useState(0);
   const [howMany, setHowMany] = useState(count);
+  const [at, setAt] = useState(sendTime);
   const [note, setNote] = useState<string | null>(null);
   const [pending, start] = useTransition();
+  const router = useRouter();
   const weeks: CalendarCell[][] = [];
   for (let i = 0; i < cells.length; i += 7) weeks.push(cells.slice(i, i + 7));
 
@@ -56,14 +59,18 @@ export function PracticeCalendar({
     setNote(null);
     setUnit(cell.planned?.unit ?? 0);
     setHowMany(cell.planned?.count ?? count);
+    setAt(cell.planned?.time ?? cell.sent?.time ?? sendTime);
   }
 
-  function apply(choice: "plan" | "skip" | { unit: number; count: number }) {
+  function apply(choice: "plan" | "skip" | { unit: number; count: number; time: string }) {
     if (!picked) return;
     start(async () => {
       const res = await setPracticeDay(studentId, picked.date, choice);
       setNote(res.error ?? res.ok ?? null);
-      if (!res.error) setPreview(await previewPracticeDay(studentId, picked.date));
+      if (!res.error) {
+        setPreview(await previewPracticeDay(studentId, picked.date));
+        router.refresh(); // the calendar squares come from the page
+      }
     });
   }
 
@@ -108,7 +115,7 @@ export function PracticeCalendar({
               )}
               {c.planned && (
                 <span className={`chip planned${c.planned.byHand ? " byhand" : ""}`}>
-                  {sendTime} · {c.planned.short} · {c.planned.count}
+                  {c.planned.time} · {c.planned.short} · {c.planned.count}
                 </span>
               )}
             </button>
@@ -138,7 +145,7 @@ export function PracticeCalendar({
                         : "not opened yet"
                 }`
               : picked.planned
-                ? `${picked.planned.unitLabel} · ${picked.planned.count} questions at ${sendTime}${picked.planned.byHand ? " · set by hand" : " · from the plan"}`
+                ? `${picked.planned.unitLabel} · ${picked.planned.count} questions at ${picked.planned.time}${picked.planned.byHand ? " · set by hand" : " · from the plan"}`
                 : "Nothing planned for this day."}
           </p>
 
@@ -157,6 +164,10 @@ export function PracticeCalendar({
                   </select>
                 </label>
                 <label className="field howmany" style={{ margin: 0 }}>
+                  <span className="lab">At</span>
+                  <input className="answer" type="time" value={at} disabled={pending} onChange={(e) => setAt(e.target.value)} />
+                </label>
+                <label className="field howmany" style={{ margin: 0 }}>
                   <span className="lab">Questions</span>
                   <input
                     className="answer"
@@ -168,7 +179,7 @@ export function PracticeCalendar({
                     onChange={(e) => setHowMany(Number(e.target.value))}
                   />
                 </label>
-                <button type="button" className="btn primary" onClick={() => apply({ unit, count: howMany })} disabled={pending}>
+                <button type="button" className="btn primary" onClick={() => apply({ unit, count: howMany, time: at })} disabled={pending}>
                   {pending ? "Saving…" : "Set this day"}
                 </button>
               </div>

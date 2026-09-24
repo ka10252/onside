@@ -95,7 +95,14 @@ export default async function StudentPage({ params, searchParams }: PageProps<"/
       past: iso < todaySg,
       sent: sent.get(iso) ?? null,
       planned: p
-        ? { unitLabel: unitName(p.unit), short: p.unit === null ? "All" : `U${p.unit}`, unit: p.unit, count: p.count, byHand: p.source === "override" }
+        ? {
+            unitLabel: unitName(p.unit),
+            short: p.unit === null ? "All" : `U${p.unit}`,
+            unit: p.unit,
+            count: p.count,
+            time: p.time,
+            byHand: p.source === "override",
+          }
         : null,
     };
   });

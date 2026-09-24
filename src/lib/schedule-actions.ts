@@ -3,7 +3,18 @@
 import { revalidatePath } from "next/cache";
 import { all } from "./db";
 import type { BankQuestion } from "./admin";
-import { countForDay, dayChoice, getSchedule, pickForSchedule, saveSchedule, sendDailySet, unitsForNextSend, type Schedule } from "./schedule";
+import {
+  countForDay,
+  dayChoice,
+  getSchedule,
+  pickForSchedule,
+  saveSchedule,
+  sendDailySet,
+  singaporeToday,
+  timeForDay,
+  unitsForNextSend,
+  type Schedule,
+} from "./schedule";
 import { requireUser } from "./session";
 
 export type ScheduleState = { error?: string; ok?: string };
@@ -77,7 +88,7 @@ const DATE = /^\d{4}-\d{2}-\d{2}$/;
 export async function setPracticeDay(
   studentId: string,
   date: string,
-  choice: "plan" | "skip" | { unit: number; count: number },
+  choice: "plan" | "skip" | { unit: number; count: number; time: string },
 ): Promise<ScheduleState> {
   await requireUser("tutor");
   if (!DATE.test(date)) return { error: "That date doesn't look right." };
@@ -90,20 +101,28 @@ export async function setPracticeDay(
   } else {
     if (!(Number.isInteger(choice.unit) && choice.unit >= 0 && choice.unit <= 20)) return { error: "Choose a unit." };
     if (!(Number.isInteger(choice.count) && choice.count >= 1 && choice.count <= 20)) return { error: "Send between 1 and 20 questions." };
-    overrides[date] = { u: choice.unit, n: choice.count };
+    if (!/^([01]\d|2[0-3]):[0-5]\d$/.test(choice.time)) return { error: "Enter a time like 07:00." };
+    overrides[date] = { u: choice.unit, n: choice.count, t: choice.time };
   }
   await saveSchedule({ ...s, overrides: JSON.stringify(overrides) });
   revalidatePath(`/tutor/students/${studentId}`);
-  return { ok: choice === "plan" ? "Back to the plan for that day." : choice === "skip" ? "No set that day." : "Saved." };
+  if (choice === "plan") return { ok: "Back to the plan for that day." };
+  if (choice === "skip") return { ok: "No set that day." };
+  const { date: today, time: now } = singaporeToday();
+  if (date < today) return { ok: "Saved, but that day has passed." };
+  if (date === today && (s.last_sent_on === today || now >= choice.time)) {
+    return { ok: `Saved. ${s.last_sent_on === today ? "A set already went out today" : `${choice.time} has passed`}, so it starts from the next day.` };
+  }
+  return { ok: `Saved. ${choice.count} questions at ${choice.time}.` };
 }
 
-export type DayPreview = { unitLabel: string; questions: BankQuestion[]; unit: number; count: number; byHand: boolean };
+export type DayPreview = { unitLabel: string; questions: BankQuestion[]; unit: number; count: number; time: string; byHand: boolean };
 
 /** What that day holds: the questions, and the settings the editor starts from. */
 export async function previewPracticeDay(studentId: string, date: string): Promise<DayPreview> {
   await requireUser("tutor");
   const s = await getSchedule(studentId);
-  if (!DATE.test(date)) return { unitLabel: "", questions: [], unit: 0, count: s.count, byHand: false };
+  if (!DATE.test(date)) return { unitLabel: "", questions: [], unit: 0, count: s.count, time: s.send_at, byHand: false };
   const units = unitsForNextSend(s, date);
   const chosen = dayChoice(s, date);
   return {
@@ -111,6 +130,7 @@ export async function previewPracticeDay(studentId: string, date: string): Promi
     questions: await pickForSchedule(s, date),
     unit: units[0] ?? 0,
     count: countForDay(s, date),
+    time: timeForDay(s, date),
     byHand: chosen !== undefined && chosen !== "skip",
   };
 }

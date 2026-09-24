@@ -364,9 +364,41 @@ async function openPostgres(url: string): Promise<Db> {
   };
 }
 
+/**
+ * The local database is a directory only one process may write to. Two at once corrupt it, so
+ * hold a lock file while it is open and say plainly what to stop.
+ */
+function lockLocalDb(dir: string) {
+  const lock = path.join(dir, "in-use.pid");
+  try {
+    const pid = Number(fs.readFileSync(lock, "utf8"));
+    if (pid && pid !== process.pid) {
+      process.kill(pid, 0); // throws when that process has gone
+      throw new Error(
+        `The local database is already open (process ${pid}). Stop \`npm run dev:local\` first, then run this again.`,
+      );
+    }
+  } catch (e) {
+    if (e instanceof Error && e.message.startsWith("The local database is already open")) throw e;
+    // no lock file, or the process in it has gone: carry on
+  }
+  fs.writeFileSync(lock, String(process.pid));
+  const drop = () => fs.rmSync(lock, { force: true });
+  process.once("exit", drop);
+  process.once("SIGINT", () => {
+    drop();
+    process.exit(130);
+  });
+  process.once("SIGTERM", () => {
+    drop();
+    process.exit(143);
+  });
+}
+
 async function openPglite(dir: string): Promise<Db> {
   const { PGlite } = await import("@electric-sql/pglite");
   fs.mkdirSync(dir, { recursive: true });
+  lockLocalDb(dir);
   const pg = await PGlite.create(dir, { parsers: { 20: (x: string) => Number(x), 1700: (x: string) => Number(x) } });
   type Pq = { query: <T>(q: string, p?: unknown[]) => Promise<{ rows: T[]; affectedRows?: number }> };
   const wrap = (s: Pq): Queryable => ({

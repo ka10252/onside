@@ -10,6 +10,9 @@ import { StudentForm } from "@/components/StudentForm";
 import { assignmentsForStudent, getStudent, listSets, studentStats, type AssignmentRow } from "@/lib/admin";
 import { deleteAssignment, setStudentArchived, unassign, updateStudent } from "@/lib/admin-actions";
 import { conceptBoard } from "@/lib/concept-board";
+import { DailyPractice } from "@/components/tutor/DailyPractice";
+import { bankParts } from "@/lib/admin";
+import { getSchedule } from "@/lib/schedule";
 import { initials } from "@/lib/format";
 import { latestSummary } from "@/lib/review";
 import { pct } from "@/lib/scoring";
@@ -30,14 +33,17 @@ export default async function StudentPage({ params }: PageProps<"/tutor/students
   const { id } = await params;
   const student = await getStudent(id);
   if (!student) notFound();
-  const [assignments, progress, sets, board, stats, latest] = await Promise.all([
+  const [assignments, progress, sets, board, stats, latest, schedule, parts] = await Promise.all([
     assignmentsForStudent(id),
     unitTestProgress(id),
     listSets(),
     conceptBoard(id),
     studentStats(id),
     latestSummary(id),
+    getSchedule(id),
+    bankParts(),
   ]);
+  const allUnits = parts.flatMap((p) => p.units);
 
   const marked = assignments.filter((a) => a.status === "reviewed");
   const got = marked.reduce((n, a) => n + a.marks_got, 0);
@@ -280,9 +286,15 @@ export default async function StudentPage({ params }: PageProps<"/tutor/students
                                 hidden={{ id: a.id }}
                                 label="Delete"
                                 className="btn ghost sm"
-                                title={`Delete "${a.set_title}" for good?`}
-                                body={`${student.name}'s answers, photos, marks and comments for this set are deleted and can't be brought back. The set itself stays in your list.`}
-                                confirmLabel="Delete everything"
+                                title="Delete this assignment?"
+                                body={`Everything ${student.name} did on "${a.set_title}" is removed and can't be brought back.`}
+                                details={[
+                                  `${a.answered} of ${a.total} questions answered`,
+                                  a.status === "reviewed" ? `Marks: ${Math.round(a.marks_got * 10) / 10}/${a.marks_total}, and your comments` : "Any marks and comments",
+                                  "Diagram photos, hints used and activity",
+                                  "The set itself stays in your list, so you can send it again",
+                                ]}
+                                confirmLabel="Delete"
                                 danger
                               />
                             )}
@@ -297,6 +309,16 @@ export default async function StudentPage({ params }: PageProps<"/tutor/students
           </section>
 
           <div className="dash">
+            {!student.archived_at && (
+              <section className="card">
+                <div className="card-hd">
+                  <h2>Daily practice</h2>
+                  <span className="muted" style={{ fontSize: 14 }}>{schedule.enabled ? "On" : "Off"}</span>
+                </div>
+                <DailyPractice schedule={schedule} units={allUnits} studentName={student.name} sendTime="7am" />
+              </section>
+            )}
+
             {!student.archived_at && (
               <section className="card">
                 <div className="card-hd">

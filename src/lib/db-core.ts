@@ -13,7 +13,7 @@ export const NOW_SQL = `to_char(now() AT TIME ZONE 'UTC', 'YYYY-MM-DD"T"HH24:MI:
 const TABLES = [
   "users", "sessions", "parts", "units", "sections", "concepts", "questions", "question_concepts",
   "diagram_checklists", "note_corrections", "past_items", "unit_past_items", "past_papers", "past_questions",
-  "hint_overrides", "ai_batches", "sets", "set_items", "assignments", "responses", "events", "login_failures",
+  "hint_overrides", "ai_batches", "sets", "set_items", "assignments", "responses", "events", "login_failures", "schedules",
 ];
 
 export const SCHEMA = `
@@ -183,6 +183,20 @@ CREATE TABLE IF NOT EXISTS ai_batches (
   response_ids   TEXT NOT NULL,
   status         TEXT NOT NULL DEFAULT 'pending',
   created_at     TEXT NOT NULL DEFAULT (${NOW_SQL})
+);
+
+-- Daily practice: one row per student (docs/decisions.md).
+CREATE TABLE IF NOT EXISTS schedules (
+  student_id   TEXT PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE,
+  enabled      INTEGER NOT NULL DEFAULT 0,
+  count        INTEGER NOT NULL DEFAULT 5,
+  source       TEXT NOT NULL DEFAULT 'test',      -- 'test' | 'past' | 'mix'
+  units        TEXT NOT NULL DEFAULT '[]',        -- unit numbers; empty means every unit
+  helper       TEXT NOT NULL DEFAULT 'on' CHECK (helper IN ('on', 'off')),
+  days         TEXT NOT NULL DEFAULT '[1,2,3,4,5]', -- 0 = Sunday
+  due_days     INTEGER,
+  last_sent_on TEXT,                              -- Singapore date, so it sends once a day
+  updated_at   TEXT NOT NULL DEFAULT (${NOW_SQL})
 );
 
 -- Sets and assignments

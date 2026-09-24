@@ -19,6 +19,11 @@ Row level security is on for every table with no policies, so Supabase's public 
 2. Environment variables (Production): everything in `.env.example` that is set in `.env.local` — `DATABASE_URL`, `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `ANTHROPIC_API_KEY` (and model names), `GEMINI_API_KEY`, `AI_MARKING_BATCH`, `HELPER_DAILY_LIMIT`.
 3. Deploy. Every push to the main branch redeploys.
 
+## Daily practice
+- `vercel.json` sets when the morning cron runs: `0 23 * * *` is 23:00 UTC, about 7am in Singapore. The free plan runs it once a day and within the hour, so change the hour there if the tutor wants a different time.
+- Set `CRON_SECRET` in `.env.local` and in the Vercel project (any long random string). Vercel sends it as a bearer token; the route turns away anyone else.
+- Each student's schedule is set on their page in the app.
+
 ## Limits to know
 - Function time: up to 300 s (`maxDuration` in `src/app/layout.tsx`). AI marking runs after the student's submit response (`after()`).
 - Batch marking results are collected when the tutor opens the Students list or a review page; the review page refreshes itself while a batch is pending.

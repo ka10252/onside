@@ -19,6 +19,7 @@ Choosing or changing the stack, adding paid services, changing scoring rules, or
 ## Setup (docs/decisions.md)
 - Hosting: Vercel (region bom1, matching the Supabase project's region) + Supabase (Postgres and a private Storage bucket `onside`). Keys in `.env.local` locally and in Vercel env vars. See docs/deploy.md.
 - Database access goes through `src/lib/db.ts` (`all`, `one`, `run`, `tx`; `?` placeholders, Postgres SQL). With `DATABASE_URL` set it uses Supabase; without it (or with `ONSIDE_DB=local`) an embedded PGlite database in `data/pglite`. Schema: `SCHEMA` in `src/lib/db-core.ts` (`CREATE … IF NOT EXISTS`); `npm run db:seed` applies it.
+- Daily practice: `src/lib/schedule.ts` + `/api/cron/daily`, once a day from `vercel.json` (about 7am Singapore), guarded by `CRON_SECRET`.
 - Files (diagram photos, past-paper figures) go through `src/lib/storage.ts`: Supabase Storage, else `data/storage`.
 - Vercel has no always-on server: background work uses `after()` from `next/server` (AI marking), and batch results are collected when the tutor opens pages. No in-memory state that must survive between requests.
 - `npm run db:seed` loads content/ and past-paper text/figures into the database (Supabase when configured). `npm run db:reset` only resets the local PGlite database. `npm run db:import-sqlite` copied the old `data/onside.db` once.

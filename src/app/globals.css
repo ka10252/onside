@@ -231,3 +231,19 @@ table.board { table-layout: fixed; min-width: 860px; }
 .duebox b { font-size: 22px; font-weight: 700; }
 .duebox.late { color: var(--red); }
 .duebox.late .dl { color: var(--red); }
+
+/* Confirm dialogs */
+.dialog.danger h2 { color: var(--redtext); }
+.dialog .dlist { margin: 0; padding: 12px 14px 12px 30px; background: var(--sunk); border-radius: 10px; color: var(--ink2); font-size: 14px; }
+.dialog .dlist li + li { margin-top: 4px; }
+.dialog form.acts { margin: 0; display: flex; justify-content: flex-end; gap: 10px; padding-top: 6px; flex-wrap: wrap; }
+
+/* Daily practice form */
+.check { display: flex; align-items: flex-start; gap: 10px; font-weight: 600; }
+.check input { accent-color: var(--ink); width: 18px; height: 18px; margin-top: 2px; }
+.two-up { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 14px; }
+.lab { font-size: 14px; font-weight: 600; }
+.daypick { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+.daybox { display: inline-flex; align-items: center; gap: 6px; height: 34px; padding: 0 12px; border: 1px solid var(--line2); border-radius: 999px; font-size: 13px; font-weight: 600; cursor: pointer; }
+.daybox:has(input:checked) { background: var(--ink); border-color: var(--ink); color: #fff; }
+.daybox input { accent-color: #fff; width: 14px; height: 14px; }

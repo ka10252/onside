@@ -111,3 +111,8 @@ These override HANDOFF §6 and answer §8 where they differ.
 - The Helper's daily limit counts from midnight Singapore time.
 - Diagram photos are shrunk in the browser (≤ 2000 px JPEG) before upload because of Vercel's request size limit.
 - Steps: docs/deploy.md.
+
+## Daily practice (2026-09-24)
+- A student can have a schedule: on/off, which days, how many questions, from unit tests / past papers / both, one unit or every unit, Helper on/off, and when it is due. It lives on the student's page.
+- `/api/cron/daily` builds and sends the set. Vercel's free plan runs a cron once a day to the hour, so the time is in `vercel.json` (`0 23 * * *` = about 7am Singapore) and `CRON_SECRET` keeps anyone else from calling it.
+- Questions are ones the student has never been sent; essays are left out. The run records the Singapore date, so a second call the same day sends nothing. "Send one now" is there for trying it.

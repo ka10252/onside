@@ -25,8 +25,15 @@ async function columnsOf(db: Queryable, table: string) {
   return rows.map((r) => r.column_name);
 }
 
+
+/** The local database is a single file opened by one process at a time. */
+function warnIfServerRunning() {
+  console.log("Note: stop `npm run dev:local` before this, and start it again after, or it keeps serving the old copy.");
+}
+
 async function main() {
   loadEnv();
+  warnIfServerRunning();
   if (!process.env.DATABASE_URL) throw new Error("DATABASE_URL is not set: there is nothing to copy from.");
   const src = await openDb();
   const dst = await openDb({ local: true, migrate: true });

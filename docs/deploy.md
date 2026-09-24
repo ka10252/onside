@@ -34,4 +34,5 @@ Row level security is on for every table with no policies, so Supabase's public 
 ## Local work after this
 - `npm run dev:local` is the one to use for looking at screens: it reads the copy in `data/pglite`, so pages render in milliseconds. `npm run db:pull` brings that copy up to date with Supabase (including diagram photos).
 - `npm run dev` talks to Supabase. Every query crosses to the database's region (about 68 ms from Singapore, so a page can take seconds). Use it only when you need to see or change the live data.
+- The local database is opened by one process at a time: stop `npm run dev:local` before `npm run db:pull` or `npm run db:migrate`, then start it again.
 - `npm test` always uses the local database. `npm run db:reset` starts the local copy over.

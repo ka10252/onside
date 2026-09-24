@@ -96,6 +96,7 @@ export default async function StudentPage({ params, searchParams }: PageProps<"/
       planned: (plannedByDate.get(iso) ?? []).map((p) => ({
         time: p.time,
         short: p.unit === null ? "All" : `U${p.unit}`,
+        unitLabel: unitName(p.unit),
         unit: p.unit,
         count: p.count,
         byHand: p.source === "override",

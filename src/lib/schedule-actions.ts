@@ -2,7 +2,8 @@
 
 import { revalidatePath } from "next/cache";
 import { all } from "./db";
-import type { BankQuestion } from "./admin";
+import { getSet, type BankQuestion } from "./admin";
+import { all as allRows } from "./db";
 import {
   dayIsByHand,
   getSchedule,
@@ -158,13 +159,24 @@ export async function setPracticeDay(
 }
 
 export type DaySet = { time: string; unit: number; count: number; unitLabel: string; sent: boolean; questions: BankQuestion[] };
-export type DayPreview = { sets: DaySet[]; byHand: boolean };
+/** A set that already went out, with the questions the student actually got. */
+export type SentSet = {
+  assignmentId: string;
+  setId: string;
+  title: string;
+  time: string;
+  status: string;
+  due: string | null;
+  helper: "on" | "off";
+  questions: BankQuestion[];
+};
+export type DayPreview = { sets: DaySet[]; sent: SentSet[]; byHand: boolean };
 
 /** What that day holds: each set, its questions, and the settings the editor starts from. */
 export async function previewPracticeDay(studentId: string, date: string): Promise<DayPreview> {
   await requireUser("tutor");
   const s = await getSchedule(studentId);
-  if (!DATE.test(date)) return { sets: [], byHand: false };
+  if (!DATE.test(date)) return { sets: [], sent: [], byHand: false };
   const { slots } = slotsForDate(s, date);
   const done = sentTimes(s, date);
   const sets: DaySet[] = [];
@@ -181,5 +193,34 @@ export async function previewPracticeDay(studentId: string, date: string): Promi
       questions,
     });
   }
-  return { sets, byHand: dayIsByHand(s, date) };
+  return { sets, sent: await sentSetsOn(studentId, date), byHand: dayIsByHand(s, date) };
+}
+
+/** The sets that went out on a day, with the questions as the student received them. */
+export async function sentSetsOn(studentId: string, date: string): Promise<SentSet[]> {
+  await requireUser("tutor");
+  if (!DATE.test(date)) return [];
+  const rows = await allRows<{ id: string; set_id: string; title: string; at: string; status: string; due_at: string | null; helper: "on" | "off" }>(
+    `SELECT a.id, a.set_id, s.title, a.assigned_at AS at, a.status, a.due_at, s.helper
+       FROM assignments a JOIN sets s ON s.id = a.set_id
+      WHERE a.student_id = ? AND substr(to_char((a.assigned_at)::timestamptz AT TIME ZONE 'Asia/Singapore', 'YYYY-MM-DD'), 1, 10) = ?
+      ORDER BY a.assigned_at`,
+    studentId,
+    date,
+  );
+  const out: SentSet[] = [];
+  for (const r of rows) {
+    const set = await getSet(r.set_id);
+    out.push({
+      assignmentId: r.id,
+      setId: r.set_id,
+      title: r.title,
+      time: new Date(new Date(r.at).getTime() + 8 * 3600_000).toISOString().slice(11, 16),
+      status: r.status,
+      due: r.due_at,
+      helper: r.helper,
+      questions: set?.items ?? [],
+    });
+  }
+  return out;
 }

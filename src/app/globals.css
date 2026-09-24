@@ -354,3 +354,13 @@ table.board { table-layout: fixed; min-width: 860px; }
 .card-hd .key .chip.waiting { background: var(--ambertint); color: var(--amber); }
 .card-hd .key .chip.done { background: var(--greentint); color: var(--green); }
 .card-hd .key .chip.duechip { background: var(--sunk); color: var(--ink2); }
+
+/* Picking one set inside a day */
+.calgrid .cell { display: flex; flex-direction: column; gap: 4px; }
+.calgrid .dayhit { border: 0; background: transparent; font: inherit; font-size: 12px; font-weight: 600; color: var(--ink2); text-align: left; padding: 0; cursor: pointer; }
+.calgrid .dayhit:hover { color: var(--ink); text-decoration: underline; }
+.calgrid button.chip { border: 0; cursor: pointer; font: inherit; font-size: 11px; font-weight: 600; text-align: left; }
+.calgrid button.chip:hover { outline: 2px solid var(--ink); outline-offset: 1px; }
+.slotlist li.picked { border-color: var(--ink); box-shadow: 0 0 0 2px var(--hl); }
+.sentset { padding: 12px 14px; border: 1px solid var(--line2); border-radius: 12px; background: var(--surface); }
+.sentset.open { border-color: var(--ink); }

@@ -7,7 +7,7 @@ import { previewPracticeDay, sendSetNow, setPracticeDay, type DayPreview, type D
 
 const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
-export type CalendarSlot = { time: string; short: string; unit: number | null; count: number; byHand: boolean };
+export type CalendarSlot = { time: string; short: string; unitLabel: string; unit: number | null; count: number; byHand: boolean };
 
 export type CalendarCell = {
   date: string;
@@ -47,21 +47,31 @@ export function PracticeCalendar({
   const [preview, setPreview] = useState<DayPreview | null>(null);
   const [showQuestions, setShowQuestions] = useState(false);
   const [note, setNote] = useState<string | null>(null);
+  const [row, setRow] = useState<number | null>(null);
+  const [openSet, setOpenSet] = useState<string | null>(null);
   const [pending, start] = useTransition();
   const router = useRouter();
   const weeks: CalendarCell[][] = [];
   for (let i = 0; i < cells.length; i += 7) weeks.push(cells.slice(i, i + 7));
 
-  function choose(cell: CalendarCell) {
+  function choose(cell: CalendarCell, focus: { row?: number; show?: "sent" | null; set?: string } = {}) {
     setPicked(cell);
     setPreview(null);
     setShowQuestions(false);
     setNote(null);
+    setRow(focus.row ?? null);
+    setOpenSet(focus.set ?? null);
     setSlots(
       cell.planned.length
         ? cell.planned.map((p) => ({ time: p.time, unit: p.unit ?? 0, count: p.count }))
         : [{ time: sendTime, unit: 0, count }],
     );
+    if (focus.show === "sent" || focus.set) {
+      start(async () => {
+        setPreview(await previewPracticeDay(studentId, cell.date));
+        setShowQuestions(Boolean(focus.set));
+      });
+    }
   }
 
   function apply(choice: "plan" | "skip" | DaySlotInput[]) {
@@ -116,24 +126,38 @@ export function PracticeCalendar({
         ))}
         {weeks.flatMap((week) =>
           week.map((c) => (
-            <button
-              type="button"
-              key={c.date}
-              onClick={() => choose(c)}
-              className={`cell${c.today ? " today" : ""}${c.past ? " past" : ""}${picked?.date === c.date ? " picked" : ""}`}
-            >
-              <span className="d">{c.day}</span>
+            <div key={c.date} className={`cell${c.today ? " today" : ""}${c.past ? " past" : ""}${picked?.date === c.date ? " picked" : ""}`}>
+              <button
+                type="button"
+                className="dayhit"
+                aria-label={`${c.day}: set this day`}
+                onClick={() => choose(c, { show: c.sent.length > 0 ? "sent" : null })}
+              >
+                {c.day}
+              </button>
               {c.sent.map((x) => (
-                <span key={x.id} className={`chip ${x.done ? "done" : "waiting"}`}>
+                <button
+                  type="button"
+                  key={x.id}
+                  className={`chip ${x.done ? "done" : "waiting"}`}
+                  title={`${x.title} · ${x.count} questions`}
+                  onClick={() => choose(c, { show: "sent", set: x.id })}
+                >
                   {x.time} · {x.short} · {x.count}
-                </span>
+                </button>
               ))}
-              {c.planned.map((p) => (
-                <span key={`p${p.time}`} className={`chip planned${p.byHand ? " byhand" : ""}`}>
+              {c.planned.map((p, i) => (
+                <button
+                  type="button"
+                  key={`p${p.time}`}
+                  className={`chip planned${p.byHand ? " byhand" : ""}`}
+                  title={`${p.unitLabel} · ${p.count} questions at ${p.time}`}
+                  onClick={() => choose(c, { row: i })}
+                >
                   {p.time} · {p.short} · {p.count}
-                </span>
+                </button>
               ))}
-            </button>
+            </div>
           )),
         )}
       </div>
@@ -171,7 +195,7 @@ export function PracticeCalendar({
             <>
               <ol className="slotlist">
                 {slots.map((s, i) => (
-                  <li key={i}>
+                  <li key={i} className={row === i ? "picked" : undefined}>
                     <span className="n">{i + 1}</span>
                     <label>
                       <span className="lab">At</span>
@@ -244,9 +268,56 @@ export function PracticeCalendar({
           )}
           {note && <p className="formmsg good" role="status">{note}</p>}
 
-          {preview && showQuestions && (
+          {preview && preview.sent.length > 0 && (
+            <div className="stack" style={{ gap: 10 }}>
+              {preview.sent.map((set) => (
+                <div key={set.assignmentId} className={`sentset${openSet === set.assignmentId ? " open" : ""}`}>
+                  <div className="card-hd" style={{ padding: 0, border: 0 }}>
+                    <b>
+                      {set.time} · {set.title}
+                    </b>
+                    <span className="rowacts">
+                      <span className="muted" style={{ fontSize: 13 }}>
+                        {set.questions.length} questions · Helper {set.helper}
+                        {set.due ? ` · due ${set.due.replace("T", " ")}` : " · no deadline"} ·{" "}
+                        {set.status === "reviewed"
+                          ? "marked"
+                          : set.status === "submitted"
+                            ? "finished, waiting for marks"
+                            : set.status === "in_progress"
+                              ? "started"
+                              : "not opened yet"}
+                      </span>
+                      <a className="btn ghost sm" href={`/tutor/students/${studentId}/a/${set.assignmentId}`}>
+                        Open
+                      </a>
+                      <button
+                        type="button"
+                        className="btn sm"
+                        onClick={() => setOpenSet(openSet === set.assignmentId ? null : set.assignmentId)}
+                      >
+                        {openSet === set.assignmentId ? "Hide questions" : "Show the questions"}
+                      </button>
+                    </span>
+                  </div>
+                  {openSet === set.assignmentId && (
+                    <ol className="fullpreview" style={{ marginTop: 10 }}>
+                      {set.questions.map((q, i) => (
+                        <li key={q.id}>
+                          <span className="n">Question {i + 1}</span>
+                          <QuestionLine q={q} />
+                          <PreviewPanel id={q.id} />
+                        </li>
+                      ))}
+                    </ol>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
+
+          {preview && showQuestions && preview.sets.length > 0 && (
             <div className="stack" style={{ gap: 14 }}>
-              {preview.sets.length === 0 && <p className="formmsg bad" style={{ margin: 0 }}>Nothing goes out this day.</p>}
               {preview.sets.map((set) => (
                 <div key={set.time} className="stack" style={{ gap: 8 }}>
                   <p className="note" style={{ margin: 0 }}>

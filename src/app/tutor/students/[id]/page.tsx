@@ -30,9 +30,10 @@ function daysAgo(iso: string | null) {
   return days <= 0 ? "today" : days === 1 ? "yesterday" : `${days} days ago`;
 }
 
-export default async function StudentPage({ params }: PageProps<"/tutor/students/[id]">) {
+export default async function StudentPage({ params, searchParams }: PageProps<"/tutor/students/[id]">) {
   const user = await requireUser("tutor");
   const { id } = await params;
+  const { sort } = (await searchParams) as { sort?: string };
   const student = await getStudent(id);
   if (!student) notFound();
   const [assignments, progress, board, stats, latest, schedule, parts] = await Promise.all([
@@ -82,6 +83,23 @@ export default async function StudentPage({ params }: PageProps<"/tutor/students
   const toReview = assignments.filter((a) => a.status === "submitted");
   const open = assignments.filter((a) => a.status === "not_started" || a.status === "in_progress");
   const overdue = open.filter((a) => isOverdue(a.due_at));
+  // Which units each set covers, for the "by unit" order and the Units column.
+  const unitRows = await all<{ assignment_id: string; number: number }>(
+    `SELECT DISTINCT a.id AS assignment_id, u.number
+       FROM assignments a JOIN set_items i ON i.set_id = a.set_id
+       JOIN questions q ON q.id = i.question_id JOIN units u ON u.id = q.unit_id
+      WHERE a.student_id = ? ORDER BY u.number`,
+    id,
+  );
+  const unitsOf = new Map<string, number[]>();
+  for (const r of unitRows) unitsOf.set(r.assignment_id, [...(unitsOf.get(r.assignment_id) ?? []), r.number]);
+  const byUnit = sort === "unit";
+  const ordered = [...assignments].sort((a, b) =>
+    byUnit
+      ? (unitsOf.get(a.id)?.[0] ?? 99) - (unitsOf.get(b.id)?.[0] ?? 99) || b.assigned_at.localeCompare(a.assigned_at)
+      : b.assigned_at.localeCompare(a.assigned_at),
+  );
+
   const trend = [...marked].sort((a, b) => (a.submitted_at ?? "").localeCompare(b.submitted_at ?? "")).slice(-8);
   const weakest = board.units.flatMap((u) => u.rows.map((r) => ({ row: r, unit: u.number }))).filter((x) => x.row.status === "needs").slice(0, 3);
 
@@ -226,7 +244,14 @@ export default async function StudentPage({ params }: PageProps<"/tutor/students
           <section className="card">
             <div className="card-hd">
               <h2>Assignments</h2>
-              {trend.length > 1 && <span className="muted" style={{ fontSize: 14 }}>Marks over time</span>}
+              <nav className="filters" aria-label="Order">
+                <Link href={`/tutor/students/${student.id}`} className={`chip${byUnit ? "" : " on"}`}>
+                  Newest first
+                </Link>
+                <Link href={`/tutor/students/${student.id}?sort=unit`} className={`chip${byUnit ? " on" : ""}`}>
+                  By unit
+                </Link>
+              </nav>
             </div>
             {trend.length > 1 && (
               <div className="trend">
@@ -246,6 +271,7 @@ export default async function StudentPage({ params }: PageProps<"/tutor/students
                   <thead>
                     <tr>
                       <th>Set</th>
+                      <th>Units</th>
                       <th>Status</th>
                       <th>Marks</th>
                       <th>Sent</th>
@@ -255,7 +281,7 @@ export default async function StudentPage({ params }: PageProps<"/tutor/students
                     </tr>
                   </thead>
                   <tbody>
-                    {assignments.map((a) => (
+                    {ordered.map((a) => (
                       <tr key={a.id}>
                         <td>
                           <Link
@@ -265,6 +291,7 @@ export default async function StudentPage({ params }: PageProps<"/tutor/students
                             {a.set_title}
                           </Link>
                         </td>
+                        <td className="muted">{(unitsOf.get(a.id) ?? []).join(", ") || "—"}</td>
                         <td>
                           <StatusPill status={a.status} answered={a.answered} total={a.total} due={a.due_at} />
                         </td>

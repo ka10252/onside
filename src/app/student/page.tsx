@@ -126,8 +126,8 @@ export default async function AssignmentsPage({ searchParams }: PageProps<"/stud
     <>
       <Nav user={user} tabs={STUDENT_TABS} active="/student" />
       <main className="page">
-        <AssignmentCalendar cells={days} monthLabel={monthLabel} />
-        <div className="wrap stack">
+        <div className="wrap studentgrid">
+          <div className="stack">
           <div className="phead" style={{ marginBottom: 0 }}>
             <div>
               <h1>Assignments</h1>
@@ -242,6 +242,8 @@ export default async function AssignmentsPage({ searchParams }: PageProps<"/stud
               </section>
             ))
           )}
+          </div>
+          <AssignmentCalendar cells={days} monthLabel={monthLabel} />
         </div>
       </main>
     </>

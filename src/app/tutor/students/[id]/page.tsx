@@ -355,7 +355,7 @@ export default async function StudentPage({ params, searchParams }: PageProps<"/
             )}
           </section>
 
-          <div className="dash">
+          <div className="dash split">
             {!student.archived_at && (
               <section className="card">
                 <div className="card-hd">

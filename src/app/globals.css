@@ -284,3 +284,8 @@ table.board { table-layout: fixed; min-width: 860px; }
 .fullpreview li { display: flex; flex-direction: column; gap: 8px; padding-bottom: 18px; border-bottom: 1px solid var(--line); }
 .fullpreview li:last-child { border-bottom: 0; padding-bottom: 0; }
 .fullpreview .n { font-size: 13px; font-weight: 700; color: var(--ink2); text-transform: uppercase; letter-spacing: .04em; }
+
+/* Daily practice takes the room; the student's details sit beside it */
+@media (min-width: 900px) {
+  .dash.split { grid-template-columns: minmax(0, 2.2fr) minmax(260px, 1fr); }
+}

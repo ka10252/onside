@@ -159,9 +159,8 @@ table.datatable td, table.datatable th { padding: 8px 12px; }
 .settings { max-height: calc(100vh - 100px); overflow-y: auto; }
 .multibody { max-height: min(420px, 60vh); }
 .sechead { margin: 8px 0 0; font-size: 17px; font-weight: 600; }
-.qc.result > summary { list-style: none; cursor: pointer; display: flex; flex-direction: column; gap: 8px; }
-.qc.result > summary::-webkit-details-marker { display: none; }
-.qc.result[open] > summary .qtext { display: none; }
+/* Results are read straight through: the question and the student's own answer are always shown. */
+.qc.result .meta { padding-bottom: 12px; border-bottom: 1px solid var(--line); }
 .ph3 { margin: 0 0 6px; font-size: 13px; font-weight: 600; color: var(--ink2); }
 .answerbox b { font-size: 13px; color: var(--ink2); }
 .btn.danger { background: var(--red); border-color: var(--red); color: #fff; }

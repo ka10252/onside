@@ -101,6 +101,21 @@ export default async function ResultsPage({ params, searchParams }: PageProps<"/
             </div>
           </div>
 
+          {!marked && (
+            <section className="card hero">
+              <div className="resulttop">
+                <span className="bigmark">
+                  <b>—</b>
+                  <span className="of">/{rv.score.total}</span>
+                </span>
+                <span className="muted">marks in this set · your tutor is still marking</span>
+              </div>
+              <p className="ss" style={{ marginTop: 16 }}>
+                {answered} of {rv.items.length} answered. Your answers are below.
+              </p>
+            </section>
+          )}
+
           {marked && (
             <section className="card hero">
               <div className="resulttop">
@@ -221,26 +236,21 @@ function ResultCard({ it, marked, context, unit }: { it: ReviewItem; marked: boo
   const noHelp = hintsUsed === 0 && asked === 0;
 
   return (
-    <details className="card qc result" open={marked && (it.confirmed ?? 0) < q.marks}>
-      <summary>
-        <span className="meta">
-          <span className="pill gray">Q{it.n}</span>
-          {unit && <span>Unit {unit}</span>}
-          {past && <span>{q.past.label}</span>}
-          <span>{FORMAT_LABEL[q.format]}</span>
-          <span className={`pill ${statusClass(marked, it, autoResult)}`}>{status}</span>
-          {hintsUsed > 0 && <span className="pill hl">Hint {hintsUsed === 2 ? "1 + 2" : "1"} used</span>}
-          {asked > 0 && (
-            <span className="pill hl">
-              Helper · {asked} {asked === 1 ? "question" : "questions"}
-            </span>
-          )}
-          {marked && noHelp && <span className="pill gray">No help</span>}
-        </span>
-        <span className="qtext clamp">
-          <Rich text={q.prompt} />
-        </span>
-      </summary>
+    <section className="card qc result">
+      <span className="meta">
+        <span className="pill gray">Q{it.n}</span>
+        {unit && <span>Unit {unit}</span>}
+        {past && <span>{q.past.label}</span>}
+        <span>{FORMAT_LABEL[q.format]}</span>
+        <span className={`pill ${statusClass(marked, it, autoResult)}`}>{status}</span>
+        {hintsUsed > 0 && <span className="pill hl">Hint {hintsUsed === 2 ? "1 + 2" : "1"} used</span>}
+        {asked > 0 && (
+          <span className="pill hl">
+            Helper · {asked} {asked === 1 ? "question" : "questions"}
+          </span>
+        )}
+        {marked && noHelp && <span className="pill gray">No help</span>}
+      </span>
 
       <div className="stack" style={{ gap: 14 }}>
         {context.length > 0 && (
@@ -267,15 +277,15 @@ function ResultCard({ it, marked, context, unit }: { it: ReviewItem; marked: boo
         )}
 
         {marked && (
-          <div>
-            <h3 className="ph3">{past ? "Mark scheme" : "Answer"}</h3>
-            <div className="answerbox mstext">
+          <details className="sub" open={(it.confirmed ?? 0) < q.marks}>
+            <summary>{past ? "Mark scheme" : "Answer"}</summary>
+            <div className="mstext">
               <Rich text={answerText(q)} />
             </div>
-          </div>
+          </details>
         )}
       </div>
-    </details>
+    </section>
   );
 }
 

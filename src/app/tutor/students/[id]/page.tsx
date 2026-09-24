@@ -1,13 +1,12 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { AssignForm } from "@/components/AssignForm";
 import { ConfirmForm } from "@/components/ConfirmForm";
 import { Crumbs } from "@/components/Crumbs";
 import { Nav, TUTOR_TABS } from "@/components/Nav";
 import { StatusBadge } from "@/components/review/StatusBadge";
 import { formatDue, StatusPill } from "@/components/StatusPill";
 import { StudentForm } from "@/components/StudentForm";
-import { assignmentsForStudent, getStudent, listSets, studentStats, type AssignmentRow } from "@/lib/admin";
+import { assignmentsForStudent, getStudent, studentStats, type AssignmentRow } from "@/lib/admin";
 import { deleteAssignment, setStudentArchived, unassign, updateStudent } from "@/lib/admin-actions";
 import { conceptBoard } from "@/lib/concept-board";
 import { DailyPractice } from "@/components/tutor/DailyPractice";
@@ -36,10 +35,9 @@ export default async function StudentPage({ params }: PageProps<"/tutor/students
   const { id } = await params;
   const student = await getStudent(id);
   if (!student) notFound();
-  const [assignments, progress, sets, board, stats, latest, schedule, parts] = await Promise.all([
+  const [assignments, progress, board, stats, latest, schedule, parts] = await Promise.all([
     assignmentsForStudent(id),
     unitTestProgress(id),
-    listSets(),
     conceptBoard(id),
     studentStats(id),
     latestSummary(id),
@@ -87,16 +85,6 @@ export default async function StudentPage({ params }: PageProps<"/tutor/students
   const trend = [...marked].sort((a, b) => (a.submitted_at ?? "").localeCompare(b.submitted_at ?? "")).slice(-8);
   const weakest = board.units.flatMap((u) => u.rows.map((r) => ({ row: r, unit: u.number }))).filter((x) => x.row.status === "needs").slice(0, 3);
 
-  const assignedSetIds = new Set(assignments.map((a) => a.set_id));
-  const sendable = sets
-    .filter((s) => !s.review_of)
-    .map((s) => ({
-      id: s.id,
-      label: s.title,
-      note: assignedSetIds.has(s.id) ? "already sent" : `${s.question_count} questions · ${s.marks} marks`,
-      disabled: assignedSetIds.has(s.id),
-    }));
-
   return (
     <>
       <Nav user={user} tabs={TUTOR_TABS} active="/tutor" />
@@ -117,6 +105,7 @@ export default async function StudentPage({ params }: PageProps<"/tutor/students
               </div>
               <div className="rowacts">
                 <Link href={`/tutor/students/${student.id}/concepts`} className="btn">Concept board</Link>
+                <Link href="/tutor/sets" className="btn">Sets</Link>
                 <Link href={`/tutor/sets/new?student=${student.id}`} className="btn accent">Build a set</Link>
               </div>
             </div>
@@ -365,16 +354,6 @@ export default async function StudentPage({ params }: PageProps<"/tutor/students
               </section>
             )}
 
-            {!student.archived_at && (
-              <section className="card">
-                <div className="card-hd">
-                  <h2>Send a set</h2>
-                </div>
-                <div className="cardbody">
-                  <AssignForm studentId={student.id} studentName={student.name} sets={sendable} />
-                </div>
-              </section>
-            )}
             <section className="card">
               <div className="card-hd">
                 <h2>Details</h2>

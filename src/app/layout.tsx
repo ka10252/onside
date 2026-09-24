@@ -5,8 +5,9 @@ import "./globals.css";
 const serif = Instrument_Serif({ variable: "--font-serif", subsets: ["latin"], weight: "400" });
 const sans = Instrument_Sans({ variable: "--font-sans", subsets: ["latin"], weight: ["400", "500", "600", "700"] });
 
-// AI marking runs after a response is sent (next/server after()); give it time on Vercel.
-export const maxDuration = 300;
+// AI marking runs after a response is sent (next/server after()). 60 s is plenty for the batch
+// call, and a page that goes wrong gives up quickly instead of hanging the browser for minutes.
+export const maxDuration = 60;
 
 export const metadata: Metadata = {
   title: "Onside",

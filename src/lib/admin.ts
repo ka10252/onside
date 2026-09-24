@@ -1,5 +1,6 @@
 import "server-only";
 import { hasAnswerSql } from "./answered";
+import { memo } from "./cache";
 import { all, one } from "./db";
 import type { Format } from "./content";
 
@@ -160,18 +161,25 @@ const BANK_SELECT = `
     FROM questions q JOIN units u ON u.id = q.unit_id
     LEFT JOIN past_items p ON q.source = 'past' AND p.id = substr(q.id, 4)`;
 
-export async function bankParts(): Promise<{ id: string; name: string; units: { number: number; title: string }[] }[]> {
+export const bankParts = memo(5 * 60_000, async (): Promise<{ id: string; name: string; units: { number: number; title: string }[] }[]> => {
   const [parts, units] = await Promise.all([
     all<{ id: string; name: string }>("SELECT id, name FROM parts ORDER BY sort"),
     all<{ number: number; title: string; part_id: string }>("SELECT number, title, part_id FROM units ORDER BY number"),
   ]);
   return parts.map((p) => ({ ...p, units: units.filter((u) => u.part_id === p.id) }));
-}
+});
+
+// The bank is 1,200-odd questions and changes only when questions are added or edited, so reading
+// it again on every preview is the slowest thing a page can do. Held for a few minutes per instance.
+const approvedBank = memo(3 * 60_000, () =>
+  all<BankQuestion>(`${BANK_SELECT} WHERE q.approved_by_tutor = 1 ORDER BY u.number, q.source = 'past', q.seq`),
+);
 
 /** Approved questions; `withDrafts` also returns AI drafts (for the builder right after generating). */
 export function bankQuestions(withDrafts = false): Promise<BankQuestion[]> {
+  if (!withDrafts) return approvedBank();
   return all<BankQuestion>(
-    `${BANK_SELECT} WHERE q.approved_by_tutor = 1 ${withDrafts ? "OR q.source = 'ai'" : ""}
+    `${BANK_SELECT} WHERE q.approved_by_tutor = 1 OR q.source = 'ai'
       ORDER BY u.number, q.source = 'past', q.seq`,
   );
 }

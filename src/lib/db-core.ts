@@ -345,8 +345,11 @@ async function openPostgres(url: string): Promise<Db> {
   const toNumber = { to: 20, from: [20, 1700], serialize: (x: unknown) => String(x), parse: (x: string) => Number(x) };
   const sql = postgres(url, {
     prepare: false, // Supabase transaction pooler
-    max: 5,
+    max: 3,
     idle_timeout: 20,
+    // Fail fast instead of leaving a page hanging until the function's time limit.
+    connect_timeout: 10,
+    connection: { application_name: "onside" },
     onnotice: () => {},
     types: { num: toNumber },
   });

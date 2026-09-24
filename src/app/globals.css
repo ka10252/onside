@@ -340,3 +340,17 @@ table.board { table-layout: fixed; min-width: 860px; }
 .slotlist label.grow { flex: 1; min-width: 200px; }
 .slotlist input, .slotlist select { height: 40px; padding: 0 10px; border: 1px solid var(--line2); border-radius: 8px; background: var(--surface); font: inherit; color: var(--ink); }
 .slotlist input[type="number"] { width: 90px; }
+
+/* The student's calendar */
+.cell.readonly { cursor: default; }
+.cell.readonly:hover { border-color: var(--line); }
+.calgrid .chip { display: block; text-decoration: none; text-align: left; }
+.calgrid a.chip:hover { outline: 2px solid var(--ink); outline-offset: 1px; }
+.calgrid .chip.duechip { background: var(--sunk); color: var(--ink2); }
+.calgrid .chip.duechip.late { background: var(--redtint); color: var(--redtext); }
+.card-hd .key { display: inline-flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.card-hd .key .chip { font-size: 11px; font-weight: 600; padding: 3px 7px; border-radius: 6px; }
+.card-hd .key .chip.planned { background: var(--ink); color: #fff; }
+.card-hd .key .chip.waiting { background: var(--ambertint); color: var(--amber); }
+.card-hd .key .chip.done { background: var(--greentint); color: var(--green); }
+.card-hd .key .chip.duechip { background: var(--sunk); color: var(--ink2); }

@@ -1,11 +1,13 @@
 import Link from "next/link";
 import { Nav, STUDENT_TABS } from "@/components/Nav";
 import { formatDue } from "@/components/StatusPill";
-import { isOverdue, shortDateSG } from "@/lib/due";
+import { dateInSG, duePieces, isOverdue, shortDateSG } from "@/lib/due";
 import { UnitSelect } from "@/components/student/UnitSelect";
 import { all } from "@/lib/db";
 import { requireUser } from "@/lib/session";
 import { closeExpiredAssignments, hasAnswerSql } from "@/lib/student";
+import { AssignmentCalendar, type StudentDay } from "@/components/student/AssignmentCalendar";
+import { getSchedule, singaporeToday, upcomingSends } from "@/lib/schedule";
 
 type Row = {
   id: string;
@@ -55,6 +57,37 @@ export default async function AssignmentsPage({ searchParams }: PageProps<"/stud
   const unitsOf = new Map<string, UnitRow[]>();
   for (const u of unitRows) unitsOf.set(u.assignment_id, [...(unitsOf.get(u.assignment_id) ?? []), u]);
 
+  // Four weeks from this Monday: what arrived, what is due, and what the tutor has scheduled.
+  const schedule = await getSchedule(user.id);
+  const { date: todaySg } = singaporeToday();
+  const monday = new Date(new Date(`${todaySg}T00:00:00Z`).getTime() - ((new Date(`${todaySg}T00:00:00Z`).getUTCDay() + 6) % 7) * 86_400_000);
+  const coming = new Map<string, ReturnType<typeof upcomingSends>>();
+  if (schedule.enabled) for (const u of upcomingSends(schedule, 42)) coming.set(u.date, [...(coming.get(u.date) ?? []), u]);
+  const shortTitle = (t: string) => (t.length > 22 ? `${t.slice(0, 21)}…` : t);
+  const days: StudentDay[] = Array.from({ length: 28 }, (_, i) => {
+    const d = new Date(monday.getTime() + i * 86_400_000);
+    const iso = d.toISOString().slice(0, 10);
+    return {
+      date: iso,
+      day: d.getUTCDate(),
+      today: iso === todaySg,
+      arrived: rows
+        .filter((r) => dateInSG(r.assigned_at) === iso)
+        .map((r) => ({ id: r.id, title: shortTitle(r.title), done: r.status === "submitted" || r.status === "reviewed" })),
+      due: rows
+        .filter((r) => r.due_at && duePieces(r.due_at).date === iso)
+        .map((r) => ({
+          id: r.id,
+          title: shortTitle(r.title),
+          time: duePieces(r.due_at!).time,
+          late: isOverdue(r.due_at),
+          done: r.status === "submitted" || r.status === "reviewed",
+        })),
+      coming: (coming.get(iso) ?? []).map((p) => ({ time: p.time, unit: p.unit, count: p.count })),
+    };
+  });
+  const monthLabel = new Date(days[0]!.date).toLocaleDateString("en-SG", { month: "long", year: "numeric", timeZone: "UTC" });
+
   const todo = rows
     .filter((r) => r.status === "not_started" || r.status === "in_progress")
     .sort((a, b) => (a.due_at ?? "9999").localeCompare(b.due_at ?? "9999") || a.assigned_at.localeCompare(b.assigned_at));
@@ -102,6 +135,8 @@ export default async function AssignmentsPage({ searchParams }: PageProps<"/stud
               </p>
             </div>
           </div>
+
+          <AssignmentCalendar cells={days} monthLabel={monthLabel} />
 
           <nav className="filters" aria-label="Which assignments to show">
             <Link href={tabLink("todo", unitPick)} className={`chip${showDone ? "" : " on"}`} aria-current={showDone ? undefined : "page"}>

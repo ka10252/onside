@@ -354,32 +354,3 @@ table.board { table-layout: fixed; min-width: 860px; }
 .card-hd .key .chip.waiting { background: var(--ambertint); color: var(--amber); }
 .card-hd .key .chip.done { background: var(--greentint); color: var(--green); }
 .card-hd .key .chip.duechip { background: var(--sunk); color: var(--ink2); }
-
-/* The student's calendar: the right-hand column, staying put while they scroll */
-.studentgrid { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 22px; align-items: start; }
-.minical { position: sticky; top: 84px; padding: 16px 18px 14px; border: 1px solid var(--line2); border-radius: 14px; background: var(--surface); box-shadow: 0 2px 4px rgba(29, 39, 64, .05); }
-.minical .mhead { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; font-size: 15px; font-weight: 700; }
-.minical .mgrid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; margin-top: 10px; }
-.minical .mdow { font-size: 11px; font-weight: 700; color: var(--ink2); text-align: center; padding-bottom: 2px; }
-.minical .mday { height: 42px; border: 1px solid transparent; border-radius: 8px; background: transparent; font: inherit; font-size: 13px; color: var(--ink); cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; padding: 0; }
-.minical .mday:hover { background: var(--sunk); }
-.minical .mday.empty { color: var(--ink2); }
-.minical .mday.today { border-color: var(--ink); font-weight: 700; }
-.minical .mday.picked { background: var(--ink); color: #fff; border-color: var(--ink); }
-.minical .dots { display: flex; gap: 3px; height: 6px; }
-.minical i, .mkey i, .mday-detail i { display: inline-block; width: 6px; height: 6px; border-radius: 50%; flex: none; }
-.minical i.waiting, .mkey i.waiting, .mday-detail i.waiting { background: var(--amber); }
-.minical i.done, .mkey i.done, .mday-detail i.done { background: var(--green); }
-.minical i.due, .mkey i.due, .mday-detail i.due { background: var(--ink2); }
-.minical i.late, .mday-detail i.late { background: var(--red); }
-.minical i.coming, .mkey i.coming, .mday-detail i.coming { background: var(--ink); }
-.minical .mday-detail { margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--line); display: flex; flex-direction: column; gap: 6px; font-size: 13px; }
-.minical .mday-detail a, .minical .mday-detail span { display: flex; align-items: center; gap: 7px; color: inherit; }
-.minical .mday-detail a:hover { text-decoration: underline; }
-.minical .mday-detail p { margin: 0; }
-.minical .mkey { margin: 12px 0 0; font-size: 11px; color: var(--ink2); display: flex; align-items: center; gap: 5px; flex-wrap: wrap; }
-/* One column when there isn't room beside the list. */
-@media (max-width: 1100px) {
-  .studentgrid { grid-template-columns: minmax(0, 1fr); }
-  .minical { position: static; order: -1; }
-}

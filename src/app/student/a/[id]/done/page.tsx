@@ -175,17 +175,25 @@ export default async function ResultsPage({ params, searchParams }: PageProps<"/
             </nav>
           )}
 
-          <div className="stack" style={{ gap: 14 }}>
-            {items.length === 0 ? (
-              <div className="card empty-state">
-                <p className="muted">Nothing here. Try another filter.</p>
-              </div>
-            ) : (
-              items.map((it) => (
-                <ResultCard key={it.q.id} it={it} marked={marked} context={contexts.get(it.q.id) ?? []} unit={unitOf.get(it.q.id)?.number ?? null} />
-              ))
-            )}
-          </div>
+          {items.length === 0 ? (
+            <div className="card empty-state">
+              <p className="muted">Nothing here. Try another filter.</p>
+            </div>
+          ) : (
+            <section className="card">
+              <ol className="qsheet">
+                {items.map((it) => (
+                  <ResultRow
+                    key={it.q.id}
+                    it={it}
+                    marked={marked}
+                    context={contexts.get(it.q.id) ?? []}
+                    unit={units.length > 1 ? (unitOf.get(it.q.id)?.number ?? null) : null}
+                  />
+                ))}
+              </ol>
+            </section>
+          )}
 
           <div>
             <Link href="/student" className="btn">
@@ -202,7 +210,7 @@ export default async function ResultsPage({ params, searchParams }: PageProps<"/
 function Split({ kind, label, split, note }: { kind: "ind" | "sup"; label: string; split: MarkSplit; note: string }) {
   const none = split.questions === 0;
   return (
-    <div className={`score ${kind}`}>
+    <div className={`score ${kind} split`}>
       <div>
         <span className="sl">{label}</span>
         <span className="sv frac">
@@ -217,45 +225,32 @@ function Split({ kind, label, split, note }: { kind: "ind" | "sup"; label: strin
   );
 }
 
-function ResultCard({ it, marked, context, unit }: { it: ReviewItem; marked: boolean; context: Block[]; unit: number | null }) {
+/**
+ * One question on the answer paper: the question and what the student wrote in the reading
+ * column, the mark in a margin on the right, the way a marked script reads.
+ */
+function ResultRow({ it, marked, context, unit }: { it: ReviewItem; marked: boolean; context: Block[]; unit: number | null }) {
   const { q, r } = it;
   const past = isPast(q);
   const attempts = json.parse<{ value: string; correct: boolean }[]>(r?.attempts, []);
   const autoResult = it.auto && attempts.length ? attempts.some((x) => x.correct) : null;
-  const status = marked
-    ? `${it.confirmed ?? 0}/${q.marks} marks`
-    : autoResult !== null
-      ? autoResult
-        ? "Correct"
-        : "Incorrect"
-      : it.result === "No answer" || it.result === "Not opened"
-        ? "No answer"
-        : "Waiting for marks";
+  const blank = it.result === "No answer" || it.result === "Not opened";
   const hintsUsed = r?.hint_level ?? 0;
   const asked = r?.ai_questions ?? 0;
-  const noHelp = hintsUsed === 0 && asked === 0;
-
-  const stamp = marked && it.result !== "Not opened" && it.result !== "No answer" ? stampFor(it.confirmed ?? 0, q.marks) : null;
+  const help = [hintsUsed > 0 ? `Hint ${hintsUsed === 2 ? "1 + 2" : "1"}` : "", asked > 0 ? `Helper ×${asked}` : ""].filter(Boolean).join(" · ");
+  // Before the tutor confirms, only questions the site marks itself show a mark.
+  const stamp = blank ? null : marked ? stampFor(it.confirmed ?? 0, q.marks) : autoResult === null ? null : stampFor(autoResult ? q.marks : 0, q.marks);
 
   return (
-    <section className="card qc result">
-      {stamp && <MarkStamp kind={stamp.kind} label={stamp.label} />}
-      <span className="meta">
-        <span className="pill gray">Q{it.n}</span>
-        {unit && <span>Unit {unit}</span>}
-        {past && <span>{q.past.label}</span>}
-        <span>{FORMAT_LABEL[q.format]}</span>
-        <span className={`pill ${statusClass(marked, it, autoResult)}`}>{status}</span>
-        {hintsUsed > 0 && <span className="pill hl">Hint {hintsUsed === 2 ? "1 + 2" : "1"} used</span>}
-        {asked > 0 && (
-          <span className="pill hl">
-            Helper · {asked} {asked === 1 ? "question" : "questions"}
+    <li className={marked && (it.confirmed ?? 0) < q.marks ? "lost" : undefined}>
+      <span className="qn">{it.n}</span>
+
+      <div className="qbody">
+        {(unit || past) && (
+          <span className="qlabel">
+            {[unit ? `Unit ${unit}` : "", past ? q.past.label : FORMAT_LABEL[q.format]].filter(Boolean).join(" · ")}
           </span>
         )}
-        {marked && noHelp && <span className="pill gray">No help</span>}
-      </span>
-
-      <div className="stack" style={{ gap: 14 }}>
         {context.length > 0 && (
           <details className="sub">
             <summary>Extracts and data</summary>
@@ -263,12 +258,12 @@ function ResultCard({ it, marked, context, unit }: { it: ReviewItem; marked: boo
           </details>
         )}
         {past ? q.past.lead.length > 0 && <Blocks blocks={q.past.lead} /> : q.table && <Blocks blocks={tableBlock(q.table)} />}
-        <p className="qtext" style={{ margin: 0 }}>
+        <p className="qtext">
           <Rich text={q.prompt} /> <span className="muted">[{q.marks}]</span>
         </p>
 
-        <div>
-          <h3 className="ph3">Your answer</h3>
+        <div className="stack" style={{ gap: 6 }}>
+          <span className="qlabel">Your answer</span>
           <YourAnswer q={q} it={it} />
         </div>
 
@@ -288,7 +283,25 @@ function ResultCard({ it, marked, context, unit }: { it: ReviewItem; marked: boo
           </details>
         )}
       </div>
-    </section>
+
+      <div className="qmargin">
+        {stamp && <MarkStamp kind={stamp.kind} label={stamp.label} />}
+        <span className="m">
+          {marked ? (
+            <>
+              {it.confirmed ?? 0}
+              <span className="of">/{q.marks}</span>
+            </>
+          ) : blank ? (
+            "—"
+          ) : (
+            <span className="waiting">Not marked yet</span>
+          )}
+        </span>
+        {help && <span className="h">{help}</span>}
+        {marked && !help && !blank && <span className="h">No help</span>}
+      </div>
+    </li>
   );
 }
 
@@ -297,15 +310,6 @@ function stampFor(got: number, marks: number): { kind: "circle" | "triangle" | "
   if (got >= marks) return { kind: "circle", label: `Full marks: ${got} of ${marks}` };
   if (got > 0) return { kind: "triangle", label: `Some marks: ${got} of ${marks}` };
   return { kind: "cross", label: `No marks: 0 of ${marks}` };
-}
-
-function statusClass(marked: boolean, it: ReviewItem, auto: boolean | null) {
-  if (marked) {
-    const got = it.confirmed ?? 0;
-    return got >= it.q.marks ? "green" : got === 0 ? "red" : "amber";
-  }
-  if (auto !== null) return auto ? "green" : "red";
-  return "gray";
 }
 
 function YourAnswer({ q, it }: { q: Question; it: ReviewItem }) {

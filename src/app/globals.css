@@ -159,8 +159,6 @@ table.datatable td, table.datatable th { padding: 8px 12px; }
 .settings { max-height: calc(100vh - 100px); overflow-y: auto; }
 .multibody { max-height: min(420px, 60vh); }
 .sechead { margin: 8px 0 0; font-size: 17px; font-weight: 600; }
-/* Results are read straight through: the question and the student's own answer are always shown. */
-.qc.result .meta { padding-bottom: 12px; border-bottom: 1px solid var(--line); }
 .ph3 { margin: 0 0 6px; font-size: 13px; font-weight: 600; color: var(--ink2); }
 .answerbox b { font-size: 13px; color: var(--ink2); }
 .btn.danger { background: var(--red); border-color: var(--red); color: #fff; }
@@ -363,9 +361,24 @@ table.board { table-layout: fixed; min-width: 860px; }
 .slotlist li.picked { border-color: var(--ink); box-shadow: 0 0 0 2px var(--hl); }
 .sentset { padding: 12px 14px; border: 1px solid var(--line2); border-radius: 12px; background: var(--surface); }
 .sentset.open { border-color: var(--ink); }
+.score.split { align-items: flex-start; }
 .sv.frac { font-size: 46px; }
 .sv .of { font-family: var(--serif); font-size: 0.55em; color: var(--ink2); }
-/* The red-pen mark on a marked question. */
-.qc.result { position: relative; }
-.qc.result .meta { padding-right: 62px; }
-.markstamp { position: absolute; top: 12px; right: 18px; color: var(--red); transform: rotate(-7deg); pointer-events: none; line-height: 0; }
+/* The marked answer paper: one sheet, the questions divided by a rule, the marks in a margin. */
+.qsheet > li { display: grid; grid-template-columns: 26px minmax(0, 1fr) 104px; gap: 0 18px; padding: 22px 26px; border-top: 1px solid var(--line); }
+.qsheet > li:first-child { border-top: 0; }
+.qsheet > li.lost { background: var(--surface2); }
+.qsheet .qn { font-family: var(--serif); font-size: 24px; line-height: 1.15; color: var(--ink2); }
+.qsheet .qbody { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.qsheet .qlabel { font-size: 13px; color: var(--ink2); }
+.qsheet .qtext { margin: 0; font-size: 18px; font-weight: 500; line-height: 1.4; }
+.qsheet .why { margin: 0; }
+.qmargin { display: flex; flex-direction: column; align-items: center; gap: 4px; text-align: center; }
+.qmargin .m { font-family: var(--serif); font-size: 24px; line-height: 1.1; }
+.qmargin .m .of { font-size: 0.66em; color: var(--ink2); }
+.qmargin .m .waiting { font-family: var(--sans); font-size: 12px; font-weight: 600; color: var(--ink2); }
+.qmargin .h { font-size: 12px; line-height: 1.35; color: var(--ink2); }
+.markstamp { color: var(--red); transform: rotate(-7deg); line-height: 0; }
+/* The tutor's comment stays quiet on the student's side: pink is for the tutor's screens. */
+.qsheet .why { padding: 2px 0 2px 14px; border-radius: 0; border-left: 2px solid var(--line2); background: transparent; }
+.qsheet .why b { color: var(--ink2); }

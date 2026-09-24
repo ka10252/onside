@@ -1,7 +1,7 @@
 "use client";
 
 import { useActionState, useState } from "react";
-import { DAY_NAMES, type Schedule } from "@/lib/schedule-shared";
+import { DAY_NAMES, timesOf, type Schedule } from "@/lib/schedule-shared";
 import { sendPracticeNow, updateSchedule, type ScheduleState } from "@/lib/schedule-actions";
 
 type Unit = { number: number; title: string };
@@ -23,6 +23,7 @@ export function DailyPractice({
   const days = JSON.parse(schedule.days) as number[];
   const [plan, setPlan] = useState<number[]>(() => JSON.parse(schedule.plan) as number[]);
   const [dueDays, setDueDays] = useState<string>(schedule.due_days === null ? "" : String(schedule.due_days));
+  const [times, setTimes] = useState<string[]>(() => timesOf(schedule));
   const first = studentName.split(" ")[0];
   const title = (u: number) => (u === 0 ? "Every unit" : `Unit ${u} · ${units.find((x) => x.number === u)?.title ?? ""}`);
   const move = (i: number, by: number) =>
@@ -55,11 +56,40 @@ export function DailyPractice({
           <span>Send {first} a set automatically</span>
         </label>
 
+        <input type="hidden" name="times" value={JSON.stringify(times)} />
         <div className="two-up">
           <div className="field">
-            <label htmlFor="sendAt">Send at</label>
-            <input id="sendAt" name="sendAt" className="answer" type="time" defaultValue={schedule.send_at} />
-            <span className="note">Singapore time</span>
+            <span className="lab">Send at</span>
+            <div className="timelist">
+              {times.map((t, i) => (
+                <span key={i} className="timeitem">
+                  <input
+                    type="time"
+                    value={t}
+                    onChange={(e) => setTimes((cur) => cur.map((x, j) => (j === i ? e.target.value : x)))}
+                  />
+                  {times.length > 1 && (
+                    <button type="button" className="btn ghost sm" onClick={() => setTimes((cur) => cur.filter((_, j) => j !== i))}>
+                      Remove
+                    </button>
+                  )}
+                </span>
+              ))}
+              <button
+                type="button"
+                className="btn sm"
+                onClick={() =>
+                  setTimes((cur) => {
+                    const [h, m] = (cur.at(-1) ?? "07:00").split(":").map(Number);
+                    const next = `${String(Math.min(23, (h ?? 7) + 6)).padStart(2, "0")}:${String(m ?? 0).padStart(2, "0")}`;
+                    return cur.includes(next) ? cur : [...cur, next];
+                  })
+                }
+              >
+                Add another time
+              </button>
+            </div>
+            <span className="note">Singapore time · one set at each time</span>
           </div>
           <div className="field">
             <label htmlFor="count">Questions each time</label>

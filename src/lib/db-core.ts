@@ -194,7 +194,9 @@ CREATE TABLE IF NOT EXISTS schedules (
   units        TEXT NOT NULL DEFAULT '[]',        -- unit numbers; empty means every unit
   helper       TEXT NOT NULL DEFAULT 'on' CHECK (helper IN ('on', 'off')),
   days         TEXT NOT NULL DEFAULT '[1,2,3,4,5]', -- 0 = Sunday
-  send_at      TEXT NOT NULL DEFAULT '07:00',      -- Singapore time
+  send_at      TEXT NOT NULL DEFAULT '07:00',      -- Singapore time; the times column holds the rest
+  times        TEXT NOT NULL DEFAULT '[]',         -- every send time on a practice day, e.g. ["07:00","20:00"]
+  sent_slots   TEXT NOT NULL DEFAULT '{}',         -- which times already went out: {"2026-09-25":["07:00"]}
   due_days     INTEGER,
   due_time     TEXT,                               -- HH:MM, Singapore time
   plan         TEXT NOT NULL DEFAULT '[]',         -- units in order, repeats allowed; empty = the units above
@@ -294,6 +296,8 @@ ALTER TABLE schedules ADD COLUMN IF NOT EXISTS due_time TEXT;
 ALTER TABLE schedules ADD COLUMN IF NOT EXISTS plan TEXT NOT NULL DEFAULT '[]';
 ALTER TABLE schedules ADD COLUMN IF NOT EXISTS plan_index INTEGER NOT NULL DEFAULT 0;
 ALTER TABLE schedules ADD COLUMN IF NOT EXISTS overrides TEXT NOT NULL DEFAULT '{}';
+ALTER TABLE schedules ADD COLUMN IF NOT EXISTS times TEXT NOT NULL DEFAULT '[]';
+ALTER TABLE schedules ADD COLUMN IF NOT EXISTS sent_slots TEXT NOT NULL DEFAULT '{}';
 `;
 
 export type Params = unknown[];

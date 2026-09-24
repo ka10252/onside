@@ -57,7 +57,8 @@ export default async function StudentPage({ params, searchParams }: PageProps<"/
   // Four weeks from this Monday: what already went out, and what the schedule will send.
   const { date: todaySg } = singaporeToday();
   const monday = new Date(new Date(`${todaySg}T00:00:00Z`).getTime() - ((new Date(`${todaySg}T00:00:00Z`).getUTCDay() + 6) % 7) * 86_400_000);
-  const planned = new Map(upcomingSends(schedule, 42).map((u) => [u.date, u]));
+  const plannedByDate = new Map<string, ReturnType<typeof upcomingSends>>();
+  for (const u of upcomingSends(schedule, 42)) plannedByDate.set(u.date, [...(plannedByDate.get(u.date) ?? []), u]);
   // Sets that already went out, with the time (Singapore), how many questions and which units.
   const sentRows = await all<{ on: string; at: string; title: string; status: string; n: number; units: string | null }>(
     `SELECT substr(a.assigned_at, 1, 10) AS on, a.assigned_at AS at, s.title, a.status,
@@ -70,9 +71,11 @@ export default async function StudentPage({ params, searchParams }: PageProps<"/
     id,
   );
   const sgTime = (iso: string) => new Date(new Date(iso).getTime() + 8 * 3600_000).toISOString().slice(11, 16);
-  const sent = new Map(
-    sentRows.map((r) => [
-      substrDay(r.at),
+  const sentByDate = new Map<string, CalendarCell["sent"]>();
+  for (const r of sentRows) {
+    const on = substrDay(r.at);
+    sentByDate.set(on, [
+      ...(sentByDate.get(on) ?? []),
       {
         title: r.title,
         status: r.status,
@@ -81,29 +84,25 @@ export default async function StudentPage({ params, searchParams }: PageProps<"/
         short: r.units ? `U${r.units.split(",").join("/")}` : "All",
         done: r.status === "submitted" || r.status === "reviewed",
       },
-    ]),
-  );
+    ]);
+  }
   const unitName = (n: number | null) => (n === null ? "Every unit" : `Unit ${n} · ${allUnits.find((u) => u.number === n)?.title ?? ""}`);
   const cells: CalendarCell[] = Array.from({ length: 28 }, (_, i) => {
     const d = new Date(monday.getTime() + i * 86_400_000);
     const iso = d.toISOString().slice(0, 10);
-    const p = planned.get(iso);
     return {
       date: iso,
       day: d.getUTCDate(),
       today: iso === todaySg,
       past: iso < todaySg,
-      sent: sent.get(iso) ?? null,
-      planned: p
-        ? {
-            unitLabel: unitName(p.unit),
-            short: p.unit === null ? "All" : `U${p.unit}`,
-            unit: p.unit,
-            count: p.count,
-            time: p.time,
-            byHand: p.source === "override",
-          }
-        : null,
+      sent: (sentByDate.get(iso) ?? []).sort((a, b) => a.time.localeCompare(b.time)),
+      planned: (plannedByDate.get(iso) ?? []).map((p) => ({
+        time: p.time,
+        short: p.unit === null ? "All" : `U${p.unit}`,
+        unit: p.unit,
+        count: p.count,
+        byHand: p.source === "override",
+      })),
     };
   });
   const monthLabel = `${new Date(cells[0]!.date).toLocaleDateString("en-SG", { month: "long", year: "numeric" })}`;

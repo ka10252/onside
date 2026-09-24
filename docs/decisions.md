@@ -125,3 +125,8 @@ These override HANDOFF §6 and answer §8 where they differ.
 - The student's page shows four weeks. A day is set by clicking it: a unit for that day, "don't send", or back to the plan. Those choices are kept per date in `schedules.overrides` and win over the weekly days and the rotation; a hand-set day doesn't move the rotation along.
 - The questions for a day are only shown when the tutor asks for them, from the day they clicked.
 - The student's details (name, login, password, archive) sit behind their name at the top of the page, so the rest of the page is about their work.
+
+## Daily practice: more than one set a day (2026-09-24)
+- A practice day has a list of send times (`schedules.times`, defaulting to `send_at`), so a student can get, say, one set in the morning and another in the evening. Each set draws its own questions and the unit rotation moves on one step per set.
+- A day set by hand on the calendar holds a list too: each entry has its own time, unit and number of questions.
+- `schedules.sent_slots` records which times have gone out on which date, so a run that fires several times a day never sends the same slot twice.

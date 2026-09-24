@@ -4,16 +4,16 @@ import { revalidatePath } from "next/cache";
 import { all } from "./db";
 import type { BankQuestion } from "./admin";
 import {
-  countForDay,
-  dayChoice,
+  dayIsByHand,
   getSchedule,
-  pickForSchedule,
+  pickForSlot,
   saveSchedule,
   sendDailySet,
+  sentTimes,
   singaporeToday,
-  timeForDay,
-  unitsForNextSend,
+  slotsForDate,
   type Schedule,
+  type Slot,
 } from "./schedule";
 import { requireUser } from "./session";
 
@@ -30,11 +30,20 @@ export async function updateSchedule(_prev: ScheduleState, fd: FormData): Promis
   const days = fd.getAll("days").map(Number).filter((d) => d >= 0 && d <= 6);
   const unit = String(fd.get("unit") ?? "");
   const dueDays = String(fd.get("dueDays") ?? "");
-  const sendAt = String(fd.get("sendAt") ?? "07:00");
+  const timesRaw = String(fd.get("times") ?? "[]");
+  let times: string[] = [];
+  try {
+    times = [...new Set((JSON.parse(timesRaw) as unknown[]).map(String))].sort();
+  } catch {
+    return { error: "The send times could not be read. Try again." };
+  }
+  if (times.length === 0) times = ["07:00"];
+  if (times.length > 6) return { error: "Six sets a day is plenty." };
+  const sendAt = times[0]!;
   const dueTime = String(fd.get("dueTime") ?? "");
   const plan = String(fd.get("plan") ?? "[]");
   const time = /^([01]\d|2[0-3]):[0-5]\d$/;
-  if (!time.test(sendAt)) return { error: "Enter a send time like 07:00." };
+  if (!times.every((t) => time.test(t))) return { error: "Enter send times like 07:00." };
   if (dueTime && !time.test(dueTime)) return { error: "Enter a due time like 21:00." };
   let planUnits: number[] = [];
   try {
@@ -58,6 +67,7 @@ export async function updateSchedule(_prev: ScheduleState, fd: FormData): Promis
     helper: fd.get("helper") === "off" ? "off" : "on",
     days: JSON.stringify(days.sort()),
     send_at: sendAt,
+    times: JSON.stringify(times),
     due_days: dueDays === "" ? null : Number(dueDays),
     due_time: dueTime || null,
     plan: JSON.stringify(planUnits),
@@ -66,7 +76,11 @@ export async function updateSchedule(_prev: ScheduleState, fd: FormData): Promis
   };
   await saveSchedule(next);
   revalidatePath(`/tutor/students/${studentId}`);
-  return { ok: enabled ? `Saved. The next set goes out at ${sendAt} on the next practice day.` : "Saved. Daily practice is off." };
+  return {
+    ok: enabled
+      ? `Saved. ${times.length === 1 ? `One set at ${sendAt}` : `${times.length} sets a day at ${times.join(", ")}`} on each practice day.`
+      : "Saved. Daily practice is off.",
+  };
 }
 
 /** Sends today's set now, for trying it out. */
@@ -84,11 +98,13 @@ export async function sendPracticeNow(_prev: ScheduleState, fd: FormData): Promi
 
 const DATE = /^\d{4}-\d{2}-\d{2}$/;
 
-/** Sets, clears or skips one day on the calendar. */
+export type DaySlotInput = { unit: number; count: number; time: string };
+
+/** Sets, clears or skips one day on the calendar. A day can hold more than one set. */
 export async function setPracticeDay(
   studentId: string,
   date: string,
-  choice: "plan" | "skip" | { unit: number; count: number; time: string },
+  choice: "plan" | "skip" | DaySlotInput[],
 ): Promise<ScheduleState> {
   await requireUser("tutor");
   if (!DATE.test(date)) return { error: "That date doesn't look right." };
@@ -99,38 +115,55 @@ export async function setPracticeDay(
   } else if (choice === "skip") {
     overrides[date] = "skip";
   } else {
-    if (!(Number.isInteger(choice.unit) && choice.unit >= 0 && choice.unit <= 20)) return { error: "Choose a unit." };
-    if (!(Number.isInteger(choice.count) && choice.count >= 1 && choice.count <= 20)) return { error: "Send between 1 and 20 questions." };
-    if (!/^([01]\d|2[0-3]):[0-5]\d$/.test(choice.time)) return { error: "Enter a time like 07:00." };
-    overrides[date] = { u: choice.unit, n: choice.count, t: choice.time };
+    if (choice.length === 0) return { error: "Add at least one set, or choose not to send." };
+    if (choice.length > 6) return { error: "Six sets in a day is plenty." };
+    for (const c of choice) {
+      if (!(Number.isInteger(c.unit) && c.unit >= 0 && c.unit <= 20)) return { error: "Choose a unit." };
+      if (!(Number.isInteger(c.count) && c.count >= 1 && c.count <= 20)) return { error: "Send between 1 and 20 questions." };
+      if (!/^([01]\d|2[0-3]):[0-5]\d$/.test(c.time)) return { error: "Enter a time like 07:00." };
+    }
+    if (new Set(choice.map((c) => c.time)).size !== choice.length) return { error: "Two sets can't go out at the same time." };
+    overrides[date] = choice.map((c) => ({ u: c.unit, n: c.count, t: c.time }));
   }
   await saveSchedule({ ...s, overrides: JSON.stringify(overrides) });
   revalidatePath(`/tutor/students/${studentId}`);
   if (choice === "plan") return { ok: "Back to the plan for that day." };
-  if (choice === "skip") return { ok: "No set that day." };
+  if (choice === "skip") return { ok: "No sets that day." };
+
   const { date: today, time: now } = singaporeToday();
-  if (date < today) return { ok: "Saved, but that day has passed." };
-  if (date === today && (s.last_sent_on === today || now >= choice.time)) {
-    return { ok: `Saved. ${s.last_sent_on === today ? "A set already went out today" : `${choice.time} has passed`}, so it starts from the next day.` };
-  }
-  return { ok: `Saved. ${choice.count} questions at ${choice.time}.` };
+  const done = sentTimes({ ...s, overrides: JSON.stringify(overrides) }, date);
+  const gone = date < today || (date === today && choice.every((c) => now >= c.time || done.includes(c.time)));
+  const word = choice.length === 1 ? "set" : "sets";
+  return {
+    ok: gone
+      ? `Saved, but ${date < today ? "that day has passed" : "those times have passed today"}, so it starts from the next day.`
+      : `Saved. ${choice.length} ${word}: ${choice.map((c) => `${c.time} · ${c.count}q`).join(", ")}.`,
+  };
 }
 
-export type DayPreview = { unitLabel: string; questions: BankQuestion[]; unit: number; count: number; time: string; byHand: boolean };
+export type DaySet = { time: string; unit: number; count: number; unitLabel: string; sent: boolean; questions: BankQuestion[] };
+export type DayPreview = { sets: DaySet[]; byHand: boolean };
 
-/** What that day holds: the questions, and the settings the editor starts from. */
+/** What that day holds: each set, its questions, and the settings the editor starts from. */
 export async function previewPracticeDay(studentId: string, date: string): Promise<DayPreview> {
   await requireUser("tutor");
   const s = await getSchedule(studentId);
-  if (!DATE.test(date)) return { unitLabel: "", questions: [], unit: 0, count: s.count, time: s.send_at, byHand: false };
-  const units = unitsForNextSend(s, date);
-  const chosen = dayChoice(s, date);
-  return {
-    unitLabel: units.length === 0 ? "Every unit" : `Unit ${units[0]}`,
-    questions: await pickForSchedule(s, date),
-    unit: units[0] ?? 0,
-    count: countForDay(s, date),
-    time: timeForDay(s, date),
-    byHand: chosen !== undefined && chosen !== "skip",
-  };
+  if (!DATE.test(date)) return { sets: [], byHand: false };
+  const { slots } = slotsForDate(s, date);
+  const done = sentTimes(s, date);
+  const sets: DaySet[] = [];
+  const taken: string[] = [];
+  for (const slot of slots as Slot[]) {
+    const questions = await pickForSlot(s, date, slot, taken);
+    taken.push(...questions.map((q) => q.id));
+    sets.push({
+      time: slot.time,
+      unit: slot.unit ?? 0,
+      count: slot.count,
+      unitLabel: slot.unit === null ? "Every unit" : `Unit ${slot.unit}`,
+      sent: done.includes(slot.time),
+      questions,
+    });
+  }
+  return { sets, byHand: dayIsByHand(s, date) };
 }

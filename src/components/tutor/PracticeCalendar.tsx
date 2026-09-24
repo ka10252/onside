@@ -3,9 +3,11 @@
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { PreviewPanel, QuestionLine } from "@/components/QuestionPreview";
-import { previewPracticeDay, setPracticeDay, type DayPreview } from "@/lib/schedule-actions";
+import { previewPracticeDay, setPracticeDay, type DayPreview, type DaySlotInput } from "@/lib/schedule-actions";
 
 const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+
+export type CalendarSlot = { time: string; short: string; unit: number | null; count: number; byHand: boolean };
 
 export type CalendarCell = {
   date: string;
@@ -13,17 +15,17 @@ export type CalendarCell = {
   day: number;
   today: boolean;
   past: boolean;
-  /** A set that already went out that day. */
-  sent?: { title: string; status: string; time: string; count: number; short: string; done: boolean } | null;
-  /** What the schedule will send that day. */
-  planned?: { unitLabel: string; short: string; unit: number | null; count: number; time: string; byHand: boolean } | null;
+  /** Sets that already went out that day. */
+  sent: { title: string; status: string; time: string; count: number; short: string; done: boolean }[];
+  /** Sets the schedule will still send that day. */
+  planned: CalendarSlot[];
 };
 
 type Unit = { number: number; title: string };
 
 /**
  * Four weeks of practice: what went out, and what is coming.
- * Clicking a day is how the tutor sets the unit for it, or looks at the questions first.
+ * Clicking a day is how the tutor sets what it sends — a day can hold more than one set.
  */
 export function PracticeCalendar({
   cells,
@@ -41,11 +43,9 @@ export function PracticeCalendar({
   count: number;
 }) {
   const [picked, setPicked] = useState<CalendarCell | null>(null);
+  const [slots, setSlots] = useState<DaySlotInput[]>([]);
   const [preview, setPreview] = useState<DayPreview | null>(null);
   const [showQuestions, setShowQuestions] = useState(false);
-  const [unit, setUnit] = useState(0);
-  const [howMany, setHowMany] = useState(count);
-  const [at, setAt] = useState(sendTime);
   const [note, setNote] = useState<string | null>(null);
   const [pending, start] = useTransition();
   const router = useRouter();
@@ -57,19 +57,21 @@ export function PracticeCalendar({
     setPreview(null);
     setShowQuestions(false);
     setNote(null);
-    setUnit(cell.planned?.unit ?? 0);
-    setHowMany(cell.planned?.count ?? count);
-    setAt(cell.planned?.time ?? cell.sent?.time ?? sendTime);
+    setSlots(
+      cell.planned.length
+        ? cell.planned.map((p) => ({ time: p.time, unit: p.unit ?? 0, count: p.count }))
+        : [{ time: sendTime, unit: 0, count }],
+    );
   }
 
-  function apply(choice: "plan" | "skip" | { unit: number; count: number; time: string }) {
+  function apply(choice: "plan" | "skip" | DaySlotInput[]) {
     if (!picked) return;
     start(async () => {
       const res = await setPracticeDay(studentId, picked.date, choice);
       setNote(res.error ?? res.ok ?? null);
       if (!res.error) {
         setPreview(await previewPracticeDay(studentId, picked.date));
-        router.refresh(); // the calendar squares come from the page
+        router.refresh(); // the squares come from the page
       }
     });
   }
@@ -82,6 +84,8 @@ export function PracticeCalendar({
     });
   }
 
+  const edit = (i: number, patch: Partial<DaySlotInput>) => setSlots((cur) => cur.map((s, j) => (j === i ? { ...s, ...patch } : s)));
+
   return (
     <div className="calendar">
       <div className="calhead">
@@ -92,7 +96,7 @@ export function PracticeCalendar({
           <span className="chip done">Finished</span>
         </span>
       </div>
-      <p className="note" style={{ margin: "0 0 8px" }}>Click a day to set its unit and how many questions, or to see them.</p>
+      <p className="note" style={{ margin: "0 0 8px" }}>Click a day to set what it sends. A day can hold more than one set.</p>
       <div className="calgrid">
         {DAYS.map((d) => (
           <span key={d} className="dow">
@@ -108,16 +112,16 @@ export function PracticeCalendar({
               className={`cell${c.today ? " today" : ""}${c.past ? " past" : ""}${picked?.date === c.date ? " picked" : ""}`}
             >
               <span className="d">{c.day}</span>
-              {c.sent && (
-                <span className={`chip ${c.sent.done ? "done" : "waiting"}`}>
-                  {c.sent.time} · {c.sent.short} · {c.sent.count}
+              {c.sent.map((x) => (
+                <span key={`s${x.time}`} className={`chip ${x.done ? "done" : "waiting"}`}>
+                  {x.time} · {x.short} · {x.count}
                 </span>
-              )}
-              {c.planned && (
-                <span className={`chip planned${c.planned.byHand ? " byhand" : ""}`}>
-                  {c.planned.time} · {c.planned.short} · {c.planned.count}
+              ))}
+              {c.planned.map((p) => (
+                <span key={`p${p.time}`} className={`chip planned${p.byHand ? " byhand" : ""}`}>
+                  {p.time} · {p.short} · {p.count}
                 </span>
-              )}
+              ))}
             </button>
           )),
         )}
@@ -126,64 +130,92 @@ export function PracticeCalendar({
       {picked && (
         <div className="dayedit">
           <div className="card-hd" style={{ padding: 0, border: 0 }}>
-            <h3>
-              {new Date(picked.date).toLocaleDateString("en-SG", { weekday: "long", day: "numeric", month: "long" })}
-            </h3>
+            <h3>{new Date(picked.date).toLocaleDateString("en-SG", { weekday: "long", day: "numeric", month: "long" })}</h3>
             <button type="button" className="btn ghost sm" onClick={() => setPicked(null)}>
               Close
             </button>
           </div>
-          <p className="note" style={{ margin: 0 }}>
-            {picked.sent
-              ? `${picked.sent.title} · sent ${picked.sent.time} · ${picked.sent.count} questions · ${
-                  picked.sent.status === "reviewed"
-                    ? "marked"
-                    : picked.sent.status === "submitted"
-                      ? "finished, waiting for marks"
-                      : picked.sent.status === "in_progress"
-                        ? "started"
-                        : "not opened yet"
-                }`
-              : picked.planned
-                ? `${picked.planned.unitLabel} · ${picked.planned.count} questions at ${picked.planned.time}${picked.planned.byHand ? " · set by hand" : " · from the plan"}`
-                : "Nothing planned for this day."}
-          </p>
+
+          {picked.sent.length > 0 && (
+            <p className="note" style={{ margin: 0 }}>
+              Already sent:{" "}
+              {picked.sent
+                .map(
+                  (x) =>
+                    `${x.time} · ${x.count} questions · ${
+                      x.status === "reviewed"
+                        ? "marked"
+                        : x.status === "submitted"
+                          ? "finished, waiting for marks"
+                          : x.status === "in_progress"
+                            ? "started"
+                            : "not opened yet"
+                    }`,
+                )
+                .join(" · ")}
+            </p>
+          )}
 
           {!picked.past && (
             <>
-              <div className="dayrow">
-                <label className="field" style={{ margin: 0 }}>
-                  <span className="lab">Unit</span>
-                  <select className="answer" value={unit} disabled={pending} onChange={(e) => setUnit(Number(e.target.value))}>
-                    <option value={0}>Every unit</option>
-                    {units.map((u) => (
-                      <option key={u.number} value={u.number}>
-                        Unit {u.number} · {u.title}
-                      </option>
-                    ))}
-                  </select>
-                </label>
-                <label className="field howmany" style={{ margin: 0 }}>
-                  <span className="lab">At</span>
-                  <input className="answer" type="time" value={at} disabled={pending} onChange={(e) => setAt(e.target.value)} />
-                </label>
-                <label className="field howmany" style={{ margin: 0 }}>
-                  <span className="lab">Questions</span>
-                  <input
-                    className="answer"
-                    type="number"
-                    min={1}
-                    max={20}
-                    value={howMany}
-                    disabled={pending}
-                    onChange={(e) => setHowMany(Number(e.target.value))}
-                  />
-                </label>
-                <button type="button" className="btn primary" onClick={() => apply({ unit, count: howMany, time: at })} disabled={pending}>
-                  {pending ? "Saving…" : "Set this day"}
-                </button>
-              </div>
+              <ol className="slotlist">
+                {slots.map((s, i) => (
+                  <li key={i}>
+                    <span className="n">{i + 1}</span>
+                    <label>
+                      <span className="lab">At</span>
+                      <input type="time" value={s.time} disabled={pending} onChange={(e) => edit(i, { time: e.target.value })} />
+                    </label>
+                    <label className="grow">
+                      <span className="lab">Unit</span>
+                      <select value={s.unit} disabled={pending} onChange={(e) => edit(i, { unit: Number(e.target.value) })}>
+                        <option value={0}>Every unit</option>
+                        {units.map((u) => (
+                          <option key={u.number} value={u.number}>
+                            Unit {u.number} · {u.title}
+                          </option>
+                        ))}
+                      </select>
+                    </label>
+                    <label>
+                      <span className="lab">Questions</span>
+                      <input
+                        type="number"
+                        min={1}
+                        max={20}
+                        value={s.count}
+                        disabled={pending}
+                        onChange={(e) => edit(i, { count: Number(e.target.value) })}
+                      />
+                    </label>
+                    <button
+                      type="button"
+                      className="btn ghost sm"
+                      disabled={pending || slots.length === 1}
+                      onClick={() => setSlots((cur) => cur.filter((_, j) => j !== i))}
+                    >
+                      Remove
+                    </button>
+                  </li>
+                ))}
+              </ol>
               <div className="rowacts">
+                <button
+                  type="button"
+                  className="btn sm"
+                  disabled={pending}
+                  onClick={() =>
+                    setSlots((cur) => [
+                      ...cur,
+                      { time: nextFreeTime(cur.map((c) => c.time)), unit: cur.at(-1)?.unit ?? 0, count: cur.at(-1)?.count ?? count },
+                    ])
+                  }
+                >
+                  Add another set
+                </button>
+                <button type="button" className="btn primary" onClick={() => apply(slots)} disabled={pending}>
+                  {pending ? "Saving…" : slots.length > 1 ? `Set these ${slots.length} sets` : "Set this day"}
+                </button>
                 <button type="button" className="btn sm" onClick={look} disabled={pending}>
                   {pending ? "Loading…" : "Show the questions"}
                 </button>
@@ -199,27 +231,42 @@ export function PracticeCalendar({
           {note && <p className="formmsg good" role="status">{note}</p>}
 
           {preview && showQuestions && (
-            <div className="stack" style={{ gap: 8 }}>
-              <p className="note" style={{ margin: 0 }}>
-                {preview.unitLabel} · {preview.questions.length} question{preview.questions.length === 1 ? "" : "s"} · answers shown
-              </p>
-              {preview.questions.length === 0 ? (
-                <p className="formmsg bad" style={{ margin: 0 }}>No unseen questions left for this unit.</p>
-              ) : (
-                <ol className="fullpreview">
-                  {preview.questions.map((q, i) => (
-                    <li key={q.id}>
-                      <span className="n">Question {i + 1}</span>
-                      <QuestionLine q={q} />
-                      <PreviewPanel id={q.id} />
-                    </li>
-                  ))}
-                </ol>
-              )}
+            <div className="stack" style={{ gap: 14 }}>
+              {preview.sets.length === 0 && <p className="formmsg bad" style={{ margin: 0 }}>Nothing goes out this day.</p>}
+              {preview.sets.map((set) => (
+                <div key={set.time} className="stack" style={{ gap: 8 }}>
+                  <p className="note" style={{ margin: 0 }}>
+                    <b>{set.time}</b> · {set.unitLabel} · {set.questions.length} question{set.questions.length === 1 ? "" : "s"}
+                    {set.sent ? " · already sent" : ""} · answers shown
+                  </p>
+                  {set.questions.length === 0 ? (
+                    <p className="formmsg bad" style={{ margin: 0 }}>No unseen questions left for this unit.</p>
+                  ) : (
+                    <ol className="fullpreview">
+                      {set.questions.map((q, i) => (
+                        <li key={q.id}>
+                          <span className="n">Question {i + 1}</span>
+                          <QuestionLine q={q} />
+                          <PreviewPanel id={q.id} />
+                        </li>
+                      ))}
+                    </ol>
+                  )}
+                </div>
+              ))}
             </div>
           )}
         </div>
       )}
     </div>
   );
+}
+
+/** An hour after the last set, so a new row doesn't clash. */
+function nextFreeTime(taken: string[]) {
+  const last = [...taken].sort().at(-1) ?? "07:00";
+  const [h, m] = last.split(":").map(Number);
+  const next = Math.min(23, (h ?? 7) + 1);
+  const time = `${String(next).padStart(2, "0")}:${String(m ?? 0).padStart(2, "0")}`;
+  return taken.includes(time) ? `${String(Math.min(23, next + 1)).padStart(2, "0")}:${String(m ?? 0).padStart(2, "0")}` : time;
 }

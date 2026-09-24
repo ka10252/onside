@@ -328,3 +328,15 @@ table.board { table-layout: fixed; min-width: 860px; }
 .detailsopen .formgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 14px 16px; align-items: end; flex: 1; min-width: 0; }
 .detailsopen .formgrid > div:last-child, .detailsopen .formgrid .formmsg { grid-column: 1 / -1; }
 .dayedit .howmany { max-width: 140px; }
+
+/* Several sets in one day */
+.timelist { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 6px; }
+.timeitem { display: inline-flex; align-items: center; gap: 6px; }
+.timelist input[type="time"] { height: 44px; padding: 0 10px; border: 1px solid var(--line2); border-radius: 10px; background: var(--surface); font: inherit; }
+.slotlist { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.slotlist li { display: flex; align-items: flex-end; gap: 10px; flex-wrap: wrap; padding: 10px 12px; border: 1px solid var(--line2); border-radius: 10px; background: var(--surface); }
+.slotlist .n { font-size: 13px; font-weight: 700; color: var(--ink2); padding-bottom: 12px; }
+.slotlist label { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.slotlist label.grow { flex: 1; min-width: 200px; }
+.slotlist input, .slotlist select { height: 40px; padding: 0 10px; border: 1px solid var(--line2); border-radius: 8px; background: var(--surface); font: inherit; color: var(--ink); }
+.slotlist input[type="number"] { width: 90px; }

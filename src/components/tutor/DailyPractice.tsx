@@ -27,6 +27,7 @@ export function DailyPractice({
   const [plan, setPlan] = useState<number[]>(() => JSON.parse(schedule.plan) as number[]);
   const [dueDays, setDueDays] = useState<string>(schedule.due_days === null ? "" : String(schedule.due_days));
   const [open, setOpen] = useState<string | null>(null);
+  const [full, setFull] = useState(false);
   const first = studentName.split(" ")[0];
   const title = (u: number) => (u === 0 ? "Every unit" : `Unit ${u} · ${units.find((x) => x.number === u)?.title ?? ""}`);
   const move = (i: number, by: number) =>
@@ -48,6 +49,11 @@ export function DailyPractice({
       <section className="nextset">
         <div className="card-hd" style={{ padding: 0, border: 0 }}>
           <h3>Next set</h3>
+          {next.questions.length > 0 && (
+            <button type="button" className="btn sm" onClick={() => setFull(true)}>
+              Open full view
+            </button>
+          )}
           <span className="muted" style={{ fontSize: 14 }}>
             {schedule.enabled === 0
               ? "Daily practice is off"
@@ -81,6 +87,32 @@ export function DailyPractice({
           These are the questions that will go out. Saving different settings changes them.
         </p>
       </section>
+
+      {full && (
+        <div className="scrim" role="dialog" aria-modal="true" aria-label="Next set" onClick={() => setFull(false)}>
+          <div className="dialog wide" onClick={(e) => e.stopPropagation()}>
+            <div className="card-hd" style={{ padding: 0, border: 0 }}>
+              <h2>Next set</h2>
+              <button type="button" className="btn sm" onClick={() => setFull(false)}>
+                Close
+              </button>
+            </div>
+            <p className="note" style={{ margin: 0 }}>
+              {next.unitLabel} · {next.questions.length} question{next.questions.length === 1 ? "" : "s"}
+              {next.date ? ` · ${new Date(next.date).toLocaleDateString("en-SG", { weekday: "short", day: "numeric", month: "short" })} at ${schedule.send_at}` : ""}
+            </p>
+            <ol className="fullpreview">
+              {next.questions.map((q, i) => (
+                <li key={q.id}>
+                  <span className="n">Question {i + 1}</span>
+                  <QuestionLine q={q} />
+                  <PreviewPanel id={q.id} />
+                </li>
+              ))}
+            </ol>
+          </div>
+        </div>
+      )}
 
       <form action={save} className="formgrid">
         <input type="hidden" name="studentId" value={schedule.student_id} />

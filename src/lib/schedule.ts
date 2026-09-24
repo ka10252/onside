@@ -114,6 +114,27 @@ export function nextSend(s: Schedule, now = new Date()): { date: string; weekday
 
 const newId = (prefix: string) => `${prefix}_${randomBytes(6).toString("hex")}`;
 
+/** Every send in the next `days` days, with the unit the plan gives each one. */
+export function upcomingSends(s: Schedule, days = 42, now = new Date()): { date: string; unit: number | null }[] {
+  const wanted = json.parse<number[]>(s.days, []);
+  const plan = json.parse<number[]>(s.plan, []);
+  const fallback = json.parse<number[]>(s.units, []);
+  if (wanted.length === 0) return [];
+  const { date, time } = singaporeToday(now);
+  const out: { date: string; unit: number | null }[] = [];
+  let step = 0;
+  for (let i = 0; i < days; i++) {
+    const day = new Date(new Date(`${date}T00:00:00Z`).getTime() + i * 86_400_000);
+    const iso = day.toISOString().slice(0, 10);
+    if (!wanted.includes(day.getUTCDay())) continue;
+    if (i === 0 && (s.last_sent_on === date || time >= s.send_at)) continue; // today has gone
+    const pick = plan.length ? plan[(s.plan_index + step) % plan.length]! : (fallback[0] ?? 0);
+    out.push({ date: iso, unit: pick === 0 ? null : pick });
+    step++;
+  }
+  return out;
+}
+
 /** Builds the set and sends it. Returns what was sent, or why nothing was. */
 export async function sendDailySet(s: Schedule, tutorId: string, now = new Date()): Promise<{ sent: number; title: string } | { skipped: string }> {
   const questions = await pickForSchedule(s, singaporeToday(now).date);

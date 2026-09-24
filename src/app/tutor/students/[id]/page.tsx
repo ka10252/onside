@@ -12,7 +12,9 @@ import { deleteAssignment, setStudentArchived, unassign, updateStudent } from "@
 import { conceptBoard } from "@/lib/concept-board";
 import { DailyPractice } from "@/components/tutor/DailyPractice";
 import { bankParts } from "@/lib/admin";
-import { getSchedule, nextSend, pickForSchedule, unitsForNextSend } from "@/lib/schedule";
+import { getSchedule, nextSend, pickForSchedule, singaporeToday, unitsForNextSend, upcomingSends } from "@/lib/schedule";
+import { PracticeCalendar, type CalendarCell } from "@/components/tutor/PracticeCalendar";
+import { all } from "@/lib/db";
 import { isOverdue } from "@/lib/due";
 import { initials } from "@/lib/format";
 import { latestSummary } from "@/lib/review";
@@ -49,6 +51,31 @@ export default async function StudentPage({ params }: PageProps<"/tutor/students
   const upcoming = nextSend(schedule);
   const nextQuestions = student.archived_at ? [] : await pickForSchedule(schedule, upcoming?.date);
   const nextUnits = unitsForNextSend(schedule);
+
+  // Four weeks from this Monday: what already went out, and what the schedule will send.
+  const { date: todaySg } = singaporeToday();
+  const monday = new Date(new Date(`${todaySg}T00:00:00Z`).getTime() - ((new Date(`${todaySg}T00:00:00Z`).getUTCDay() + 6) % 7) * 86_400_000);
+  const planned = new Map(upcomingSends(schedule, 42).map((u) => [u.date, u]));
+  const sentRows = await all<{ on: string; title: string; status: string }>(
+    `SELECT substr(a.assigned_at, 1, 10) AS on, s.title, a.status FROM assignments a JOIN sets s ON s.id = a.set_id
+      WHERE a.student_id = ? AND s.title LIKE 'Daily practice%'`,
+    id,
+  );
+  const sent = new Map(sentRows.map((r) => [r.on, r]));
+  const unitName = (n: number | null) => (n === null ? "Every unit" : `Unit ${n} · ${allUnits.find((u) => u.number === n)?.title ?? ""}`);
+  const cells: CalendarCell[] = Array.from({ length: 28 }, (_, i) => {
+    const d = new Date(monday.getTime() + i * 86_400_000);
+    const iso = d.toISOString().slice(0, 10);
+    const p = planned.get(iso);
+    return {
+      date: iso,
+      day: d.getUTCDate(),
+      today: iso === todaySg,
+      sent: sent.get(iso) ?? null,
+      planned: schedule.enabled && p ? { time: schedule.send_at, unitLabel: unitName(p.unit), count: schedule.count } : null,
+    };
+  });
+  const monthLabel = `${new Date(cells[0]!.date).toLocaleDateString("en-SG", { month: "long", year: "numeric" })}`;
 
   const marked = assignments.filter((a) => a.status === "reviewed");
   const got = marked.reduce((n, a) => n + a.marks_got, 0);
@@ -321,6 +348,7 @@ export default async function StudentPage({ params }: PageProps<"/tutor/students
                     {schedule.enabled ? `On · ${schedule.send_at}` : "Off"}
                   </span>
                 </div>
+                <PracticeCalendar cells={cells} monthLabel={monthLabel} />
                 <DailyPractice
                   schedule={schedule}
                   units={allUnits}

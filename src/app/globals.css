@@ -365,3 +365,7 @@ table.board { table-layout: fixed; min-width: 860px; }
 .sentset.open { border-color: var(--ink); }
 .sv.frac { font-size: 46px; }
 .sv .of { font-family: var(--serif); font-size: 0.55em; color: var(--ink2); }
+/* The red-pen mark on a marked question. */
+.qc.result { position: relative; }
+.qc.result .meta { padding-right: 62px; }
+.markstamp { position: absolute; top: 12px; right: 18px; color: var(--red); transform: rotate(-7deg); pointer-events: none; line-height: 0; }

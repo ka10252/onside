@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { CheckIcon, CrossIcon } from "@/components/Icons";
+import { CheckIcon, CrossIcon, MarkStamp } from "@/components/Icons";
 import { Nav, STUDENT_TABS } from "@/components/Nav";
 import { Blocks, Rich } from "@/components/Rich";
 import { answerText } from "@/lib/answer-text";
@@ -235,8 +235,11 @@ function ResultCard({ it, marked, context, unit }: { it: ReviewItem; marked: boo
   const asked = r?.ai_questions ?? 0;
   const noHelp = hintsUsed === 0 && asked === 0;
 
+  const stamp = marked && it.result !== "Not opened" && it.result !== "No answer" ? stampFor(it.confirmed ?? 0, q.marks) : null;
+
   return (
     <section className="card qc result">
+      {stamp && <MarkStamp kind={stamp.kind} label={stamp.label} />}
       <span className="meta">
         <span className="pill gray">Q{it.n}</span>
         {unit && <span>Unit {unit}</span>}
@@ -287,6 +290,13 @@ function ResultCard({ it, marked, context, unit }: { it: ReviewItem; marked: boo
       </div>
     </section>
   );
+}
+
+/** Full marks get a circle, part marks a triangle, none a cross. */
+function stampFor(got: number, marks: number): { kind: "circle" | "triangle" | "cross"; label: string } {
+  if (got >= marks) return { kind: "circle", label: `Full marks: ${got} of ${marks}` };
+  if (got > 0) return { kind: "triangle", label: `Some marks: ${got} of ${marks}` };
+  return { kind: "cross", label: `No marks: 0 of ${marks}` };
 }
 
 function statusClass(marked: boolean, it: ReviewItem, auto: boolean | null) {

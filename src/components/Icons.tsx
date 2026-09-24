@@ -54,3 +54,37 @@ export const BulbIcon = () => (
     />
   </svg>
 );
+
+/**
+ * A red-pen mark, the way a paper is marked by hand: a circle for full marks, a triangle where
+ * some were lost, a cross for none. Drawn a little off-true so it doesn't look printed.
+ */
+export const MarkStamp = ({ kind, label }: { kind: "circle" | "triangle" | "cross"; label: string }) => (
+  <span className="markstamp" role="img" aria-label={label} title={label}>
+    <svg width="46" height="46" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+      {kind === "circle" && (
+        <path
+          d="M33.5 10.8C27.6 6.4 15.6 7.6 10.6 16.4 5.6 25.2 11 38 21.8 39.4c9.8 1.3 17.6-6.2 17.1-15.1-.3-5.2-2.6-9.6-6.9-12.6"
+          stroke="currentColor"
+          strokeWidth="2.6"
+          strokeLinecap="round"
+        />
+      )}
+      {kind === "triangle" && (
+        <path
+          d="M24.2 8.6 41 37.2c.6 1 .1 1.7-1.1 1.7l-31.4-.2c-1.3 0-1.7-.8-1-1.8L23.6 9"
+          stroke="currentColor"
+          strokeWidth="2.6"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      )}
+      {kind === "cross" && (
+        <>
+          <path d="M11.4 10.6 37.8 38.2" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" />
+          <path d="M38.2 11.2 10.8 37.6" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" />
+        </>
+      )}
+    </svg>
+  </span>
+);

@@ -112,7 +112,14 @@ export default async function AssignmentsPage({ searchParams }: PageProps<"/stud
             </Link>
 
             {units.length > 1 && (
-              <UnitSelect units={units} value={unitPick} hrefFor={(u) => tabLink(showDone ? "done" : "todo", u)} />
+              <UnitSelect
+                units={units}
+                value={unitPick}
+                hrefs={Object.fromEntries([
+                  ["", tabLink(showDone ? "done" : "todo", null)],
+                  ...units.map((u) => [String(u.number), tabLink(showDone ? "done" : "todo", u.number)] as const),
+                ])}
+              />
             )}
           </nav>
 

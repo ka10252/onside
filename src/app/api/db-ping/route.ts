@@ -15,15 +15,25 @@ export const maxDuration = 60;
 export async function GET(req: Request) {
   const started = Date.now();
   const ms: Record<string, number> = {};
+  // Each step gets its own limit, so one slow loader is named rather than taking the whole route
+  // past the function's time limit with nothing to show.
+  const STEP_MS = 6000;
   const time = async (label: string, fn: () => Promise<unknown>) => {
     const t = Date.now();
+    let timer: ReturnType<typeof setTimeout> | undefined;
     try {
-      await fn();
-    } catch {
-      ms[label + " (failed)"] = Date.now() - t;
-      return;
+      await Promise.race([
+        fn(),
+        new Promise<never>((_, reject) => {
+          timer = setTimeout(() => reject(new Error("over the limit")), STEP_MS);
+        }),
+      ]);
+      ms[label] = Date.now() - t;
+    } catch (e) {
+      ms[`${label} (${e instanceof Error && e.message === "over the limit" ? "still running after" : "failed after"})`] = Date.now() - t;
+    } finally {
+      clearTimeout(timer);
     }
-    ms[label] = Date.now() - t;
   };
   try {
     await time("connect + SELECT 1", () => all("SELECT 1"));

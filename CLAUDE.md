@@ -22,7 +22,8 @@ Choosing or changing the stack, adding paid services, changing scoring rules, or
 - Files (diagram photos, past-paper figures) go through `src/lib/storage.ts`: Supabase Storage, else `data/storage`.
 - Vercel has no always-on server: background work uses `after()` from `next/server` (AI marking), and batch results are collected when the tutor opens pages. No in-memory state that must survive between requests.
 - `npm run db:seed` loads content/ and past-paper text/figures into the database (Supabase when configured). `npm run db:reset` only resets the local PGlite database. `npm run db:import-sqlite` copied the old `data/onside.db` once.
-- `npm run dev` (uses `.env.local`, so Supabase once configured), `npm run dev:local` (local database), `npm run typecheck`, `npm run lint`, `npm test` (always local).
+- Looking at screens: `npm run dev:local` (the copy in data/pglite; every query is local, so pages render in milliseconds). `npm run db:pull` refreshes that copy from Supabase. `npm run dev` talks to Supabase itself — each query crosses to the database's region (about 68 ms from Singapore), so pages take seconds; use it only to check the live data.
+- `npm run typecheck`, `npm run lint`, `npm test` (always local).
 - Tests and browser checks: use `npm run dev:local`, never the Supabase data, and never real Claude calls.
 - Logins: `npm run account -- --id <id> --password <pw> --tutor` (or `--name <name>` / `--user <student id>` for students). Never put passwords in committed files.
 - AI goes through `src/lib/ai`: Claude when `ANTHROPIC_API_KEY` is set, else Gemini. Keys and model-per-task settings in `.env.local`.

@@ -17,7 +17,8 @@
     "db:check": "tsx scripts/check-env.ts",
     "db:import-local": "tsx scripts/import-local.ts",
     "db:summary": "tsx scripts/summary.ts",
-    "student:delete": "tsx scripts/delete-student.ts"
+    "student:delete": "tsx scripts/delete-student.ts",
+    "db:pull": "tsx scripts/pull.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.126.0",

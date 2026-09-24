@@ -1,6 +1,9 @@
-import Link from "next/link";
+"use client";
 
-const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+import Link from "next/link";
+import { useState, useSyncExternalStore } from "react";
+
+const DAYS = ["M", "T", "W", "T", "F", "S", "S"];
 
 export type StudentDay = {
   date: string;
@@ -14,54 +17,116 @@ export type StudentDay = {
   coming: { time: string; unit: number | null; count: number }[];
 };
 
-/** Four weeks: what arrived, what is due, and what is on its way. */
+/**
+ * A small calendar that stays in the corner while the student scrolls: what arrived, what is due,
+ * and what is on its way. Clicking a day shows that day underneath.
+ */
 export function AssignmentCalendar({ cells, monthLabel }: { cells: StudentDay[]; monthLabel: string }) {
+  const [picked, setPicked] = useState<string | null>(null);
+  // Whether it was left open, read the way the server can agree with.
+  const stored = useSyncExternalStore(
+    () => () => {},
+    () => {
+      try {
+        return localStorage.getItem("onside:calendar");
+      } catch {
+        return null;
+      }
+    },
+    () => null,
+  );
+  const [choice, setChoice] = useState<boolean | null>(null);
+  const open = choice ?? stored !== "closed";
+
+  const toggle = () => {
+    try {
+      localStorage.setItem("onside:calendar", open ? "closed" : "open");
+    } catch {
+      // private window: it just won't be remembered
+    }
+    setChoice(!open);
+  };
+
   const weeks: StudentDay[][] = [];
   for (let i = 0; i < cells.length; i += 7) weeks.push(cells.slice(i, i + 7));
+  const day = cells.find((c) => c.date === picked) ?? null;
+  const dueLeft = (c: StudentDay) => c.due.filter((d) => !d.done);
+
   return (
-    <section className="card">
-      <div className="card-hd">
-        <h2>{monthLabel}</h2>
-        <span className="key">
-          <span className="chip waiting">Arrived</span>
-          <span className="chip done">Finished</span>
-          <span className="chip duechip">Due</span>
-          <span className="chip planned">On its way</span>
-        </span>
+    <aside className={`minical${open ? "" : " shut"}`} aria-label="Your calendar">
+      <div className="mhead">
+        <span>{open ? monthLabel : "Calendar"}</span>
+        <button type="button" className="link" onClick={toggle} aria-expanded={open}>
+          {open ? "Hide" : "Show"}
+        </button>
       </div>
-      <div className="calendar">
-        <div className="calgrid">
-          {DAYS.map((d) => (
-            <span key={d} className="dow">
-              {d}
-            </span>
-          ))}
-          {weeks.flatMap((week) =>
-            week.map((c) => (
-              <div key={c.date} className={`cell readonly${c.today ? " today" : ""}`}>
-                <span className="d">{c.day}</span>
-                {c.arrived.map((a) => (
-                  <Link key={`a${a.id}`} href={a.done ? `/student/a/${a.id}/done` : `/student/a/${a.id}`} className={`chip ${a.done ? "done" : "waiting"}`}>
-                    {a.title}
-                  </Link>
-                ))}
-                {c.due
-                  .filter((d) => !d.done)
-                  .map((d) => (
-                    <Link key={`d${d.id}`} href={`/student/a/${d.id}`} className={`chip duechip${d.late ? " late" : ""}`}>
-                      Due{d.time ? ` ${d.time}` : ""} · {d.title}
-                    </Link>
-                  ))}
-                {c.coming.map((p) => (
-                  <span key={`p${p.time}`} className="chip planned">
-                    {p.time} · {p.unit === null ? "New set" : `Unit ${p.unit}`} · {p.count}
-                  </span>
-                ))}
-              </div>
-            )),
+      {open && (
+        <>
+          <div className="mgrid">
+            {DAYS.map((d, i) => (
+              <span key={i} className="mdow">
+                {d}
+              </span>
+            ))}
+            {weeks.flatMap((week) =>
+              week.map((c) => {
+                const marks = [
+                  ...c.arrived.map((a) => (a.done ? "done" : "waiting")),
+                  ...dueLeft(c).map((d) => (d.late ? "late" : "due")),
+                  ...c.coming.map(() => "coming"),
+                ].slice(0, 3);
+                const label = [
+                  ...c.arrived.map((a) => `${a.title}${a.done ? " (finished)" : ""}`),
+                  ...dueLeft(c).map((d) => `Due: ${d.title}`),
+                  ...c.coming.map((p) => `${p.time}: ${p.unit === null ? "new set" : `unit ${p.unit}`}`),
+                ].join(" · ");
+                return (
+                  <button
+                    type="button"
+                    key={c.date}
+                    title={label || undefined}
+                    onClick={() => setPicked(picked === c.date ? null : c.date)}
+                    className={`mday${c.today ? " today" : ""}${picked === c.date ? " picked" : ""}${marks.length ? "" : " empty"}`}
+                  >
+                    <span>{c.day}</span>
+                    <span className="dots">
+                      {marks.map((m, i) => (
+                        <i key={i} className={m} />
+                      ))}
+                    </span>
+                  </button>
+                );
+              }),
+            )}
+          </div>
+
+          {day && (
+            <div className="mday-detail">
+              <b>{new Date(day.date).toLocaleDateString("en-SG", { weekday: "short", day: "numeric", month: "short", timeZone: "UTC" })}</b>
+              {day.arrived.length === 0 && dueLeft(day).length === 0 && day.coming.length === 0 && <p className="muted">Nothing this day.</p>}
+              {day.arrived.map((a) => (
+                <Link key={`a${a.id}`} href={a.done ? `/student/a/${a.id}/done` : `/student/a/${a.id}`}>
+                  <i className={a.done ? "done" : "waiting"} /> {a.title}
+                </Link>
+              ))}
+              {dueLeft(day).map((d) => (
+                <Link key={`d${d.id}`} href={`/student/a/${d.id}`}>
+                  <i className={d.late ? "late" : "due"} /> Due{d.time ? ` ${d.time}` : ""} · {d.title}
+                </Link>
+              ))}
+              {day.coming.map((p) => (
+                <span key={`p${p.time}`}>
+                  <i className="coming" /> {p.time} · {p.unit === null ? "New set" : `Unit ${p.unit}`} · {p.count} questions
+                </span>
+              ))}
+            </div>
           )}
-        </div>
-      </div>
-    </section>
+
+          <p className="mkey">
+            <i className="waiting" /> to do <i className="done" /> finished <i className="due" /> due <i className="coming" /> coming
+          </p>
+        </>
+      )}
+    </aside>
   );
 }

@@ -126,6 +126,7 @@ export default async function AssignmentsPage({ searchParams }: PageProps<"/stud
     <>
       <Nav user={user} tabs={STUDENT_TABS} active="/student" />
       <main className="page">
+        <AssignmentCalendar cells={days} monthLabel={monthLabel} />
         <div className="wrap stack">
           <div className="phead" style={{ marginBottom: 0 }}>
             <div>
@@ -135,8 +136,6 @@ export default async function AssignmentsPage({ searchParams }: PageProps<"/stud
               </p>
             </div>
           </div>
-
-          <AssignmentCalendar cells={days} monthLabel={monthLabel} />
 
           <nav className="filters" aria-label="Which assignments to show">
             <Link href={tabLink("todo", unitPick)} className={`chip${showDone ? "" : " on"}`} aria-current={showDone ? undefined : "page"}>

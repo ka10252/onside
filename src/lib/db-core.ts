@@ -194,7 +194,11 @@ CREATE TABLE IF NOT EXISTS schedules (
   units        TEXT NOT NULL DEFAULT '[]',        -- unit numbers; empty means every unit
   helper       TEXT NOT NULL DEFAULT 'on' CHECK (helper IN ('on', 'off')),
   days         TEXT NOT NULL DEFAULT '[1,2,3,4,5]', -- 0 = Sunday
+  send_at      TEXT NOT NULL DEFAULT '07:00',      -- Singapore time
   due_days     INTEGER,
+  due_time     TEXT,                               -- HH:MM, Singapore time
+  plan         TEXT NOT NULL DEFAULT '[]',         -- units in order, repeats allowed; empty = the units above
+  plan_index   INTEGER NOT NULL DEFAULT 0,
   last_sent_on TEXT,                              -- Singapore date, so it sends once a day
   updated_at   TEXT NOT NULL DEFAULT (${NOW_SQL})
 );
@@ -280,6 +284,14 @@ CREATE INDEX IF NOT EXISTS events_response ON events (response_id, at);
 -- Supabase exposes the public schema through its API. Row level security with no policies
 -- blocks that; the app connects as the database owner and is not affected.
 ${TABLES.map((t) => `ALTER TABLE ${t} ENABLE ROW LEVEL SECURITY;`).join("\n")}
+`;
+
+// Columns added after a table was first created. Postgres skips the ones already there.
+export const ADDED_COLUMNS = `
+ALTER TABLE schedules ADD COLUMN IF NOT EXISTS send_at TEXT NOT NULL DEFAULT '07:00';
+ALTER TABLE schedules ADD COLUMN IF NOT EXISTS due_time TEXT;
+ALTER TABLE schedules ADD COLUMN IF NOT EXISTS plan TEXT NOT NULL DEFAULT '[]';
+ALTER TABLE schedules ADD COLUMN IF NOT EXISTS plan_index INTEGER NOT NULL DEFAULT 0;
 `;
 
 export type Params = unknown[];
@@ -383,7 +395,10 @@ export async function openDb(opts: { url?: string; migrate?: boolean; local?: bo
   const url = opts.local ? undefined : (opts.url ?? (process.env.ONSIDE_DB === "local" ? undefined : process.env.DATABASE_URL));
   const db = url ? await openPostgres(url) : await openPglite(PGLITE_DIR);
   // Local databases set themselves up; Supabase is set up with `npm run db:setup`.
-  if (opts.migrate ?? db.kind === "pglite") await db.exec(SCHEMA);
+  if (opts.migrate ?? db.kind === "pglite") {
+    await db.exec(SCHEMA);
+    await db.exec(ADDED_COLUMNS);
+  }
   return db;
 }
 

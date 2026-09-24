@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Nav, STUDENT_TABS } from "@/components/Nav";
 import { formatDue } from "@/components/StatusPill";
+import { isOverdue } from "@/lib/due";
 import { UnitSelect } from "@/components/student/UnitSelect";
 import { all } from "@/lib/db";
 import { requireUser } from "@/lib/session";
@@ -24,7 +25,6 @@ type Row = {
 type UnitRow = { assignment_id: string; number: number; title: string };
 
 const shortDate = (iso: string) => new Date(iso).toLocaleDateString("en-SG", { day: "numeric", month: "short" });
-const today = () => new Date().toISOString().slice(0, 10);
 
 export default async function AssignmentsPage({ searchParams }: PageProps<"/student">) {
   const user = await requireUser("student");
@@ -141,7 +141,7 @@ export default async function AssignmentsPage({ searchParams }: PageProps<"/stud
                 )}
                 <div className="alist">
                   {g.rows.map((r) => {
-                    const overdue = !showDone && r.due_at !== null && r.due_at < today();
+                    const overdue = !showDone && isOverdue(r.due_at);
                     const marked = r.status === "reviewed";
                     const pc = marked && r.marks_total ? Math.round((r.marks_got / r.marks_total) * 100) : null;
                     return (

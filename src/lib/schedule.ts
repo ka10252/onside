@@ -5,7 +5,7 @@ import { pickRandom, sourceOf } from "./bank-filter";
 import { all, json, one, run, tx } from "./db";
 import { DEFAULT_SCHEDULE, type Schedule } from "./schedule-shared";
 
-export { DAY_NAMES, DEFAULT_SCHEDULE } from "./schedule-shared";
+export { DAY_NAMES, DEFAULT_SCHEDULE, planPreview } from "./schedule-shared";
 export type { Schedule } from "./schedule-shared";
 
 // Daily practice: each morning the cron route sends a student a few questions they haven't seen.
@@ -16,7 +16,7 @@ export type { Schedule } from "./schedule-shared";
 /** Today in Singapore, where the tutor and the student are. */
 export function singaporeToday(now = new Date()) {
   const sg = new Date(now.getTime() + 8 * 3600_000);
-  return { date: sg.toISOString().slice(0, 10), weekday: sg.getUTCDay() };
+  return { date: sg.toISOString().slice(0, 10), weekday: sg.getUTCDay(), time: sg.toISOString().slice(11, 16) };
 }
 
 export async function getSchedule(studentId: string): Promise<Schedule> {
@@ -26,10 +26,11 @@ export async function getSchedule(studentId: string): Promise<Schedule> {
 
 export async function saveSchedule(s: Schedule) {
   await run(
-    `INSERT INTO schedules (student_id, enabled, count, source, units, helper, days, due_days)
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    `INSERT INTO schedules (student_id, enabled, count, source, units, helper, days, send_at, due_days, due_time, plan, plan_index)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
      ON CONFLICT (student_id) DO UPDATE SET enabled = excluded.enabled, count = excluded.count, source = excluded.source,
-       units = excluded.units, helper = excluded.helper, days = excluded.days, due_days = excluded.due_days`,
+       units = excluded.units, helper = excluded.helper, days = excluded.days, send_at = excluded.send_at,
+       due_days = excluded.due_days, due_time = excluded.due_time, plan = excluded.plan, plan_index = excluded.plan_index`,
     s.student_id,
     s.enabled,
     s.count,
@@ -37,7 +38,11 @@ export async function saveSchedule(s: Schedule) {
     s.units,
     s.helper,
     s.days,
+    s.send_at,
     s.due_days,
+    s.due_time,
+    s.plan,
+    s.plan_index,
   );
 }
 
@@ -59,9 +64,17 @@ function inSource(q: BankQuestion, source: Schedule["source"]) {
   return s === "test" || s === "P1" || s === "P2" || s === "P3" || s === "onside";
 }
 
-/** The questions a run would send, newest units first is not a thing here: it is random and spread over the chosen units. */
+/** The unit the next send covers: the plan's turn, or the unit(s) set for every send. */
+export function unitsForNextSend(s: Schedule): number[] {
+  const plan = json.parse<number[]>(s.plan, []);
+  if (plan.length === 0) return json.parse<number[]>(s.units, []);
+  const pick = plan[s.plan_index % plan.length]!;
+  return pick === 0 ? [] : [pick];
+}
+
+/** The questions the next send would use: random, and spread over the units when there is more than one. */
 export async function pickForSchedule(s: Schedule): Promise<BankQuestion[]> {
-  const units = json.parse<number[]>(s.units, []);
+  const units = unitsForNextSend(s);
   const [bank, seen] = await Promise.all([bankQuestions(), seenIds(s.student_id)]);
   const pool = bank.filter(
     (q) => !seen.has(q.id) && inSource(q, s.source) && (units.length === 0 || units.includes(q.unit_number)) && q.format !== "essay",
@@ -82,7 +95,9 @@ export async function sendDailySet(s: Schedule, tutorId: string, now = new Date(
       ? `Daily practice · Unit ${unitNumbers[0]} · ${new Date(date).toLocaleDateString("en-SG", { day: "numeric", month: "short" })}`
       : `Daily practice · ${new Date(date).toLocaleDateString("en-SG", { day: "numeric", month: "short" })}`;
   const setId = newId("set");
-  const due = s.due_days ? new Date(new Date(`${date}T00:00:00Z`).getTime() + s.due_days * 86_400_000).toISOString().slice(0, 10) : null;
+  const dueDate =
+    s.due_days === null ? null : new Date(new Date(`${date}T00:00:00Z`).getTime() + s.due_days * 86_400_000).toISOString().slice(0, 10);
+  const due = dueDate && s.due_time ? `${dueDate}T${s.due_time}` : dueDate;
   await tx(async (t) => {
     await t.run(
       "INSERT INTO sets (id, title, mode, helper, created_by) VALUES (?, ?, 'assigned', ?, ?)",
@@ -97,7 +112,13 @@ export async function sendDailySet(s: Schedule, tutorId: string, now = new Date(
       ...questions.flatMap((q, i) => [setId, i + 1, q.id]),
     );
     await t.run("INSERT INTO assignments (id, set_id, student_id, due_at) VALUES (?, ?, ?, ?)", newId("asg"), setId, s.student_id, due);
-    await t.run("UPDATE schedules SET last_sent_on = ? WHERE student_id = ?", date, s.student_id);
+    const plan = json.parse<number[]>(s.plan, []);
+    await t.run(
+      "UPDATE schedules SET last_sent_on = ?, plan_index = ? WHERE student_id = ?",
+      date,
+      plan.length ? (s.plan_index + 1) % plan.length : 0,
+      s.student_id,
+    );
   });
   return { sent: questions.length, title };
 }
@@ -106,7 +127,7 @@ export type RunResult = { student: string; result: string };
 
 /** Sends today's practice to every student whose schedule says so. Safe to call more than once a day. */
 export async function runSchedules(now = new Date()): Promise<RunResult[]> {
-  const { date, weekday } = singaporeToday(now);
+  const { date, weekday, time } = singaporeToday(now);
   const tutor = await one<{ id: string }>("SELECT id FROM users WHERE role = 'tutor' ORDER BY id LIMIT 1");
   if (!tutor) return [];
   const rows = await all<Schedule & { name: string; archived_at: string | null }>(
@@ -121,6 +142,10 @@ export async function runSchedules(now = new Date()): Promise<RunResult[]> {
     }
     if (!json.parse<number[]>(s.days, []).includes(weekday)) {
       out.push({ student: s.name, result: "not a practice day" });
+      continue;
+    }
+    if (time < s.send_at) {
+      out.push({ student: s.name, result: `waits until ${s.send_at}` });
       continue;
     }
     try {

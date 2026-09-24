@@ -1,4 +1,5 @@
 import type { AssignmentStatus } from "@/lib/admin";
+import { formatDue } from "@/lib/due";
 
 const STATUS: Record<AssignmentStatus, { label: string; cls: string }> = {
   not_started: { label: "Not started", cls: "gray" },
@@ -30,7 +31,4 @@ export function StatusPill({
   );
 }
 
-export function formatDue(due: string) {
-  const [y, m, d] = due.split("-").map(Number);
-  return new Date(y!, m! - 1, d!).toLocaleDateString("en-SG", { weekday: "short", day: "numeric", month: "short" });
-}
+export { formatDue };

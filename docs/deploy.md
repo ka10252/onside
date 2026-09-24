@@ -20,9 +20,13 @@ Row level security is on for every table with no policies, so Supabase's public 
 3. Deploy. Every push to the main branch redeploys.
 
 ## Daily practice
-- `vercel.json` sets when the morning cron runs: `0 23 * * *` is 23:00 UTC, about 7am in Singapore. The free plan runs it once a day and within the hour, so change the hour there if the tutor wants a different time.
-- Set `CRON_SECRET` in `.env.local` and in the Vercel project (any long random string). Vercel sends it as a bearer token; the route turns away anyone else.
-- Each student's schedule is set on their page in the app.
+- Each student's schedule (on/off, days, send time, how many questions, the unit plan, the deadline) is set on their page in the app. `/api/cron/daily` sends whatever is due; calling it more often than needed does nothing.
+- **Timing comes from GitHub Actions** (`.github/workflows/daily-practice.yml`), which calls the route every 15 minutes, because Vercel's free plan runs a cron only once a day and only to the hour. Add two repository secrets under Settings → Secrets and variables → Actions:
+  - `ONSIDE_URL` — `https://your-app.vercel.app`
+  - `CRON_SECRET` — the same value as in Vercel
+- `vercel.json` keeps a daily cron at 22:00 UTC (6am Singapore) as a backstop if the workflow is off.
+- Set `CRON_SECRET` in `.env.local` and in the Vercel project (any long random string). Both callers send it as a bearer token; the route turns everyone else away.
+- GitHub Actions minutes: each call takes a few seconds, so roughly 8 hours a month of the 2,000 free minutes on a private repo.
 
 ## Limits to know
 - Function time: up to 300 s (`maxDuration` in `src/app/layout.tsx`). AI marking runs after the student's submit response (`after()`).

@@ -247,3 +247,10 @@ table.board { table-layout: fixed; min-width: 860px; }
 .daybox { display: inline-flex; align-items: center; gap: 6px; height: 34px; padding: 0 12px; border: 1px solid var(--line2); border-radius: 999px; font-size: 13px; font-weight: 600; cursor: pointer; }
 .daybox:has(input:checked) { background: var(--ink); border-color: var(--ink); color: #fff; }
 .daybox input { accent-color: #fff; width: 14px; height: 14px; }
+
+/* Day-by-day unit plan */
+.planlist { list-style: none; margin: 8px 0 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.planlist li { display: grid; grid-template-columns: 28px minmax(0, 1fr) auto; gap: 10px; align-items: center; padding: 8px 10px; border: 1px solid var(--line2); border-radius: 10px; background: var(--surface); }
+.planlist li.next { border-color: var(--ink); }
+.planlist .n { font-size: 13px; font-weight: 700; color: var(--ink2); text-align: center; }
+.planlist select { height: 36px; padding: 0 8px; border: 1px solid var(--line2); border-radius: 8px; background: var(--surface); font: inherit; color: var(--ink); max-width: 100%; }

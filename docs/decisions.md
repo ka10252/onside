@@ -114,5 +114,9 @@ These override HANDOFF §6 and answer §8 where they differ.
 
 ## Daily practice (2026-09-24)
 - A student can have a schedule: on/off, which days, how many questions, from unit tests / past papers / both, one unit or every unit, Helper on/off, and when it is due. It lives on the student's page.
-- `/api/cron/daily` builds and sends the set. Vercel's free plan runs a cron once a day to the hour, so the time is in `vercel.json` (`0 23 * * *` = about 7am Singapore) and `CRON_SECRET` keeps anyone else from calling it.
+- `/api/cron/daily` builds and sends the set, and only sends what is due. The tutor picks the send time, so GitHub Actions calls the route every 15 minutes (Vercel's free cron is once a day, to the hour, and stays as a backstop). `CRON_SECRET` keeps anyone else from calling it.
 - Questions are ones the student has never been sent; essays are left out. The run records the Singapore date, so a second call the same day sends nothing. "Send one now" is there for trying it.
+
+## Daily practice: time and unit plan (2026-09-24)
+- The schedule holds a send time and a deadline (days ahead plus an optional time of day), both Singapore time. A due date can now carry a time (`2026-09-26T21:00`); `src/lib/due.ts` reads and formats both shapes.
+- The units rotate through a plan the tutor writes, one entry per send, repeats allowed (Unit 1, Unit 2, Unit 2, …). It starts again at the top, and the schedule remembers its place. With no plan, questions come from every unit (or the single unit set below it).

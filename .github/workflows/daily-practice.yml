@@ -1,0 +1,26 @@
+# Calls Onside every 15 minutes so the daily practice goes out at the time the tutor chose.
+# Vercel's free plan only runs a cron once a day, to the hour, which is too blunt for that.
+# The app itself decides whether anything is due, so extra calls cost nothing.
+#
+# Set two repository secrets (Settings -> Secrets and variables -> Actions):
+#   ONSIDE_URL     https://your-app.vercel.app
+#   CRON_SECRET    the same value as in the Vercel project
+name: Daily practice
+
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch: {}
+
+jobs:
+  send:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ask Onside to send anything due
+        env:
+          ONSIDE_URL: ${{ secrets.ONSIDE_URL }}
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+        run: |
+          curl --fail --silent --show-error --max-time 60 \
+            -H "Authorization: Bearer $CRON_SECRET" \
+            "$ONSIDE_URL/api/cron/daily"

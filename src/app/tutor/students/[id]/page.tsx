@@ -5,7 +5,7 @@ import { ConfirmForm } from "@/components/ConfirmForm";
 import { Crumbs } from "@/components/Crumbs";
 import { Nav, TUTOR_TABS } from "@/components/Nav";
 import { StatusBadge } from "@/components/review/StatusBadge";
-import { StatusPill } from "@/components/StatusPill";
+import { formatDue, StatusPill } from "@/components/StatusPill";
 import { StudentForm } from "@/components/StudentForm";
 import { assignmentsForStudent, getStudent, listSets, studentStats, type AssignmentRow } from "@/lib/admin";
 import { deleteAssignment, setStudentArchived, unassign, updateStudent } from "@/lib/admin-actions";
@@ -13,6 +13,7 @@ import { conceptBoard } from "@/lib/concept-board";
 import { DailyPractice } from "@/components/tutor/DailyPractice";
 import { bankParts } from "@/lib/admin";
 import { getSchedule } from "@/lib/schedule";
+import { isOverdue } from "@/lib/due";
 import { initials } from "@/lib/format";
 import { latestSummary } from "@/lib/review";
 import { pct } from "@/lib/scoring";
@@ -50,9 +51,8 @@ export default async function StudentPage({ params }: PageProps<"/tutor/students
   const outOf = marked.reduce((n, a) => n + a.marks_total, 0);
   const overall = outOf ? Math.round((got / outOf) * 100) : null;
   const toReview = assignments.filter((a) => a.status === "submitted");
-  const today = new Date().toISOString().slice(0, 10);
   const open = assignments.filter((a) => a.status === "not_started" || a.status === "in_progress");
-  const overdue = open.filter((a) => a.due_at && a.due_at < today);
+  const overdue = open.filter((a) => isOverdue(a.due_at));
   const trend = [...marked].sort((a, b) => (a.submitted_at ?? "").localeCompare(b.submitted_at ?? "")).slice(-8);
   const weakest = board.units.flatMap((u) => u.rows.map((r) => ({ row: r, unit: u.number }))).filter((x) => x.row.status === "needs").slice(0, 3);
 
@@ -258,7 +258,7 @@ export default async function StudentPage({ params }: PageProps<"/tutor/students
                           )}
                         </td>
                         <td className="muted">{day(a.assigned_at)}</td>
-                        <td className="muted">{a.due_at ? day(a.due_at) : "—"}</td>
+                        <td className="muted">{a.due_at ? formatDue(a.due_at) : "—"}</td>
                         <td className="muted">{a.submitted_at ? day(a.submitted_at) : "—"}</td>
                         <td>
                           <div className="rowacts">
@@ -313,9 +313,11 @@ export default async function StudentPage({ params }: PageProps<"/tutor/students
               <section className="card">
                 <div className="card-hd">
                   <h2>Daily practice</h2>
-                  <span className="muted" style={{ fontSize: 14 }}>{schedule.enabled ? "On" : "Off"}</span>
+                  <span className="muted" style={{ fontSize: 14 }}>
+                    {schedule.enabled ? `On · ${schedule.send_at}` : "Off"}
+                  </span>
                 </div>
-                <DailyPractice schedule={schedule} units={allUnits} studentName={student.name} sendTime="7am" />
+                <DailyPractice schedule={schedule} units={allUnits} studentName={student.name} />
               </section>
             )}
 

@@ -12,7 +12,7 @@ import { deleteAssignment, setStudentArchived, unassign, updateStudent } from "@
 import { conceptBoard } from "@/lib/concept-board";
 import { DailyPractice } from "@/components/tutor/DailyPractice";
 import { bankParts } from "@/lib/admin";
-import { getSchedule } from "@/lib/schedule";
+import { getSchedule, nextSend, pickForSchedule, unitsForNextSend } from "@/lib/schedule";
 import { isOverdue } from "@/lib/due";
 import { initials } from "@/lib/format";
 import { latestSummary } from "@/lib/review";
@@ -45,6 +45,10 @@ export default async function StudentPage({ params }: PageProps<"/tutor/students
     bankParts(),
   ]);
   const allUnits = parts.flatMap((p) => p.units);
+  // What the next automatic set would hold, so the tutor can look before it goes out.
+  const upcoming = nextSend(schedule);
+  const nextQuestions = student.archived_at ? [] : await pickForSchedule(schedule, upcoming?.date);
+  const nextUnits = unitsForNextSend(schedule);
 
   const marked = assignments.filter((a) => a.status === "reviewed");
   const got = marked.reduce((n, a) => n + a.marks_got, 0);
@@ -317,7 +321,19 @@ export default async function StudentPage({ params }: PageProps<"/tutor/students
                     {schedule.enabled ? `On · ${schedule.send_at}` : "Off"}
                   </span>
                 </div>
-                <DailyPractice schedule={schedule} units={allUnits} studentName={student.name} />
+                <DailyPractice
+                  schedule={schedule}
+                  units={allUnits}
+                  studentName={student.name}
+                  next={{
+                    date: upcoming?.date ?? null,
+                    unitLabel:
+                      nextUnits.length === 0
+                        ? "Every unit"
+                        : nextUnits.map((n) => `Unit ${n} · ${allUnits.find((u) => u.number === n)?.title ?? ""}`).join(", "),
+                    questions: nextQuestions,
+                  }}
+                />
               </section>
             )}
 

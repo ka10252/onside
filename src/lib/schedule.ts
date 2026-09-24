@@ -72,21 +72,51 @@ export function unitsForNextSend(s: Schedule): number[] {
   return pick === 0 ? [] : [pick];
 }
 
-/** The questions the next send would use: random, and spread over the units when there is more than one. */
-export async function pickForSchedule(s: Schedule): Promise<BankQuestion[]> {
+/** Same seed, same questions: the tutor's preview shows what will actually be sent. */
+function seeded(seed: string) {
+  let h = 2166136261;
+  for (const c of seed) h = Math.imul(h ^ c.charCodeAt(0), 16777619);
+  return () => {
+    h = Math.imul(h ^ (h >>> 15), 2246822507) ^ Math.imul(h ^ (h >>> 13), 3266489909);
+    return ((h ^= h >>> 16) >>> 0) / 4294967296;
+  };
+}
+
+/**
+ * The questions the next send would use: spread over the chosen units, and the same every time
+ * for a given student, date and place in the plan.
+ */
+export async function pickForSchedule(s: Schedule, forDate?: string): Promise<BankQuestion[]> {
   const units = unitsForNextSend(s);
   const [bank, seen] = await Promise.all([bankQuestions(), seenIds(s.student_id)]);
   const pool = bank.filter(
     (q) => !seen.has(q.id) && inSource(q, s.source) && (units.length === 0 || units.includes(q.unit_number)) && q.format !== "essay",
   );
-  return pickRandom(pool, Math.max(1, Math.min(20, s.count)), [], units.length > 1) as BankQuestion[];
+  const rand = seeded(`${s.student_id}|${forDate ?? singaporeToday().date}|${s.plan_index}|${s.count}|${s.source}`);
+  return pickRandom(pool, Math.max(1, Math.min(20, s.count)), [], units.length > 1, rand) as BankQuestion[];
+}
+
+/** When the next set goes out, following the days and the send time. */
+export function nextSend(s: Schedule, now = new Date()): { date: string; weekday: number } | null {
+  const days = json.parse<number[]>(s.days, []);
+  if (days.length === 0) return null;
+  const { date, time } = singaporeToday(now);
+  for (let i = 0; i < 8; i++) {
+    const day = new Date(new Date(`${date}T00:00:00Z`).getTime() + i * 86_400_000);
+    const iso = day.toISOString().slice(0, 10);
+    const weekday = day.getUTCDay();
+    if (!days.includes(weekday)) continue;
+    if (i === 0 && (s.last_sent_on === date || time >= s.send_at)) continue; // today's slot has gone
+    return { date: iso, weekday };
+  }
+  return null;
 }
 
 const newId = (prefix: string) => `${prefix}_${randomBytes(6).toString("hex")}`;
 
 /** Builds the set and sends it. Returns what was sent, or why nothing was. */
 export async function sendDailySet(s: Schedule, tutorId: string, now = new Date()): Promise<{ sent: number; title: string } | { skipped: string }> {
-  const questions = await pickForSchedule(s);
+  const questions = await pickForSchedule(s, singaporeToday(now).date);
   if (questions.length === 0) return { skipped: "no unseen questions left for these units" };
   const { date } = singaporeToday(now);
   const unitNumbers = [...new Set(questions.map((q) => q.unit_number))].sort((a, b) => a - b);

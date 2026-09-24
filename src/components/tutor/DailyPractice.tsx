@@ -1,6 +1,9 @@
 "use client";
 
 import { useActionState, useState } from "react";
+import type { BankQuestion } from "@/lib/admin";
+import { formatDue } from "@/lib/due";
+import { PreviewPanel, QuestionLine } from "@/components/QuestionPreview";
 import { DAY_NAMES, type Schedule } from "@/lib/schedule-shared";
 import { sendPracticeNow, updateSchedule, type ScheduleState } from "@/lib/schedule-actions";
 
@@ -11,16 +14,19 @@ export function DailyPractice({
   schedule,
   units,
   studentName,
+  next,
 }: {
   schedule: Schedule;
   units: Unit[];
   studentName: string;
+  next: { date: string | null; unitLabel: string; questions: BankQuestion[] };
 }) {
   const [state, save, saving] = useActionState<ScheduleState, FormData>(updateSchedule, {});
   const [sent, sendNow, sending] = useActionState<ScheduleState, FormData>(sendPracticeNow, {});
   const days = JSON.parse(schedule.days) as number[];
   const [plan, setPlan] = useState<number[]>(() => JSON.parse(schedule.plan) as number[]);
   const [dueDays, setDueDays] = useState<string>(schedule.due_days === null ? "" : String(schedule.due_days));
+  const [open, setOpen] = useState<string | null>(null);
   const first = studentName.split(" ")[0];
   const title = (u: number) => (u === 0 ? "Every unit" : `Unit ${u} · ${units.find((x) => x.number === u)?.title ?? ""}`);
   const move = (i: number, by: number) =>
@@ -32,8 +38,50 @@ export function DailyPractice({
       return next;
     });
 
+  const dueOn =
+    next.date && schedule.due_days !== null
+      ? new Date(new Date(`${next.date}T00:00:00Z`).getTime() + schedule.due_days * 86_400_000).toISOString().slice(0, 10)
+      : null;
+
   return (
     <div className="cardbody stack" style={{ gap: 18 }}>
+      <section className="nextset">
+        <div className="card-hd" style={{ padding: 0, border: 0 }}>
+          <h3>Next set</h3>
+          <span className="muted" style={{ fontSize: 14 }}>
+            {schedule.enabled === 0
+              ? "Daily practice is off"
+              : next.date
+                ? `${new Date(next.date).toLocaleDateString("en-SG", { weekday: "short", day: "numeric", month: "short" })} at ${schedule.send_at}`
+                : "No practice day chosen"}
+          </span>
+        </div>
+        <p className="note" style={{ marginTop: 4 }}>
+          {next.unitLabel} · {next.questions.length} question{next.questions.length === 1 ? "" : "s"}
+          {dueOn ? ` · finish by ${formatDue(schedule.due_time ? `${dueOn}T${schedule.due_time}` : dueOn)}` : " · no deadline"}
+        </p>
+        {next.questions.length === 0 ? (
+          <p className="formmsg bad" style={{ marginTop: 8 }}>
+            No unseen questions left for this unit. Change the plan, or pick another source.
+          </p>
+        ) : (
+          <ol className="pick" style={{ marginTop: 10 }}>
+            {next.questions.map((q, i) => (
+              <li key={q.id} className={open === q.id ? "expanded" : undefined}>
+                <span className="n">{i + 1}</span>
+                <button type="button" className="pickopen" aria-expanded={open === q.id} onClick={() => setOpen(open === q.id ? null : q.id)}>
+                  <QuestionLine q={q} />
+                </button>
+                {open === q.id && <PreviewPanel id={q.id} />}
+              </li>
+            ))}
+          </ol>
+        )}
+        <p className="note" style={{ marginTop: 8 }}>
+          These are the questions that will go out. Saving different settings changes them.
+        </p>
+      </section>
+
       <form action={save} className="formgrid">
         <input type="hidden" name="studentId" value={schedule.student_id} />
         <input type="hidden" name="plan" value={JSON.stringify(plan)} />

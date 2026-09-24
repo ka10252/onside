@@ -254,3 +254,8 @@ table.board { table-layout: fixed; min-width: 860px; }
 .planlist li.next { border-color: var(--ink); }
 .planlist .n { font-size: 13px; font-weight: 700; color: var(--ink2); text-align: center; }
 .planlist select { height: 36px; padding: 0 8px; border: 1px solid var(--line2); border-radius: 8px; background: var(--surface); font: inherit; color: var(--ink); max-width: 100%; }
+
+/* Preview of the next automatic set */
+.nextset { padding: 16px 18px; border: 1px solid var(--line2); border-radius: 12px; background: var(--sunk); }
+.nextset h3 { margin: 0; font-size: 16px; }
+.nextset .pick { background: var(--surface); border-radius: 10px; }

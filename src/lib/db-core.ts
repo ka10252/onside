@@ -360,6 +360,12 @@ async function openPostgres(url: string): Promise<Db> {
     run: async (q: string, ...p: Params) => (await s.unsafe(toPg(q), norm(p) as never[])).count ?? 0,
   });
   const base = wrap(sql as unknown as Unsafe);
+  // The first connection out of a cold serverless instance sometimes never answers, which used to
+  // leave the page hanging until the function's time limit. Prove the connection works, with a
+  // limit of our own and one retry, so a bad start costs seconds and the next request opens afresh.
+  await firstContact(async () => {
+    await sql.unsafe("SELECT 1");
+  }, () => sql.end({ timeout: 1 }));
   return {
     ...base,
     kind: "postgres",
@@ -369,6 +375,31 @@ async function openPostgres(url: string): Promise<Db> {
     },
     close: () => sql.end(),
   };
+}
+
+const FIRST_CONTACT_MS = 8000;
+
+/** Runs `probe` with a time limit; on the first failure it tries once more, then gives up. */
+async function firstContact(probe: () => Promise<void>, close: () => Promise<unknown>): Promise<void> {
+  for (let attempt = 1; attempt <= 2; attempt++) {
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    try {
+      await Promise.race([
+        probe(),
+        new Promise<never>((_, reject) => {
+          timer = setTimeout(() => reject(new Error(`the database did not answer within ${FIRST_CONTACT_MS / 1000}s`)), FIRST_CONTACT_MS);
+        }),
+      ]);
+      return;
+    } catch (e) {
+      if (attempt === 2) {
+        await close().catch(() => {});
+        throw new Error(`Could not reach the database: ${e instanceof Error ? e.message : String(e)}`);
+      }
+    } finally {
+      clearTimeout(timer);
+    }
+  }
 }
 
 /**

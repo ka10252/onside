@@ -7,7 +7,13 @@ export const maxDuration = 120;
 
 export async function GET(req: Request) {
   const secret = process.env.CRON_SECRET;
-  if (secret && req.headers.get("authorization") !== `Bearer ${secret}`) {
+  if (!secret) {
+    // Without a secret anyone could set work for the student, so only a local run may go on.
+    if (process.env.NODE_ENV === "production") {
+      console.error("CRON_SECRET is not set: daily practice will not run.");
+      return new Response("CRON_SECRET is not set", { status: 500 });
+    }
+  } else if (req.headers.get("authorization") !== `Bearer ${secret}`) {
     return new Response("Not allowed", { status: 401 });
   }
   const results = await runSchedules();

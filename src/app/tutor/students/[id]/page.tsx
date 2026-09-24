@@ -11,19 +11,18 @@ import { deleteAssignment, setStudentArchived, unassign, updateStudent } from "@
 import { conceptBoard } from "@/lib/concept-board";
 import { DailyPractice } from "@/components/tutor/DailyPractice";
 import { bankParts } from "@/lib/admin";
-import { getSchedule, nextSend, pickForSchedule, singaporeToday, unitsForNextSend, upcomingSends } from "@/lib/schedule";
+import { getSchedule, nextSend, singaporeToday, upcomingSends } from "@/lib/schedule";
+import { timesOf } from "@/lib/schedule-shared";
 import { PracticeCalendar, type CalendarCell } from "@/components/tutor/PracticeCalendar";
 import { all } from "@/lib/db";
-import { isOverdue } from "@/lib/due";
+import { dateInSG, isOverdue, shortDateSG } from "@/lib/due";
 import { initials } from "@/lib/format";
 import { latestSummary } from "@/lib/review";
 import { pct } from "@/lib/scoring";
 import { requireUser } from "@/lib/session";
 import { unitTestProgress } from "@/lib/unit-progress";
 
-const day = (iso: string) => new Date(iso).toLocaleDateString("en-SG", { day: "numeric", month: "short" });
-/** The Singapore date a set went out. */
-const substrDay = (iso: string) => new Date(new Date(iso).getTime() + 8 * 3600_000).toISOString().slice(0, 10);
+const day = shortDateSG;
 const percent = (a: AssignmentRow) => (a.marks_total ? Math.round((a.marks_got / a.marks_total) * 100) : 0);
 
 function daysAgo(iso: string | null) {
@@ -50,9 +49,6 @@ export default async function StudentPage({ params, searchParams }: PageProps<"/
   const allUnits = parts.flatMap((p) => p.units);
   // What the next automatic set would hold, so the tutor can look before it goes out.
   const upcoming = nextSend(schedule);
-  const nextQuestions = student.archived_at ? [] : await pickForSchedule(schedule, upcoming?.date);
-
-  const nextUnits = unitsForNextSend(schedule);
 
   // Four weeks from this Monday: what already went out, and what the schedule will send.
   const { date: todaySg } = singaporeToday();
@@ -73,7 +69,7 @@ export default async function StudentPage({ params, searchParams }: PageProps<"/
   const sgTime = (iso: string) => new Date(new Date(iso).getTime() + 8 * 3600_000).toISOString().slice(11, 16);
   const sentByDate = new Map<string, CalendarCell["sent"]>();
   for (const r of sentRows) {
-    const on = substrDay(r.at);
+    const on = dateInSG(r.at);
     sentByDate.set(on, [
       ...(sentByDate.get(on) ?? []),
       {
@@ -436,7 +432,7 @@ export default async function StudentPage({ params, searchParams }: PageProps<"/
                 <div className="card-hd">
                   <h2>Daily practice</h2>
                   <span className="muted" style={{ fontSize: 14 }}>
-                    {schedule.enabled ? `On · ${schedule.send_at}` : "Off"}
+                    {schedule.enabled ? `On · ${timesOf(schedule).join(", ")}` : "Off"}
                   </span>
                 </div>
                 <PracticeCalendar
@@ -451,11 +447,11 @@ export default async function StudentPage({ params, searchParams }: PageProps<"/
                   schedule={schedule}
                   units={allUnits}
                   studentName={student.name}
-                  next={{
-                    date: upcoming?.date ?? null,
-                    unitLabel: nextUnits.length === 0 ? "Every unit" : unitName(nextUnits[0]!),
-                    count: nextQuestions.length,
-                  }}
+                  next={
+                    upcoming
+                      ? { date: upcoming.date, time: upcoming.time, unitLabel: unitName(upcoming.unit), count: upcoming.count }
+                      : null
+                  }
                 />
               </section>
             )}

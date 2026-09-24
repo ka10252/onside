@@ -3,6 +3,7 @@
 import { useActionState, useState } from "react";
 import { DAY_NAMES, timesOf, type Schedule } from "@/lib/schedule-shared";
 import { sendPracticeNow, updateSchedule, type ScheduleState } from "@/lib/schedule-actions";
+import { nextFreeTime } from "./PracticeCalendar";
 
 type Unit = { number: number; title: string };
 
@@ -16,7 +17,7 @@ export function DailyPractice({
   schedule: Schedule;
   units: Unit[];
   studentName: string;
-  next: { date: string | null; unitLabel: string; count: number };
+  next: { date: string; time: string; unitLabel: string; count: number } | null;
 }) {
   const [state, save, saving] = useActionState<ScheduleState, FormData>(updateSchedule, {});
   const [sent, sendNow, sending] = useActionState<ScheduleState, FormData>(sendPracticeNow, {});
@@ -42,9 +43,9 @@ export function DailyPractice({
         <b>Next set</b>{" "}
         {schedule.enabled === 0
           ? "Daily practice is off."
-          : next.date
-            ? `${new Date(next.date).toLocaleDateString("en-SG", { weekday: "short", day: "numeric", month: "short" })} at ${schedule.send_at} · ${next.unitLabel} · ${next.count} question${next.count === 1 ? "" : "s"}`
-            : "No practice day chosen."}{" "}
+          : next
+            ? `${new Date(next.date).toLocaleDateString("en-SG", { weekday: "short", day: "numeric", month: "short", timeZone: "UTC" })} at ${next.time} · ${next.unitLabel} · ${next.count} question${next.count === 1 ? "" : "s"}`
+            : "Nothing planned. Choose days below, or set a day on the calendar."}{" "}
         <span className="muted">Click a day above to change it or see the questions.</span>
       </p>
 
@@ -78,13 +79,7 @@ export function DailyPractice({
               <button
                 type="button"
                 className="btn sm"
-                onClick={() =>
-                  setTimes((cur) => {
-                    const [h, m] = (cur.at(-1) ?? "07:00").split(":").map(Number);
-                    const next = `${String(Math.min(23, (h ?? 7) + 6)).padStart(2, "0")}:${String(m ?? 0).padStart(2, "0")}`;
-                    return cur.includes(next) ? cur : [...cur, next];
-                  })
-                }
+                onClick={() => setTimes((cur) => [...cur, nextFreeTime(cur)])}
               >
                 Add another time
               </button>

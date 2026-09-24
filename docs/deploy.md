@@ -25,7 +25,7 @@ Row level security is on for every table with no policies, so Supabase's public 
   - `ONSIDE_URL` — `https://your-app.vercel.app`
   - `CRON_SECRET` — the same value as in Vercel
 - `vercel.json` keeps a daily cron at 22:00 UTC (6am Singapore) as a backstop if the workflow is off.
-- Set `CRON_SECRET` in `.env.local` and in the Vercel project (any long random string). Both callers send it as a bearer token; the route turns everyone else away.
+- Set `CRON_SECRET` in `.env.local` and in the Vercel project (any long random string). Both callers send it as a bearer token; the route turns everyone else away, and in production it refuses to run at all until the secret is set.
 - GitHub Actions minutes: each call takes a few seconds, so roughly 8 hours a month of the 2,000 free minutes on a private repo.
 
 ## Limits to know

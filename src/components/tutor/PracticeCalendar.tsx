@@ -262,11 +262,14 @@ export function PracticeCalendar({
   );
 }
 
-/** An hour after the last set, so a new row doesn't clash. */
-function nextFreeTime(taken: string[]) {
-  const last = [...taken].sort().at(-1) ?? "07:00";
-  const [h, m] = last.split(":").map(Number);
-  const next = Math.min(23, (h ?? 7) + 1);
-  const time = `${String(next).padStart(2, "0")}:${String(m ?? 0).padStart(2, "0")}`;
-  return taken.includes(time) ? `${String(Math.min(23, next + 1)).padStart(2, "0")}:${String(m ?? 0).padStart(2, "0")}` : time;
+/** The first free time after the last set, so a new row never clashes. */
+export function nextFreeTime(taken: string[]) {
+  const last = [...taken].sort().at(-1) ?? "06:00";
+  const [h = 6, m = 0] = last.split(":").map(Number);
+  for (let i = 1; i <= 24 * 4; i++) {
+    const mins = ((h * 60 + m + i * 15) % (24 * 60) + 24 * 60) % (24 * 60);
+    const time = `${String(Math.floor(mins / 60)).padStart(2, "0")}:${String(mins % 60).padStart(2, "0")}`;
+    if (!taken.includes(time)) return time;
+  }
+  return "23:45";
 }

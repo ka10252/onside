@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Nav, STUDENT_TABS } from "@/components/Nav";
 import { formatDue } from "@/components/StatusPill";
-import { isOverdue } from "@/lib/due";
+import { isOverdue, shortDateSG } from "@/lib/due";
 import { UnitSelect } from "@/components/student/UnitSelect";
 import { all } from "@/lib/db";
 import { requireUser } from "@/lib/session";
@@ -24,7 +24,7 @@ type Row = {
 
 type UnitRow = { assignment_id: string; number: number; title: string };
 
-const shortDate = (iso: string) => new Date(iso).toLocaleDateString("en-SG", { day: "numeric", month: "short" });
+const shortDate = shortDateSG;
 
 export default async function AssignmentsPage({ searchParams }: PageProps<"/student">) {
   const user = await requireUser("student");

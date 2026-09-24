@@ -112,6 +112,7 @@ export function daySkipped(s: Schedule, date: string) {
  * each set that follows the plan.
  */
 export function slotsForDate(s: Schedule, date: string, step = 0): { slots: Slot[]; used: number } {
+  const sent = sentTimes(s, date);
   const chosen = readChoice(overridesOf(s)[date], s);
   if (chosen === "skip") return { slots: [], used: 0 };
   if (chosen) {
@@ -123,10 +124,14 @@ export function slotsForDate(s: Schedule, date: string, step = 0): { slots: Slot
   const weekday = new Date(`${date}T00:00:00Z`).getUTCDay();
   if (!json.parse<number[]>(s.days, []).includes(weekday)) return { slots: [], used: 0 };
   const times = timesOf(s);
-  return {
-    slots: times.map((time, i) => ({ time, unit: planUnit(s, step + i), count: s.count, source: "plan" as const })),
-    used: times.length,
-  };
+  // plan_index has already moved on for the sets that went out today, so only count the ones left.
+  let ahead = 0;
+  const slots = times.map((time) => {
+    const slot = { time, unit: sent.includes(time) ? null : planUnit(s, step + ahead), count: s.count, source: "plan" as const };
+    if (!sent.includes(time)) ahead++;
+    return slot;
+  });
+  return { slots, used: ahead };
 }
 
 /** Times that already went out on a date. */
@@ -135,6 +140,17 @@ export function sentTimes(s: Schedule, date: string): string[] {
   const times = log[date] ?? [];
   // Before this column existed, one send a day was recorded on the schedule itself.
   return s.last_sent_on === date && times.length === 0 ? [s.send_at] : times;
+}
+
+/**
+ * A slot is due when its time has come and it hasn't gone out. Changing the time of day after a
+ * set has gone out doesn't earn the student another one: a day sends as many sets as it has times.
+ */
+export function dueSlots(s: Schedule, date: string, nowTime: string): Slot[] {
+  const { slots } = slotsForDate(s, date);
+  const done = sentTimes(s, date);
+  const left = Math.max(0, slots.length - done.length);
+  return slots.filter((slot) => nowTime >= slot.time && !done.includes(slot.time)).slice(0, left);
 }
 
 /** The unit the next send covers (or the one on a given day). */
@@ -182,7 +198,8 @@ export async function pickForSlot(s: Schedule, date: string, slot: Slot, alsoAvo
       q.format !== "essay",
   );
   const rand = seeded(`${s.student_id}|${date}|${slot.time}|${units.join(",")}|${slot.count}|${s.source}`);
-  return pickRandom(pool, Math.max(1, Math.min(20, slot.count)), [], units.length > 1, rand) as BankQuestion[];
+  // "Every unit" spreads the questions over the units instead of taking them all from one.
+  return pickRandom(pool, Math.max(1, Math.min(20, slot.count)), [], units.length !== 1, rand) as BankQuestion[];
 }
 
 /** The questions the day's first set would use. */
@@ -209,7 +226,7 @@ const newId = (prefix: string) => `${prefix}_${randomBytes(6).toString("hex")}`;
  * Days the tutor set by hand win over the weekly days and the rotation.
  */
 export function upcomingSends(s: Schedule, days = 42, now = new Date()): DayPlan[] {
-  const { date, time } = singaporeToday(now);
+  const { date } = singaporeToday(now);
   const out: DayPlan[] = [];
   let step = 0;
   for (let i = 0; i < days; i++) {
@@ -217,8 +234,12 @@ export function upcomingSends(s: Schedule, days = 42, now = new Date()): DayPlan
     const { slots, used } = slotsForDate(s, iso, step);
     step += used;
     const already = i === 0 ? sentTimes(s, iso) : [];
+    const stillToCome = i === 0 ? slots.length - already.length : slots.length;
+    let shown = 0;
     for (const slot of slots) {
-      if (i === 0 && (time >= slot.time || already.includes(slot.time))) continue; // that one has gone
+      if (i === 0 && already.includes(slot.time)) continue; // that one went out
+      if (i === 0 && shown >= stillToCome) continue; // the day's sets are all accounted for
+      shown++;
       out.push({ ...slot, date: iso });
     }
   }
@@ -242,14 +263,28 @@ export async function sendSet(
   const dueDate =
     s.due_days === null ? null : new Date(new Date(`${date}T00:00:00Z`).getTime() + s.due_days * 86_400_000).toISOString().slice(0, 10);
   const due = dueDate && s.due_time ? `${dueDate}T${s.due_time}` : dueDate;
-  const log = json.parse<Record<string, string[]>>(s.sent_slots, {});
-  const times = [...new Set([...(log[date] ?? []), slot.time])].sort();
-  // Keep the log to the last few weeks.
-  const trimmed = Object.fromEntries(
-    Object.entries({ ...log, [date]: times }).filter(([d]) => d >= new Date(Date.now() - 30 * 86_400_000).toISOString().slice(0, 10)),
-  );
   const plan = json.parse<number[]>(s.plan, []);
+  let clash = false;
   await tx(async (t) => {
+    // Claim the slot first. Two callers (the GitHub workflow and the Vercel cron can fire in the
+    // same minute) race here, and only the one that writes the log gets to send.
+    const fresh = await t.one<{ sent_slots: string; plan_index: number }>(
+      "SELECT sent_slots, plan_index FROM schedules WHERE student_id = ? FOR UPDATE",
+      s.student_id,
+    );
+    // "Send one now" can run before the schedule was ever saved.
+    if (!fresh) await t.run("INSERT INTO schedules (student_id) VALUES (?) ON CONFLICT (student_id) DO NOTHING", s.student_id);
+    const log = json.parse<Record<string, string[]>>(fresh?.sent_slots ?? s.sent_slots, {});
+    if ((log[date] ?? []).includes(slot.time)) {
+      clash = true;
+      return;
+    }
+    const times = [...new Set([...(log[date] ?? []), slot.time])].sort();
+    // Keep the log to the last few weeks.
+    const trimmed = Object.fromEntries(
+      Object.entries({ ...log, [date]: times }).filter(([d]) => d >= new Date(Date.now() - 30 * 86_400_000).toISOString().slice(0, 10)),
+    );
+    const index = fresh?.plan_index ?? s.plan_index;
     await t.run(
       "INSERT INTO sets (id, title, mode, helper, created_by) VALUES (?, ?, 'assigned', ?, ?)",
       setId,
@@ -267,10 +302,11 @@ export async function sendSet(
       "UPDATE schedules SET last_sent_on = ?, sent_slots = ?, plan_index = ? WHERE student_id = ?",
       date,
       JSON.stringify(trimmed),
-      advancePlan && plan.length ? (s.plan_index + 1) % plan.length : s.plan_index,
+      advancePlan && plan.length ? (index + 1) % plan.length : index,
       s.student_id,
     );
   });
+  if (clash) return { skipped: "another run sent this one" };
   return { sent: questions.length, title };
 }
 
@@ -303,8 +339,7 @@ export async function runSchedules(now = new Date()): Promise<RunResult[]> {
       out.push({ student: s.name, result: daySkipped(s, date) ? "set aside for today" : "not a practice day" });
       continue;
     }
-    const done = sentTimes(s, date);
-    const due = slots.filter((slot) => time >= slot.time && !done.includes(slot.time));
+    const due = dueSlots(s, date, time);
     if (due.length === 0) {
       const next = slots.find((slot) => time < slot.time);
       out.push({ student: s.name, result: next ? `waits until ${next.time}` : "already sent today" });

@@ -30,3 +30,13 @@ export function isOverdue(due: string | null, now = new Date()) {
   // A date with no time is late once that day has passed.
   return singaporeNow(now) > (time ? `${date}T${time}` : `${date}T23:59`);
 }
+
+/** A timestamp shown as a Singapore date: "26 Sep". */
+export function shortDateSG(iso: string) {
+  return new Date(new Date(iso).getTime() + SG_OFFSET_MS).toLocaleDateString("en-SG", { day: "numeric", month: "short", timeZone: "UTC" });
+}
+
+/** The Singapore date (YYYY-MM-DD) a timestamp falls on. */
+export function dateInSG(iso: string) {
+  return new Date(new Date(iso).getTime() + SG_OFFSET_MS).toISOString().slice(0, 10);
+}

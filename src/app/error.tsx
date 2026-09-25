@@ -1,11 +1,37 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect } from "react";
 import { isStale } from "@/components/stale";
 
+const RELOADED = "onside:reloaded-at";
+
+/** Reloads once for a page that a new deployment left behind, but never in a loop. */
+function useReloadOnce(should: boolean) {
+  useEffect(() => {
+    if (!should) return;
+    let last = 0;
+    try {
+      last = Number(sessionStorage.getItem(RELOADED) ?? 0);
+    } catch {
+      // private window: fall back to the button
+    }
+    if (Date.now() - last < 20_000) return;
+    try {
+      sessionStorage.setItem(RELOADED, String(Date.now()));
+    } catch {
+      // ignore
+    }
+    window.location.reload();
+  }, [should]);
+}
+
 export default function ErrorPage({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) {
-  // A page open while a new version went live can't reach the server any more; a refresh fixes it.
-  if (isStale(error)) {
+  // A page open while a new version went live can't reach the server any more; a refresh fixes it,
+  // so take it once without asking and only show this if that didn't help.
+  const stale = isStale(error);
+  useReloadOnce(stale);
+  if (stale) {
     return (
       <main className="page">
         <div className="narrow">

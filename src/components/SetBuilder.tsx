@@ -6,6 +6,7 @@ import { saveSet } from "@/lib/admin-actions";
 import { EMPTY_FILTER, matches, pickRandom, sameQuestionKey, SESSIONS, SKILLS, sourceOf, type BankFilter, type Source } from "@/lib/bank-filter";
 import { generateQuestions, loadBankRange, studentHistory, type SeenState } from "@/lib/builder-actions";
 import { PreviewPanel, QuestionLine } from "./QuestionPreview";
+import { reportIfStale } from "./stale";
 
 type Initial = { id: string; title: string; helper: "on" | "off"; timeLimitMin: number | null; questionIds: string[] };
 type Part = { id: string; name: string; units: { number: number; title: string }[] };
@@ -260,14 +261,20 @@ export function SetBuilder({
     setError(null);
     const minutes = helper === "off" && timeLimit.trim() ? Number(timeLimit) : null;
     startTransition(async () => {
-      const res = await saveSet(initial?.id ?? null, {
-        title: shownTitle,
-        helper,
-        timeLimitMin: minutes,
-        questionIds: selected,
-        sendTo: studentId && !initial ? { studentId, due: due || null } : null,
-      });
-      if (res?.error) setError(res.error);
+      try {
+        const res = await saveSet(initial?.id ?? null, {
+          title: shownTitle,
+          helper,
+          timeLimitMin: minutes,
+          questionIds: selected,
+          sendTo: studentId && !initial ? { studentId, due: due || null } : null,
+        });
+        if (res?.error) setError(res.error);
+      } catch (e) {
+        // A page open while a new version went live can't reach the server any more.
+        if (!reportIfStale(e)) throw e;
+        setError("This page is out of date. Refresh and save again — nothing has been lost.");
+      }
     });
   }
 

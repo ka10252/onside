@@ -8,7 +8,7 @@ import { saveDraft, submitAssignment, uploadPhoto } from "@/lib/student-actions"
 import { ArrowLeft, ArrowRight, EyeIcon } from "../Icons";
 import { Blocks, Rich } from "../Rich";
 import { flushAll, registerSaver } from "./flush";
-import { dropBackup, keepBackup, reportIfStale, useBackup } from "./stale";
+import { dropBackup, keepBackup, reportIfStale, useBackup } from "../stale";
 import { HelperDrawer, type Msg } from "./HelperDrawer";
 import { useActivity } from "./useActivity";
 

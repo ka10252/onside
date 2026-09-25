@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { PreviewPanel, QuestionLine } from "@/components/QuestionPreview";
+import { reportIfStale } from "@/components/stale";
 import { previewPracticeDay, sendSetNow, setPracticeDay, type DayPreview, type DaySlotInput } from "@/lib/schedule-actions";
 
 const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
@@ -77,11 +78,16 @@ export function PracticeCalendar({
   function apply(choice: "plan" | "skip" | DaySlotInput[]) {
     if (!picked) return;
     start(async () => {
-      const res = await setPracticeDay(studentId, picked.date, choice);
-      setNote(res.error ?? res.ok ?? null);
-      if (!res.error) {
-        setPreview(await previewPracticeDay(studentId, picked.date));
-        router.refresh(); // the squares come from the page
+      try {
+        const res = await setPracticeDay(studentId, picked.date, choice);
+        setNote(res.error ?? res.ok ?? null);
+        if (!res.error) {
+          setPreview(await previewPracticeDay(studentId, picked.date));
+          router.refresh(); // the squares come from the page
+        }
+      } catch (e) {
+        if (!reportIfStale(e)) throw e;
+        setNote("This page is out of date. Refresh and try again.");
       }
     });
   }
@@ -91,9 +97,14 @@ export function PracticeCalendar({
     const first = slots[0];
     if (!first) return;
     start(async () => {
-      const res = await sendSetNow(studentId, { unit: first.unit, count: first.count });
-      setNote(res.error ?? res.ok ?? null);
-      if (!res.error) router.refresh();
+      try {
+        const res = await sendSetNow(studentId, { unit: first.unit, count: first.count });
+        setNote(res.error ?? res.ok ?? null);
+        if (!res.error) router.refresh();
+      } catch (e) {
+        if (!reportIfStale(e)) throw e;
+        setNote("This page is out of date. Refresh and send again.");
+      }
     });
   }
 

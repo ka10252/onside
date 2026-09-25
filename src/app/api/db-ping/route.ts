@@ -2,7 +2,7 @@
 // so a slow page can be told apart from a slow database. `?deep=1` also times the work behind
 // the tutor's screens, one loader at a time.
 import { all, one } from "@/lib/db";
-import { listStudents, assignmentsForStudent, studentStats, bankParts } from "@/lib/admin";
+import { listStudents, assignmentsForStudent, studentStats, bankParts, bankCounts, bankQuestions, bankRange } from "@/lib/admin";
 import { conceptBoard } from "@/lib/concept-board";
 import { latestSummary } from "@/lib/review";
 import { unitTestProgress } from "@/lib/unit-progress";
@@ -49,6 +49,14 @@ export async function GET(req: Request) {
         await time("latestSummary", () => latestSummary(id));
         await time("bankParts", () => bankParts());
         await time("bankParts again", () => bankParts());
+        await time("bankCounts (new-set screen)", () => bankCounts());
+        await time("bankRange (one unit)", () => bankRange([7]));
+        // The heaviest read in the app: every approved question, used whenever a set is sent.
+        await time("bankQuestions (whole bank)", async () => {
+          const rows = await bankQuestions();
+          ms["bankQuestions rows"] = rows.length;
+          ms["bankQuestions KB"] = Math.round(JSON.stringify(rows).length / 1024);
+        });
         const s = await getSchedule(id);
         await time("upcomingSends (28 days)", async () => upcomingSends(s, 28));
         // The student's own screens, for comparison. loadReview itself is wrapped in React's cache(),

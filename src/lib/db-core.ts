@@ -344,16 +344,21 @@ const norm = (params: Params) => params.map((p) => (p === undefined ? null : typ
 async function openPostgres(url: string): Promise<Db> {
   const { default: postgres } = await import("postgres");
   const toNumber = { to: 20, from: [20, 1700], serialize: (x: unknown) => String(x), parse: (x: string) => Number(x) };
-  const sql = postgres(url, {
-    prepare: false, // Supabase transaction pooler
-    max: 3,
-    idle_timeout: 20,
-    // Fail fast instead of leaving a page hanging until the function's time limit.
-    connect_timeout: 10,
-    connection: { application_name: "onside" },
-    onnotice: () => {},
-    types: { num: toNumber },
-  });
+  const make = () =>
+    postgres(url, {
+      prepare: false, // Supabase transaction pooler
+      max: 3,
+      idle_timeout: 20,
+      // Fail fast instead of leaving a page hanging until the function's time limit.
+      connect_timeout: 10,
+      connection: { application_name: "onside" },
+      onnotice: () => {},
+      types: { num: toNumber },
+    });
+  // The first connection out of a cold serverless instance sometimes never answers. Prove the
+  // connection with a query of our own; if it doesn't come back, throw that client away and open a
+  // second one, because asking the stuck socket again only waits again.
+  const sql = await firstContact(make);
   type Unsafe = { unsafe: (q: string, p?: never[]) => Promise<unknown[] & { count: number }> };
   const wrap = (s: Unsafe): Queryable => ({
     all: async <T,>(q: string, ...p: Params) => (await s.unsafe(toPg(q), norm(p) as never[])) as unknown as T[],
@@ -361,12 +366,6 @@ async function openPostgres(url: string): Promise<Db> {
     run: async (q: string, ...p: Params) => (await s.unsafe(toPg(q), norm(p) as never[])).count ?? 0,
   });
   const base = wrap(sql as unknown as Unsafe);
-  // The first connection out of a cold serverless instance sometimes never answers, which used to
-  // leave the page hanging until the function's time limit. Prove the connection works, with a
-  // limit of our own and one retry, so a bad start costs seconds and the next request opens afresh.
-  await firstContact(async () => {
-    await sql.unsafe("SELECT 1");
-  }, () => sql.end({ timeout: 1 }));
   return {
     ...base,
     kind: "postgres",
@@ -379,28 +378,33 @@ async function openPostgres(url: string): Promise<Db> {
 }
 
 const FIRST_CONTACT_MS = 8000;
+const FIRST_CONTACT_TRIES = 3;
 
-/** Runs `probe` with a time limit; on the first failure it tries once more, then gives up. */
-async function firstContact(probe: () => Promise<void>, close: () => Promise<unknown>): Promise<void> {
-  for (let attempt = 1; attempt <= 2; attempt++) {
+type Sql = { unsafe: (q: string) => Promise<unknown>; end: (o?: { timeout?: number }) => Promise<void> };
+
+/** Opens a client and proves it answers, with a fresh client on each retry. */
+async function firstContact<T extends Sql>(make: () => T): Promise<T> {
+  let last = "";
+  for (let attempt = 1; attempt <= FIRST_CONTACT_TRIES; attempt++) {
+    const sql = make();
     let timer: ReturnType<typeof setTimeout> | undefined;
     try {
       await Promise.race([
-        probe(),
+        sql.unsafe("SELECT 1"),
         new Promise<never>((_, reject) => {
-          timer = setTimeout(() => reject(new Error(`the database did not answer within ${FIRST_CONTACT_MS / 1000}s`)), FIRST_CONTACT_MS);
+          timer = setTimeout(() => reject(new Error(`no answer within ${FIRST_CONTACT_MS / 1000}s`)), FIRST_CONTACT_MS);
         }),
       ]);
-      return;
+      return sql;
     } catch (e) {
-      if (attempt === 2) {
-        await close().catch(() => {});
-        throw new Error(`Could not reach the database: ${e instanceof Error ? e.message : String(e)}`);
-      }
+      last = e instanceof Error ? e.message : String(e);
+      console.error(`database: attempt ${attempt} of ${FIRST_CONTACT_TRIES} failed (${last})`);
+      void sql.end({ timeout: 1 }).catch(() => {});
     } finally {
       clearTimeout(timer);
     }
   }
+  throw new Error(`Could not reach the database after ${FIRST_CONTACT_TRIES} tries: ${last}`);
 }
 
 /**

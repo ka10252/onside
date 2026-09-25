@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 
-export default function ErrorPage({ reset }: { error: Error & { digest?: string }; reset: () => void }) {
+export default function ErrorPage({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) {
   return (
     <main className="page">
       <div className="narrow">
@@ -13,6 +13,12 @@ export default function ErrorPage({ reset }: { error: Error & { digest?: string 
             <button type="button" className="btn primary" onClick={reset}>Try again</button>
             <Link href="/" className="btn">Go to the start</Link>
           </div>
+          {error.digest && (
+            // The code the server logged this under, so a report can be matched to the entry.
+            <p className="muted" style={{ marginTop: 14, fontSize: 13 }}>
+              Code {error.digest}
+            </p>
+          )}
         </div>
       </div>
     </main>

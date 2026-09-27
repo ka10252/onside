@@ -130,3 +130,11 @@ These override HANDOFF §6 and answer §8 where they differ.
 - A practice day has a list of send times (`schedules.times`, defaulting to `send_at`), so a student can get, say, one set in the morning and another in the evening. Each set draws its own questions and the unit rotation moves on one step per set.
 - A day set by hand on the calendar holds a list too: each entry has its own time, unit and number of questions.
 - `schedules.sent_slots` records which times have gone out on which date, so a run that fires several times a day never sends the same slot twice.
+
+## A page must never hang (2026-09-27)
+The site kept ending a long wait with "something went wrong", on any screen, with no pattern to which one. Two separate causes, both of the serverless kind:
+
+- **A connection that died while the instance slept.** Vercel freezes an instance between requests and the database closes the connection it was holding. On waking, a query goes out on a socket nobody is listening to: no answer, no error, and the driver waits until the function's own limit. So every query gets a deadline of 8 s (`src/lib/db.ts`). Past it the pool is dropped, the next call opens a fresh one, and reads are asked again — writes are not, because a write that timed out may still have landed. Opening a pool proves itself with a short query (`firstContact` in `src/lib/db-core.ts`); two connections per instance, let go after 10 idle seconds or 5 minutes of life.
+- **A page left behind by a new deployment.** Vercel gives each deployment its own Server Action addresses, and Skew Protection is paid. `/api/version` reports which build is serving; `StaleBar` in the root layout checks it every minute while the tab is in front and says so before a button is pressed. Saving a set and the calendar's buttons report it in place rather than throwing the page away.
+
+What a person sees now: a page frame straight away (`loading.tsx` on both sides), a line after 6 seconds saying it is taking longer than usual, and — if it still fails — one silent retry before any error screen. Only a second failure shows one, with the code the server logged it under. Deploy while the tutor is working and it will still interrupt them, so don't.

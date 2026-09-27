@@ -16,6 +16,16 @@ jobs:
   send:
     runs-on: ubuntu-latest
     steps:
+      # Vercel puts an instance to sleep when nothing has asked for a while, and the first request
+      # after that is the slow one. Touching the screens people land on keeps them awake.
+      - name: Keep the screens awake
+        env:
+          ONSIDE_URL: ${{ secrets.ONSIDE_URL }}
+        run: |
+          for path in / /student /tutor /api/db-ping; do
+            curl --silent --show-error --output /dev/null --max-time 30 "$ONSIDE_URL$path" || true
+          done
+
       - name: Ask Onside to send anything due
         env:
           ONSIDE_URL: ${{ secrets.ONSIDE_URL }}

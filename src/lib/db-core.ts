@@ -347,8 +347,14 @@ async function openPostgres(url: string): Promise<Db> {
   const make = () =>
     postgres(url, {
       prepare: false, // Supabase transaction pooler
-      max: 3,
+      // Two connections per instance. Queries take about 2 ms, so a page that asks for nine things
+      // at once loses nothing by taking turns, and there are fewer sockets left to go stale while
+      // the instance is asleep.
+      max: 2,
       idle_timeout: 10,
+      // Let a connection go after a few minutes even when it is busy, rather than keeping one that
+      // the database may have given up on.
+      max_lifetime: 60 * 5,
       // Fail fast instead of leaving a page hanging until the function's time limit.
       connect_timeout: 10,
       connection: { application_name: "onside" },

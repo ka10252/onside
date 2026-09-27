@@ -1,5 +1,5 @@
 import "server-only";
-import { openDb, type Db, type Params, type Queryable } from "./db-core";
+import { openDb, POOL_MAX, type Db, type Params, type Queryable } from "./db-core";
 
 export { json, NOW_SQL } from "./db-core";
 export type { Queryable } from "./db-core";
@@ -28,6 +28,30 @@ export function db(): Promise<Db> {
  * still have reached the database.
  */
 const QUERY_MS = 8000;
+
+/**
+ * Only as many queries in flight as there are connections. Handing the driver a queue deeper than
+ * that hangs against Supabase's transaction pooler: nine queries over a pool of three never come
+ * back, while nine over a pool of nine, or nine one after another, are fine. A page that asks for
+ * seven things at once was hitting exactly that. Waiting here costs nothing — the queries are a
+ * couple of milliseconds each — and it is the whole difference between a page and a hung page.
+ */
+function gate(width: number) {
+  let busy = 0;
+  const waiting: (() => void)[] = [];
+  return async <T>(fn: () => Promise<T>): Promise<T> => {
+    if (busy >= width) await new Promise<void>((resume) => waiting.push(resume));
+    busy++;
+    try {
+      return await fn();
+    } finally {
+      busy--;
+      waiting.shift()?.();
+    }
+  };
+}
+
+const inFlight = gate(POOL_MAX);
 
 class QueryStalled extends Error {}
 
@@ -61,7 +85,7 @@ async function ask<T>(work: (d: Db) => Promise<T>, retry: boolean): Promise<T> {
     const conn = await held;
     if (conn.kind !== "postgres") return work(conn); // the local database is in this process
     try {
-      return await deadline(work(conn));
+      return await inFlight(() => deadline(work(conn)));
     } catch (e) {
       if (!(e instanceof QueryStalled)) throw e;
       console.error(`database: query stalled on attempt ${attempt}, opening a new connection`);

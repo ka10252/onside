@@ -341,16 +341,20 @@ export function toPg(sql: string): string {
 // undefined is not a valid parameter; booleans are stored as 0/1 like before.
 const norm = (params: Params) => params.map((p) => (p === undefined ? null : typeof p === "boolean" ? (p ? 1 : 0) : p));
 
+/**
+ * Connections per instance. Queries take about 2 ms on the server, so this is plenty — and
+ * src/lib/db.ts never lets more than this many queries be in flight at once, because handing a
+ * queue of them to the driver at the same time hangs against Supabase's transaction pooler.
+ */
+export const POOL_MAX = 4;
+
 async function openPostgres(url: string): Promise<Db> {
   const { default: postgres } = await import("postgres");
   const toNumber = { to: 20, from: [20, 1700], serialize: (x: unknown) => String(x), parse: (x: string) => Number(x) };
   const make = () =>
     postgres(url, {
       prepare: false, // Supabase transaction pooler
-      // Two connections per instance. Queries take about 2 ms, so a page that asks for nine things
-      // at once loses nothing by taking turns, and there are fewer sockets left to go stale while
-      // the instance is asleep.
-      max: 2,
+      max: POOL_MAX,
       idle_timeout: 10,
       // Let a connection go after a few minutes even when it is busy, rather than keeping one that
       // the database may have given up on.

@@ -7,7 +7,7 @@ import { answerText } from "@/lib/answer-text";
 import { isPast, pastContext, tableBlock, type Block, type Question } from "@/lib/content";
 import { all, json } from "@/lib/db";
 import { FORMAT_LABEL } from "@/lib/format";
-import { loadReview, type ReviewItem } from "@/lib/review";
+import { ACCEPTED_NOTE, loadReview, type ReviewItem } from "@/lib/review";
 import { pct, type MarkSplit } from "@/lib/scoring";
 import { requireUser } from "@/lib/session";
 import { finalizeAssignment, getAssignment, isLocked } from "@/lib/student";
@@ -270,7 +270,7 @@ function ResultRow({ it, marked, context, unit }: { it: ReviewItem; marked: bool
           <YourAnswer q={q} it={it} marked={marked} />
         </div>
 
-        {marked && it.tutorMark?.note && it.tutorMark.note !== "Accepted AI suggestion" && (
+        {marked && it.tutorMark?.note && it.tutorMark.note !== ACCEPTED_NOTE && (
           <div className="why">
             <b>Tutor comment</b>
             <p>{it.tutorMark.note}</p>

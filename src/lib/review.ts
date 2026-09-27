@@ -8,6 +8,9 @@ import { isWritten, type ResponseRow } from "./student";
 
 export type TutorMark = { marks: number; note?: string; confirmed_at: string };
 
+/** Older rows where the tutor accepted a suggestion and there was nothing to say. Not shown. */
+export const ACCEPTED_NOTE = "Accepted AI suggestion";
+
 type EventRow = { id: number; response_id: string; at: string; type: string; data: string };
 
 export type ReviewItem = {

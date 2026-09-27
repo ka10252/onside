@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 import { queueMarking } from "./ai/marking";
 import type { AiMark } from "./ai/marking";
 import { all, json, one, run } from "./db";
-import { loadReview } from "./review";
+import { ACCEPTED_NOTE, loadReview } from "./review";
 import { requireUser } from "./session";
 
 export type ReviewState = { error?: string; ok?: string };
@@ -66,7 +66,8 @@ export async function acceptAiMarks(assignmentId: string) {
     if (m?.status !== "done" || m.marks === undefined) continue;
     await run(
       "UPDATE responses SET tutor_mark = ? WHERE id = ? AND tutor_mark IS NULL",
-      JSON.stringify({ marks: m.marks, note: "Accepted AI suggestion", confirmed_at: now }),
+      // Accepting takes the drafted comment with the marks, so the student gets told something.
+      JSON.stringify({ marks: m.marks, note: m.comment || ACCEPTED_NOTE, confirmed_at: now }),
       r.id,
     );
   }

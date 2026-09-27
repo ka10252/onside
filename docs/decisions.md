@@ -139,3 +139,10 @@ The site kept ending a long wait with "something went wrong", on any screen, wit
 - **A page left behind by a new deployment.** Vercel gives each deployment its own Server Action addresses, and Skew Protection is paid. `/api/version` reports which build is serving; `StaleBar` in the root layout checks it every minute while the tab is in front and says so before a button is pressed. Saving a set and the calendar's buttons report it in place rather than throwing the page away.
 
 What a person sees now: a page frame straight away (`loading.tsx` on both sides), a line after 6 seconds saying it is taking longer than usual, and — if it still fails — one silent retry before any error screen. Only a second failure shows one, with the code the server logged it under. Deploy while the tutor is working and it will still interrupt them, so don't.
+
+## The AI drafts the comment the student reads (2026-09-27)
+AI marking already covered short answers, calculations, essays and past-paper questions: marks, band, the marking points met with the student's own words quoted back, and what was missed. All of that was written for the tutor. Nothing was written for the student, so accepting a suggestion sent a mark with no words at all.
+
+The marking prompt now also returns `comment_for_student`: one to three sentences about that answer — what earned the marks and what it needed for the rest, naming the economics, in plain sentence case with no greeting and no praise. It fills the comment box on the marking screen; the tutor edits it, replaces it, or clears it, and "Use the draft" puts it back. Only what the tutor confirms reaches the student. "Accept all AI marks" now sends those comments too, and says so before it does.
+
+Diagrams are still marked by hand (Jin, 2026-09-17), so they get no draft.

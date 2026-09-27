@@ -14,7 +14,7 @@ import { ConfirmForm } from "@/components/ConfirmForm";
 import { all, json } from "@/lib/db";
 import { FORMAT_LABEL, initials } from "@/lib/format";
 import { acceptAiMarks, markReviewed, rerunMarking } from "@/lib/review-actions";
-import { loadReview, type ReviewItem } from "@/lib/review";
+import { ACCEPTED_NOTE, loadReview, type ReviewItem } from "@/lib/review";
 import { pct } from "@/lib/scoring";
 import { requireUser } from "@/lib/session";
 import { answerText } from "@/lib/answer-text";
@@ -145,7 +145,7 @@ export default async function ReviewPage({ params }: PageProps<"/tutor/students/
                     label={`Accept all AI marks (${aiWaiting})`}
                     className="btn sm"
                     title={`Accept ${aiWaiting} AI ${aiWaiting === 1 ? "mark" : "marks"}?`}
-                    body="Each AI suggestion becomes the confirmed mark. You can still change any of them before sending."
+                    body="Each AI suggestion becomes the confirmed mark, and its drafted comment becomes the comment the student reads. You can still change any of them before sending."
                     confirmLabel="Accept all"
                   />
                 )}
@@ -377,8 +377,9 @@ function Detail({ it, assignmentId }: { it: ReviewItem; assignmentId: string }) 
             questionId={q.id}
             max={q.marks}
             suggested={aiMark?.status === "done" ? (aiMark.marks ?? null) : null}
+            draft={aiMark?.status === "done" ? aiMark.comment : undefined}
             current={it.tutorMark?.marks ?? null}
-            note={it.tutorMark?.note}
+            note={it.tutorMark?.note === ACCEPTED_NOTE ? undefined : it.tutorMark?.note}
           />
         </div>
       )}

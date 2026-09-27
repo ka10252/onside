@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useState } from "react";
 import { confirmMark, type ReviewState } from "@/lib/review-actions";
 
 export function MarkForm({
@@ -9,6 +9,7 @@ export function MarkForm({
   questionId,
   max,
   suggested,
+  draft,
   current,
   note,
 }: {
@@ -17,10 +18,13 @@ export function MarkForm({
   questionId: string;
   max: number;
   suggested: number | null;
+  /** What the AI would write to the student. Only a starting point; the tutor owns what is sent. */
+  draft?: string;
   current: number | null;
   note?: string;
 }) {
   const [state, action, pending] = useActionState<ReviewState, FormData>(confirmMark, {});
+  const [comment, setComment] = useState(note ?? draft ?? "");
   return (
     <form action={action} className="markform">
       <input type="hidden" name="assignmentId" value={assignmentId} />
@@ -40,10 +44,23 @@ export function MarkForm({
         />
         <span className="muted">/ {max}</span>
       </label>
-      <input className="answer note-in" name="note" placeholder="Note for the student (optional)" defaultValue={note ?? ""} maxLength={500} />
+      <textarea
+        className="answer note-in"
+        name="note"
+        rows={2}
+        placeholder="Comment for the student (optional)"
+        value={comment}
+        onChange={(e) => setComment(e.target.value)}
+        maxLength={500}
+      />
       <button type="submit" className="btn primary sm" disabled={pending}>
         {current !== null ? "Update" : suggested !== null ? "Confirm" : "Save marks"}
       </button>
+      {draft && comment !== draft && (
+        <button type="button" className="btn ghost sm" onClick={() => setComment(draft)} disabled={pending}>
+          Use the draft
+        </button>
+      )}
       {state.error && <span className="formmsg bad" role="alert">{state.error}</span>}
       {state.ok && <span className="formmsg" role="status">{state.ok}</span>}
     </form>

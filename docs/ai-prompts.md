@@ -44,9 +44,10 @@ Return:
  "band": "<band or null>",
  "evidence": [{"point": "<marking point or band criterion>", "quote": "<exact words from the student>", "met": true|false}],
  "missed": ["<marking points not met>"],
- "summary_for_tutor": ["<≤3 bullets, ≤10 words each>"]}
+ "summary_for_tutor": ["<≤3 bullets, ≤10 words each>"],
+ "comment_for_student": "<1–3 sentences to the student about this answer: what earned the marks and what it needed for the rest. Plain, sentence case, no greeting, no praise, no emoji. Not the mark scheme and not the answer.>"}
 ```
-The student never sees `missed` before the tutor confirms.
+The student never sees `missed` before the tutor confirms. `comment_for_student` is a draft: it fills the comment box on the marking screen, the tutor edits or replaces it, and only what the tutor confirms reaches the student.
 
 ## 4. Diagram check (vision, JSON)
 ```

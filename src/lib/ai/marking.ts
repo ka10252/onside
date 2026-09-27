@@ -16,17 +16,20 @@ export type AiMark = {
   evidence?: { point: string; quote: string; met: boolean }[];
   missed?: string[];
   summary?: string[];
+  /** A draft of what to write to the student. The tutor edits or replaces it before they see it. */
+  comment?: string;
   items?: { item: string; status: string; note: string }[]; // diagram checklist
   error?: string;
   at: string;
 };
 
-type Raw = {
+export type Raw = {
   marks: number;
   band?: string | null;
   evidence?: { point: string; quote: string; met: boolean }[];
   missed?: string[];
   summary_for_tutor?: string[];
+  comment_for_student?: string;
   items?: { item: string; status: string; note: string }[];
 };
 const isRaw = (v: unknown): v is Raw => typeof v === "object" && v !== null && typeof (v as Raw).marks === "number";
@@ -105,7 +108,8 @@ Return JSON:
  "band": "<band or null>",
  "evidence": [{"point": "<marking point or band criterion>", "quote": "<exact words from the student>", "met": true|false}],
  "missed": ["<marking points not met>"],
- "summary_for_tutor": ["<≤3 bullets, ≤10 words each, blunt facts>"]${diagramPart ? `,\n "items": []` : ""}}`;
+ "summary_for_tutor": ["<≤3 bullets, ≤10 words each, blunt facts>"],
+ "comment_for_student": "<1 to 3 sentences, written to the student, about this answer: what earned the marks and what it needed to earn the rest. Name the economics. Plain words, sentence case, no greeting, no praise, no encouragement, no emoji, no exclamation marks. Don't restate the mark scheme or write the answer for them.>"${diagramPart ? `,\n "items": []` : ""}}`;
   return {
     answer,
     req: {
@@ -124,7 +128,8 @@ ${answer.slice(0, 12000) || "(no written answer)"}${diagramPart}`,
   };
 }
 
-function finish(q: Question, answer: string, raw: Raw): AiMark {
+/** The model's JSON, cleaned: marks clamped, invented quotes dropped, lists trimmed. Exported for tests. */
+export function finish(q: Question, answer: string, raw: Raw): AiMark {
   const text = norm(answer);
   return {
     status: "done",
@@ -138,6 +143,7 @@ function finish(q: Question, answer: string, raw: Raw): AiMark {
       .slice(0, 12),
     missed: (raw.missed ?? []).map(String).slice(0, 10),
     summary: (raw.summary_for_tutor ?? []).map(String).slice(0, 3),
+    comment: raw.comment_for_student ? String(raw.comment_for_student).trim().slice(0, 500) : undefined,
     items: raw.items?.slice(0, 12),
     at: new Date().toISOString(),
   };

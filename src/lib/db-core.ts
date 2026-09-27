@@ -348,16 +348,15 @@ async function openPostgres(url: string): Promise<Db> {
     postgres(url, {
       prepare: false, // Supabase transaction pooler
       max: 3,
-      idle_timeout: 20,
+      idle_timeout: 10,
       // Fail fast instead of leaving a page hanging until the function's time limit.
       connect_timeout: 10,
       connection: { application_name: "onside" },
       onnotice: () => {},
       types: { num: toNumber },
     });
-  // The first connection out of a cold serverless instance sometimes never answers. Prove the
-  // connection with a query of our own; if it doesn't come back, throw that client away and open a
-  // second one, because asking the stuck socket again only waits again.
+  // The first connection out of a cold instance sometimes never answers. Prove it with a query of
+  // our own rather than letting the first page wait on it.
   const sql = await firstContact(make);
   type Unsafe = { unsafe: (q: string, p?: never[]) => Promise<unknown[] & { count: number }> };
   const wrap = (s: Unsafe): Queryable => ({
@@ -377,8 +376,10 @@ async function openPostgres(url: string): Promise<Db> {
   };
 }
 
-const FIRST_CONTACT_MS = 8000;
-const FIRST_CONTACT_TRIES = 3;
+// One try, kept short: db() forgets a pool that fails to open, so the next request opens another,
+// and every query has a deadline of its own (src/lib/db.ts) for connections that die later.
+const FIRST_CONTACT_MS = 6000;
+const FIRST_CONTACT_TRIES = 1;
 
 type Sql = { unsafe: (q: string) => Promise<unknown>; end: (o?: { timeout?: number }) => Promise<void> };
 

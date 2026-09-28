@@ -155,7 +155,7 @@ export default async function AssignmentsPage({ searchParams }: PageProps<"/stud
               Done · {done.length}
             </Link>
 
-            {showDone && done.length > 1 && (
+            {showDone && done.length > 0 && (
               <>
                 <span className="filtersep" aria-hidden />
                 <Link href={link({ by: "unit" })} className={`chip${byUnit ? " on" : ""}`}>

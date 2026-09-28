@@ -41,11 +41,12 @@ export function DailyPractice({
     <div className="cardbody stack" style={{ gap: 18 }}>
       <p className="nextline">
         <b>Next set</b>{" "}
-        {schedule.enabled === 0
-          ? "Daily practice is off."
-          : next
-            ? `${new Date(next.date).toLocaleDateString("en-SG", { weekday: "short", day: "numeric", month: "short", timeZone: "UTC" })} at ${next.time} · ${next.unitLabel} · ${next.count} question${next.count === 1 ? "" : "s"}`
+        {next
+          ? `${new Date(next.date).toLocaleDateString("en-SG", { weekday: "short", day: "numeric", month: "short", timeZone: "UTC" })} at ${next.time} · ${next.unitLabel} · ${next.count} question${next.count === 1 ? "" : "s"}`
+          : schedule.enabled === 0
+            ? "Daily practice is off. Set a day on the calendar to send one anyway."
             : "Nothing planned. Choose days below, or set a day on the calendar."}{" "}
+        {schedule.enabled === 0 && next && <span className="muted">Only the days you set by hand go out; the weekly schedule is off.</span>}
         <span className="muted">Click a day above to change it or see the questions.</span>
       </p>
 

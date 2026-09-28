@@ -62,7 +62,8 @@ export default async function AssignmentsPage({ searchParams }: PageProps<"/stud
   const { date: todaySg } = singaporeToday();
   const monday = new Date(new Date(`${todaySg}T00:00:00Z`).getTime() - ((new Date(`${todaySg}T00:00:00Z`).getUTCDay() + 6) % 7) * 86_400_000);
   const coming = new Map<string, ReturnType<typeof upcomingSends>>();
-  if (schedule.enabled) for (const u of upcomingSends(schedule, 42)) coming.set(u.date, [...(coming.get(u.date) ?? []), u]);
+  // Not gated on `enabled`: days the tutor set by hand go out whichever way the switch is.
+  for (const u of upcomingSends(schedule, 42)) coming.set(u.date, [...(coming.get(u.date) ?? []), u]);
   const shortTitle = (t: string) => (t.length > 22 ? `${t.slice(0, 21)}…` : t);
   const days: StudentDay[] = Array.from({ length: 28 }, (_, i) => {
     const d = new Date(monday.getTime() + i * 86_400_000);

@@ -108,6 +108,17 @@ export function daySkipped(s: Schedule, date: string) {
 }
 
 /**
+ * Whether this date sends anything at all. A day the tutor set by hand counts on its own; the
+ * weekly days only count while the schedule is switched on.
+ */
+export function sendsOn(s: Schedule, date: string): boolean {
+  const chosen = readChoice(overridesOf(s)[date], s);
+  if (chosen === "skip") return false;
+  if (chosen) return chosen.length > 0;
+  return s.enabled === 1 && slotsForDate(s, date).slots.length > 0;
+}
+
+/**
  * Every set that day sends, in time order. `step` is where the rotation stands; it moves on for
  * each set that follows the plan.
  */
@@ -137,9 +148,12 @@ export function slotsForDate(s: Schedule, date: string, step = 0): { slots: Slot
 /** Times that already went out on a date. */
 export function sentTimes(s: Schedule, date: string): string[] {
   const log = json.parse<Record<string, string[]>>(s.sent_slots, {});
-  const times = log[date] ?? [];
+  const times = log[date];
+  // A date in the log is the record, even when it is empty: "Send one now" writes the date without
+  // a time, and reading that as "the morning set went out" stopped the day's real set from going.
+  if (times) return times;
   // Before this column existed, one send a day was recorded on the schedule itself.
-  return s.last_sent_on === date && times.length === 0 ? [s.send_at] : times;
+  return s.last_sent_on === date ? [s.send_at] : [];
 }
 
 /**
@@ -231,6 +245,7 @@ export function upcomingSends(s: Schedule, days = 42, now = new Date()): DayPlan
   let step = 0;
   for (let i = 0; i < days; i++) {
     const iso = new Date(new Date(`${date}T00:00:00Z`).getTime() + i * 86_400_000).toISOString().slice(0, 10);
+    if (!sendsOn(s, iso)) continue; // a day off sends nothing and doesn't move the rotation on
     const { slots, used } = slotsForDate(s, iso, step);
     step += used;
     const already = i === 0 ? sentTimes(s, iso) : [];
@@ -342,13 +357,19 @@ export async function runSchedules(now = new Date()): Promise<RunResult[]> {
   const { date, time } = singaporeToday(now);
   const tutor = await one<{ id: string }>("SELECT id FROM users WHERE role = 'tutor' ORDER BY id LIMIT 1");
   if (!tutor) return [];
+  // Not just the switched-on schedules: a day the tutor set by hand on the calendar is an
+  // instruction for that date, and goes out whether or not the weekly schedule is running.
   const rows = await all<Schedule & { name: string; archived_at: string | null }>(
     `SELECT s.*, u.name, u.archived_at FROM schedules s JOIN users u ON u.id = s.student_id
-      WHERE s.enabled = 1 AND u.archived_at IS NULL`,
+      WHERE u.archived_at IS NULL`,
   );
   const out: RunResult[] = [];
   for (const row of rows) {
     let s = row;
+    if (!sendsOn(s, date)) {
+      if (s.enabled) out.push({ student: s.name, result: daySkipped(s, date) ? "set aside for today" : "not a practice day" });
+      continue;
+    }
     const { slots } = slotsForDate(s, date);
     if (slots.length === 0) {
       out.push({ student: s.name, result: daySkipped(s, date) ? "set aside for today" : "not a practice day" });

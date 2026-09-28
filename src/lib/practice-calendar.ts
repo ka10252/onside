@@ -46,8 +46,10 @@ export async function practiceMonth(studentId: string, month?: string) {
   const units = parts.flatMap((p) => p.units);
   // upcomingSends counts from today, so ask for enough days to reach the end of this grid.
   const reach = Math.ceil((end.getTime() - utc(today).getTime()) / DAY_MS) + 1;
+  // Not gated on `enabled`: a day the tutor set by hand goes out whether or not the weekly
+  // schedule is switched on, so it has to show here too.
   const plannedByDate = new Map<string, ReturnType<typeof upcomingSends>>();
-  if (schedule.enabled && reach > 0) {
+  if (reach > 0) {
     for (const u of upcomingSends(schedule, Math.min(reach, 400))) {
       if (u.date >= iso(start) && u.date <= iso(end)) plannedByDate.set(u.date, [...(plannedByDate.get(u.date) ?? []), u]);
     }

@@ -165,3 +165,8 @@ Separately, "Send one now" wrote the date into `sent_slots` with no time, and `s
 
 ## The tutor can read the student's screen (2026-09-28)
 After marking, "See 도원's screen" on the marking page opens `/tutor/students/[id]/a/[assignmentId]/student-view`: the results page the student reads, the same component, not a rebuilt likeness. `Results` in `src/components/student/Results.tsx` holds it; the student's page and the tutor's route each supply where its links point and where the way back goes. Nothing is hidden or added for the tutor, so before the marks are sent the tutor sees exactly the blank the student sees.
+
+## The red pen tells help apart from no help (2026-09-28)
+A circle on a student's results now means full marks reached on their own. Full marks with a hint or the Helper gets a triangle, the same as part marks: it scored, but not unaided. Only a blank stays unmarked and only nothing at all is a cross.
+
+The two blocks under the set's marks are both out of the marks in the whole set, not out of the marks available in each half. "Without help 12/30, With the Helper 6/30" reads against the set's 18/30 and adds up to it; the old denominators (12/16 and 6/14) were two different scales and answered a question nobody was asking.

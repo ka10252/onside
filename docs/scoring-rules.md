@@ -1,6 +1,9 @@
 # Scoring rules
 
 ## Question level
+- **The red pen on a student's results:** a circle is full marks with no help; a triangle is
+  anything that scored but fell short of that — part marks, or full marks reached with a hint or
+  the Helper; a cross is no marks. Questions left blank get none.
 - **Hint cap:** no hint 100%, Hint 1 opened 90%, Hint 2 opened 70%. AI questions don't reduce the cap.
 - **Question score (marks)** = confirmed marks × hint cap. Auto formats: confirmed = auto result.
 - No per-question submit (Jin, 2026-09-18). Answers save as the student works and can be changed until the student submits the whole set. Every answer is then checked once: MCQ, calculation final value and analysis chain are auto-marked (no retries, no feedback before submitting); written formats go to marking.
@@ -16,6 +19,10 @@
 Thresholds are starting values; make them config.
 
 ## Set level
+- **Marks with and without help** (the two blocks at the top of a student's results) = marks earned
+  on questions done with no hint and no Helper, and marks earned on questions where either was
+  used — both **out of the marks in the whole set**, so they read against each other and add up to
+  the set's score (Jin, 2026-09-28).
 - **Supported score** = questions taken for full marks, out of the questions in the set.
 - **Independent score** = the same, counting only questions done with no hint and no Helper.
 - Both are shown as counts (`2/5`), never as a percentage: a share of a mark total says less to a

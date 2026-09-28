@@ -112,13 +112,15 @@ export async function Results({
                   kind="ind"
                   label="Without help"
                   split={rv.score.split.withoutAi}
-                  note="Answered with no hint and without asking the Helper"
+                  outOf={rv.score.total}
+                  note="of the set's marks, earned with no hint and without asking the Helper"
                 />
                 <Split
                   kind="sup"
                   label="With the Helper"
                   split={rv.score.split.withAi}
-                  note="You used a hint or asked the Helper on these"
+                  outOf={rv.score.total}
+                  note="of the set's marks, earned on questions where you used a hint or the Helper"
                 />
               </div>
               <p className="ss" style={{ marginTop: 16 }}>
@@ -192,15 +194,31 @@ export async function Results({
 }
 
 /** Marks got out of marks available on the questions done with, or without, help. */
-function Split({ kind, label, split, note }: { kind: "ind" | "sup"; label: string; split: MarkSplit; note: string }) {
+/**
+ * Marks earned with, or without, help — both out of the marks in the whole set, so the two read
+ * against each other and add up to the set's score.
+ */
+function Split({
+  kind,
+  label,
+  split,
+  outOf,
+  note,
+}: {
+  kind: "ind" | "sup";
+  label: string;
+  split: MarkSplit;
+  outOf: number;
+  note: string;
+}) {
   const none = split.questions === 0;
   return (
     <div className={`score ${kind} split`}>
       <div>
         <span className="sl">{label}</span>
         <span className="sv frac">
-          {none ? "—" : split.got}
-          {!none && <span className="of">/{split.available}</span>}
+          {split.got}
+          <span className="of">/{outOf}</span>
         </span>
         <span className="ss">
           {none ? "No questions" : `${split.questions} ${split.questions === 1 ? "question" : "questions"}`} · {note}
@@ -224,7 +242,14 @@ function ResultRow({ it, marked, context, unit }: { it: ReviewItem; marked: bool
   const asked = r?.ai_questions ?? 0;
   const help = [hintsUsed > 0 ? `Hint ${hintsUsed === 2 ? "1 + 2" : "1"}` : "", asked > 0 ? `Helper ×${asked}` : ""].filter(Boolean).join(" · ");
   // Before the tutor confirms, only questions the site marks itself show a mark.
-  const stamp = blank ? null : marked ? stampFor(it.confirmed ?? 0, q.marks) : autoResult === null ? null : stampFor(autoResult ? q.marks : 0, q.marks);
+  const helped = Boolean(help);
+  const stamp = blank
+    ? null
+    : marked
+      ? stampFor(it.confirmed ?? 0, q.marks, helped)
+      : autoResult === null
+        ? null
+        : stampFor(autoResult ? q.marks : 0, q.marks, helped);
 
   return (
     <li className={marked && (it.confirmed ?? 0) < q.marks ? "lost" : undefined}>
@@ -292,11 +317,15 @@ function ResultRow({ it, marked, context, unit }: { it: ReviewItem; marked: bool
   );
 }
 
-/** Full marks get a circle, part marks a triangle, none a cross. */
-function stampFor(got: number, marks: number): { kind: "circle" | "triangle" | "cross"; label: string } {
-  if (got >= marks) return { kind: "circle", label: `Full marks: ${got} of ${marks}` };
-  if (got > 0) return { kind: "triangle", label: `Some marks: ${got} of ${marks}` };
-  return { kind: "cross", label: `No marks: 0 of ${marks}` };
+/**
+ * A circle is full marks on your own. A triangle is anything short of that which still scored:
+ * part marks, or full marks reached with a hint or the Helper. Nothing at all is a cross.
+ */
+function stampFor(got: number, marks: number, helped: boolean): { kind: "circle" | "triangle" | "cross"; label: string } {
+  const of = `${got} of ${marks}`;
+  if (got <= 0) return { kind: "cross", label: `No marks: 0 of ${marks}` };
+  if (got >= marks) return helped ? { kind: "triangle", label: `Full marks with help: ${of}` } : { kind: "circle", label: `Full marks, no help: ${of}` };
+  return { kind: "triangle", label: helped ? `Some marks, with help: ${of}` : `Some marks: ${of}` };
 }
 
 function YourAnswer({ q, it, marked }: { q: Question; it: ReviewItem; marked: boolean }) {

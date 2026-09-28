@@ -384,16 +384,16 @@ table.board { table-layout: fixed; min-width: 860px; }
 .qmargin .h { font-size: 12px; line-height: 1.35; color: var(--ink2); }
 .markstamp { color: var(--red); transform: rotate(-7deg); line-height: 0; pointer-events: none; }
 /* Multiple choice, read back: every option, what the student chose, and the right one. */
-.qsheet .choices { gap: 6px; }
-.qsheet .choice { cursor: default; min-height: 44px; font-size: 16px; }
-.qsheet .choice:hover { border-color: var(--line2); }
-.qsheet .choice .grow { flex-grow: 1; min-width: 0; }
-.qsheet .choice .tag { flex-shrink: 0; font-size: 12px; font-weight: 600; color: var(--ink2); }
-.qsheet .choice.picked { border: 2px solid var(--ink); padding: 7px 13px; }
-.qsheet .choice.picked .k { background: var(--ink); border-color: var(--ink); color: #FFFFFF; }
-.qsheet .choice.right { border: 2px solid var(--green); padding: 7px 13px; background: var(--greentint); }
-.qsheet .choice.right .k { background: var(--green); border-color: var(--green); color: #FFFFFF; }
-.qsheet .choice .tag.good { color: var(--green); }
+.choices.readback { gap: 6px; margin: 0; padding-left: 0; list-style: none; }
+.readback .choice { cursor: default; min-height: 44px; font-size: 16px; }
+.readback .choice:hover { border-color: var(--line2); }
+.readback .choice .grow { flex-grow: 1; min-width: 0; }
+.readback .choice .tag { flex-shrink: 0; font-size: 12px; font-weight: 600; color: var(--ink2); }
+.readback .choice.picked { border: 2px solid var(--ink); padding: 7px 13px; }
+.readback .choice.picked .k { background: var(--ink); border-color: var(--ink); color: #FFFFFF; }
+.readback .choice.right { border: 2px solid var(--green); padding: 7px 13px; background: var(--greentint); }
+.readback .choice.right .k { background: var(--green); border-color: var(--green); color: #FFFFFF; }
+.readback .choice .tag.good { color: var(--green); }
 /* The tutor's comment stays quiet on the student's side: pink is for the tutor's screens. */
 .qsheet .why { padding: 2px 0 2px 14px; border-radius: 0; border-left: 2px solid var(--line2); background: transparent; }
 .qsheet .why b { color: var(--ink2); }

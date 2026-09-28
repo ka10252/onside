@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Choices } from "@/components/Choices";
 import { MarkStamp } from "@/components/Icons";
 import { Nav, STUDENT_TABS } from "@/components/Nav";
 import { Blocks, Rich } from "@/components/Rich";
@@ -323,31 +324,12 @@ function YourAnswer({ q, it, marked }: { q: Question; it: ReviewItem; marked: bo
 
   if (!isPast(q) && q.format === "mcq") {
     const tried = attempts.map((a) => a.value);
+    // The right answer is only named once the tutor has confirmed the marks.
     parts.push(
       tried.length === 0 ? (
         <p key="none" className="muted" style={{ margin: 0 }}>No answer.</p>
       ) : (
-        <ol key="mcq" className="choices">
-          {q.options.map((o) => {
-            const at = tried.indexOf(o.id);
-            const chose = at >= 0;
-            // The right answer is only named once the tutor has confirmed the marks.
-            const right = marked && o.id === q.answer;
-            return (
-              <li key={o.id} className={`choice${chose ? " picked" : ""}${right ? " right" : ""}`}>
-                <span className="k">{o.id.toUpperCase()}</span>
-                <span className="grow">{o.text}</span>
-                {chose && (
-                  <span className="tag">
-                    {tried.length > 1 ? `Try ${at + 1}` : "You chose this"}
-                    {right ? "" : marked ? " · wrong" : ""}
-                  </span>
-                )}
-                {right && <span className="tag good">Right answer</span>}
-              </li>
-            );
-          })}
-        </ol>
+        <Choices key="mcq" q={q} tried={tried} showAnswer={marked} />
       ),
     );
   } else if (!isPast(q) && q.format === "analysis_chain") {

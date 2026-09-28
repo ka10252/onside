@@ -2,6 +2,7 @@ import Link from "next/link";
 import { after } from "next/server";
 import { notFound } from "next/navigation";
 import { Blocks, Rich } from "@/components/Rich";
+import { Choices } from "@/components/Choices";
 import { Crumbs } from "@/components/Crumbs";
 import { Nav, TUTOR_TABS } from "@/components/Nav";
 import { AutoRefresh } from "@/components/review/AutoRefresh";
@@ -293,13 +294,11 @@ function Detail({ it, assignmentId, first }: { it: ReviewItem; assignmentId: str
       <div className="markgrid">
         <section>
           <h3>Question</h3>
-          <QuestionBody q={q} />
-          <details className="sub" open style={{ marginTop: 10 }}>
-            <summary>{past ? "Mark scheme" : "Answer"}</summary>
-            <div className="mstext">
-              <Rich text={past ? q.marking.text || "Not found in the mark scheme file." : answerText(q)} />
-            </div>
-          </details>
+          <QuestionBody q={q} tried={attempts.map((x) => x.value)} />
+          <h3 style={{ marginTop: 6 }}>{past ? "Mark scheme" : "Answer"}</h3>
+          <div className="answerbox mstext">
+            <Rich text={past ? q.marking.text || "Not found in the mark scheme file." : answerText(q)} />
+          </div>
         </section>
 
         <section>
@@ -387,7 +386,8 @@ function Detail({ it, assignmentId, first }: { it: ReviewItem; assignmentId: str
       )}
 
       {it.log.length > 0 && (
-        <Reveal label="full conversation">
+        <section className="stack" style={{ gap: 8 }}>
+          <h3>What {first} asked the Helper</h3>
           <ol className="convo">
             {it.log.map((l, i) =>
               l.who === "marker" ? (
@@ -404,7 +404,7 @@ function Detail({ it, assignmentId, first }: { it: ReviewItem; assignmentId: str
               ),
             )}
           </ol>
-        </Reveal>
+        </section>
       )}
 
       {it.snapshots.length > 1 && (
@@ -447,27 +447,31 @@ function planText(plan: string) {
   }
 }
 
-async function QuestionBody({ q }: { q: Question }) {
+/** The question as the student had it: the extracts, the lead, the prompt and every option. */
+async function QuestionBody({ q, tried }: { q: Question; tried: string[] }) {
+  const past = isPast(q);
   return (
     <div className="stack" style={{ gap: 10 }}>
-      {isPast(q) ? (
-        <>
-          <details className="sub">
-            <summary>Extracts and data</summary>
-            <Blocks blocks={await pastContext(q.past.paper, q.past.question)} />
-          </details>
-          {q.past.lead.length > 0 && <Blocks blocks={q.past.lead} />}
-          <p className="qtext" style={{ margin: 0 }}>
-            <Rich text={q.prompt} /> <span className="muted">[{q.marks}]</span>
-          </p>
-        </>
-      ) : (
-        <>
-          {q.table && <Blocks blocks={tableBlock(q.table)} />}
-          <p className="qtext" style={{ margin: 0 }}>
-            <Rich text={q.prompt} /> <span className="muted">[{q.marks}]</span>
-          </p>
-        </>
+      {past && (
+        <details className="sub" open>
+          <summary>Extracts and data</summary>
+          <Blocks blocks={await pastContext(q.past.paper, q.past.question)} />
+        </details>
+      )}
+      {past ? q.past.lead.length > 0 && <Blocks blocks={q.past.lead} /> : q.table && <Blocks blocks={tableBlock(q.table)} />}
+      <p className="qtext" style={{ margin: 0 }}>
+        <Rich text={q.prompt} /> <span className="muted">[{q.marks}]</span>
+      </p>
+      {!past && q.format === "mcq" && <Choices q={q} tried={tried} showAnswer />}
+      {!past && q.format === "analysis_chain" && (
+        <ol className="chainlist">
+          {q.steps.map((st) => (
+            <li key={st.id}>
+              <span className="n">{st.distractor ? "×" : "•"}</span>
+              <span>{st.text}</span>
+            </li>
+          ))}
+        </ol>
       )}
     </div>
   );

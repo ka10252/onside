@@ -408,3 +408,5 @@ table.board { table-layout: fixed; min-width: 860px; }
 .markgrid .qtext { font-size: 17px; font-weight: 500; line-height: 1.4; }
 .markgrid .sub > .mstext { padding: 0 14px 14px; }
 @media (max-width: 860px) { .markgrid { grid-template-columns: 1fr; } }
+/* A tutor looking at a student's own screen. */
+.asstudent { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding: 10px 16px; margin-bottom: 8px; border: 1px dashed var(--line2); border-radius: 10px; background: var(--surface2); font-size: 14px; color: var(--ink2); }

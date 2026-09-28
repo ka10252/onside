@@ -150,6 +150,9 @@ export default async function ReviewPage({ params }: PageProps<"/tutor/students/
                 {facts.minutes} min · {facts.aiQuestions} AI questions · {facts.hints} hints
               </span>
               <div className="actions-row">
+                <Link href={`/tutor/students/${id}/a/${assignmentId}/student-view`} className="btn sm">
+                  See {first}&apos;s screen
+                </Link>
                 {marking && <span className="muted">AI is suggesting marks…</span>}
                 {!marking && batching && <span className="muted">AI marks arrive within about an hour (half-price batch).</span>}
                 {!marking && aiErrors > 0 && (

@@ -97,6 +97,9 @@ function whereAmI() {
     branch: process.env.VERCEL_GIT_COMMIT_REF ?? "(unknown)",
     has: {
       CRON_SECRET: Boolean(process.env.CRON_SECRET),
+      TELEGRAM_BOT_TOKEN: Boolean(process.env.TELEGRAM_BOT_TOKEN),
+      TELEGRAM_CHAT_ID: Boolean(process.env.TELEGRAM_CHAT_ID),
+      ONSIDE_URL: Boolean(process.env.ONSIDE_URL ?? process.env.VERCEL_PROJECT_PRODUCTION_URL),
       DATABASE_URL: Boolean(process.env.DATABASE_URL),
       ANTHROPIC_API_KEY: Boolean(process.env.ANTHROPIC_API_KEY),
     },

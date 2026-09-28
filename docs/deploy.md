@@ -29,7 +29,7 @@ Row level security is on for every table with no policies, so Supabase's public 
 Telegram, because it is free, arrives as a push and needs no domain. Without both settings nothing is sent, so a local run never messages anyone.
 
 1. In Telegram, message **@BotFather**, send `/newbot`, give it a name, and copy the token.
-2. Message your new bot once (anything), then open `https://api.telegram.org/bot<TOKEN>/getUpdates` and copy `result[0].message.chat.id`.
+2. Message your new bot once (anything), then run `npm run notify:chatid`, which reads the token and prints the chat id. (Or message **@userinfobot** in Telegram: in a one-to-one chat with your bot, your user id is the chat id.)
 3. Put both in `.env.local` as `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID`, and the same two in the Vercel project (Production). Add `ONSIDE_URL` too, so the message can link straight to the marking screen.
 4. `npm run notify:test` sends one message to check it.
 

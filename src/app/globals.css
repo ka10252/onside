@@ -260,8 +260,12 @@ table.board { table-layout: fixed; min-width: 860px; }
 
 /* Practice calendar */
 .calendar { padding: 16px 18px 6px; border-bottom: 1px solid var(--line); }
-.calhead { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 10px; }
-.calhead .month { font-weight: 700; }
+.calhead { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 10px; flex-wrap: wrap; }
+/* Stepping through the months, the way a calendar does. */
+.monthpick { display: inline-flex; align-items: center; gap: 6px; }
+.monthpick select { height: 34px; padding: 0 8px; border: 1px solid var(--line2); border-radius: 8px; background: var(--surface); font: inherit; font-weight: 700; }
+.monthpick .btn.ghost.sm { min-width: 30px; padding: 0 8px; font-size: 18px; line-height: 1; }
+.calgrid .cell.outside { opacity: 0.45; }
 .calhead .key { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; }
 .calhead .key .chip { font-size: 11px; font-weight: 600; padding: 3px 7px; border-radius: 6px; }
 .calhead .key .chip.planned { background: var(--ink); color: #fff; }

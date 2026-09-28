@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
+import { useSearchParams } from "next/navigation";
 import { PreviewPanel, QuestionLine } from "@/components/QuestionPreview";
 import { reportIfStale } from "@/components/stale";
 import { previewPracticeDay, sendSetNow, setPracticeDay, type DayPreview, type DaySlotInput } from "@/lib/schedule-actions";
@@ -16,6 +17,8 @@ export type CalendarCell = {
   day: number;
   today: boolean;
   past: boolean;
+  /** A day from the month before or after, shown only to finish the week. */
+  outside?: boolean;
   /** Sets that already went out that day. */
   sent: { id: string; title: string; status: string; time: string; count: number; short: string; done: boolean }[];
   /** Sets the schedule will still send that day. */
@@ -30,14 +33,17 @@ type Unit = { number: number; title: string };
  */
 export function PracticeCalendar({
   cells,
-  monthLabel,
+  month,
+  thisMonth,
   units,
   studentId,
   sendTime,
   count,
 }: {
   cells: CalendarCell[];
-  monthLabel: string;
+  /** The month on show, as YYYY-MM. */
+  month: string;
+  thisMonth: string;
   units: Unit[];
   studentId: string;
   sendTime: string;
@@ -52,6 +58,18 @@ export function PracticeCalendar({
   const [openSet, setOpenSet] = useState<string | null>(null);
   const [pending, start] = useTransition();
   const router = useRouter();
+  const params = useSearchParams();
+
+  /** Shows another month, keeping whatever else the page is sorted or filtered by. */
+  function goToMonth(next: string) {
+    const q = new URLSearchParams(params);
+    if (next === thisMonth) q.delete("month");
+    else q.set("month", next);
+    setPicked(null);
+    router.push(`?${q}`, { scroll: false });
+  }
+  // A year and a half around this month is as far as a plan is ever worth looking.
+  const choices = Array.from({ length: 19 }, (_, i) => step(thisMonth, i - 6));
   const weeks: CalendarCell[][] = [];
   for (let i = 0; i < cells.length; i += 7) weeks.push(cells.slice(i, i + 7));
 
@@ -121,7 +139,26 @@ export function PracticeCalendar({
   return (
     <div className="calendar">
       <div className="calhead">
-        <span className="month">{monthLabel}</span>
+        <span className="monthpick">
+          <button type="button" className="btn ghost sm" onClick={() => goToMonth(step(month, -1))} aria-label="The month before">
+            ‹
+          </button>
+          <select value={month} onChange={(e) => goToMonth(e.target.value)} aria-label="Month">
+            {choices.map((m) => (
+              <option key={m} value={m}>
+                {label(m)}
+              </option>
+            ))}
+          </select>
+          <button type="button" className="btn ghost sm" onClick={() => goToMonth(step(month, 1))} aria-label="The month after">
+            ›
+          </button>
+          {month !== thisMonth && (
+            <button type="button" className="btn sm" onClick={() => goToMonth(thisMonth)}>
+              This month
+            </button>
+          )}
+        </span>
         <span className="key">
           <span className="chip planned">To come</span>
           <span className="chip waiting">Sent, not finished</span>
@@ -137,7 +174,12 @@ export function PracticeCalendar({
         ))}
         {weeks.flatMap((week) =>
           week.map((c) => (
-            <div key={c.date} className={`cell${c.today ? " today" : ""}${c.past ? " past" : ""}${picked?.date === c.date ? " picked" : ""}`}>
+            <div
+              key={c.date}
+              className={`cell${c.today ? " today" : ""}${c.past ? " past" : ""}${c.outside ? " outside" : ""}${
+                picked?.date === c.date ? " picked" : ""
+              }`}
+            >
               <button
                 type="button"
                 className="dayhit"
@@ -368,4 +410,14 @@ export function nextFreeTime(taken: string[]) {
     if (!taken.includes(time)) return time;
   }
   return "23:45";
+}
+
+/** The month `by` months from this one, as YYYY-MM. */
+function step(month: string, by: number): string {
+  const [y, m] = month.split("-").map(Number);
+  return new Date(Date.UTC(y!, m! - 1 + by, 1)).toISOString().slice(0, 7);
+}
+
+function label(month: string): string {
+  return new Date(`${month}-01T00:00:00Z`).toLocaleDateString("en-SG", { month: "long", year: "numeric", timeZone: "UTC" });
 }

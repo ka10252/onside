@@ -11,11 +11,12 @@ import { deleteAssignment, setStudentArchived, unassign, updateStudent } from "@
 import { conceptBoard } from "@/lib/concept-board";
 import { DailyPractice } from "@/components/tutor/DailyPractice";
 import { bankParts } from "@/lib/admin";
-import { getSchedule, nextSend, singaporeToday, upcomingSends } from "@/lib/schedule";
+import { getSchedule, nextSend } from "@/lib/schedule";
 import { timesOf } from "@/lib/schedule-shared";
-import { PracticeCalendar, type CalendarCell } from "@/components/tutor/PracticeCalendar";
+import { PracticeCalendar } from "@/components/tutor/PracticeCalendar";
+import { practiceMonth } from "@/lib/practice-calendar";
 import { all } from "@/lib/db";
-import { dateInSG, isOverdue, shortDateSG } from "@/lib/due";
+import { isOverdue, shortDateSG } from "@/lib/due";
 import { initials } from "@/lib/format";
 import { latestSummary } from "@/lib/review";
 import { requireUser } from "@/lib/session";
@@ -33,7 +34,7 @@ function daysAgo(iso: string | null) {
 export default async function StudentPage({ params, searchParams }: PageProps<"/tutor/students/[id]">) {
   const user = await requireUser("tutor");
   const { id } = await params;
-  const { sort } = (await searchParams) as { sort?: string };
+  const { sort, month: monthParam } = (await searchParams) as { sort?: string; month?: string };
   const student = await getStudent(id);
   if (!student) notFound();
   const [assignments, progress, board, stats, latest, schedule, parts] = await Promise.all([
@@ -46,63 +47,12 @@ export default async function StudentPage({ params, searchParams }: PageProps<"/
     bankParts(),
   ]);
   const allUnits = parts.flatMap((p) => p.units);
+  const unitName = (n: number | null) => (n === null ? "Every unit" : `Unit ${n} · ${allUnits.find((u) => u.number === n)?.title ?? ""}`);
   // What the next automatic set would hold, so the tutor can look before it goes out.
   const upcoming = nextSend(schedule);
 
-  // Four weeks from this Monday: what already went out, and what the schedule will send.
-  const { date: todaySg } = singaporeToday();
-  const monday = new Date(new Date(`${todaySg}T00:00:00Z`).getTime() - ((new Date(`${todaySg}T00:00:00Z`).getUTCDay() + 6) % 7) * 86_400_000);
-  const plannedByDate = new Map<string, ReturnType<typeof upcomingSends>>();
-  for (const u of upcomingSends(schedule, 42)) plannedByDate.set(u.date, [...(plannedByDate.get(u.date) ?? []), u]);
-  // Sets that already went out, with the time (Singapore), how many questions and which units.
-  const sentRows = await all<{ id: string; at: string; title: string; status: string; n: number; units: string | null }>(
-    `SELECT a.id, a.assigned_at AS at, s.title, a.status,
-            (SELECT COUNT(*)::int FROM set_items i WHERE i.set_id = s.id) AS n,
-            (SELECT string_agg(DISTINCT u.number::text, ',' ORDER BY u.number::text)
-               FROM set_items i JOIN questions q ON q.id = i.question_id JOIN units u ON u.id = q.unit_id
-              WHERE i.set_id = s.id) AS units
-       FROM assignments a JOIN sets s ON s.id = a.set_id
-      WHERE a.student_id = ? AND s.title LIKE 'Daily practice%'`,
-    id,
-  );
-  const sgTime = (iso: string) => new Date(new Date(iso).getTime() + 8 * 3600_000).toISOString().slice(11, 16);
-  const sentByDate = new Map<string, CalendarCell["sent"]>();
-  for (const r of sentRows) {
-    const on = dateInSG(r.at);
-    sentByDate.set(on, [
-      ...(sentByDate.get(on) ?? []),
-      {
-        id: r.id,
-        title: r.title,
-        status: r.status,
-        time: sgTime(r.at),
-        count: r.n,
-        short: r.units ? `U${r.units.split(",").join("/")}` : "All",
-        done: r.status === "submitted" || r.status === "reviewed",
-      },
-    ]);
-  }
-  const unitName = (n: number | null) => (n === null ? "Every unit" : `Unit ${n} · ${allUnits.find((u) => u.number === n)?.title ?? ""}`);
-  const cells: CalendarCell[] = Array.from({ length: 28 }, (_, i) => {
-    const d = new Date(monday.getTime() + i * 86_400_000);
-    const iso = d.toISOString().slice(0, 10);
-    return {
-      date: iso,
-      day: d.getUTCDate(),
-      today: iso === todaySg,
-      past: iso < todaySg,
-      sent: (sentByDate.get(iso) ?? []).sort((a, b) => a.time.localeCompare(b.time)),
-      planned: (plannedByDate.get(iso) ?? []).map((p) => ({
-        time: p.time,
-        short: p.unit === null ? "All" : `U${p.unit}`,
-        unitLabel: unitName(p.unit),
-        unit: p.unit,
-        count: p.count,
-        byHand: p.source === "override",
-      })),
-    };
-  });
-  const monthLabel = `${new Date(cells[0]!.date).toLocaleDateString("en-SG", { month: "long", year: "numeric" })}`;
+  // The calendar's month, which the tutor can step through.
+  const calendar = await practiceMonth(id, monthParam);
 
   const marked = assignments.filter((a) => a.status === "reviewed");
   const got = marked.reduce((n, a) => n + a.marks_got, 0);
@@ -439,8 +389,9 @@ export default async function StudentPage({ params, searchParams }: PageProps<"/
                   </span>
                 </div>
                 <PracticeCalendar
-                  cells={cells}
-                  monthLabel={monthLabel}
+                  cells={calendar.cells}
+                  month={calendar.month}
+                  thisMonth={calendar.thisMonth}
                   units={allUnits}
                   studentId={student.id}
                   sendTime={schedule.send_at}

@@ -25,6 +25,14 @@ Row level security is on for every table with no policies, so Supabase's public 
   - `ONSIDE_URL` — `https://your-app.vercel.app`
   - `CRON_SECRET` — the same value as in Vercel
 - `vercel.json` keeps a daily cron at 22:00 UTC (6am Singapore) as a backstop if the workflow is off.
+## A message when a student submits
+Telegram, because it is free, arrives as a push and needs no domain. Without both settings nothing is sent, so a local run never messages anyone.
+
+1. In Telegram, message **@BotFather**, send `/newbot`, give it a name, and copy the token.
+2. Message your new bot once (anything), then open `https://api.telegram.org/bot<TOKEN>/getUpdates` and copy `result[0].message.chat.id`.
+3. Put both in `.env.local` as `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID`, and the same two in the Vercel project (Production). Add `ONSIDE_URL` too, so the message can link straight to the marking screen.
+4. `npm run notify:test` sends one message to check it.
+
 - Set `CRON_SECRET` in `.env.local` and in the Vercel project (any long random string). Both callers send it as a bearer token; the route turns everyone else away, and in production it refuses to run at all until the secret is set.
 - GitHub Actions minutes: each call takes a few seconds, so roughly 8 hours a month of the 2,000 free minutes on a private repo.
 

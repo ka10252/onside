@@ -2,7 +2,9 @@ import "server-only";
 import { randomBytes } from "node:crypto";
 import { isPast, pastContext, tableBlock, type Block, type Format, type Question } from "./content";
 import { all, json, one, run, tx } from "./db";
+import { after } from "next/server";
 import { queueMarking } from "./ai/marking";
+import { notifySubmitted } from "./notify";
 import { hasAnswer } from "./answered";
 import { checkCalculation, HELPER_LOCK_MS, scoreChain } from "./grading";
 
@@ -126,7 +128,20 @@ export async function finalizeAssignment(assignmentId: string) {
     }
     return claimed;
   });
-  if (changed) queueMarking(assignmentId);
+  if (changed) {
+    queueMarking(assignmentId);
+    tellTutor(assignmentId);
+  }
+}
+
+/** Sends the tutor a note that this came in, after the student's page has been answered. */
+function tellTutor(assignmentId: string) {
+  const job = () => notifySubmitted(assignmentId).catch((e) => console.error("submit notice failed", e));
+  try {
+    after(job);
+  } catch {
+    void job(); // outside a request (scripts, tests)
+  }
 }
 
 /** Closes timed sets whose time (plus grace) is over, even if the student closed the tab. */

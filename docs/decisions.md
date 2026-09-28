@@ -173,3 +173,8 @@ The two blocks under the set's marks are both out of the marks in the whole set,
 
 ## Finished sets sort two ways (2026-09-28)
 The Done tab groups by unit, which is right for revising a topic and wrong for checking what was just marked. Two chips now choose: "By unit" keeps the headed groups, "Newest first" drops them and runs by the date submitted. The choice rides in the URL as `?sort=new` beside the tab and the unit filter, and by unit stays the default.
+
+## A message when a student submits (2026-09-28)
+Telegram (Jin, 2026-09-28): free, arrives as a push on the phone, and needs no domain or verified sender, which email would. `src/lib/notify.ts` posts to the Bot API and does nothing at all unless `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID` are both set, so local runs and tests never send. `finalizeAssignment` fires it through `after()` beside the AI marking, and a failure is logged and swallowed — a notification is never worth failing a student's submit for. The message says who submitted, which set, how many questions, how long it took, what help was used, and links to the marking screen. Setup and `npm run notify:test` are in docs/deploy.md.
+
+Only on submit for now. Marking finishing, and overdue sets, were offered and left out.

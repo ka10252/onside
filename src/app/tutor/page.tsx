@@ -5,7 +5,6 @@ import { listStudents } from "@/lib/admin";
 import { initials } from "@/lib/format";
 import { conceptBoard } from "@/lib/concept-board";
 import { latestSummary } from "@/lib/review";
-import { pct } from "@/lib/scoring";
 import { StatusBadge } from "@/components/review/StatusBadge";
 import { requireUser } from "@/lib/session";
 
@@ -49,7 +48,7 @@ export default async function StudentsPage() {
                     <th>Student</th>
                     <th>Latest assignment</th>
                     <th>Status</th>
-                    <th>Independent / Supported</th>
+                    <th>Right without help / in all</th>
                     <th>Concepts</th>
                     <th />
                   </tr>
@@ -86,7 +85,10 @@ export default async function StudentsPage() {
                           <span className="muted">Pending</span>
                         ) : (
                           <>
-                            <b>{pct(sum.independent)}</b> / {pct(sum.supported)}
+                            <b>
+                              {sum.solvedAlone}/{sum.count}
+                            </b>{" "}
+                            alone · {sum.solved}/{sum.count} right
                           </>
                         )}
                       </td>

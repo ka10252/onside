@@ -9,13 +9,12 @@ import { MarkForm } from "@/components/review/MarkForm";
 import { QuestionRow, Reveal } from "@/components/review/QuestionRows";
 import { HelpPill, StatusBadge } from "@/components/review/StatusBadge";
 import { hasPendingBatches, isMarking, pollMarkingBatches, queueMarking } from "@/lib/ai/marking";
-import { isPast, pastContext, type Question } from "@/lib/content";
+import { isPast, pastContext, tableBlock, type Question } from "@/lib/content";
 import { ConfirmForm } from "@/components/ConfirmForm";
 import { all, json } from "@/lib/db";
 import { FORMAT_LABEL, initials } from "@/lib/format";
 import { acceptAiMarks, markReviewed, rerunMarking } from "@/lib/review-actions";
 import { ACCEPTED_NOTE, loadReview, type ReviewItem } from "@/lib/review";
-import { pct } from "@/lib/scoring";
 import { requireUser } from "@/lib/session";
 import { answerText } from "@/lib/answer-text";
 
@@ -100,9 +99,18 @@ export default async function ReviewPage({ params }: PageProps<"/tutor/students/
               <div className="score ind">
                 <div>
                   <span className="sl">Independent score · no AI</span>
-                  <span className="sv">{score.pending ? "Pending" : pct(score.independent)}</span>
+                  <span className="sv frac">
+                    {score.pending ? (
+                      "Pending"
+                    ) : (
+                      <>
+                        {score.solvedAlone}
+                        <span className="of">/{score.count}</span>
+                      </>
+                    )}
+                  </span>
                   <span className="ss">
-                    Solved without AI: <b>{score.withoutAi} of {score.count}</b>
+                    Right with no help. Answered without AI: <b>{score.withoutAi} of {score.count}</b>
                     {score.unverified ? ` · Unverified: ${score.unverified}` : ""}
                   </span>
                 </div>
@@ -115,9 +123,18 @@ export default async function ReviewPage({ params }: PageProps<"/tutor/students/
               <div className="score sup">
                 <div>
                   <span className="sl">Supported score · with AI</span>
-                  <span className="sv">{score.pending ? "Pending" : pct(score.supported)}</span>
+                  <span className="sv frac">
+                    {score.pending ? (
+                      "Pending"
+                    ) : (
+                      <>
+                        {score.solved}
+                        <span className="of">/{score.count}</span>
+                      </>
+                    )}
+                  </span>
                   <span className="ss">
-                    Solved with AI help: <b>{score.withAi} of {score.count}</b>
+                    Right in all. Used AI on: <b>{score.withAi} of {score.count}</b>
                   </span>
                 </div>
                 <div className="qboxes">
@@ -211,7 +228,7 @@ export default async function ReviewPage({ params }: PageProps<"/tutor/students/
                   <span>Q</span>
                   <span>Question</span>
                   <span>Result</span>
-                  <span>Score</span>
+                  <span>Marks</span>
                   <span>Solved</span>
                   <span>Hints</span>
                   <span>AI qs</span>
@@ -227,7 +244,7 @@ export default async function ReviewPage({ params }: PageProps<"/tutor/students/
                         <span className="n">{it.n}</span>
                         <span className="qt clamp">{it.q.prompt.replace(/\*\*/g, "")}</span>
                         <span>{it.result}</span>
-                        <span>{score.questions[i]!.score === null ? "—" : `${Math.round((score.questions[i]!.score! / it.q.marks) * 100)}%`}</span>
+                        <span>{it.confirmed === null ? "—" : `${it.confirmed}/${it.q.marks}`}</span>
                         <span>
                           <HelpPill category={score.questions[i]!.category} />
                         </span>
@@ -240,7 +257,7 @@ export default async function ReviewPage({ params }: PageProps<"/tutor/students/
                       </>
                     }
                   >
-                    <Detail it={it} assignmentId={a.id} />
+                    <Detail it={it} assignmentId={a.id} first={first} />
                   </QuestionRow>
                 ))}
               </div>
@@ -252,81 +269,63 @@ export default async function ReviewPage({ params }: PageProps<"/tutor/students/
   );
 }
 
-function Detail({ it, assignmentId }: { it: ReviewItem; assignmentId: string }) {
+/**
+ * One question, laid out to be marked: the question itself on the left, what the student wrote on
+ * the right, and the marking underneath. The mark scheme sits with the question, because marking
+ * means holding the two side by side.
+ */
+function Detail({ it, assignmentId, first }: { it: ReviewItem; assignmentId: string; first: string }) {
   const { q, r, aiMark } = it;
   const attempts = json.parse<{ value: string; correct: boolean }[]>(r?.attempts, []);
   const past = isPast(q);
+  const wrote = r?.plan_text || r?.working_text || r?.final_text || r?.photo_path || attempts.length > 0;
   return (
     <>
       <p className="meta" style={{ margin: 0 }}>
         {past && <span className="pill gray">{q.past.label}</span>}
         <span className="pill gray">{FORMAT_LABEL[q.format]}</span>
-        <span>{it.concepts.map((c) => c.label).join(" · ")}</span>
         <span>{q.marks} marks</span>
+        <span>{it.concepts.map((c) => c.label).join(" · ")}</span>
+        {it.timeMin > 0 && <span>{it.timeMin} min</span>}
       </p>
       {it.honesty && <p className="honesty" style={{ margin: 0 }}>{it.honesty}</p>}
 
-      <div className="two">
-        <div>
-          {attempts.length > 0 && (
-            <>
-              <h3>Attempts</h3>
-              {attempts.map((x, i) => (
-                <div key={i} className="att">
-                  <span className="muted">{i + 1}</span>
-                  {x.correct ? <span className="v">{attemptLabel(q, x.value)}</span> : <s className="v">{attemptLabel(q, x.value)}</s>}
-                  <span className={`pill ${x.correct ? "green" : "red"}`}>{x.correct ? "Correct" : "Incorrect"}</span>
-                </div>
-              ))}
-            </>
-          )}
-          {r?.photo_path && (
-            <>
-              <h3>Diagram</h3>
-              {/* eslint-disable-next-line @next/next/no-img-element -- private upload */}
+      <div className="markgrid">
+        <section>
+          <h3>Question</h3>
+          <QuestionBody q={q} />
+          <details className="sub" open style={{ marginTop: 10 }}>
+            <summary>{past ? "Mark scheme" : "Answer"}</summary>
+            <div className="mstext">
+              <Rich text={past ? q.marking.text || "Not found in the mark scheme file." : answerText(q)} />
+            </div>
+          </details>
+        </section>
+
+        <section>
+          <h3>What {first} wrote</h3>
+          {!wrote && <p className="muted" style={{ margin: 0 }}>{r ? "Nothing written." : "Not opened."}</p>}
+          <div className="stack" style={{ gap: 10 }}>
+            {attempts.map((x, i) => (
+              <div key={i} className="att">
+                <span className="muted">{i + 1}</span>
+                {x.correct ? <span className="v">{attemptLabel(q, x.value)}</span> : <s className="v">{attemptLabel(q, x.value)}</s>}
+                <span className={`pill ${x.correct ? "green" : "red"}`}>{x.correct ? "Correct" : "Incorrect"}</span>
+              </div>
+            ))}
+            {r?.plan_text && <div className="answerbox"><b>Plan</b>{"\n"}{planText(r.plan_text)}</div>}
+            {r?.working_text && <div className="answerbox"><b>Working</b>{"\n"}{r.working_text}</div>}
+            {r?.final_text && <div className="answerbox">{r.final_text}</div>}
+            {r?.photo_path && (
+              // eslint-disable-next-line @next/next/no-img-element -- private upload
               <img className="upload" src={`/api/photo?r=${r.id}`} alt="Student's diagram" />
-            </>
-          )}
-        </div>
-        <div>
-          <h3>AI summary</h3>
-          {it.bullets.length ? (
-            <ul className="summary">
-              {it.bullets.map((b, i) => (
-                <li key={i}>{b}</li>
-              ))}
-            </ul>
-          ) : (
-            <p className="muted" style={{ margin: 0 }}>{r ? "No help used." : "Not opened."}</p>
-          )}
-        </div>
+            )}
+          </div>
+        </section>
       </div>
 
-      {(r?.plan_text || r?.working_text || r?.final_text) && (
-        <div className="stack" style={{ gap: 10 }}>
-          {r.plan_text && (
-            <div>
-              <h3>Plan</h3>
-              <div className="answerbox">{planText(r.plan_text)}</div>
-            </div>
-          )}
-          {r.working_text && (
-            <div>
-              <h3>Working</h3>
-              <div className="answerbox">{r.working_text}</div>
-            </div>
-          )}
-          {r.final_text && (
-            <div>
-              <h3>{q.format === "calculation" ? "Final answer" : "Answer"}</h3>
-              <div className="answerbox">{r.final_text}</div>
-            </div>
-          )}
-        </div>
-      )}
-
       {!it.auto && (
-        <div className="stack" style={{ gap: 10 }}>
+        <section className="stack" style={{ gap: 10 }}>
           <h3>Marking</h3>
           {aiMark?.status === "done" && (
             <div className="sub" style={{ padding: 14 }}>
@@ -368,6 +367,9 @@ function Detail({ it, assignmentId }: { it: ReviewItem; assignmentId: string }) 
               {aiMark.missed && aiMark.missed.length > 0 && (
                 <p className="muted" style={{ margin: "8px 0 0", fontSize: 14 }}>Missed: {aiMark.missed.join("; ")}</p>
               )}
+              {it.bullets.length > 0 && (
+                <p className="muted" style={{ margin: "8px 0 0", fontSize: 14 }}>{it.bullets.join(" · ")}</p>
+              )}
             </div>
           )}
           {aiMark?.status === "error" && <p className="formmsg bad" style={{ margin: 0 }}>AI marking failed. Mark it yourself or retry.</p>}
@@ -381,12 +383,8 @@ function Detail({ it, assignmentId }: { it: ReviewItem; assignmentId: string }) 
             current={it.tutorMark?.marks ?? null}
             note={it.tutorMark?.note === ACCEPTED_NOTE ? undefined : it.tutorMark?.note}
           />
-        </div>
+        </section>
       )}
-
-      <Reveal label="question and mark scheme">
-        <QuestionAndScheme q={q} />
-      </Reveal>
 
       {it.log.length > 0 && (
         <Reveal label="full conversation">
@@ -449,28 +447,28 @@ function planText(plan: string) {
   }
 }
 
-async function QuestionAndScheme({ q }: { q: Question }) {
-  if (isPast(q)) {
-    return (
-      <div className="stack" style={{ gap: 10 }}>
-        <details className="sub">
-          <summary>Extracts and data</summary>
-          <Blocks blocks={await pastContext(q.past.paper, q.past.question)} />
-        </details>
-        {q.past.lead.length > 0 && <Blocks blocks={q.past.lead} />}
-        <p className="qtext" style={{ margin: 0 }}>
-          <Rich text={q.prompt} />
-        </p>
-        <div className="answerbox mstext">
-          <Rich text={q.marking.text || "Not found in the mark scheme file."} />
-        </div>
-      </div>
-    );
-  }
+async function QuestionBody({ q }: { q: Question }) {
   return (
     <div className="stack" style={{ gap: 10 }}>
-      <p className="qtext" style={{ margin: 0 }}>{q.prompt}</p>
-      <div className="answerbox">{answerText(q)}</div>
+      {isPast(q) ? (
+        <>
+          <details className="sub">
+            <summary>Extracts and data</summary>
+            <Blocks blocks={await pastContext(q.past.paper, q.past.question)} />
+          </details>
+          {q.past.lead.length > 0 && <Blocks blocks={q.past.lead} />}
+          <p className="qtext" style={{ margin: 0 }}>
+            <Rich text={q.prompt} /> <span className="muted">[{q.marks}]</span>
+          </p>
+        </>
+      ) : (
+        <>
+          {q.table && <Blocks blocks={tableBlock(q.table)} />}
+          <p className="qtext" style={{ margin: 0 }}>
+            <Rich text={q.prompt} /> <span className="muted">[{q.marks}]</span>
+          </p>
+        </>
+      )}
     </div>
   );
 }

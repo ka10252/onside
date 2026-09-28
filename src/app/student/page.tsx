@@ -178,7 +178,6 @@ export default async function AssignmentsPage({ searchParams }: PageProps<"/stud
                   {g.rows.map((r) => {
                     const overdue = !showDone && isOverdue(r.due_at);
                     const marked = r.status === "reviewed";
-                    const pc = marked && r.marks_total ? Math.round((r.marks_got / r.marks_total) * 100) : null;
                     return (
                       <Link
                         key={r.id}
@@ -211,7 +210,7 @@ export default async function AssignmentsPage({ searchParams }: PageProps<"/stud
                                 {Math.round(r.marks_got * 10) / 10}
                                 <span className="of">/{r.marks_total}</span>
                               </b>
-                              <span className="pc">{pc}%</span>
+                              <span className="pc">marks</span>
                             </span>
                           )}
                           {!showDone && r.due_at && (

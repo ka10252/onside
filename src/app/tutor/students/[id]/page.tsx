@@ -18,7 +18,6 @@ import { all } from "@/lib/db";
 import { dateInSG, isOverdue, shortDateSG } from "@/lib/due";
 import { initials } from "@/lib/format";
 import { latestSummary } from "@/lib/review";
-import { pct } from "@/lib/scoring";
 import { requireUser } from "@/lib/session";
 import { unitTestProgress } from "@/lib/unit-progress";
 
@@ -187,12 +186,12 @@ export default async function StudentPage({ params, searchParams }: PageProps<"/
 
           <section className="card hero">
             <h2 className="headline">
-              <span>{overall === null ? "No marks yet" : `${overall}% overall`}</span>
+              <span>{overall === null ? "No marks yet" : `${got} of ${outOf} marks`}</span>
               {latest && !latest.pending && (
                 <>
                   <span className="sep">|</span>
                   <span>
-                    Latest set: {pct(latest.independent)} without AI / {pct(latest.supported)} with
+                    Latest set: {latest.solvedAlone} of {latest.count} right without help, {latest.solved} of {latest.count} in all
                   </span>
                 </>
               )}
@@ -329,9 +328,11 @@ export default async function StudentPage({ params, searchParams }: PageProps<"/
             {trend.length > 1 && (
               <div className="trend">
                 {trend.map((a) => (
-                  <span key={a.id} className="tbar" title={`${a.set_title}: ${percent(a)}%`}>
+                  <span key={a.id} className="tbar" title={`${a.set_title}: ${a.marks_got} of ${a.marks_total} marks`}>
                     <span className="fill" style={{ height: `${Math.max(4, percent(a))}%` }} />
-                    <span className="tl">{percent(a)}%</span>
+                    <span className="tl">
+                      {Math.round(a.marks_got * 10) / 10}/{a.marks_total}
+                    </span>
                   </span>
                 ))}
               </div>

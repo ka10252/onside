@@ -146,3 +146,9 @@ AI marking already covered short answers, calculations, essays and past-paper qu
 The marking prompt now also returns `comment_for_student`: one to three sentences about that answer — what earned the marks and what it needed for the rest, naming the economics, in plain sentence case with no greeting and no praise. It fills the comment box on the marking screen; the tutor edits it, replaces it, or clears it, and "Use the draft" puts it back. Only what the tutor confirms reaches the student. "Accept all AI marks" now sends those comments too, and says so before it does.
 
 Diagrams are still marked by hand (Jin, 2026-09-17), so they get no draft.
+
+## Results are counted in questions, not percentages (2026-09-28)
+A share of a mark total says less to a student than "two of five on your own", so no screen shows a percentage any more. Independent and Supported are counts of questions taken for full marks — Independent counting only the ones done with no hint and no Helper — both out of the questions in the set. A question worth 3 of 4 counts in neither; part marks live in the marks fractions beside them (`18 of 30 marks`, `Without help 12/16`). The tutor's trend bars keep their heights, which are a picture, and label each bar with its marks.
+
+## Marking a question, side by side (2026-09-28)
+The marking screen had the question hidden behind "Show question and mark scheme" at the bottom, under seven headings — Attempts, Diagram, AI summary, Plan, Working, Answer, Marking. Marking means holding the question and the answer together, so the question and its mark scheme are now on the left, what the student wrote on the right, and the marking underneath: three headings. The AI's tutor bullets fold into the suggestion box rather than standing alone. Below 860 px the two columns stack.

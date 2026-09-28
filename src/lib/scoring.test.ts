@@ -46,6 +46,16 @@ describe("scoreSet", () => {
     expect(s.split.withAi).toEqual({ got: 4, available: 8, questions: 2 });
     expect(s.split.withoutAi.got + s.split.withAi.got).toBe(s.marks);
   });
+  it("counts the questions taken for full marks, with and without help", () => {
+    const s = scoreSet([
+      q({ id: "a", confirmed: 4 }), // full marks, no help
+      q({ id: "b", confirmed: 4, hintLevel: 1 }), // full marks, used a hint
+      q({ id: "c", confirmed: 3 }), // part marks, no help
+      q({ id: "d", confirmed: 4, flags: ["paste"] }), // full marks, flagged but unhelped
+      q({ id: "e", confirmed: 0, answered: false }), // blank
+    ]);
+    expect([s.solvedAlone, s.solved, s.count]).toEqual([2, 3, 5]);
+  });
   it("applies the Hint 2 cap", () => {
     expect(scoreSet([q({ hintLevel: 2, confirmed: 4 })]).supported).toBeCloseTo(0.7);
   });

@@ -397,3 +397,10 @@ table.board { table-layout: fixed; min-width: 860px; }
 /* The tutor's comment stays quiet on the student's side: pink is for the tutor's screens. */
 .qsheet .why { padding: 2px 0 2px 14px; border-radius: 0; border-left: 2px solid var(--line2); background: transparent; }
 .qsheet .why b { color: var(--ink2); }
+/* Marking a question: the question on the left, what the student wrote on the right. */
+.markgrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 26px; align-items: start; }
+.markgrid > section { min-width: 0; display: flex; flex-direction: column; gap: 8px; }
+.markgrid h3 { margin: 0; }
+.markgrid .qtext { font-size: 17px; font-weight: 500; line-height: 1.4; }
+.markgrid .sub > .mstext { padding: 0 14px 14px; }
+@media (max-width: 860px) { .markgrid { grid-template-columns: 1fr; } }

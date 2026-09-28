@@ -8,7 +8,7 @@ import { isPast, pastContext, tableBlock, type Block, type Question } from "@/li
 import { all, json } from "@/lib/db";
 import { FORMAT_LABEL } from "@/lib/format";
 import { ACCEPTED_NOTE, loadReview, type ReviewItem } from "@/lib/review";
-import { pct, type MarkSplit } from "@/lib/scoring";
+import { type MarkSplit } from "@/lib/scoring";
 import { requireUser } from "@/lib/session";
 import { finalizeAssignment, getAssignment, isLocked } from "@/lib/student";
 
@@ -75,7 +75,6 @@ export default async function ResultsPage({ params, searchParams }: PageProps<"/
     const q = [k === "all" ? "" : `show=${k}`, u ? `unit=${u}` : ""].filter(Boolean).join("&");
     return `/student/a/${a.id}/done${q ? `?${q}` : ""}`;
   };
-  const percent = rv.score.total ? Math.round((rv.score.marks / rv.score.total) * 100) : 0;
 
   return (
     <>
@@ -92,9 +91,7 @@ export default async function ResultsPage({ params, searchParams }: PageProps<"/
               <div>
                 <h1>{a.title}</h1>
                 <p>
-                  {marked
-                    ? `${rv.score.marks}/${rv.score.total} marks · ${percent}%`
-                    : "Submitted · waiting for your tutor's marks"}{" "}
+                  {marked ? `${rv.score.marks} of ${rv.score.total} marks` : "Submitted · waiting for your tutor's marks"}{" "}
                   · {answered} of {rv.items.length} answered
                 </p>
               </div>
@@ -123,7 +120,6 @@ export default async function ResultsPage({ params, searchParams }: PageProps<"/
                   <b>{rv.score.marks}</b>
                   <span className="of">/{rv.score.total}</span>
                 </span>
-                <span className="bigpc">{percent}%</span>
                 <span className="muted">marks in this set</span>
               </div>
               <div className="scores">
@@ -141,10 +137,15 @@ export default async function ResultsPage({ params, searchParams }: PageProps<"/
                 />
               </div>
               <p className="ss" style={{ marginTop: 16 }}>
-                Independent score <b>{pct(rv.score.independent)}</b> · Supported score <b>{pct(rv.score.supported)}</b>
-                {rv.score.noAnswer > 0
-                  ? ` · ${rv.score.noAnswer} left blank`
-                  : ""}
+                Independent score{" "}
+                <b>
+                  {rv.score.solvedAlone}/{rv.score.count}
+                </b>{" "}
+                · Supported score{" "}
+                <b>
+                  {rv.score.solved}/{rv.score.count}
+                </b>{" "}
+                questions right{rv.score.noAnswer > 0 ? ` · ${rv.score.noAnswer} left blank` : ""}
               </p>
             </section>
           )}

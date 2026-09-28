@@ -16,8 +16,14 @@
 Thresholds are starting values; make them config.
 
 ## Set level
-- **Supported score** = Σ question score ÷ Σ marks available.
-- **Independent score** = Σ confirmed marks on *Without AI* questions ÷ Σ marks available.
+- **Supported score** = questions taken for full marks, out of the questions in the set.
+- **Independent score** = the same, counting only questions done with no hint and no Helper.
+- Both are shown as counts (`2/5`), never as a percentage: a share of a mark total says less to a
+  student than "two of five on your own" (Jin, 2026-09-28). Part marks live in the marks fractions
+  beside them — a question worth 3 of 4 counts in neither score.
+- The marks ratios behind them (Σ question score ÷ Σ marks available, and the same over *Without
+  AI* questions) are still computed as `score.supported` and `score.independent`; nothing displays
+  them now, and the hint cap still applies to them.
 - Also show counts: `Solved without AI: 2 of 5`, `Unverified: 1`.
 - Result line: `{marks}/{total} marks | {n} of {m} without AI | Weak spot: {concept}`.
 - Scores that include unconfirmed AI marks show as "pending" to the tutor and are hidden from the student.

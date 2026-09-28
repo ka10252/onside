@@ -47,6 +47,9 @@ export type SetScore = {
   questions: QuestionScore[];
   /** Marks got and available, split by whether the student used a hint or the Helper. */
   split: { withoutAi: MarkSplit; withAi: MarkSplit };
+  /** Questions answered for full marks: all of them, and the ones done with no help at all. */
+  solved: number;
+  solvedAlone: number;
 };
 
 export type MarkSplit = { got: number; available: number; questions: number };
@@ -77,7 +80,15 @@ export function scoreSet(qs: ScoredQuestion[]): SetScore {
       withoutAi: splitOf(qs, questions, (c) => c === "without_ai" || c === "unverified"),
       withAi: splitOf(qs, questions, (c) => c === "with_ai"),
     },
+    // Full marks only. A question worth 3 of 4 shows up in the marks, not here.
+    solved: full(qs, questions, () => true),
+    solvedAlone: full(qs, questions, (c) => c !== "with_ai"),
   };
+}
+
+/** How many questions took full marks, among those the category test keeps. */
+function full(qs: ScoredQuestion[], scores: QuestionScore[], keep: (c: QuestionScore["category"]) => boolean): number {
+  return qs.filter((q, i) => q.confirmed !== null && q.confirmed >= q.marks && keep(scores[i]!.category)).length;
 }
 
 function splitOf(qs: ScoredQuestion[], scores: QuestionScore[], keep: (c: QuestionScore["category"]) => boolean): MarkSplit {

@@ -31,7 +31,7 @@ const shortDate = shortDateSG;
 export default async function AssignmentsPage({ searchParams }: PageProps<"/student">) {
   const user = await requireUser("student");
   await closeExpiredAssignments();
-  const { tab, unit } = (await searchParams) as { tab?: string; unit?: string };
+  const { tab, unit, sort } = (await searchParams) as { tab?: string; unit?: string; sort?: string };
   const rows = await all<Row>(
     `SELECT a.id, s.title, a.status, a.due_at, a.assigned_at, a.submitted_at, s.helper, s.time_limit_min,
             (SELECT COUNT(*) FROM set_items i WHERE i.set_id = s.id) AS total,
@@ -100,8 +100,10 @@ export default async function AssignmentsPage({ searchParams }: PageProps<"/stud
   const unitPick = Number(unit) || null;
   const units = [...new Map(shown.flatMap((r) => unitsOf.get(r.id) ?? []).map((u) => [u.number, u])).values()].sort((a, b) => a.number - b.number);
   const list = unitPick ? shown.filter((r) => (unitsOf.get(r.id) ?? []).some((u) => u.number === unitPick)) : shown;
-  // Finished sets are grouped by the unit they cover, so a student can revise one topic at a time.
-  const groups = showDone
+  // Finished sets group by the unit they cover, so a student can revise one topic at a time, or
+  // run newest first when they have just had something marked.
+  const byUnit = sort !== "new";
+  const groups = showDone && byUnit
     ? [...new Map<string, { label: string; sort: number; rows: Row[] }>(
         list.map((r) => {
           const us = unitsOf.get(r.id) ?? [];
@@ -120,8 +122,14 @@ export default async function AssignmentsPage({ searchParams }: PageProps<"/stud
         }))
         .sort((a, b) => a.sort - b.sort)
     : [{ label: "", sort: 0, rows: list }];
-  const tabLink = (to: "todo" | "done", u: number | null) =>
-    `/student${to === "done" ? "?tab=done" : "?"}${u ? `${to === "done" ? "&" : ""}unit=${u}` : ""}`.replace(/\?$/, "");
+  const link = ({ to = showDone ? "done" : "todo", u = unitPick, by = sort }: { to?: string; u?: number | null; by?: string }) => {
+    const q = new URLSearchParams();
+    if (to === "done") q.set("tab", "done");
+    if (u) q.set("unit", String(u));
+    if (to === "done" && by === "new") q.set("sort", "new");
+    const s = q.toString();
+    return `/student${s ? `?${s}` : ""}`;
+  };
 
   return (
     <>
@@ -140,20 +148,32 @@ export default async function AssignmentsPage({ searchParams }: PageProps<"/stud
           <AssignmentCalendar cells={days} monthLabel={monthLabel} />
 
           <nav className="filters" aria-label="Which assignments to show">
-            <Link href={tabLink("todo", unitPick)} className={`chip${showDone ? "" : " on"}`} aria-current={showDone ? undefined : "page"}>
+            <Link href={link({ to: "todo" })} className={`chip${showDone ? "" : " on"}`} aria-current={showDone ? undefined : "page"}>
               To do · {todo.length}
             </Link>
-            <Link href={tabLink("done", unitPick)} className={`chip${showDone ? " on" : ""}`} aria-current={showDone ? "page" : undefined}>
+            <Link href={link({ to: "done" })} className={`chip${showDone ? " on" : ""}`} aria-current={showDone ? "page" : undefined}>
               Done · {done.length}
             </Link>
+
+            {showDone && done.length > 1 && (
+              <>
+                <span className="filtersep" aria-hidden />
+                <Link href={link({ by: "unit" })} className={`chip${byUnit ? " on" : ""}`}>
+                  By unit
+                </Link>
+                <Link href={link({ by: "new" })} className={`chip${byUnit ? "" : " on"}`}>
+                  Newest first
+                </Link>
+              </>
+            )}
 
             {units.length > 1 && (
               <UnitSelect
                 units={units}
                 value={unitPick}
                 hrefs={Object.fromEntries([
-                  ["", tabLink(showDone ? "done" : "todo", null)],
-                  ...units.map((u) => [String(u.number), tabLink(showDone ? "done" : "todo", u.number)] as const),
+                  ["", link({ u: null })],
+                  ...units.map((u) => [String(u.number), link({ u: u.number })] as const),
                 ])}
               />
             )}

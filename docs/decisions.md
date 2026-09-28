@@ -170,3 +170,6 @@ After marking, "See 도원's screen" on the marking page opens `/tutor/students/
 A circle on a student's results now means full marks reached on their own. Full marks with a hint or the Helper gets a triangle, the same as part marks: it scored, but not unaided. Only a blank stays unmarked and only nothing at all is a cross.
 
 The two blocks under the set's marks are both out of the marks in the whole set, not out of the marks available in each half. "Without help 12/30, With the Helper 6/30" reads against the set's 18/30 and adds up to it; the old denominators (12/16 and 6/14) were two different scales and answered a question nobody was asking.
+
+## Finished sets sort two ways (2026-09-28)
+The Done tab groups by unit, which is right for revising a topic and wrong for checking what was just marked. Two chips now choose: "By unit" keeps the headed groups, "Newest first" drops them and runs by the date submitted. The choice rides in the URL as `?sort=new` beside the tab and the unit filter, and by unit stays the default.

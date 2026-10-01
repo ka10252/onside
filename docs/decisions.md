@@ -178,3 +178,15 @@ The Done tab groups by unit, which is right for revising a topic and wrong for c
 Telegram (Jin, 2026-09-28): free, arrives as a push on the phone, and needs no domain or verified sender, which email would. `src/lib/notify.ts` posts to the Bot API and does nothing at all unless `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID` are both set, so local runs and tests never send. `finalizeAssignment` fires it through `after()` beside the AI marking, and a failure is logged and swallowed — a notification is never worth failing a student's submit for. The message says who submitted, which set, how many questions, how long it took, what help was used, and links to the marking screen. Setup and `npm run notify:test` are in docs/deploy.md.
 
 Only on submit for now. Marking finishing, and overdue sets, were offered and left out.
+
+## Lessons are the tutor's own room (2026-10-01)
+A lesson is prepared, taught and reviewed at `/tutor/students/[id]/lesson`, and the student sees none of it until a review quiz is sent. It shares nothing with daily practice — its own `lessons` and `lesson_items` tables, no reading or writing of `schedules` — so preparing a lesson can never change what goes out in the morning (Jin, 2026-10-01).
+
+The page opens with what the past papers actually ask of that unit: the diagrams by how often they are asked for, the command terms, the terms asked to define, and how many past questions are held by length. All counted from `past_items`, not judged. The tutor picks questions from the unit's past papers, marks each one as it goes ("Got it" / "Missed"), and keeps private notes.
+
+**The review quiz** is the questions missed in the lesson plus others on the same ground — same section first, then the rest of the unit, never one the student has already been sent — ten in all, multiple choice and short answers only. A missed essay is not re-asked: a review quiz checks a hole has closed, it is not another essay. Multiple choice comes from the unit tests because the IB sets none; everything else is past paper. It goes out as an ordinary assignment with the Helper off, and the lesson remembers which one it was so it cannot be sent twice.
+
+Essay outlines are not submitted through Onside — Jin takes those himself and gives feedback directly (Jin, 2026-09-28).
+
+## Units are ranked by how much of the exam they carry (2026-10-01)
+637 past-paper questions across M22–N25, every one tagged to a unit. Unit 16 carries 85, unit 1 carries 7, and the top seven units are 54% of the exam between them. `src/lib/unit-weight.ts` counts it; the question bank badges each unit with its rank, and the student's page weighs that against how they are doing — a unit that carries a lot and has gone badly, or has never been tested, is the one to teach next. A unit they are solid in drops down rather than sitting at the top for ever.

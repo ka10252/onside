@@ -185,6 +185,32 @@ CREATE TABLE IF NOT EXISTS ai_batches (
   created_at     TEXT NOT NULL DEFAULT (${NOW_SQL})
 );
 
+-- A lesson the tutor prepares and then teaches. Nothing here touches daily practice: a lesson is
+-- the tutor's own working space until they choose to send a set from it (docs/decisions.md).
+CREATE TABLE IF NOT EXISTS lessons (
+  id          TEXT PRIMARY KEY,
+  student_id  TEXT NOT NULL REFERENCES users(id),
+  unit        INTEGER,
+  title       TEXT NOT NULL DEFAULT '',
+  -- planning: being put together · taught: run, with each question marked right or wrong
+  status      TEXT NOT NULL DEFAULT 'planning',
+  notes       TEXT NOT NULL DEFAULT '',
+  created_at  TEXT NOT NULL DEFAULT (${NOW_SQL}),
+  taught_at   TEXT,
+  -- the review set sent afterwards, once it has been
+  review_assignment_id TEXT
+);
+CREATE INDEX IF NOT EXISTS lessons_student ON lessons (student_id, created_at);
+
+CREATE TABLE IF NOT EXISTS lesson_items (
+  lesson_id   TEXT NOT NULL REFERENCES lessons(id) ON DELETE CASCADE,
+  question_id TEXT NOT NULL REFERENCES questions(id),
+  position    INTEGER NOT NULL DEFAULT 0,
+  -- how it went in the lesson: null while planning, then right or wrong
+  outcome     TEXT,
+  PRIMARY KEY (lesson_id, question_id)
+);
+
 -- Daily practice: one row per student (docs/decisions.md).
 CREATE TABLE IF NOT EXISTS schedules (
   student_id   TEXT PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE,

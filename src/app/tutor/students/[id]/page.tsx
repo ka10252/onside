@@ -168,6 +168,18 @@ export default async function StudentPage({ params, searchParams }: PageProps<"/
             </div>
           </section>
 
+          <section className="card">
+            <div className="card-hd">
+              <h2>What to teach next</h2>
+              <span className="muted" style={{ fontSize: 14 }}>
+                How much of the exam each unit carries (M22–N25), against how this student is doing in it
+              </span>
+            </div>
+            <div className="cardbody">
+              <UnitReviewBoard rows={units} studentId={id} />
+            </div>
+          </section>
+
           <div className="dash">
             <section className="card">
               <div className="card-hd">
@@ -414,18 +426,6 @@ export default async function StudentPage({ params, searchParams }: PageProps<"/
             )}
 
           </div>
-
-          <section className="card">
-            <div className="card-hd">
-              <h2>What to teach next</h2>
-              <span className="muted" style={{ fontSize: 14 }}>
-                How much of the exam each unit carries (M22–N25), against how this student is doing in it
-              </span>
-            </div>
-            <div className="cardbody">
-              <UnitReviewBoard rows={units} studentId={id} />
-            </div>
-          </section>
 
           <details className="card">
             <summary className="card-hd" style={{ cursor: "pointer" }}>

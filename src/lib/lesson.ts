@@ -1,6 +1,8 @@
 import "server-only";
 import { randomBytes } from "node:crypto";
 import { bankRange, type BankQuestion } from "./admin";
+import { answerText } from "./answer-text";
+import { isPast, pastContext, tableBlock, type Block, type Question } from "./content";
 import { all, one, run, tx } from "./db";
 import { weightByUnit, type UnitWeight } from "./unit-weight";
 import { recipeFor, type Recipe } from "./lesson-template";
@@ -189,4 +191,77 @@ export async function reviewPlan(lessonId: string, size = REVIEW_SIZE): Promise<
           .filter(Boolean)
           .join(" · ");
   return { missed, variants, short };
+}
+
+/**
+ * The lesson's questions as the student should see them on a shared screen: the extracts, the
+ * question and the options, and nothing else. No answer, no mark scheme, no hints — they are not
+ * left out of the markup, they are never fetched, so there is nothing on the page to give away.
+ */
+export type TeachQuestion = {
+  id: string;
+  n: number;
+  marks: number;
+  format: string;
+  label: string | null;
+  prompt: string;
+  context: Block[];
+  lead: Block[];
+  options: { id: string; text: string }[];
+  outcome: "right" | "wrong" | null;
+};
+
+export async function teachView(lessonId: string): Promise<TeachQuestion[]> {
+  const lesson = await getLesson(lessonId);
+  if (!lesson || lesson.items.length === 0) return [];
+  const ids = lesson.items.map((i) => i.question_id);
+  const holes = ids.map(() => "?").join(", ");
+  const rows = await all<{ id: string; marks: number; format: string; data: string }>(
+    `SELECT id, marks, format, data FROM questions WHERE id IN (${holes})`,
+    ...ids,
+  );
+  const byId = new Map(rows.map((r) => [r.id, r]));
+  const out: TeachQuestion[] = [];
+  for (const [i, item] of lesson.items.entries()) {
+    const row = byId.get(item.question_id);
+    if (!row) continue;
+    const q = JSON.parse(row.data) as Question;
+    const past = isPast(q);
+    out.push({
+      id: row.id,
+      n: i + 1,
+      marks: row.marks,
+      format: row.format,
+      label: past ? q.past.label : null,
+      prompt: q.prompt,
+      context: past ? await pastContext(q.past.paper, q.past.question) : [],
+      lead: past ? q.past.lead : q.table ? tableBlock(q.table) : [],
+      // The options, in their own order, with nothing saying which is right.
+      options: !past && q.format === "mcq" ? q.options.map((o: { id: string; text: string }) => ({ id: o.id, text: o.text })) : [],
+      outcome: item.outcome,
+    });
+  }
+  return out;
+}
+
+/** The same questions with their answers beside them. The preparing screen only — never the lesson. */
+export type PrepareQuestion = TeachQuestion & { answer: string; right: string | null };
+
+export async function prepareView(lessonId: string): Promise<PrepareQuestion[]> {
+  const lesson = await getLesson(lessonId);
+  if (!lesson || lesson.items.length === 0) return [];
+  const shown = await teachView(lessonId);
+  const holes = shown.map(() => "?").join(", ");
+  const rows = await all<{ id: string; data: string }>(`SELECT id, data FROM questions WHERE id IN (${holes})`, ...shown.map((q) => q.id));
+  const byId = new Map(rows.map((r) => [r.id, JSON.parse(r.data) as Question]));
+  return shown.map((s) => {
+    const q = byId.get(s.id);
+    if (!q) return { ...s, answer: "", right: null };
+    const past = isPast(q);
+    return {
+      ...s,
+      answer: past ? q.marking.text || "Not found in the mark scheme file." : answerText(q),
+      right: !past && q.format === "mcq" ? String(q.answer).toUpperCase() : null,
+    };
+  });
 }

@@ -430,3 +430,25 @@ table.board { table-layout: fixed; min-width: 860px; }
 .facet li { display: flex; justify-content: space-between; gap: 12px; font-size: 14px; padding: 3px 0; border-bottom: 1px solid var(--line); }
 .facet li:last-child { border-bottom: 0; }
 .facet b { font-variant-numeric: tabular-nums; color: var(--ink2); }
+/* Running the lesson: one question at a time, on a screen the student is reading too. */
+.teach { display: flex; flex-direction: column; gap: 18px; }
+.teachbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.teachbar .pos { font-family: var(--serif); font-size: 20px; min-width: 70px; text-align: center; }
+.teachbar .dots { display: inline-flex; gap: 6px; }
+.teachbar .dot { width: 12px; height: 12px; border-radius: 50%; border: 1px solid var(--line2); background: var(--surface); padding: 0; cursor: pointer; }
+.teachbar .dot.on { outline: 2px solid var(--ink); outline-offset: 2px; }
+.teachbar .dot.right { background: var(--green); border-color: var(--green); }
+.teachbar .dot.wrong { background: var(--red); border-color: var(--red); }
+.teachcard { padding: 32px 36px; display: flex; flex-direction: column; gap: 16px; }
+.teachq { margin: 0; font-size: 26px; font-weight: 500; line-height: 1.35; }
+.btn.lg { height: 52px; padding: 0 28px; font-size: 17px; }
+/* Preparing: the question on the left, its answer beside it. */
+.preplist { list-style: none; margin: 0; padding: 0; }
+.preplist > li { display: grid; grid-template-columns: 30px minmax(0, 1fr) minmax(0, 1fr) 150px; gap: 0 16px; padding: 18px 24px; border-top: 1px solid var(--line); align-items: start; }
+.preplist > li:first-child { border-top: 0; }
+.preplist .n { font-family: var(--serif); font-size: 20px; color: var(--ink2); }
+.preplist .q, .preplist .a { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.preplist .qtext { margin: 0; font-size: 16px; font-weight: 500; line-height: 1.4; }
+.preplist .a .mstext { padding: 10px 12px; border: 1px solid var(--line2); border-radius: 10px; background: var(--surface2); }
+.preplist .acts { display: flex; flex-direction: column; gap: 6px; }
+@media (max-width: 1000px) { .preplist > li { grid-template-columns: 30px minmax(0, 1fr); } .preplist .a, .preplist .acts { grid-column: 2; } }

@@ -5,7 +5,8 @@ import { Nav, TUTOR_TABS } from "@/components/Nav";
 import { LessonBoard } from "@/components/tutor/LessonBoard";
 import { WeightPill } from "@/components/tutor/UnitWeight";
 import { getStudent } from "@/lib/admin";
-import { getLesson, lessonPool, lessonsFor, openLesson, reviewPlan, unitBrief } from "@/lib/lesson";
+import { getLesson, lessonPool, lessonsFor, openLesson, prepareView, reviewPlan, teachView, unitBrief } from "@/lib/lesson";
+import { TeachBoard } from "@/components/tutor/TeachBoard";
 import { requireUser } from "@/lib/session";
 
 // The tutor's own room: preparing a lesson, running it, and sending a review quiz afterwards.
@@ -13,19 +14,23 @@ import { requireUser } from "@/lib/session";
 export default async function LessonPage({ params, searchParams }: PageProps<"/tutor/students/[id]/lesson">) {
   const user = await requireUser("tutor");
   const { id } = await params;
-  const { unit: unitParam, lesson: lessonParam } = (await searchParams) as { unit?: string; lesson?: string };
+  const { unit: unitParam, lesson: lessonParam, mode } = (await searchParams) as { unit?: string; lesson?: string; mode?: string };
+  const teaching = mode === "teach";
   const student = await getStudent(id);
   if (!student) notFound();
 
   const past = await lessonsFor(id);
-  const chosen = lessonParam ? await getLesson(lessonParam) : null;
-  const unit = chosen?.unit ?? (Number(unitParam) || null);
+  const named = lessonParam ? await getLesson(lessonParam) : null;
+  const unit = named?.unit ?? (Number(unitParam) || null);
   const brief = unit ? await unitBrief(unit) : null;
   // Opening a unit starts (or re-opens) its lesson, so the tutor's picks survive a refresh.
-  const lesson = chosen ?? (unit && brief ? await getLesson((await openLesson(id, unit, `Unit ${unit} · ${brief.title}`)).id) : null);
-  const [pool, plan] = await Promise.all([
-    unit ? lessonPool(unit, id) : Promise.resolve([]),
-    lesson ? reviewPlan(lesson.id) : Promise.resolve(null),
+  const lesson = named ?? (unit && brief ? await getLesson((await openLesson(id, unit, `Unit ${unit} · ${brief.title}`)).id) : null);
+  // In the lesson, only what the student should read is fetched at all.
+  const [pool, plan, teach, chosen] = await Promise.all([
+    unit && !teaching ? lessonPool(unit, id) : Promise.resolve([]),
+    lesson && !teaching ? reviewPlan(lesson.id) : Promise.resolve(null),
+    lesson && teaching ? teachView(lesson.id) : Promise.resolve([]),
+    lesson && !teaching ? prepareView(lesson.id) : Promise.resolve([]),
   ]);
   const first = student.name.split(" ")[0];
 
@@ -46,11 +51,24 @@ export default async function LessonPage({ params, searchParams }: PageProps<"/t
               <div>
                 <h1>{brief ? `Unit ${brief.unit} · ${brief.title}` : "Prepare a lesson"}</h1>
                 <p>
-                  Yours only. {first} sees nothing here until you send the review quiz, and daily practice carries on
-                  untouched.
+                  {teaching
+                    ? `Only what ${first} should read. Nothing on this page gives an answer away.`
+                    : `Yours only, answers and all. ${first} sees nothing here until you send the review quiz, and daily practice carries on untouched.`}
                 </p>
               </div>
-              {brief?.weight && <WeightPill w={brief.weight} />}
+              <span className="rowacts">
+                {brief?.weight && !teaching && <WeightPill w={brief.weight} />}
+                {lesson && (
+                  <nav className="filters" aria-label="Which screen">
+                    <Link href={`/tutor/students/${id}/lesson?lesson=${lesson.id}`} className={`chip${teaching ? "" : " on"}`}>
+                      Prepare
+                    </Link>
+                    <Link href={`/tutor/students/${id}/lesson?lesson=${lesson.id}&mode=teach`} className={`chip${teaching ? " on" : ""}`}>
+                      Teach
+                    </Link>
+                  </nav>
+                )}
+              </span>
             </div>
           </div>
 
@@ -67,17 +85,13 @@ export default async function LessonPage({ params, searchParams }: PageProps<"/t
                 ))}
               </div>
             </section>
+          ) : teaching ? (
+            <TeachBoard lessonId={lesson!.id} questions={teach} />
           ) : (
-            <LessonBoard
-              brief={brief}
-              lesson={lesson!}
-              pool={pool}
-              plan={plan}
-              studentFirstName={first}
-            />
+            <LessonBoard brief={brief} lesson={lesson!} pool={pool} plan={plan} chosen={chosen} studentFirstName={first} />
           )}
 
-          {past.length > 0 && (
+          {past.length > 0 && !teaching && (
             <details className="card">
               <summary className="card-hd" style={{ cursor: "pointer" }}>
                 <h2>Earlier lessons</h2>

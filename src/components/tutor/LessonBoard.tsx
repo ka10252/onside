@@ -5,7 +5,8 @@ import { useRouter } from "next/navigation";
 import { PreviewPanel, QuestionLine } from "@/components/QuestionPreview";
 import { reportIfStale } from "@/components/stale";
 import type { BankQuestion } from "@/lib/admin";
-import type { Lesson, LessonItem, ReviewPlan, UnitBrief } from "@/lib/lesson";
+import type { Lesson, LessonItem, PrepareQuestion, ReviewPlan, UnitBrief } from "@/lib/lesson";
+import { Blocks, Rich } from "@/components/Rich";
 import { applyTemplate, pickQuestions, saveLessonNotes, sendReviewQuiz, setOutcome } from "@/lib/lesson-actions";
 
 type Pool = (BankQuestion & { seen: boolean })[];
@@ -16,15 +17,17 @@ export function LessonBoard({
   lesson,
   pool,
   plan,
+  chosen,
   studentFirstName,
 }: {
   brief: UnitBrief;
   lesson: Lesson & { items: LessonItem[] };
   pool: Pool;
   plan: ReviewPlan | null;
+  /** The picked questions with their answers, for the preparing screen. */
+  chosen: PrepareQuestion[];
   studentFirstName: string;
 }) {
-  const byId = new Map(pool.map((q) => [q.id, q]));
   const [picked, setPicked] = useState<string[]>(lesson.items.map((i) => i.question_id));
   const [outcomes, setOutcomes] = useState<Record<string, "right" | "wrong" | null>>(
     Object.fromEntries(lesson.items.map((i) => [i.question_id, i.outcome])),
@@ -144,42 +147,65 @@ export function LessonBoard({
         )}
       </section>
 
-      {picked.length > 0 && (
+      {chosen.length > 0 && (
         <section className="card">
           <div className="card-hd">
             <h2>In the lesson</h2>
-            <span className="muted" style={{ fontSize: 14 }}>Mark each one as you go</span>
+            <span className="muted" style={{ fontSize: 14 }}>The answer sits beside each one. Mark them here or on the Teach screen.</span>
           </div>
-          <ol className="pick">
-            {picked.map((id, i) => {
-              const q = byId.get(id);
-              return (
-                <li key={id}>
-                  <span className="n">{i + 1}</span>
-                  <span className="pickopen" style={{ textAlign: "left", cursor: "default" }}>
-                    {q ? <QuestionLine q={q} /> : id}
+          <ol className="preplist">
+            {chosen.map((q) => (
+              <li key={q.id}>
+                <span className="n">{q.n}</span>
+                <div className="q">
+                  <span className="meta">
+                    {q.label && <span className="pill ink">{q.label}</span>}
+                    <span>
+                      {q.marks} {q.marks === 1 ? "mark" : "marks"}
+                    </span>
                   </span>
-                  <span className="rowacts">
-                    <button
-                      type="button"
-                      className={`btn sm${outcomes[id] === "right" ? " primary" : " ghost"}`}
-                      onClick={() => mark(id, "right")}
-                      disabled={pending}
-                    >
-                      Got it
-                    </button>
-                    <button
-                      type="button"
-                      className={`btn sm${outcomes[id] === "wrong" ? " danger" : " ghost"}`}
-                      onClick={() => mark(id, "wrong")}
-                      disabled={pending}
-                    >
-                      Missed
-                    </button>
-                  </span>
-                </li>
-              );
-            })}
+                  {q.lead.length > 0 && <Blocks blocks={q.lead} />}
+                  <p className="qtext">
+                    <Rich text={q.prompt} />
+                  </p>
+                  {q.options.length > 0 && (
+                    <ol className="choices readback">
+                      {q.options.map((o) => (
+                        <li key={o.id} className={`choice${q.right === o.id.toUpperCase() ? " right" : ""}`}>
+                          <span className="k">{o.id.toUpperCase()}</span>
+                          <span className="grow">{o.text}</span>
+                          {q.right === o.id.toUpperCase() && <span className="tag good">Right</span>}
+                        </li>
+                      ))}
+                    </ol>
+                  )}
+                </div>
+                <div className="a">
+                  <span className="qlabel">{q.label ? "Mark scheme" : "Answer"}</span>
+                  <div className="mstext">
+                    <Rich text={q.answer} />
+                  </div>
+                </div>
+                <span className="acts">
+                  <button
+                    type="button"
+                    className={`btn sm${outcomes[q.id] === "right" ? " primary" : " ghost"}`}
+                    onClick={() => mark(q.id, "right")}
+                    disabled={pending}
+                  >
+                    Got it
+                  </button>
+                  <button
+                    type="button"
+                    className={`btn sm${outcomes[q.id] === "wrong" ? " danger" : " ghost"}`}
+                    onClick={() => mark(q.id, "wrong")}
+                    disabled={pending}
+                  >
+                    Missed
+                  </button>
+                </span>
+              </li>
+            ))}
           </ol>
         </section>
       )}

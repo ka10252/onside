@@ -78,7 +78,7 @@ export function TeachBoard({ lessonId, questions }: { lessonId: string; question
           </span>
         </p>
         {q.context.length > 0 && (
-          <details className="sub">
+          <details className="sub" open={q.marks >= 10 || /\b(text|table|figure|paragraph|extract|data)\b/i.test(q.prompt) || undefined}>
             <summary>Extracts and data</summary>
             <Blocks blocks={q.context} />
           </details>

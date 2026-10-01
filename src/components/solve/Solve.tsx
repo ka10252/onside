@@ -117,7 +117,9 @@ export function Solve(props: SolveProps) {
           <article className="card qcard">
             {q.label && <span className="pill gray" style={{ alignSelf: "flex-start" }}>{q.label}</span>}
             {q.context.length > 0 && (
-              <details className="sub" open={position === 1 || undefined}>
+              // In the real paper the extract is in front of them. Open it whenever the question
+              // sends them to it, and on the first question of a set to show it is there.
+              <details className="sub" open={position === 1 || needsExtract(q.prompt, q.marks) || undefined}>
                 <summary>Extracts and data</summary>
                 <Blocks blocks={q.context} />
               </details>
@@ -798,4 +800,9 @@ function safeParse(s: string): string[] {
   } catch {
     return s ? [s] : [];
   }
+}
+
+/** Whether the question sends the student to the extract: it names it, or it is a long answer. */
+function needsExtract(prompt: string, marks: number): boolean {
+  return marks >= 10 || /\b(text|table|figure|paragraph|extract|data)\b/i.test(prompt);
 }

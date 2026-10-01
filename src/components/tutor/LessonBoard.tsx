@@ -164,6 +164,12 @@ export function LessonBoard({
                       {q.marks} {q.marks === 1 ? "mark" : "marks"}
                     </span>
                   </span>
+                  {q.context.length > 0 && (
+                    <details className="sub">
+                      <summary>Extracts and data ({q.context.length})</summary>
+                      <Blocks blocks={q.context} />
+                    </details>
+                  )}
                   {q.lead.length > 0 && <Blocks blocks={q.lead} />}
                   <p className="qtext">
                     <Rich text={q.prompt} />

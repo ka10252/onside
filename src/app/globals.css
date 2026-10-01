@@ -410,3 +410,17 @@ table.board { table-layout: fixed; min-width: 860px; }
 @media (max-width: 860px) { .markgrid { grid-template-columns: 1fr; } }
 /* A tutor looking at a student's own screen. */
 .asstudent { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding: 10px 16px; margin-bottom: 8px; border: 1px dashed var(--line2); border-radius: 10px; background: var(--surface2); font-size: 14px; color: var(--ink2); }
+/* How much of the exam a unit carries. */
+.pill.weight { font-variant-numeric: tabular-nums; }
+.pill.weight.heavy { background: var(--ink); color: #FFFFFF; }
+.pill.weight.middling { background: var(--surface2); color: var(--ink2); border: 1px solid var(--line2); }
+.pill.weight.light { background: transparent; color: var(--ink2); border: 1px dashed var(--line2); }
+.weightbar { display: block; width: 100%; height: 6px; border-radius: 3px; background: var(--sunk); overflow: hidden; }
+.weightbar .fill { display: block; height: 100%; border-radius: 3px; background: var(--line2); }
+.weightbar .fill.heavy { background: var(--ink); }
+.weightbar .fill.middling { background: var(--ink2); }
+.unitreview { display: grid; grid-template-columns: 44px minmax(0, 1fr) 120px 150px; gap: 10px 14px; align-items: center; }
+.unitreview .ur { display: contents; }
+.unitreview .num { font-family: var(--serif); font-size: 20px; color: var(--ink2); text-align: right; }
+.unitreview .nm { font-weight: 500; min-width: 0; }
+.unitreview .nm .sub { display: block; font-size: 12px; font-weight: 400; color: var(--ink2); }

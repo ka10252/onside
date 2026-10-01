@@ -2,10 +2,12 @@ import Link from "next/link";
 import { Nav, TUTOR_TABS } from "@/components/Nav";
 import { listParts } from "@/lib/content";
 import { requireUser } from "@/lib/session";
+import { WeightPill } from "@/components/tutor/UnitWeight";
+import { weightByUnit } from "@/lib/unit-weight";
 
 export default async function BankPage() {
   const user = await requireUser("tutor");
-  const parts = await listParts();
+  const [parts, weights] = await Promise.all([listParts(), weightByUnit()]);
 
   return (
     <>
@@ -15,7 +17,10 @@ export default async function BankPage() {
           <div className="phead">
             <div>
               <h1>Question bank</h1>
-              <p>Onside questions from the unit packs and original past-paper questions (M22–N25), sorted by unit.</p>
+              <p>
+                Onside questions from the unit packs and original past-paper questions (M22–N25), sorted by unit. The badge
+                is how often each unit has been examined across those papers.
+              </p>
             </div>
           </div>
           <div className="partlist">
@@ -30,6 +35,7 @@ export default async function BankPage() {
                       <span className="n">{u.number}</span>
                       <span>{u.title}</span>
                       <span className="rowacts">
+                        {weights.get(u.number) && <WeightPill w={weights.get(u.number)!} />}
                         {u.past_count > 0 && <span className="pill gray">{u.past_count} past</span>}
                         {u.question_count > 0 && <span className="pill green">{u.question_count} Onside</span>}
                         {u.concept_extraction === "thin" && <span className="pill amber">Notes need a manual pass</span>}

@@ -190,3 +190,8 @@ Essay outlines are not submitted through Onside — Jin takes those himself and 
 
 ## Units are ranked by how much of the exam they carry (2026-10-01)
 637 past-paper questions across M22–N25, every one tagged to a unit. Unit 16 carries 85, unit 1 carries 7, and the top seven units are 54% of the exam between them. `src/lib/unit-weight.ts` counts it; the question bank badges each unit with its rank, and the student's page weighs that against how they are doing — a unit that carries a lot and has gone badly, or has never been tested, is the one to teach next. A unit they are solid in drops down rather than sitting at the top for ever.
+
+## The question mix is derived, not decided (2026-10-02)
+Each unit's lesson template — how many multiple choice, short, explanation and essay questions — is worked out from what that unit's past papers actually ask for, by grouping their command terms into calculation, explanation, evaluation and definition. Unit 8 comes out 9 short and 1 explanation because two-thirds of its items are calculations; unit 9 comes out 10 explanations because 87% of its items say explain; unit 20 gets two essays because 59% ask to evaluate; unit 18 gets 8 short because 62% ask to define. Nothing is typed in by hand, so adding a session's papers moves the templates with it.
+
+Ten questions make a lesson, with the multiple choice a warm-up on top (two to six, from the unit tests, since the IB sets none). "Fill from the template" picks them from the unit's past papers, skipping anything the student has already been sent, and says when a unit has run too thin to fill — units 15 and 17 already have, which is the measured reason to teach them with 14 and 16.

@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { getLesson, markOutcome, openLesson, reviewPlan, setLessonItems, REVIEW_SIZE } from "./lesson";
+import { fillTemplate } from "./lesson-template";
 import { one, run } from "./db";
 import { saveSet } from "./admin-actions";
 import { requireUser } from "./session";
@@ -70,4 +71,18 @@ export async function sendReviewQuiz(lessonId: string, due: string | null): Prom
   if (a) await run("UPDATE lessons SET review_assignment_id = ? WHERE id = ?", a.id, lessonId);
   revalidatePath(back(l.student_id));
   return { ok: `Sent ${ids.length} questions.` };
+}
+
+/** Fills the lesson with the mix this unit's past papers call for. Replaces whatever was picked. */
+export async function applyTemplate(lessonId: string): Promise<LessonState> {
+  await requireUser("tutor");
+  const l = await getLesson(lessonId);
+  if (!l) return { error: "That lesson is gone." };
+  if (l.unit === null) return { error: "This lesson has no unit." };
+  const { recipe, picked, short } = await fillTemplate(l.unit, l.student_id);
+  if (picked.length === 0) return { error: `No unseen questions are left in unit ${l.unit}.` };
+  await setLessonItems(lessonId, picked.map((q) => q.id));
+  revalidatePath(back(l.student_id));
+  const mix = `${recipe.mcq} MCQ · ${recipe.short} short · ${recipe.explain} explain · ${recipe.essay} essay`;
+  return { ok: `${picked.length} questions — ${mix}${short ? ` (${short})` : ""}.` };
 }

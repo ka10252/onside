@@ -3,6 +3,7 @@ import { randomBytes } from "node:crypto";
 import { bankRange, type BankQuestion } from "./admin";
 import { all, one, run, tx } from "./db";
 import { weightByUnit, type UnitWeight } from "./unit-weight";
+import { recipeFor, type Recipe } from "./lesson-template";
 
 /**
  * A lesson the tutor prepares, teaches, and then sends a review set from. It is their own working
@@ -63,6 +64,8 @@ export type UnitBrief = {
   defined: { name: string; n: number }[];
   /** Past-paper questions in the bank, by what they ask for. */
   stock: { short: number; explain: number; essay: number };
+  /** The question mix this unit calls for. */
+  recipe: Recipe;
 };
 
 export async function unitBrief(unit: number): Promise<UnitBrief | null> {
@@ -76,7 +79,7 @@ export async function unitBrief(unit: number): Promise<UnitBrief | null> {
         unit,
       )
     ).filter((r) => r.name);
-  const [weights, diagrams, commands, defined, stock] = await Promise.all([
+  const [weights, diagrams, commands, defined, stock, recipe] = await Promise.all([
     weightByUnit(),
     top("diagram_type"),
     top("command_term"),
@@ -89,10 +92,12 @@ export async function unitBrief(unit: number): Promise<UnitBrief | null> {
         WHERE x.number = ? AND q.source = 'past' AND q.approved_by_tutor = 1`,
       unit,
     ),
+    recipeFor(unit),
   ]);
   return {
     unit,
     title: u.title,
+    recipe,
     weight: weights.get(unit) ?? null,
     diagrams,
     commands,

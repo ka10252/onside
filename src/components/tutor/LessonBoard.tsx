@@ -6,7 +6,7 @@ import { PreviewPanel, QuestionLine } from "@/components/QuestionPreview";
 import { reportIfStale } from "@/components/stale";
 import type { BankQuestion } from "@/lib/admin";
 import type { Lesson, LessonItem, ReviewPlan, UnitBrief } from "@/lib/lesson";
-import { pickQuestions, saveLessonNotes, sendReviewQuiz, setOutcome } from "@/lib/lesson-actions";
+import { applyTemplate, pickQuestions, saveLessonNotes, sendReviewQuiz, setOutcome } from "@/lib/lesson-actions";
 
 type Pool = (BankQuestion & { seen: boolean })[];
 
@@ -85,10 +85,32 @@ export function LessonBoard({
       <section className="card">
         <div className="card-hd">
           <h2>Questions for the lesson</h2>
-          <span className="muted" style={{ fontSize: 14 }}>
-            {picked.length} picked{pending ? " · saving…" : ""}
+          <span className="rowacts">
+            <span className="muted" style={{ fontSize: 14 }}>
+              {picked.length} picked{pending ? " · saving…" : ""}
+            </span>
+            <button
+              type="button"
+              className="btn sm"
+              disabled={pending}
+              title={`${brief.recipe.mcq} MCQ · ${brief.recipe.short} short · ${brief.recipe.explain} explain · ${brief.recipe.essay} essay`}
+              onClick={() =>
+                run(async () => {
+                  const res = await applyTemplate(lesson.id);
+                  if (!res.error) setPicked([]);
+                  return res;
+                })
+              }
+            >
+              Fill from the template
+            </button>
           </span>
         </div>
+        <p className="cardbody note" style={{ margin: 0, paddingBottom: 0 }}>
+          The template for this unit: <b>{brief.recipe.mcq} MCQ</b> · <b>{brief.recipe.short} short</b> ·{" "}
+          <b>{brief.recipe.explain} explain</b> · <b>{brief.recipe.essay} essay</b> — because the papers make it{" "}
+          {brief.recipe.why}.
+        </p>
         <div className="cardbody modes">
           <span className="lbl">Show</span>
           <div className="seg">

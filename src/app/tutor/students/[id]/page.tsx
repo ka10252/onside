@@ -332,7 +332,17 @@ export default async function StudentPage({ params, searchParams }: PageProps<"/
                         </td>
                         <td className="muted">{(unitsOf.get(a.id) ?? []).join(", ") || "—"}</td>
                         <td>
-                          <StatusPill status={a.status} answered={a.answered} total={a.total} due={a.due_at} />
+                          <span className="rowacts">
+                            <StatusPill status={a.status} answered={a.answered} total={a.total} due={a.due_at} />
+                            {a.status === "reviewed" &&
+                              (a.results_seen_at ? (
+                                <span className="pill green" title={`Opened ${shortDateSG(a.results_seen_at)}`}>
+                                  Marks read
+                                </span>
+                              ) : (
+                                <span className="pill amber">Not opened</span>
+                              ))}
+                          </span>
                         </td>
                         <td>
                           {a.status === "reviewed" ? (

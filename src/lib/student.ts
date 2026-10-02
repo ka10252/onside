@@ -358,3 +358,12 @@ export async function studentResponse(r: ResponseRow, q: Question): Promise<Stud
     unlockAt: new Date(r.first_viewed_at ?? Date.now()).getTime() + HELPER_LOCK_MS,
   };
 }
+
+/** Records that the student has opened their marks. The first time is the one that counts. */
+export async function markResultsSeen(assignmentId: string) {
+  await run(
+    "UPDATE assignments SET results_seen_at = ? WHERE id = ? AND status = 'reviewed' AND results_seen_at IS NULL",
+    new Date().toISOString(),
+    assignmentId,
+  );
+}

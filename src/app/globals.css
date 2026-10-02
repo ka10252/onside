@@ -507,3 +507,6 @@ table.board { table-layout: fixed; min-width: 860px; }
 .rewrite.done { border-color: var(--green); }
 .rewrite .asked { margin: 0; font-size: 15px; line-height: 1.5; color: var(--ink2); }
 .rewrite.ask .asked { color: var(--ink); }
+/* An unread thing on a tab. */
+.newdot { display: inline-block; width: 7px; height: 7px; margin-left: 6px; border-radius: 50%; background: var(--amber); vertical-align: 1px; }
+.chip.on .newdot { background: #FFFFFF; }

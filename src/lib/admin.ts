@@ -58,11 +58,13 @@ export type AssignmentRow = {
   total: number;
   marks_got: number;
   marks_total: number;
+  /** When the student opened their marks, if they have. */
+  results_seen_at: string | null;
 };
 
 const ASSIGNMENT_SELECT = `
   SELECT a.id, a.set_id, s.title AS set_title, a.student_id, u.name AS student_name, a.status,
-         a.due_at, a.assigned_at, a.submitted_at,
+         a.due_at, a.assigned_at, a.submitted_at, a.results_seen_at,
          (SELECT COUNT(*) FROM responses r WHERE r.assignment_id = a.id AND ${hasAnswerSql()}) AS answered,
          (SELECT COUNT(*) FROM set_items i WHERE i.set_id = a.set_id) AS total,
          (SELECT COALESCE(SUM(q.marks), 0) FROM set_items i JOIN questions q ON q.id = i.question_id WHERE i.set_id = a.set_id) AS marks_total,

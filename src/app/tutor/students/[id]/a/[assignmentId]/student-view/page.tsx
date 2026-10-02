@@ -35,7 +35,7 @@ export default async function StudentViewPage({ params, searchParams }: PageProp
           </Link>
         </div>
       </div>
-      <Results a={a} basePath={`${back}/student-view`} back={{ href: back, label: "Back to marking" }} show={show} unit={unit} />
+      <Results a={a} basePath={`${back}/student-view`} back={{ href: back, label: "Back to marking" }} show={show} unit={unit} seenBy="tutor" />
     </>
   );
 }

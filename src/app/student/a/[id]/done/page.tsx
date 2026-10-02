@@ -38,7 +38,7 @@ export default async function ResultsPage({ params, searchParams }: PageProps<"/
   return (
     <>
       <Nav user={user} tabs={STUDENT_TABS} active="/student" />
-      <Results a={a} basePath={`/student/a/${a.id}/done`} back={{ href: "/student", label: "Assignments" }} show={show} unit={unit} />
+      <Results a={a} basePath={`/student/a/${a.id}/done`} back={{ href: "/student", label: "Assignments" }} show={show} unit={unit} seenBy="student" />
     </>
   );
 }

@@ -23,6 +23,8 @@ type Row = {
   time_limit_min: number | null;
   marks_got: number;
   marks_total: number;
+  results_seen_at: string | null;
+  rewrites: number;
 };
 
 type UnitRow = { assignment_id: string; number: number; title: string };
@@ -34,7 +36,9 @@ export default async function AssignmentsPage({ searchParams }: PageProps<"/stud
   await closeExpiredAssignments();
   const { tab, unit, sort } = (await searchParams) as { tab?: string; unit?: string; sort?: string };
   const rows = await all<Row>(
-    `SELECT a.id, s.title, a.status, a.due_at, a.assigned_at, a.submitted_at, s.helper, s.time_limit_min,
+    `SELECT a.id, s.title, a.status, a.due_at, a.assigned_at, a.submitted_at, s.helper, s.time_limit_min, a.results_seen_at,
+            (SELECT COUNT(*)::int FROM responses r WHERE r.assignment_id = a.id
+               AND r.rewrite_asked_at IS NOT NULL AND r.rewrite_text IS NULL) AS rewrites,
             (SELECT COUNT(*) FROM set_items i WHERE i.set_id = s.id) AS total,
             (SELECT COUNT(*) FROM responses r WHERE r.assignment_id = a.id AND ${hasAnswerSql()}) AS answered,
             (SELECT COALESCE(SUM(q.marks), 0) FROM set_items i JOIN questions q ON q.id = i.question_id WHERE i.set_id = s.id) AS marks_total,
@@ -96,15 +100,18 @@ export default async function AssignmentsPage({ searchParams }: PageProps<"/stud
   const done = rows
     .filter((r) => r.status === "submitted" || r.status === "reviewed")
     .sort((a, b) => (b.submitted_at ?? "").localeCompare(a.submitted_at ?? ""));
+  const needsWork = rows.filter((r) => r.rewrites > 0);
   const showDone = tab === "done";
-  const shown = showDone ? done : todo;
+  const showRevision = tab === "revision";
+  const shown = showRevision ? needsWork : showDone ? done : todo;
+  const unseen = done.filter((r) => r.status === "reviewed" && !r.results_seen_at).length;
   const unitPick = Number(unit) || null;
   const units = [...new Map(shown.flatMap((r) => unitsOf.get(r.id) ?? []).map((u) => [u.number, u])).values()].sort((a, b) => a.number - b.number);
   const list = unitPick ? shown.filter((r) => (unitsOf.get(r.id) ?? []).some((u) => u.number === unitPick)) : shown;
   // Finished sets group by the unit they cover, so a student can revise one topic at a time, or
   // run newest first when they have just had something marked.
   const byUnit = sort !== "new";
-  const groups = showDone && byUnit
+  const groups = showDone && !showRevision && byUnit
     ? [...new Map<string, { label: string; sort: number; rows: Row[] }>(
         list.map((r) => {
           const us = unitsOf.get(r.id) ?? [];
@@ -123,9 +130,9 @@ export default async function AssignmentsPage({ searchParams }: PageProps<"/stud
         }))
         .sort((a, b) => a.sort - b.sort)
     : [{ label: "", sort: 0, rows: list }];
-  const link = ({ to = showDone ? "done" : "todo", u = unitPick, by = sort }: { to?: string; u?: number | null; by?: string }) => {
+  const link = ({ to = showRevision ? "revision" : showDone ? "done" : "todo", u = unitPick, by = sort }: { to?: string; u?: number | null; by?: string }) => {
     const q = new URLSearchParams();
-    if (to === "done") q.set("tab", "done");
+    if (to === "done" || to === "revision") q.set("tab", to);
     if (u) q.set("unit", String(u));
     if (to === "done" && by === "new") q.set("sort", "new");
     const s = q.toString();
@@ -157,12 +164,26 @@ export default async function AssignmentsPage({ searchParams }: PageProps<"/stud
           <AssignmentCalendar cells={days} monthLabel={monthLabel} />
 
           <nav className="filters" aria-label="Which assignments to show">
-            <Link href={link({ to: "todo" })} className={`chip${showDone ? "" : " on"}`} aria-current={showDone ? undefined : "page"}>
+            <Link
+              href={link({ to: "todo" })}
+              className={`chip${showDone || showRevision ? "" : " on"}`}
+              aria-current={showDone || showRevision ? undefined : "page"}
+            >
               To do · {todo.length}
             </Link>
             <Link href={link({ to: "done" })} className={`chip${showDone ? " on" : ""}`} aria-current={showDone ? "page" : undefined}>
               Done · {done.length}
+              {unseen > 0 && <span className="newdot" aria-label={`${unseen} with marks you haven't read`} />}
             </Link>
+            {needsWork.length > 0 && (
+              <Link
+                href={link({ to: "revision" })}
+                className={`chip${showRevision ? " on" : ""}`}
+                aria-current={showRevision ? "page" : undefined}
+              >
+                Need revision · {needsWork.length}
+              </Link>
+            )}
 
             {showDone && done.length > 0 && (
               <>
@@ -191,7 +212,11 @@ export default async function AssignmentsPage({ searchParams }: PageProps<"/stud
           {list.length === 0 ? (
             <div className="card empty-state">
               <p className="muted">
-                {showDone ? "Finished sets show here with your marks and your tutor's comments." : "Nothing to do right now."}
+                {showRevision
+                  ? "Nothing to write again."
+                  : showDone
+                    ? "Finished sets show here with your marks and your tutor's comments."
+                    : "Nothing to do right now."}
               </p>
             </div>
           ) : (
@@ -211,7 +236,7 @@ export default async function AssignmentsPage({ searchParams }: PageProps<"/stud
                     return (
                       <Link
                         key={r.id}
-                        href={showDone ? `/student/a/${r.id}/done` : `/student/a/${r.id}`}
+                        href={showDone || showRevision ? `/student/a/${r.id}/done?show=rewrite` : `/student/a/${r.id}`}
                         className="card acard clickable"
                         style={{ color: "inherit", textDecoration: "none" }}
                       >
@@ -227,6 +252,12 @@ export default async function AssignmentsPage({ searchParams }: PageProps<"/stud
                             {!showDone && r.helper === "off" && <span>Helper off{r.time_limit_min ? ` · ${r.time_limit_min} min` : ""}</span>}
                             <span>Sent {shortDate(r.assigned_at)}</span>
                             {showDone && r.submitted_at && <span>Submitted {shortDate(r.submitted_at)}</span>}
+                          {r.status === "reviewed" && !r.results_seen_at && <span className="pill amber">New marks</span>}
+                          {r.rewrites > 0 && (
+                            <span className="pill ink">
+                              {r.rewrites} to write again
+                            </span>
+                          )}
                             {!showDone &&
                               (unitsOf.get(r.id) ?? []).slice(0, 3).map((u) => (
                                 <span key={u.number}>Unit {u.number}</span>

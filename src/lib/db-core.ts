@@ -276,7 +276,9 @@ CREATE TABLE IF NOT EXISTS assignments (
   started_at         TEXT,
   submitted_at       TEXT,
   reviewed_at        TEXT,
-  marking_started_at TEXT
+  marking_started_at TEXT,
+  -- when the student first opened their marks
+  results_seen_at    TEXT
 );
 CREATE INDEX IF NOT EXISTS assignments_student ON assignments (student_id, status);
 
@@ -337,6 +339,7 @@ ${TABLES.map((t) => `ALTER TABLE ${t} ENABLE ROW LEVEL SECURITY;`).join("\n")}
 // Columns added after a table was first created. Postgres skips the ones already there.
 export const ADDED_COLUMNS = `
 ALTER TABLE unit_briefs ADD COLUMN IF NOT EXISTS tutor TEXT NOT NULL DEFAULT '';
+ALTER TABLE assignments ADD COLUMN IF NOT EXISTS results_seen_at TEXT;
 ALTER TABLE responses ADD COLUMN IF NOT EXISTS rewrite_note TEXT;
 ALTER TABLE responses ADD COLUMN IF NOT EXISTS rewrite_asked_at TEXT;
 ALTER TABLE responses ADD COLUMN IF NOT EXISTS rewrite_text TEXT;

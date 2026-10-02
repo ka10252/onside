@@ -3,6 +3,7 @@ import { Choices } from "@/components/Choices";
 import { MarkStamp } from "@/components/Icons";
 import { RewriteBox } from "@/components/student/RewriteBox";
 import { rewriteOf } from "@/lib/rewrite";
+import { markResultsSeen } from "@/lib/student";
 import { Blocks, Rich } from "@/components/Rich";
 import { answerText } from "@/lib/answer-text";
 import { isPast, pastContext, tableBlock, type Block, type Question } from "@/lib/content";
@@ -23,6 +24,7 @@ export async function Results({
   back,
   show,
   unit,
+  seenBy,
 }: {
   a: { id: string; set_id: string; title: string; status: string };
   /** Where the filter links point: this page. */
@@ -31,6 +33,8 @@ export async function Results({
   back: { href: string; label: string };
   show?: string;
   unit?: string;
+  /** Who is reading: only the student opening their own marks counts as having seen them. */
+  seenBy: "student" | "tutor";
 }) {
   const rv = (await loadReview(a.id))!;
   const unitRows = await all<{ id: string; number: number; title: string }>(
@@ -48,6 +52,8 @@ export async function Results({
     ),
   );
   const marked = a.status === "reviewed";
+  // Opening marked results is what "seen" means. Only the student's own screen records it.
+  if (marked && seenBy === "student") await markResultsSeen(a.id);
   const answered = rv.items.filter((it) => it.result !== "No answer" && it.result !== "Not opened").length;
 
   const unitPick = Number(unit) || null;

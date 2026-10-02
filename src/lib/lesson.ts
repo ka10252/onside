@@ -3,6 +3,7 @@ import { randomBytes } from "node:crypto";
 import { bankRange, type BankQuestion } from "./admin";
 import { answerText } from "./answer-text";
 import { isPast, pastContext, tableBlock, type Block, type Question } from "./content";
+import { relevantContext } from "./extract";
 import { all, one, run, tx } from "./db";
 import { weightByUnit, type UnitWeight } from "./unit-weight";
 import { recipeFor, type Recipe } from "./lesson-template";
@@ -238,7 +239,7 @@ export async function teachView(lessonId: string): Promise<TeachQuestion[]> {
       format: row.format,
       label: past ? q.past.label : null,
       prompt: q.prompt,
-      context: past ? await pastContext(q.past.paper, q.past.question) : [],
+      context: past ? relevantContext(await pastContext(q.past.paper, q.past.question), q.prompt) : [],
       lead: past ? q.past.lead : q.table ? tableBlock(q.table) : [],
       // The options, in their own order, with nothing saying which is right.
       options: !past && q.format === "mcq" ? q.options.map((o: { id: string; text: string }) => ({ id: o.id, text: o.text })) : [],

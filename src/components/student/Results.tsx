@@ -5,6 +5,7 @@ import { Blocks, Rich } from "@/components/Rich";
 import { answerText } from "@/lib/answer-text";
 import { isPast, pastContext, tableBlock, type Block, type Question } from "@/lib/content";
 import { all, json } from "@/lib/db";
+import { relevantContext } from "@/lib/extract";
 import { FORMAT_LABEL } from "@/lib/format";
 import { ACCEPTED_NOTE, loadReview, type ReviewItem } from "@/lib/review";
 import { type MarkSplit } from "@/lib/scoring";
@@ -40,7 +41,7 @@ export async function Results({
     await Promise.all(
       rv.items.filter((it) => isPast(it.q)).map(async (it) => {
         const q = it.q as Extract<Question, { past: unknown }>;
-        return [q.id, await pastContext(q.past.paper, q.past.question)] as const;
+        return [q.id, relevantContext(await pastContext(q.past.paper, q.past.question), q.prompt)] as const;
       }),
     ),
   );

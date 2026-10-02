@@ -602,6 +602,8 @@ function WrittenAnswer({
   const isEssay = q.format === "essay";
   const isCalc = q.format === "calculation";
   const isDiagram = q.format === "diagram" || Boolean(q.label && /\b(diagram|sketch|draw)\b/i.test(q.prompt));
+  // A calculation's result, or anything worth two marks or less, fits on one line.
+  const oneLine = !isDiagram && (isCalc || q.marks <= 2);
   const prompts = q.planPrompts ?? [];
   const [plan, setPlan] = useState<string[]>(() => {
     const saved = safeParse(r.plan);
@@ -751,22 +753,41 @@ function WrittenAnswer({
 
       <div className="field">
         <label htmlFor="answer">{isCalc ? "Final answer" : isDiagram ? "Explanation" : "Your answer"}</label>
-        <textarea
-          id="answer"
-          className="working"
-          style={{ minHeight: isEssay ? 360 : isCalc ? 60 : 180 }}
-          value={text}
-          disabled={done}
-          onChange={(e) => {
-            setText(e.target.value);
-            report({ text: e.target.value });
-          }}
-          onPaste={onPaste("answer")}
-        />
+        {oneLine ? (
+          // A calculation's result, a definition, a "state whether" — a box the size of the answer.
+          <input
+            id="answer"
+            className="answer"
+            value={text}
+            disabled={done}
+            placeholder={isCalc ? "The answer, with its units" : undefined}
+            onChange={(e) => {
+              setText(e.target.value);
+              report({ text: e.target.value });
+            }}
+            onPaste={onPaste("answer")}
+          />
+        ) : (
+          <textarea
+            id="answer"
+            className="working"
+            style={{ minHeight: answerHeight(q) }}
+            value={text}
+            disabled={done}
+            onChange={(e) => {
+              setText(e.target.value);
+              report({ text: e.target.value });
+            }}
+            onPaste={onPaste("answer")}
+          />
+        )}
         {done ? (
           <SubmittedNote />
         ) : (
-          <SavedNote savedAt={savedAt} extra={`${text.trim().split(/\s+/).filter(Boolean).length} words`} />
+          <SavedNote
+            savedAt={savedAt}
+            extra={oneLine ? `${q.marks} ${q.marks === 1 ? "mark" : "marks"}` : `${text.trim().split(/\s+/).filter(Boolean).length} words`}
+          />
         )}
       </div>
 
@@ -805,4 +826,15 @@ function safeParse(s: string): string[] {
 /** Whether the question sends the student to the extract: it names it, or it is a long answer. */
 function needsExtract(prompt: string, marks: number): boolean {
   return marks >= 10 || /\b(text|table|figure|paragraph|extract|data)\b/i.test(prompt);
+}
+
+/**
+ * How much room an answer needs. Two marks is a definition, four is a short explanation, fifteen is
+ * an essay — a box the size of the answer tells a student how much to write without being told.
+ */
+function answerHeight(q: { format: string; marks: number }): number {
+  if (q.format === "essay") return 360;
+  if (q.marks >= 10) return 300;
+  if (q.marks >= 5) return 180;
+  return 110;
 }

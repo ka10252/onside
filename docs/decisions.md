@@ -204,3 +204,14 @@ The notes a tutor teaches from — what to emphasise in a unit, the answer shape
 The notes are in two halves, split in the file by a `<!-- tutor only -->` line (Jin, 2026-10-02). Above it is **what the student reads, written in English**, since the teaching screen is a screen they read over the tutor's shoulder: the answer shape the papers reward, which curve moves and why, the mistakes that cost marks, the definitions, the essay skeleton. Below it is **the tutor's**: how heavily the unit is examined, how much stock is left, the lesson's timings, how to run the drills, and which questions are the same question in two time zones. The teaching screen is never given the tutor half — it is a separate column the lesson screen does not fetch.
 
 Both lesson screens show them: the preparing screen puts them at the top, where a lesson is actually planned; the teaching screen makes them its first step, a Revision tab before the Questions, so going over a unit and asking about it are two deliberate moves rather than one page. `src/components/Notes.tsx` renders the markdown — headings, lists, tables, quotes and fenced blocks, which is every shape the notes use.
+
+## A question carries only the extract it names (2026-10-02)
+A Paper 2 question comes with the whole stimulus — three texts, two tables, a figure, nineteen blocks — because that is how the paper prints it. But a two-mark calculation that says "using Table 1" needs Table 1, and sending the other eighteen blocks buries the question it is attached to.
+
+`src/lib/extract.ts` reads what the wording names — "Table 1", "Text A, paragraph 4", "Figure 2" — and keeps those blocks with their headings. A question that names nothing keeps everything, and so does the essay formula "using information from the text/data", which means all of it. If the references match no block it keeps everything rather than hand back nothing. Measured over 134 past questions: 1,704 blocks down to 498, a 71% cut, with every essay untouched.
+
+## A lesson is taken across the papers, not down one (2026-10-02)
+Filling a unit 16 lesson picked nine Paper 2 questions, one Paper 1 and no Paper 3 at all, though nineteen Paper 3 questions were sitting in that unit — the questions were being taken in id order, which runs session by session. The papers now take turns within each band, newest session first, so a lesson is three papers' worth of practice.
+
+## The answer box is the size of the answer (2026-10-02)
+Every written answer was a 180-pixel textarea, whether it was worth two marks or fifteen. A calculation's result and anything worth two marks or less is now a single line; four marks gets a small box, five to nine a larger one, an essay the full height. A student should be able to tell how much to write from the space they are given.

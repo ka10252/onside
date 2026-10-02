@@ -13,6 +13,7 @@ import { hasPendingBatches, isMarking, pollMarkingBatches, queueMarking } from "
 import { isPast, pastContext, tableBlock, type Question } from "@/lib/content";
 import { ConfirmForm } from "@/components/ConfirmForm";
 import { all, json } from "@/lib/db";
+import { relevantContext } from "@/lib/extract";
 import { FORMAT_LABEL, initials } from "@/lib/format";
 import { acceptAiMarks, markReviewed, rerunMarking } from "@/lib/review-actions";
 import { ACCEPTED_NOTE, loadReview, type ReviewItem } from "@/lib/review";
@@ -458,7 +459,7 @@ async function QuestionBody({ q, tried }: { q: Question; tried: string[] }) {
       {past && (
         <details className="sub" open>
           <summary>Extracts and data</summary>
-          <Blocks blocks={await pastContext(q.past.paper, q.past.question)} />
+          <Blocks blocks={relevantContext(await pastContext(q.past.paper, q.past.question), q.prompt)} />
         </details>
       )}
       {past ? q.past.lead.length > 0 && <Blocks blocks={q.past.lead} /> : q.table && <Blocks blocks={tableBlock(q.table)} />}

@@ -76,6 +76,36 @@ export async function recipeFor(unit: number): Promise<Recipe> {
 
 export type FilledTemplate = { recipe: Recipe; picked: BankQuestion[]; short: string | null };
 
+/** Which paper a question came from, for spreading a lesson across all three. */
+const paperOf = (q: BankQuestion): string => q.past_label?.match(/\bP(\d)\b/)?.[0] ?? q.paper_style?.slice(0, 2) ?? "unit test";
+/** M24 → 2405, N23 → 2311, so the newest sessions come first. */
+const sessionOf = (q: BankQuestion): number =>
+  q.session ? Number(q.session.slice(1)) * 100 + (q.session[0] === "M" ? 5 : 11) : 0;
+
+/**
+ * Takes n questions across the papers rather than down one. Picking in id order filled a unit 16
+ * lesson with nine Paper 2 questions and no Paper 3 at all, though nineteen Paper 3 questions were
+ * sitting there. Papers take turns, newest session first within each.
+ */
+function spread(pool: BankQuestion[], n: number): BankQuestion[] {
+  if (n <= 0) return [];
+  const queues = new Map<string, BankQuestion[]>();
+  for (const q of [...pool].sort((a, b) => sessionOf(b) - sessionOf(a))) {
+    const key = paperOf(q);
+    queues.set(key, [...(queues.get(key) ?? []), q]);
+  }
+  const lists = [...queues.entries()].sort((a, b) => a[0].localeCompare(b[0])).map(([, v]) => v);
+  const out: BankQuestion[] = [];
+  while (out.length < n && lists.some((l) => l.length)) {
+    for (const list of lists) {
+      if (out.length >= n) break;
+      const next = list.shift();
+      if (next) out.push(next);
+    }
+  }
+  return out;
+}
+
 /**
  * The recipe turned into actual questions: past papers for everything the IB sets, unit tests for
  * the multiple-choice warm-up, and never one this student has already been sent.
@@ -91,7 +121,7 @@ export async function fillTemplate(unit: number, studentId: string): Promise<Fil
   ]);
   const had = new Set(sent.map((r) => r.question_id));
   const free = bank.filter((q) => !had.has(q.id));
-  const take = (n: number, pick: (q: BankQuestion) => boolean, from = free) => from.filter(pick).slice(0, n);
+  const take = (n: number, pick: (q: BankQuestion) => boolean) => spread(free.filter(pick), n);
 
   const picked = [
     ...take(recipe.mcq, (q) => q.format === "mcq"),

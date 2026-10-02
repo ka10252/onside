@@ -70,16 +70,28 @@ export function LessonBoard({
 
   return (
     <div className="stack">
-      {brief.notes && (
-        <section className="card">
+      {brief.notes?.tutor && (
+        <section className="card tutoronly">
           <div className="card-hd">
-            <h2>Revision notes</h2>
-            <span className="muted" style={{ fontSize: 14 }}>Yours, from content/source · also on the Teach screen</span>
+            <h2>For you only</h2>
+            <span className="muted" style={{ fontSize: 14 }}>Never on the Teach screen</span>
           </div>
+          <div className="cardbody">
+            <Notes text={brief.notes.tutor} />
+          </div>
+        </section>
+      )}
+
+      {brief.notes?.body && (
+        <details className="card">
+          <summary className="card-hd" style={{ cursor: "pointer" }}>
+            <h2>Revision notes</h2>
+            <span className="muted" style={{ fontSize: 14 }}>What {studentFirstName} reads · the Teach screen opens on this</span>
+          </summary>
           <div className="cardbody">
             <Notes text={brief.notes.body} />
           </div>
-        </section>
+        </details>
       )}
 
       <section className="card">

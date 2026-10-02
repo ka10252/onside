@@ -68,8 +68,8 @@ export type UnitBrief = {
   stock: { short: number; explain: number; essay: number };
   /** The question mix this unit calls for. */
   recipe: Recipe;
-  /** The revision notes written for this unit, when there are any. */
-  notes: { headline: string; body: string } | null;
+  /** The revision notes for this unit: what the student reads, and what only the tutor does. */
+  notes: { headline: string; body: string; tutor: string } | null;
 };
 
 export async function unitBrief(unit: number): Promise<UnitBrief | null> {
@@ -97,7 +97,7 @@ export async function unitBrief(unit: number): Promise<UnitBrief | null> {
       unit,
     ),
     recipeFor(unit),
-    one<{ headline: string; body: string }>("SELECT headline, body FROM unit_briefs WHERE unit = ?", unit),
+    one<{ headline: string; body: string; tutor: string }>("SELECT headline, body, tutor FROM unit_briefs WHERE unit = ?", unit),
   ]);
   return {
     unit,

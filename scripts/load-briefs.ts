@@ -9,11 +9,12 @@ import { loadEnv } from "./env";
 
 const DIR = path.join(process.cwd(), "content", "source", "수업준비");
 
-/** The first bold sentence under "한 줄 요약", which is the one thing to say about the unit. */
+/** Everything after this line is the tutor's, and never reaches the lesson screen. */
+const SPLIT = /^<!--\s*tutor only\s*-->\s*$/m;
+
+/** The first bold sentence, which is the one thing to say about the unit. */
 function headlineOf(body: string): string {
-  const section = body.split(/^##\s+한 줄 요약\s*$/m)[1];
-  const bold = (section ?? body).match(/\*\*(.+?)\*\*/);
-  return bold?.[1]?.trim() ?? "";
+  return body.match(/\*\*(.+?)\*\*/)?.[1]?.trim() ?? "";
 }
 
 async function main() {
@@ -30,16 +31,19 @@ async function main() {
   const db = await openDb();
   for (const f of files.sort()) {
     const unit = Number(f.match(/^U(\d+)/)![1]);
-    const body = fs.readFileSync(path.join(DIR, f), "utf8");
+    const whole = fs.readFileSync(path.join(DIR, f), "utf8");
+    const [body = "", tutor = ""] = whole.split(SPLIT);
     await db.run(
-      `INSERT INTO unit_briefs (unit, headline, body, updated_at) VALUES (?, ?, ?, ?)
-       ON CONFLICT (unit) DO UPDATE SET headline = excluded.headline, body = excluded.body, updated_at = excluded.updated_at`,
+      `INSERT INTO unit_briefs (unit, headline, body, tutor, updated_at) VALUES (?, ?, ?, ?, ?)
+       ON CONFLICT (unit) DO UPDATE SET headline = excluded.headline, body = excluded.body,
+         tutor = excluded.tutor, updated_at = excluded.updated_at`,
       unit,
       headlineOf(body),
-      body,
+      body.trim(),
+      tutor.trim(),
       new Date().toISOString(),
     );
-    console.log(`  unit ${String(unit).padStart(2)} ← ${f} (${body.length} chars)`);
+    console.log(`  unit ${String(unit).padStart(2)} ← ${f} · student ${body.trim().length} chars · tutor ${tutor.trim().length} chars`);
   }
   console.log(`\n${files.length} ${files.length === 1 ? "brief" : "briefs"} loaded into ${db.kind === "postgres" ? "Supabase" : "the local database"}.`);
   await db.close();

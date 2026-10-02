@@ -191,7 +191,10 @@ CREATE TABLE IF NOT EXISTS ai_batches (
 CREATE TABLE IF NOT EXISTS unit_briefs (
   unit        INTEGER PRIMARY KEY,
   headline    TEXT NOT NULL DEFAULT '',
+  -- what the student reads, in English: the lesson screen shows this one
   body        TEXT NOT NULL DEFAULT '',
+  -- what only the tutor reads: frequency, stock, timings, how to run the drills
+  tutor       TEXT NOT NULL DEFAULT '',
   updated_at  TEXT NOT NULL DEFAULT (${NOW_SQL})
 );
 
@@ -328,6 +331,7 @@ ${TABLES.map((t) => `ALTER TABLE ${t} ENABLE ROW LEVEL SECURITY;`).join("\n")}
 
 // Columns added after a table was first created. Postgres skips the ones already there.
 export const ADDED_COLUMNS = `
+ALTER TABLE unit_briefs ADD COLUMN IF NOT EXISTS tutor TEXT NOT NULL DEFAULT '';
 ALTER TABLE schedules ADD COLUMN IF NOT EXISTS send_at TEXT NOT NULL DEFAULT '07:00';
 ALTER TABLE schedules ADD COLUMN IF NOT EXISTS due_time TEXT;
 ALTER TABLE schedules ADD COLUMN IF NOT EXISTS plan TEXT NOT NULL DEFAULT '[]';

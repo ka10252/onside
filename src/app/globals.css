@@ -464,3 +464,5 @@ table.board { table-layout: fixed; min-width: 860px; }
 .notes table.t td, .notes table.t th { font-size: 14px; }
 .teach .notes { font-size: 17px; }
 .teach .notes .noteh { font-size: 24px; }
+/* Marked out so it is never mistaken for the screen the student reads. */
+.card.tutoronly { border: 1px dashed var(--line2); background: var(--surface2); box-shadow: none; }

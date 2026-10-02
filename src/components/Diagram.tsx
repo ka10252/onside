@@ -38,10 +38,33 @@ function crossPath(path: Pt[], l: Line): Pt {
 const shiftX = (l: Line, by: number): Line => ({ a: { x: l.a.x + by, y: l.a.y }, b: { x: l.b.x + by, y: l.b.y } });
 const d2 = (n: number) => Math.round(n * 10) / 10;
 
+/** The arrow that says a curve moved, drawn from a point on the first to the same point on the second. */
+function Shift({ from, to }: { from: Pt; to: Pt }) {
+  return (
+    <line
+      x1={d2(from.x)}
+      y1={d2(from.y)}
+      x2={d2(to.x)}
+      y2={d2(to.y)}
+      stroke={SHIFT}
+      strokeWidth="1.6"
+      markerEnd="url(#dgmarrow)"
+    />
+  );
+}
+
+/** A point a given fraction along a straight line. */
+const along = (l: Line, t: number): Pt => ({ x: l.a.x + (l.b.x - l.a.x) * t, y: l.a.y + (l.b.y - l.a.y) * t });
+
 function Frame({ children, x, y, caption }: { children: React.ReactNode; x: string; y: string; caption?: string }) {
   return (
     <figure className="dgm">
       <svg viewBox="0 0 320 240" role="img" aria-label={caption ?? `${y} against ${x}`}>
+        <defs>
+          <marker id="dgmarrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+            <path d="M0 0 L10 5 L0 10 z" fill={SHIFT} />
+          </marker>
+        </defs>
         <line x1="44" y1="200" x2="304" y2="200" stroke={AXIS} strokeWidth="1.5" />
         <line x1="44" y1="200" x2="44" y2="16" stroke={AXIS} strokeWidth="1.5" />
         <text x="304" y="220" textAnchor="end" className="dgmlab">{x}</text>
@@ -95,6 +118,7 @@ function ExchangeRate({ caption }: { caption?: string }) {
       <Straight l={s1} label="S₁" colour={CURVE} />
       <Straight l={d1} label="D₁" colour={CURVE} />
       <Straight l={d2line} label="D₂" colour={SHIFT} dashed />
+      <Shift from={along(d1, 0.26)} to={along(d2line, 0.26)} />
       <Eq at={e1} px="e₁" qx="Q₁" colour={CURVE} />
       <Eq at={e2} px="e₂" qx="Q₂" colour={SHIFT} />
     </Frame>
@@ -127,6 +151,7 @@ function AdAs({ caption }: { caption?: string }) {
       <text x={FULL + 4} y="44" className="dgmlab">Yf</text>
       <Straight l={ad1} label="AD₁" colour={CURVE} />
       <Straight l={ad2} label="AD₂" colour={SHIFT} dashed />
+      <Shift from={along(ad1, 0.2)} to={along(ad2, 0.2)} />
       <Eq at={e1} px="P₁" qx="Y₁" colour={CURVE} />
       <Eq at={e2} px="P₂" qx="Y₂" colour={SHIFT} />
     </Frame>

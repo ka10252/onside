@@ -21,8 +21,8 @@ import { initials } from "@/lib/format";
 import { latestSummary } from "@/lib/review";
 import { requireUser } from "@/lib/session";
 import { unitTestProgress } from "@/lib/unit-progress";
-import { unitReview } from "@/lib/unit-weight";
-import { UnitReviewBoard } from "@/components/tutor/UnitReviewBoard";
+import { plannedLessons } from "@/lib/lesson-plan";
+import { LessonPlanBoard } from "@/components/tutor/LessonPlanBoard";
 
 const day = shortDateSG;
 const percent = (a: AssignmentRow) => (a.marks_total ? Math.round((a.marks_got / a.marks_total) * 100) : 0);
@@ -47,7 +47,7 @@ export default async function StudentPage({ params, searchParams }: PageProps<"/
     latestSummary(id),
     getSchedule(id),
     bankParts(),
-    unitReview(id),
+    plannedLessons(id),
   ]);
   const allUnits = parts.flatMap((p) => p.units);
   const unitName = (n: number | null) => (n === null ? "Every unit" : `Unit ${n} · ${allUnits.find((u) => u.number === n)?.title ?? ""}`);
@@ -172,11 +172,11 @@ export default async function StudentPage({ params, searchParams }: PageProps<"/
             <div className="card-hd">
               <h2>What to teach next</h2>
               <span className="muted" style={{ fontSize: 14 }}>
-                How much of the exam each unit carries (M22–N25), against how this student is doing in it
+                Ten lessons, heaviest first. Each is a unit or two the papers set together.
               </span>
             </div>
             <div className="cardbody">
-              <UnitReviewBoard rows={units} studentId={id} />
+              <LessonPlanBoard lessons={units} studentId={id} />
             </div>
           </section>
 

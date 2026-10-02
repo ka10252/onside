@@ -240,3 +240,10 @@ Every equilibrium in a note's diagram is worked out from where the curves actual
 Sending the marks opens the mark scheme on the student's results screen, and a question with a rewrite owed sat directly above it — so the second version could be copied from the answer. While a rewrite is owed that question's mark scheme stays shut, and the screen says it opens once the rewrite is sent. The tutor's comment stays visible, because that is what the rewrite is written against.
 
 No hints and no Helper on a rewrite (Jin, 2026-10-03). A rewrite is there to show whether the feedback landed, and the help counts on a response measure the first attempt — mixing a second round of help into them would make "right without help" mean nothing.
+
+## Ten lessons, heaviest first, paired as the papers pair them (2026-10-03)
+With ten lessons left before the exam and twenty units, "what to teach next" is a plan rather than a list. `src/lib/lesson-plan.ts` holds it: ten lessons, each a unit or two, ordered by how much of the exam the lesson carries, which is what decides where a limited number of lessons goes.
+
+The pairs are not invented. Counting across M22–N25, unit 10 appears in the same paper question as unit 13 twenty times, unit 3 with unit 4 fourteen times, unit 19 with unit 20 twelve times — so a pair is a pair the examiners already treat as one topic. A pair is also what a tutor can recap inside half an hour, which is why no two heavy units share a lesson: 16 goes with 17 (13 items), 13 with 10, 4 with 3. All twenty units are covered, which is every past question held.
+
+The student's standing still shows against each unit, and the three lessons where weight meets weakness are marked "Sooner".

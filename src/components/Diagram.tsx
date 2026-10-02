@@ -41,6 +41,13 @@ const shiftY = (l: Line, by: number): Line => ({ a: { x: l.a.x, y: l.a.y + by },
 /** Where a line is at a given height. */
 const atY = (l: Line, y: number): Pt => cross(l, line({ x: 0, y }, { x: 320, y }));
 
+/** Where a line is at a given horizontal position. */
+const atX = (l: Line, x: number): Pt => cross(l, line({ x, y: 0 }, { x, y: 240 }));
+
+/** A line of a given direction through a point, running `back` before it and `on` after it. */
+const thru = (at: Pt, dir: Pt, back: number, on: number): Line =>
+  line({ x: at.x - dir.x * back, y: at.y - dir.y * back }, { x: at.x + dir.x * on, y: at.y + dir.y * on });
+
 /** Trims a line to the drawing area, so a shifted curve never runs past the axes. */
 function clip(l: Line): Line {
   const dx = l.b.x - l.a.x;
@@ -153,6 +160,9 @@ function Frame({ children, x, y, caption }: { children: React.ReactNode; x: stri
           <marker id="dgmarrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
             <path d="M0 0 L10 5 L0 10 z" fill={SHIFT} />
           </marker>
+          <marker id="dgmarrowink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+            <path d="M0 0 L10 5 L0 10 z" fill={CURVE} />
+          </marker>
         </defs>
         <line x1="44" y1="200" x2="304" y2="200" stroke={AXIS} strokeWidth="1.5" />
         <line x1="44" y1="200" x2="44" y2="16" stroke={AXIS} strokeWidth="1.5" />
@@ -190,7 +200,11 @@ function Straight({ l, label, colour, dashed }: { l: Line; label: string; colour
         strokeWidth="2"
         strokeDasharray={dashed ? "5 4" : undefined}
       />
-      <text x={l.b.x + 4} y={l.b.y + 4} className="dgmcur" fill={colour}>{label}</text>
+      {l.b.x + label.length * 6.2 > 304 ? (
+        <text x={d2(l.b.x) - 4} y={d2(l.b.y) - 7} textAnchor="end" className="dgmcur" fill={colour}>{label}</text>
+      ) : (
+        <text x={d2(l.b.x) + 4} y={d2(l.b.y) + 4} className="dgmcur" fill={colour}>{label}</text>
+      )}
     </>
   );
 }
@@ -239,7 +253,7 @@ function AdAs({ caption }: { caption?: string }) {
       <line x1={FULL} y1="200" x2={FULL} y2="30" stroke={AXIS} strokeWidth="1.5" strokeDasharray="4 4" />
       <text x={FULL + 4} y="44" className="dgmlab">Yf</text>
       <Straight l={ad1} label="AD₁" colour={CURVE} />
-      <Straight l={ad2} label="AD₂" colour={SHIFT} dashed />
+      <Straight l={clip(ad2)} label="AD₂" colour={SHIFT} dashed />
       <Shift from={along(ad1, 0.2)} to={along(ad2, 0.2)} />
       <Eq at={e1} px="P₁" qx="Y₁" colour={CURVE} />
       <Eq at={e2} px="P₂" qx="Y₂" colour={SHIFT} />
@@ -356,6 +370,381 @@ function SupplyElasticity({ caption }: { caption?: string }) {
   );
 }
 
+/**
+ * The monetarist, or new classical, model: a vertical long-run supply curve at full employment, a
+ * short-run curve that moves, and an economy that returns to Yf on its own. Demand rises, output
+ * overshoots, money wages then rise and the short-run curve moves back until only the price level
+ * has changed.
+ */
+function AdAsMonetarist({ caption }: { caption?: string }) {
+  const YF = 176;
+  const e1 = { x: YF, y: 136 };
+  const sras1 = thru(e1, { x: 1, y: -0.8 }, 104, 74);
+  const ad1 = thru(e1, { x: 1, y: 0.95 }, 100, 62);
+  const ad2 = shiftX(ad1, 66);
+  const short = cross(ad2, sras1);
+  const e3 = atX(ad2, YF);
+  // The short-run curve rises until it meets the new demand curve back on the vertical line.
+  const sras2 = shiftY(sras1, e3.y - atX(sras1, YF).y);
+  return (
+    <Frame x="Real output" y="Price level" caption={caption}>
+      <line x1={YF} y1="200" x2={YF} y2="30" stroke={CURVE} strokeWidth="2" />
+      <text x={YF} y="26" textAnchor="middle" className="dgmcur">LRAS</text>
+      <Straight l={clip(sras1)} label="SRAS₁" colour={CURVE} />
+      <Straight l={clip(sras2)} label="SRAS₂" colour={SHIFT} dashed />
+      <Straight l={clip(ad1)} label="AD₁" colour={CURVE} />
+      <Straight l={clip(ad2)} label="AD₂" colour={SHIFT} dashed />
+      <Shift from={along(clip(sras1), 0.3)} to={along(clip(sras2), 0.3)} />
+      <Eq at={e1} px="P₁" qx="Yf" colour={CURVE} />
+      <circle cx={d2(short.x)} cy={d2(short.y)} r="3.5" fill={AXIS} />
+      <text x={d2(short.x) + 6} y={d2(short.y) + 4} className="dgmlab" fill={AXIS}>short run</text>
+      <circle cx={d2(e3.x)} cy={d2(e3.y)} r="3.5" fill={SHIFT} />
+      <line x1="44" y1={d2(e3.y)} x2={d2(e3.x)} y2={d2(e3.y)} stroke={GUIDE} strokeWidth="1" strokeDasharray="3 3" />
+      <text x="40" y={d2(e3.y) + 4} textAnchor="end" className="dgmlab" fill={SHIFT}>P₂</text>
+    </Frame>
+  );
+}
+
+/** The business cycle: output swinging around a rising trend, with the phases named. */
+function BusinessCycle({ caption }: { caption?: string }) {
+  const pts: Pt[] = [];
+  for (let i = 0; i <= 60; i++) {
+    const t = i / 60;
+    const x = 52 + t * 244;
+    pts.push({ x, y: 150 - t * 70 - Math.sin(t * Math.PI * 2.4) * 34 });
+  }
+  const peak = pts.reduce((a, b) => (b.y < a.y && b.x < 160 ? b : a), pts[0]!);
+  const trough = pts.reduce((a, b) => (b.y > a.y && b.x > peak.x && b.x < 230 ? b : a), pts[20]!);
+  return (
+    <Frame x="Time" y="Real output" caption={caption}>
+      <line x1="52" y1="150" x2="296" y2="80" stroke={AXIS} strokeWidth="1.4" strokeDasharray="5 4" />
+      <text x="196" y="102" textAnchor="middle" className="dgmlab">trend</text>
+      <path d={`M${pts.map((q) => `${d2(q.x)} ${d2(q.y)}`).join(" L")}`} fill="none" stroke={CURVE} strokeWidth="2" />
+      <circle cx={d2(peak.x)} cy={d2(peak.y)} r="3.5" fill={SHIFT} />
+      <text x={d2(peak.x)} y={d2(peak.y) - 8} textAnchor="middle" className="dgmlab" fill={SHIFT}>peak</text>
+      <circle cx={d2(trough.x)} cy={d2(trough.y)} r="3.5" fill={SHIFT} />
+      <text x={d2(trough.x)} y={d2(trough.y) + 16} textAnchor="middle" className="dgmlab" fill={SHIFT}>trough</text>
+      <text x={d2((peak.x + trough.x) / 2)} y={d2(trough.y) + 32} textAnchor="middle" className="dgmlab">contraction</text>
+    </Frame>
+  );
+}
+
+/** A shaded triangle: the welfare loss between the social optimum and what the market does. */
+function Loss({ a, b, c, label }: { a: Pt; b: Pt; c: Pt; label: string }) {
+  return (
+    <>
+      <polygon
+        points={[a, b, c].map((p) => `${d2(p.x)},${d2(p.y)}`).join(" ")}
+        fill={SHIFT}
+        fillOpacity="0.16"
+        stroke={SHIFT}
+        strokeWidth="0.8"
+      />
+      <text
+        x={d2((a.x + b.x + c.x) / 3)}
+        y={d2(Math.min(a.y, b.y, c.y)) - 6}
+        textAnchor="middle"
+        className="dgmlab"
+        fill={SHIFT}
+      >
+        {label}
+      </text>
+    </>
+  );
+}
+
+/**
+ * A negative production externality: the private cost of producing is below the cost to society, so
+ * the market produces past the point where the two are equal. The shaded triangle is what that
+ * overproduction costs society.
+ */
+function ExternalityProduction({ caption }: { caption?: string }) {
+  const mpc = line({ x: 60, y: 186 }, { x: 250, y: 56 });
+  const msc = shiftY(mpc, -42);
+  const d = line({ x: 60, y: 48 }, { x: 252, y: 188 });
+  const market = cross(mpc, d);
+  const best = cross(msc, d);
+  return (
+    <Frame x="Quantity" y="Costs and benefits" caption={caption}>
+      <Loss a={best} b={{ x: market.x, y: market.y }} c={atX(msc, market.x)} label="welfare loss" />
+      <Straight l={mpc} label="MPC = S" colour={CURVE} />
+      <Straight l={clip(msc)} label="MSC" colour={SHIFT} />
+      <Straight l={d} label="D = MPB = MSB" colour={CURVE} />
+      <Eq at={market} px="P₁" qx="Q₁" colour={CURVE} />
+      <Eq at={best} px="P*" qx="Q*" colour={SHIFT} />
+    </Frame>
+  );
+}
+
+/**
+ * A negative consumption externality: the benefit to the consumer is above the benefit to society,
+ * so the market consumes past the point where the two are equal.
+ */
+function ExternalityConsumption({ caption }: { caption?: string }) {
+  const s = line({ x: 60, y: 186 }, { x: 250, y: 56 });
+  const mpb = line({ x: 60, y: 48 }, { x: 252, y: 188 });
+  const msb = shiftY(mpb, 40);
+  const market = cross(s, mpb);
+  const best = cross(s, msb);
+  return (
+    <Frame x="Quantity" y="Costs and benefits" caption={caption}>
+      <Loss a={best} b={{ x: market.x, y: market.y }} c={atX(msb, market.x)} label="welfare loss" />
+      <Straight l={s} label="S = MPC = MSC" colour={CURVE} />
+      <Straight l={mpb} label="D = MPB" colour={CURVE} />
+      <Straight l={clip(msb)} label="MSB" colour={SHIFT} />
+      <Eq at={market} px="P₁" qx="Q₁" colour={CURVE} />
+      <Eq at={best} px="P*" qx="Q*" colour={SHIFT} />
+    </Frame>
+  );
+}
+
+/** The market answering a change in demand: the shift, and the new price and quantity. */
+function DemandShift({ caption }: { caption?: string }) {
+  const d1 = line({ x: 62, y: 46 }, { x: 250, y: 190 });
+  const s1 = line({ x: 62, y: 190 }, { x: 258, y: 42 });
+  const d2line = shiftX(d1, 52);
+  const e1 = cross(d1, s1);
+  const e2 = cross(d2line, s1);
+  return (
+    <Frame x="Quantity" y="Price" caption={caption}>
+      <Straight l={s1} label="S₁" colour={CURVE} />
+      <Straight l={d1} label="D₁" colour={CURVE} />
+      <Straight l={clip(d2line)} label="D₂" colour={SHIFT} dashed />
+      <Shift from={along(d1, 0.28)} to={along(d2line, 0.28)} />
+      <Eq at={e1} px="P₁" qx="Q₁" colour={CURVE} />
+      <Eq at={e2} px="P₂" qx="Q₂" colour={SHIFT} />
+    </Frame>
+  );
+}
+
+/**
+ * A positive consumption externality: the benefit to society is above the benefit to the consumer,
+ * so the market consumes less than the social optimum. Education, health care and vaccination are
+ * the examples the papers use.
+ */
+function ExternalityPositive({ caption }: { caption?: string }) {
+  const s = line({ x: 60, y: 186 }, { x: 250, y: 56 });
+  const mpb = line({ x: 58, y: 56 }, { x: 236, y: 190 });
+  const msb = shiftX(mpb, 54);
+  const market = cross(s, mpb);
+  const best = cross(s, msb);
+  return (
+    <Frame x="Quantity" y="Costs and benefits" caption={caption}>
+      <Loss a={market} b={best} c={atX(msb, market.x)} label="welfare loss" />
+      <Straight l={s} label="S = MSC" colour={CURVE} />
+      <Straight l={mpb} label="D = MPB" colour={CURVE} />
+      <Straight l={clip(msb)} label="MSB" colour={SHIFT} />
+      <Eq at={market} px="P₁" qx="Q₁" colour={CURVE} />
+      <Eq at={best} px="P*" qx="Q*" colour={SHIFT} />
+    </Frame>
+  );
+}
+
+/**
+ * Monopoly. Marginal revenue falls twice as fast as demand, output is where MC cuts MR, and the
+ * price is read up from there to the demand curve — never off MC. The shaded box is abnormal
+ * profit, the difference between price and average cost over the quantity sold.
+ */
+function Monopoly({ caption }: { caption?: string }) {
+  const d = line({ x: 58, y: 40 }, { x: 274, y: 192 });
+  // Marginal revenue starts at the same point and falls twice as steeply.
+  const mr = line({ x: 58, y: 40 }, { x: 166, y: 192 });
+  // Average cost is a parabola; marginal cost runs through its lowest point, as it must.
+  const vertex = { x: 170, y: 150 };
+  const ac: Pt[] = [];
+  for (let i = 0; i <= 40; i++) {
+    const x = 80 + (i / 40) * 160;
+    ac.push({ x, y: vertex.y - Math.pow((x - vertex.x) / 42, 2) * 26 });
+  }
+  const mc = thru(vertex, { x: 1, y: -1.6 }, 70, 52);
+  const qm = cross(mr, mc);
+  const price = atX(d, qm.x);
+  const cost = { x: qm.x, y: vertex.y - Math.pow((qm.x - vertex.x) / 42, 2) * 26 };
+  return (
+    <Frame x="Quantity" y="Price and cost" caption={caption}>
+      <Box x1={44} x2={qm.x} y1={price.y} y2={cost.y} label="abnormal profit" />
+      <path d={`M${ac.map((p) => `${d2(p.x)} ${d2(p.y)}`).join(" L")}`} fill="none" stroke={CURVE} strokeWidth="1.8" />
+      <text x={d2(ac[ac.length - 1]!.x) + 4} y={d2(ac[ac.length - 1]!.y) + 4} className="dgmcur">AC</text>
+      <Straight l={clip(mc)} label="MC" colour={CURVE} />
+      <Straight l={d} label="D = AR" colour={CURVE} />
+      <Straight l={mr} label="MR" colour={AXIS} />
+      <line x1={d2(qm.x)} y1="200" x2={d2(qm.x)} y2={d2(qm.y)} stroke={GUIDE} strokeWidth="1" strokeDasharray="3 3" />
+      <circle cx={d2(qm.x)} cy={d2(qm.y)} r="3" fill={AXIS} />
+      <text x={d2(qm.x)} y="214" textAnchor="middle" className="dgmlab" fill={SHIFT}>Qm</text>
+      <circle cx={d2(price.x)} cy={d2(price.y)} r="3.5" fill={SHIFT} />
+      <line x1="44" y1={d2(price.y)} x2={d2(price.x)} y2={d2(price.y)} stroke={GUIDE} strokeWidth="1" strokeDasharray="3 3" />
+      <text x="40" y={d2(price.y) + 4} textAnchor="end" className="dgmlab" fill={SHIFT}>Pm</text>
+      <line x1="44" y1={d2(cost.y)} x2={d2(cost.x)} y2={d2(cost.y)} stroke={GUIDE} strokeWidth="1" strokeDasharray="3 3" />
+      <text x="40" y={d2(cost.y) + 4} textAnchor="end" className="dgmlab" fill={AXIS}>AC</text>
+    </Frame>
+  );
+}
+
+/** A figure with no axes, for the diagrams that are a cycle rather than a market. */
+function Plain({ children, caption, label }: { children: React.ReactNode; caption?: string; label: string }) {
+  return (
+    <figure className="dgm">
+      <svg viewBox="0 0 320 240" role="img" aria-label={caption ?? label}>
+        <defs>
+          <marker id="dgmarrowink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+            <path d="M0 0 L10 5 L0 10 z" fill={CURVE} />
+          </marker>
+        </defs>
+        {children}
+      </svg>
+      {caption && <figcaption>{caption}</figcaption>}
+    </figure>
+  );
+}
+
+/**
+ * The poverty cycle, which twelve past questions ask to be drawn. Each stage causes the next, and
+ * the question is always where an intervention breaks the ring.
+ */
+function PovertyCycle({ caption }: { caption?: string }) {
+  const nodes = [
+    { x: 92, y: 44, text: "Low income" },
+    { x: 238, y: 92, text: "Low saving" },
+    { x: 196, y: 196, text: "Low investment" },
+    { x: 66, y: 148, text: "Low productivity" },
+  ];
+  // Each arrow starts and ends clear of the words it joins, so no arrowhead lands on a letter.
+  const arrow = (a: (typeof nodes)[number], b: (typeof nodes)[number]) => {
+    const dx = b.x - a.x;
+    const dy = b.y - a.y;
+    const len = Math.hypot(dx, dy) || 1;
+    const ux = dx / len;
+    const uy = dy / len;
+    const half = (n: (typeof nodes)[number]) => n.text.length * 3.4 + 5;
+    return {
+      x1: d2(a.x + ux * half(a)),
+      y1: d2(a.y + uy * 13 + 4),
+      x2: d2(b.x - ux * half(b)),
+      y2: d2(b.y - uy * 13 + 4),
+    };
+  };
+  return (
+    <Plain caption={caption} label="the poverty cycle">
+      {nodes.map((n, i) => {
+        const next = nodes[(i + 1) % nodes.length]!;
+        return (
+          <g key={n.text}>
+            <line {...arrow(n, next)} stroke={CURVE} strokeWidth="1.6" markerEnd="url(#dgmarrowink)" />
+            <text x={d2(n.x)} y={d2(n.y)} textAnchor="middle" className="dgmcur">{n.text}</text>
+          </g>
+        );
+      })}
+    </Plain>
+  );
+}
+
+/**
+ * The international trade diagram with a tariff. Domestic supply and demand, a world price below
+ * the domestic equilibrium, and the tariff that lifts it. Four quantities are read off the two
+ * price lines, and the shaded box is the revenue the tariff raises.
+ */
+function Tariff({ caption }: { caption?: string }) {
+  const d = line({ x: 58, y: 36 }, { x: 268, y: 192 });
+  const sup = line({ x: 58, y: 192 }, { x: 240, y: 36 });
+  const home = cross(d, sup);
+  const pw = home.y + 48;
+  const pt = pw - 26;
+  const q1 = atY(sup, pw).x;
+  const q2 = atY(sup, pt).x;
+  const q3 = atY(d, pt).x;
+  const q4 = atY(d, pw).x;
+  return (
+    <Frame x="Quantity" y="Price" caption={caption}>
+      <Box x1={q2} x2={q3} y1={pw} y2={pt} label="revenue" />
+      <Straight l={sup} label="S domestic" colour={CURVE} />
+      <Straight l={d} label="D domestic" colour={CURVE} />
+      <line x1="48" y1={d2(pw)} x2="296" y2={d2(pw)} stroke={AXIS} strokeWidth="1.6" />
+      <text x="300" y={d2(pw) - 5} textAnchor="end" className="dgmlab">Pw</text>
+      <line x1="48" y1={d2(pt)} x2="296" y2={d2(pt)} stroke={SHIFT} strokeWidth="1.6" />
+      <text x="300" y={d2(pt) - 5} textAnchor="end" className="dgmlab" fill={SHIFT}>Pw + tariff</text>
+      {[
+        [q1, "Q₁"],
+        [q2, "Q₂"],
+        [q3, "Q₃"],
+        [q4, "Q₄"],
+      ].map(([x, t]) => (
+        <g key={t as string}>
+          <line x1={d2(x as number)} y1="200" x2={d2(x as number)} y2={d2(x === q1 || x === q4 ? pw : pt)} stroke={GUIDE} strokeWidth="1" strokeDasharray="3 3" />
+          <text x={d2(x as number)} y="214" textAnchor="middle" className="dgmlab">{t as string}</text>
+        </g>
+      ))}
+    </Frame>
+  );
+}
+
+/**
+ * The production possibilities curve: the combinations an economy can produce with everything it
+ * has. A point inside is unemployment or inefficiency; the outward shift is growth.
+ */
+function Ppc({ caption }: { caption?: string }) {
+  const curve = (r: number): Pt[] => {
+    const out: Pt[] = [];
+    for (let i = 0; i <= 40; i++) {
+      const t = (i / 40) * (Math.PI / 2);
+      out.push({ x: 50 + Math.sin(t) * r, y: 198 - Math.cos(t) * r * 0.82 });
+    }
+    return out;
+  };
+  const p1 = curve(150);
+  const p2 = curve(196);
+  const at = p1[16]!;
+  const inside = { x: at.x - 36, y: at.y + 26 };
+  return (
+    <Frame x="Consumer goods" y="Capital goods" caption={caption}>
+      <path d={`M${p1.map((p) => `${d2(p.x)} ${d2(p.y)}`).join(" L")}`} fill="none" stroke={CURVE} strokeWidth="2" />
+      <path d={`M${p2.map((p) => `${d2(p.x)} ${d2(p.y)}`).join(" L")}`} fill="none" stroke={SHIFT} strokeWidth="2" strokeDasharray="5 4" />
+      <text x={d2(p1[37]!.x) + 6} y={d2(p1[37]!.y) - 6} className="dgmcur">PPC₁</text>
+      <text x={d2(p2[7]!.x) + 8} y={d2(p2[7]!.y) + 2} className="dgmcur" fill={SHIFT}>PPC₂</text>
+      <Shift from={p1[20]!} to={p2[20]!} />
+      <circle cx={d2(at.x)} cy={d2(at.y)} r="3.5" fill={CURVE} />
+      <text x={d2(at.x) + 6} y={d2(at.y) + 4} className="dgmlab">A · efficient</text>
+      <circle cx={d2(inside.x)} cy={d2(inside.y)} r="3.5" fill={AXIS} />
+      <text x={d2(inside.x) + 6} y={d2(inside.y) + 4} className="dgmlab">B · unemployment</text>
+    </Frame>
+  );
+}
+
+/**
+ * The Lorenz curve. The straight line is perfect equality; the further the curve bends away from
+ * it, the more unequal the distribution. The Gini coefficient is the area between the two divided
+ * by the whole area under the line of equality.
+ */
+function Lorenz({ caption }: { caption?: string }) {
+  const x0 = 46;
+  const y0 = 198;
+  const w = 212;
+  const h = 164;
+  const bend = (power: number): Pt[] => {
+    const out: Pt[] = [];
+    for (let i = 0; i <= 40; i++) {
+      const t = i / 40;
+      out.push({ x: x0 + t * w, y: y0 - Math.pow(t, power) * h });
+    }
+    return out;
+  };
+  const c1 = bend(2.1);
+  const c2 = bend(3.4);
+  const path = (ps: Pt[]) => `M${ps.map((p) => `${d2(p.x)} ${d2(p.y)}`).join(" L")}`;
+  return (
+    <Frame x="Cumulative % of population" y="Cumulative % of income" caption={caption}>
+      <line x1={x0} y1={y0} x2={d2(x0 + w)} y2={d2(y0 - h)} stroke={AXIS} strokeWidth="1.6" />
+      <text x={d2(x0 + w) - 2} y={d2(y0 - h) - 7} textAnchor="end" className="dgmlab">line of equality</text>
+      <path d={path(c1)} fill="none" stroke={CURVE} strokeWidth="2" />
+      <text x={d2(c1[30]!.x) + 6} y={d2(c1[30]!.y) + 12} className="dgmcur">L₁</text>
+      <path d={path(c2)} fill="none" stroke={SHIFT} strokeWidth="2" strokeDasharray="5 4" />
+      <text x={d2(c2[34]!.x) + 6} y={d2(c2[34]!.y) + 12} className="dgmcur" fill={SHIFT}>L₂</text>
+      <Shift from={c1[24]!} to={c2[24]!} />
+      <text x={d2(x0 + w * 0.46)} y={d2(y0 - h * 0.52)} className="dgmlab">A</text>
+      <text x={d2(x0 + w * 0.72)} y={d2(y0 - h * 0.12)} className="dgmlab">B</text>
+    </Frame>
+  );
+}
+
 const DIAGRAMS: Record<string, (p: { caption?: string }) => React.ReactElement> = {
   "exchange-rate": ExchangeRate,
   "ad-as": AdAs,
@@ -363,6 +752,17 @@ const DIAGRAMS: Record<string, (p: { caption?: string }) => React.ReactElement> 
   subsidy: Subsidy,
   "price-ceiling": PriceCeiling,
   "supply-elasticity": SupplyElasticity,
+  "ad-as-monetarist": AdAsMonetarist,
+  "business-cycle": BusinessCycle,
+  "externality-production": ExternalityProduction,
+  "externality-consumption": ExternalityConsumption,
+  "demand-shift": DemandShift,
+  "externality-positive": ExternalityPositive,
+  monopoly: Monopoly,
+  "poverty-cycle": PovertyCycle,
+  tariff: Tariff,
+  ppc: Ppc,
+  lorenz: Lorenz,
 };
 
 export function Diagram({ name, caption }: { name: string; caption?: string }) {

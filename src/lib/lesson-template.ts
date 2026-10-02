@@ -106,6 +106,42 @@ function spread(pool: BankQuestion[], n: number): BankQuestion[] {
   return out;
 }
 
+/** "M24 P1 TZ1 HL · Q3(a)" and "…Q3(b)" are one question in the paper; this is what they share. */
+const stemOf = (q: BankQuestion): string | null => {
+  const label = q.past_label;
+  if (!label || !/\((a|b)\)\s*$/i.test(label)) return null;
+  return label.replace(/\((a|b)\)\s*$/i, "").trim();
+};
+
+/**
+ * Essays come as the paper sets them: Paper 1 asks a 10-mark (a) and a 15-mark (b) under one
+ * question, and a lesson that sends only the (b) hides half of it. Whole sets are preferred, so the
+ * tutor can have the student outline either part (Jin, 2026-10-02).
+ */
+function essays(free: BankQuestion[], want: number): BankQuestion[] {
+  if (want <= 0) return [];
+  const all = free.filter((q) => q.source === "past" && q.marks >= 10);
+  const sets = new Map<string, BankQuestion[]>();
+  for (const q of all) {
+    const stem = stemOf(q);
+    if (stem) sets.set(stem, [...(sets.get(stem) ?? []), q]);
+  }
+  // Whole sets first, newest session first; (a) before (b).
+  const whole = [...sets.values()]
+    .filter((v) => v.length >= 2)
+    .sort((a, b) => sessionOf(b[0]!) - sessionOf(a[0]!))
+    .map((v) => [...v].sort((x, y) => (x.past_label ?? "").localeCompare(y.past_label ?? "")));
+
+  const out: BankQuestion[] = [];
+  for (const set of whole) {
+    if (out.length >= want) break;
+    out.push(...set);
+  }
+  if (out.length > 0) return out;
+  // No complete set left in this unit: one essay on its own is better than none.
+  return spread(all, want);
+}
+
 /**
  * The recipe turned into actual questions: past papers for everything the IB sets, unit tests for
  * the multiple-choice warm-up, and never one this student has already been sent.
@@ -127,7 +163,7 @@ export async function fillTemplate(unit: number, studentId: string): Promise<Fil
     ...take(recipe.mcq, (q) => q.format === "mcq"),
     ...take(recipe.short, (q) => q.source === "past" && q.marks <= 3 && q.format !== "mcq"),
     ...take(recipe.explain, (q) => q.source === "past" && q.marks >= 4 && q.marks <= 9),
-    ...take(recipe.essay, (q) => q.source === "past" && q.marks >= 10),
+    ...essays(free, recipe.essay),
   ];
   const asked = recipe.mcq + recipe.short + recipe.explain + recipe.essay;
   return {

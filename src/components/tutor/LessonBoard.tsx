@@ -7,6 +7,7 @@ import { reportIfStale } from "@/components/stale";
 import type { BankQuestion } from "@/lib/admin";
 import type { Lesson, LessonItem, PrepareQuestion, ReviewPlan, UnitBrief } from "@/lib/lesson";
 import { Blocks, Rich } from "@/components/Rich";
+import { Notes } from "@/components/Notes";
 import { applyTemplate, pickQuestions, saveLessonNotes, sendReviewQuiz, setOutcome } from "@/lib/lesson-actions";
 
 type Pool = (BankQuestion & { seen: boolean })[];
@@ -69,6 +70,18 @@ export function LessonBoard({
 
   return (
     <div className="stack">
+      {brief.notes && (
+        <section className="card">
+          <div className="card-hd">
+            <h2>Revision notes</h2>
+            <span className="muted" style={{ fontSize: 14 }}>Yours, from content/source · also on the Teach screen</span>
+          </div>
+          <div className="cardbody">
+            <Notes text={brief.notes.body} />
+          </div>
+        </section>
+      )}
+
       <section className="card">
         <div className="card-hd">
           <h2>What the papers ask for</h2>

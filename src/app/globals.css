@@ -452,3 +452,15 @@ table.board { table-layout: fixed; min-width: 860px; }
 .preplist .a .mstext { padding: 10px 12px; border: 1px solid var(--line2); border-radius: 10px; background: var(--surface2); }
 .preplist .acts { display: flex; flex-direction: column; gap: 6px; }
 @media (max-width: 1000px) { .preplist > li { grid-template-columns: 30px minmax(0, 1fr); } .preplist .a, .preplist .acts { grid-column: 2; } }
+/* Revision notes for a unit, written by hand and read while teaching. */
+.notes { display: flex; flex-direction: column; gap: 12px; }
+.notes > p { margin: 0; line-height: 1.6; }
+.notes .noteh { margin: 10px 0 0; font-size: 20px; font-weight: 600; }
+.notes .noteh4 { margin: 6px 0 0; font-size: 16px; font-weight: 600; color: var(--ink2); }
+.notes hr { border: 0; border-top: 1px solid var(--line); margin: 6px 0; width: 100%; }
+.notes .notelist { margin: 0; padding-left: 22px; display: flex; flex-direction: column; gap: 6px; line-height: 1.55; }
+.notes .notepre { margin: 0; padding: 14px 16px; border: 1px solid var(--line2); border-radius: 10px; background: var(--surface2); font-size: 13px; line-height: 1.6; white-space: pre-wrap; overflow-x: auto; }
+.notes .notequote { margin: 0; padding: 8px 14px; border-left: 3px solid var(--line2); color: var(--ink2); }
+.notes table.t td, .notes table.t th { font-size: 14px; }
+.teach .notes { font-size: 17px; }
+.teach .notes .noteh { font-size: 24px; }

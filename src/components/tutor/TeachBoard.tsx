@@ -3,6 +3,7 @@
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { Blocks, Rich } from "@/components/Rich";
+import { Notes } from "@/components/Notes";
 import { reportIfStale } from "@/components/stale";
 import type { TeachQuestion } from "@/lib/lesson";
 import { setOutcome } from "@/lib/lesson-actions";
@@ -11,7 +12,17 @@ import { setOutcome } from "@/lib/lesson-actions";
  * The lesson itself, on a screen the student is looking at too: one question at a time, large, with
  * nothing on the page that gives the answer away. The tutor marks each one as they go.
  */
-export function TeachBoard({ lessonId, questions }: { lessonId: string; questions: TeachQuestion[] }) {
+export function TeachBoard({
+  lessonId,
+  questions,
+  notes,
+}: {
+  lessonId: string;
+  questions: TeachQuestion[];
+  /** The unit's revision notes, gone through before the questions. */
+  notes: string | null;
+}) {
+  const [showing, setShowing] = useState<"revision" | "questions">(notes ? "revision" : "questions");
   const [at, setAt] = useState(0);
   const [outcomes, setOutcomes] = useState<Record<string, "right" | "wrong" | null>>(
     Object.fromEntries(questions.map((q) => [q.id, q.outcome])),
@@ -19,7 +30,36 @@ export function TeachBoard({ lessonId, questions }: { lessonId: string; question
   const [pending, start] = useTransition();
   const router = useRouter();
   const q = questions[at];
-  if (!q) return <p className="muted">No questions in this lesson yet.</p>;
+
+  const tabs = notes ? (
+    <nav className="filters" aria-label="Which part of the lesson">
+      <button type="button" className={`chip${showing === "revision" ? " on" : ""}`} onClick={() => setShowing("revision")}>
+        Revision
+      </button>
+      <button type="button" className={`chip${showing === "questions" ? " on" : ""}`} onClick={() => setShowing("questions")}>
+        Questions · {questions.length}
+      </button>
+    </nav>
+  ) : null;
+
+  if (showing === "revision" && notes) {
+    return (
+      <div className="teach">
+        {tabs}
+        <article className="card teachcard">
+          <Notes text={notes} />
+        </article>
+      </div>
+    );
+  }
+  if (!q) {
+    return (
+      <div className="teach">
+        {tabs}
+        <p className="muted">No questions in this lesson yet. Add some on the Prepare screen.</p>
+      </div>
+    );
+  }
 
   function mark(outcome: "right" | "wrong") {
     const next = outcomes[q!.id] === outcome ? null : outcome;
@@ -38,6 +78,7 @@ export function TeachBoard({ lessonId, questions }: { lessonId: string; question
   const done = questions.filter((x) => outcomes[x.id]).length;
   return (
     <div className="teach">
+      {tabs}
       <div className="teachbar">
         <span className="rowacts">
           <button type="button" className="btn ghost sm" onClick={() => setAt((i) => Math.max(0, i - 1))} disabled={at === 0}>

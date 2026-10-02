@@ -86,7 +86,7 @@ export default async function LessonPage({ params, searchParams }: PageProps<"/t
               </div>
             </section>
           ) : teaching ? (
-            <TeachBoard lessonId={lesson!.id} questions={teach} />
+            <TeachBoard lessonId={lesson!.id} questions={teach} notes={brief.notes?.body ?? null} />
           ) : (
             <LessonBoard brief={brief} lesson={lesson!} pool={pool} plan={plan} chosen={chosen} studentFirstName={first} />
           )}

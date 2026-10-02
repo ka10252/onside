@@ -185,6 +185,16 @@ CREATE TABLE IF NOT EXISTS ai_batches (
   created_at     TEXT NOT NULL DEFAULT (${NOW_SQL})
 );
 
+-- The revision notes for a unit, shown while preparing and during the lesson. Written from Jin's
+-- own materials and the past papers, so the text itself stays out of the repository: it is loaded
+-- into the database from content/source (git-ignored) by the brief:load script.
+CREATE TABLE IF NOT EXISTS unit_briefs (
+  unit        INTEGER PRIMARY KEY,
+  headline    TEXT NOT NULL DEFAULT '',
+  body        TEXT NOT NULL DEFAULT '',
+  updated_at  TEXT NOT NULL DEFAULT (${NOW_SQL})
+);
+
 -- A lesson the tutor prepares and then teaches. Nothing here touches daily practice: a lesson is
 -- the tutor's own working space until they choose to send a set from it (docs/decisions.md).
 CREATE TABLE IF NOT EXISTS lessons (

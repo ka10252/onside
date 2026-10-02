@@ -68,6 +68,8 @@ export type UnitBrief = {
   stock: { short: number; explain: number; essay: number };
   /** The question mix this unit calls for. */
   recipe: Recipe;
+  /** The revision notes written for this unit, when there are any. */
+  notes: { headline: string; body: string } | null;
 };
 
 export async function unitBrief(unit: number): Promise<UnitBrief | null> {
@@ -81,7 +83,7 @@ export async function unitBrief(unit: number): Promise<UnitBrief | null> {
         unit,
       )
     ).filter((r) => r.name);
-  const [weights, diagrams, commands, defined, stock, recipe] = await Promise.all([
+  const [weights, diagrams, commands, defined, stock, recipe, notes] = await Promise.all([
     weightByUnit(),
     top("diagram_type"),
     top("command_term"),
@@ -95,6 +97,7 @@ export async function unitBrief(unit: number): Promise<UnitBrief | null> {
       unit,
     ),
     recipeFor(unit),
+    one<{ headline: string; body: string }>("SELECT headline, body FROM unit_briefs WHERE unit = ?", unit),
   ]);
   return {
     unit,
@@ -105,6 +108,7 @@ export async function unitBrief(unit: number): Promise<UnitBrief | null> {
     commands,
     defined,
     stock: stock ?? { short: 0, explain: 0, essay: 0 },
+    notes: notes ?? null,
   };
 }
 

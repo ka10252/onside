@@ -8,6 +8,7 @@ import { requireUser } from "@/lib/session";
 import { closeExpiredAssignments, hasAnswerSql } from "@/lib/student";
 import { AssignmentCalendar, type StudentDay } from "@/components/student/AssignmentCalendar";
 import { getSchedule, singaporeToday, upcomingSends } from "@/lib/schedule";
+import { rewritesWaiting } from "@/lib/rewrite";
 
 type Row = {
   id: string;
@@ -58,7 +59,7 @@ export default async function AssignmentsPage({ searchParams }: PageProps<"/stud
   for (const u of unitRows) unitsOf.set(u.assignment_id, [...(unitsOf.get(u.assignment_id) ?? []), u]);
 
   // Four weeks from this Monday: what arrived, what is due, and what the tutor has scheduled.
-  const schedule = await getSchedule(user.id);
+  const [schedule, rewrites] = await Promise.all([getSchedule(user.id), rewritesWaiting(user.id)]);
   const { date: todaySg } = singaporeToday();
   const monday = new Date(new Date(`${todaySg}T00:00:00Z`).getTime() - ((new Date(`${todaySg}T00:00:00Z`).getUTCDay() + 6) % 7) * 86_400_000);
   const coming = new Map<string, ReturnType<typeof upcomingSends>>();
@@ -141,6 +142,14 @@ export default async function AssignmentsPage({ searchParams }: PageProps<"/stud
               <h1>Assignments</h1>
               <p>
                 {todo.length} to do · {done.length} done
+                {rewrites > 0 && (
+                  <>
+                    {" · "}
+                    <b>
+                      {rewrites} to write again
+                    </b>
+                  </>
+                )}
               </p>
             </div>
           </div>

@@ -224,3 +224,8 @@ Each note opens with three things to take away rather than a paragraph saying wh
 `/tutor/students/[id]/lesson/print?unit=N` is the notes alone, laid out for paper, with the browser's own Save as PDF doing the export. No questions are on it, so it can be given to a student before the lesson.
 
 `scripts/cover.ts` checks the other direction: it takes the questions the template picks for a unit and asks whether the note covers what each one leans on. Unit 16's essay turned out to ask about unemployment, which the note had dropped when it was cut to twenty minutes.
+
+## A mark that asks for the answer again (2026-10-02)
+A mark alone rarely changes what someone writes next time, so the tutor can ask for an answer a second time. On the marking screen, under each question, "Ask for a rewrite" takes a note saying what to fix — the AI's drafted comment fills it, since that is usually the thing to fix — and the student's results screen turns that question into a box with the note above it and a "To write again" filter at the top. The tutor reads the second version in the same place they asked, and can ask again, which clears the first, or mark it done.
+
+It lives on `responses` (`rewrite_note`, `rewrite_asked_at`, `rewrite_text`, `rewrite_at`) rather than a table of its own: a rewrite belongs to the answer it corrects, and one round at a time is enough. Only the student who owns the answer can send one, the assignment stays `reviewed` throughout, and a rewrite arriving sends the tutor a Telegram message like a submission does.

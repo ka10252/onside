@@ -16,7 +16,21 @@ type EventRow = { id: number; response_id: string; at: string; type: string; dat
 export type ReviewItem = {
   n: number;
   q: Question;
-  r: (ResponseRow & { flags: string; paste_chars: number; away_ms: number; blur_count: number; active_ms: number; ai_mark: string | null; tutor_mark: string | null }) | null;
+  r:
+    | (ResponseRow & {
+        flags: string;
+        paste_chars: number;
+        away_ms: number;
+        blur_count: number;
+        active_ms: number;
+        ai_mark: string | null;
+        tutor_mark: string | null;
+        rewrite_note: string | null;
+        rewrite_asked_at: string | null;
+        rewrite_text: string | null;
+        rewrite_at: string | null;
+      })
+    | null;
   confirmed: number | null;
   auto: boolean;
   aiMark: AiMark | null;

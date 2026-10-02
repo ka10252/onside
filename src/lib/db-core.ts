@@ -308,6 +308,11 @@ CREATE TABLE IF NOT EXISTS responses (
   auto_correct     INTEGER,
   answers          TEXT,
   position         INTEGER,
+  -- A rewrite: the tutor asks for this answer again, and the student writes it a second time
+  rewrite_note     TEXT,
+  rewrite_asked_at TEXT,
+  rewrite_text     TEXT,
+  rewrite_at       TEXT,
   UNIQUE (assignment_id, question_id)
 );
 CREATE INDEX IF NOT EXISTS responses_student ON responses (student_id, question_id);
@@ -332,6 +337,10 @@ ${TABLES.map((t) => `ALTER TABLE ${t} ENABLE ROW LEVEL SECURITY;`).join("\n")}
 // Columns added after a table was first created. Postgres skips the ones already there.
 export const ADDED_COLUMNS = `
 ALTER TABLE unit_briefs ADD COLUMN IF NOT EXISTS tutor TEXT NOT NULL DEFAULT '';
+ALTER TABLE responses ADD COLUMN IF NOT EXISTS rewrite_note TEXT;
+ALTER TABLE responses ADD COLUMN IF NOT EXISTS rewrite_asked_at TEXT;
+ALTER TABLE responses ADD COLUMN IF NOT EXISTS rewrite_text TEXT;
+ALTER TABLE responses ADD COLUMN IF NOT EXISTS rewrite_at TEXT;
 ALTER TABLE schedules ADD COLUMN IF NOT EXISTS send_at TEXT NOT NULL DEFAULT '07:00';
 ALTER TABLE schedules ADD COLUMN IF NOT EXISTS due_time TEXT;
 ALTER TABLE schedules ADD COLUMN IF NOT EXISTS plan TEXT NOT NULL DEFAULT '[]';

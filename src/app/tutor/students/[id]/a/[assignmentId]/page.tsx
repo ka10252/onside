@@ -7,6 +7,8 @@ import { Crumbs } from "@/components/Crumbs";
 import { Nav, TUTOR_TABS } from "@/components/Nav";
 import { AutoRefresh } from "@/components/review/AutoRefresh";
 import { MarkForm } from "@/components/review/MarkForm";
+import { RewriteAsk } from "@/components/review/RewriteAsk";
+import { rewriteOf } from "@/lib/rewrite";
 import { QuestionRow, Reveal } from "@/components/review/QuestionRows";
 import { HelpPill, StatusBadge } from "@/components/review/StatusBadge";
 import { hasPendingBatches, isMarking, pollMarkingBatches, queueMarking } from "@/lib/ai/marking";
@@ -376,6 +378,7 @@ function Detail({ it, assignmentId, first }: { it: ReviewItem; assignmentId: str
             </div>
           )}
           {aiMark?.status === "error" && <p className="formmsg bad" style={{ margin: 0 }}>AI marking failed. Mark it yourself or retry.</p>}
+          {r && <RewriteAsk responseId={r.id} rewrite={rewriteOf(r)} draft={aiMark?.status === "done" ? aiMark.comment : undefined} />}
           <MarkForm
             assignmentId={assignmentId}
             responseId={r?.id ?? null}

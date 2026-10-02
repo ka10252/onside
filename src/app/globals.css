@@ -488,3 +488,10 @@ table.board { table-layout: fixed; min-width: 860px; }
   .dgm { max-width: 300px; }
   body { background: #FFFFFF; }
 }
+/* Asking for an answer again, and writing it again. */
+.rewrite { display: flex; flex-direction: column; gap: 10px; padding: 14px 16px; border: 1px solid var(--line2); border-radius: 12px; background: var(--surface2); }
+.rewrite.ask { border: 2px solid var(--ink); background: var(--surface); }
+.rewrite.waiting { border-style: dashed; }
+.rewrite.done { border-color: var(--green); }
+.rewrite .asked { margin: 0; font-size: 15px; line-height: 1.5; color: var(--ink2); }
+.rewrite.ask .asked { color: var(--ink); }

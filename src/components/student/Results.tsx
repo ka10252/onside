@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { Choices } from "@/components/Choices";
 import { MarkStamp } from "@/components/Icons";
+import { RewriteBox } from "@/components/student/RewriteBox";
+import { rewriteOf } from "@/lib/rewrite";
 import { Blocks, Rich } from "@/components/Rich";
 import { answerText } from "@/lib/answer-text";
 import { isPast, pastContext, tableBlock, type Block, type Question } from "@/lib/content";
@@ -52,8 +54,10 @@ export async function Results({
   const units = [...new Map(unitRows.map((u) => [u.number, u])).values()];
   const lost = (it: ReviewItem) => marked && (it.confirmed ?? 0) < it.q.marks;
   const helped = (it: ReviewItem) => (it.r?.hint_level ?? 0) > 0 || (it.r?.ai_questions ?? 0) > 0;
+  const toRewrite = (it: ReviewItem) => Boolean(it.r?.rewrite_asked_at && !it.r.rewrite_text);
   const filters = [
     { key: "all", label: "All questions", keep: () => true },
+    { key: "rewrite", label: "To write again", keep: toRewrite },
     { key: "lost", label: "Lost marks", keep: lost },
     { key: "help", label: "Used help", keep: helped },
   ] as const;
@@ -142,6 +146,7 @@ export async function Results({
             <nav className="filters" aria-label="Which questions to show">
               {filters.map((f) => {
                 const n = rv.items.filter((it) => f.keep(it)).length;
+                if (f.key === "rewrite" && n === 0) return null;
                 return (
                   <Link key={f.key} href={link(f.key, unitPick)} className={`chip${picked.key === f.key ? " on" : ""}`}>
                     {f.label} · {n}
@@ -280,6 +285,8 @@ function ResultRow({ it, marked, context, unit }: { it: ReviewItem; marked: bool
           <span className="qlabel">Your answer</span>
           <YourAnswer q={q} it={it} marked={marked} />
         </div>
+
+        {it.r && rewriteOf(it.r) && <RewriteBox responseId={it.r.id} rewrite={rewriteOf(it.r)!} />}
 
         {marked && it.tutorMark?.note && it.tutorMark.note !== ACCEPTED_NOTE && (
           <div className="why">

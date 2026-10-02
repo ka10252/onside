@@ -5,10 +5,10 @@ import { dropRewrite, requestRewrite, type RewriteState } from "@/lib/rewrite-ac
 import type { Rewrite } from "@/lib/rewrite";
 
 /** The tutor asks for an answer again, and reads the second version when it comes. */
-export function RewriteAsk({ responseId, rewrite, draft }: { responseId: string; rewrite: Rewrite | null; draft?: string }) {
+export function RewriteAsk({ responseId, rewrite }: { responseId: string; rewrite: Rewrite | null }) {
   const [state, ask, asking] = useActionState<RewriteState, FormData>(requestRewrite, {});
   const [open, setOpen] = useState(false);
-  const [note, setNote] = useState(rewrite?.note ?? draft ?? "");
+  const [note, setNote] = useState(rewrite?.note ?? "");
   const [dropping, startDrop] = useTransition();
 
   if (rewrite?.text) {

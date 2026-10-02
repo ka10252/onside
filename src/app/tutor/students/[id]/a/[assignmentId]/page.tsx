@@ -378,7 +378,7 @@ function Detail({ it, assignmentId, first }: { it: ReviewItem; assignmentId: str
             </div>
           )}
           {aiMark?.status === "error" && <p className="formmsg bad" style={{ margin: 0 }}>AI marking failed. Mark it yourself or retry.</p>}
-          {r && <RewriteAsk responseId={r.id} rewrite={rewriteOf(r)} draft={aiMark?.status === "done" ? aiMark.comment : undefined} />}
+          {r && <RewriteAsk responseId={r.id} rewrite={rewriteOf(r)} />}
           <MarkForm
             assignmentId={assignmentId}
             responseId={r?.id ?? null}

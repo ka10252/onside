@@ -604,6 +604,8 @@ function WrittenAnswer({
   const isDiagram = q.format === "diagram" || Boolean(q.label && /\b(diagram|sketch|draw)\b/i.test(q.prompt));
   // A calculation's result, or anything worth two marks or less, fits on one line.
   const oneLine = !isDiagram && (isCalc || q.marks <= 2);
+  // Anything written by hand can be photographed: a diagram, an essay, working on paper.
+  const canPhoto = !oneLine;
   const prompts = q.planPrompts ?? [];
   const [plan, setPlan] = useState<string[]>(() => {
     const saved = safeParse(r.plan);
@@ -712,9 +714,9 @@ function WrittenAnswer({
         </details>
       )}
 
-      {isDiagram && (
+      {canPhoto && (
         <div className="field">
-          <label htmlFor="photo">Photo of your diagram</label>
+          <label htmlFor="photo">{isDiagram ? "Photo of your diagram" : "Photo of your work"}</label>
           {r.photo && (
             // eslint-disable-next-line @next/next/no-img-element -- private upload served by an auth-checked route
             <img className="upload" src={`/api/photo?r=${r.id}&v=${photoVersion}`} alt="Your uploaded diagram" />
@@ -729,7 +731,9 @@ function WrittenAnswer({
               onChange={(e) => e.target.files?.[0] && void upload(e.target.files[0])}
             />
           )}
-          <span className="note">{uploading ? "Uploading…" : "Label the axes and every curve."}</span>
+          <span className="note">
+            {uploading ? "Uploading…" : isDiagram ? "Label the axes and every curve." : "If you wrote it on paper, photograph it here."}
+          </span>
         </div>
       )}
 

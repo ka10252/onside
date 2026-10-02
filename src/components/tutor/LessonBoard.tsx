@@ -8,7 +8,7 @@ import type { BankQuestion } from "@/lib/admin";
 import type { Lesson, LessonItem, PrepareQuestion, ReviewPlan, UnitBrief } from "@/lib/lesson";
 import { Blocks, Rich } from "@/components/Rich";
 import { Notes } from "@/components/Notes";
-import { applyTemplate, pickQuestions, saveLessonNotes, sendReviewQuiz, setOutcome } from "@/lib/lesson-actions";
+import { applyTemplate, pickQuestions, saveLessonNotes, sendHomework, sendReviewQuiz, setOutcome } from "@/lib/lesson-actions";
 
 type Pool = (BankQuestion & { seen: boolean })[];
 
@@ -19,6 +19,7 @@ export function LessonBoard({
   pool,
   plan,
   chosen,
+  left,
   basePath,
   studentFirstName,
 }: {
@@ -28,6 +29,8 @@ export function LessonBoard({
   plan: ReviewPlan | null;
   /** The picked questions with their answers, for the preparing screen. */
   chosen: PrepareQuestion[];
+  /** Questions the lesson never got to, for the homework. */
+  left: BankQuestion[];
   /** This lesson's own address, for the handout link. */
   basePath: string;
   studentFirstName: string;
@@ -40,6 +43,7 @@ export function LessonBoard({
   const [note, setNote] = useState<string | null>(null);
   const [open, setOpen] = useState<string | null>(null);
   const [band, setBand] = useState<"short" | "explain" | "essay">("short");
+  const [withReview, setWithReview] = useState(true);
   const [pending, start] = useTransition();
   const router = useRouter();
 
@@ -246,6 +250,53 @@ export function LessonBoard({
               </li>
             ))}
           </ol>
+        </section>
+      )}
+
+      {left.length > 0 && (
+        <section className="card">
+          <div className="card-hd">
+            <h2>Homework</h2>
+            <span className="muted" style={{ fontSize: 14 }}>{left.length} never got marked in the lesson</span>
+          </div>
+          <div className="cardbody stack" style={{ gap: 12 }}>
+            {lesson.homework_assignment_id ? (
+              <p className="formmsg good" style={{ margin: 0 }}>Already sent to {studentFirstName}.</p>
+            ) : (
+              <>
+                <ol className="pick">
+                  {left.map((q) => (
+                    <li key={q.id}>
+                      <span className="n">{q.marks}</span>
+                      <span className="pickopen" style={{ textAlign: "left", cursor: "default" }}>
+                        <QuestionLine q={q} />
+                      </span>
+                    </li>
+                  ))}
+                </ol>
+                <label className="opt">
+                  <input type="checkbox" checked={withReview} onChange={(e) => setWithReview(e.target.checked)} />
+                  <span>
+                    Add the review quiz too
+                    {plan && plan.missed.length > 0
+                      ? ` (${plan.missed.length + plan.variants.length} more, ${left.length + plan.missed.length + plan.variants.length} in all)`
+                      : " (nothing marked wrong yet)"}
+                  </span>
+                </label>
+                <div className="rowacts">
+                  <button
+                    type="button"
+                    className="btn accent"
+                    disabled={pending}
+                    onClick={() => run(() => sendHomework(lesson.id, withReview))}
+                  >
+                    {pending ? "Sending…" : `Send to ${studentFirstName}`}
+                  </button>
+                  <span className="muted" style={{ fontSize: 13 }}>Helper off. They can photograph work done on paper.</span>
+                </div>
+              </>
+            )}
+          </div>
         </section>
       )}
 

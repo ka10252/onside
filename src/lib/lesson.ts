@@ -23,6 +23,7 @@ export type Lesson = {
   created_at: string;
   taught_at: string | null;
   review_assignment_id: string | null;
+  homework_assignment_id: string | null;
 };
 
 export type LessonItem = { question_id: string; position: number; outcome: "right" | "wrong" | null };
@@ -269,4 +270,16 @@ export async function prepareView(lessonId: string): Promise<PrepareQuestion[]> 
       right: !past && q.format === "mcq" ? String(q.answer).toUpperCase() : null,
     };
   });
+}
+
+
+/** The questions a lesson never got to: picked for it, never marked right or wrong. */
+export async function unfinished(lessonId: string): Promise<BankQuestion[]> {
+  const lesson = await getLesson(lessonId);
+  if (!lesson) return [];
+  const left = lesson.items.filter((i) => i.outcome === null).map((i) => i.question_id);
+  if (left.length === 0 || lesson.unit === null) return [];
+  const bank = await bankRange([lesson.unit]);
+  const byId = new Map(bank.map((q) => [q.id, q]));
+  return left.map((id) => byId.get(id)).filter((q): q is BankQuestion => Boolean(q));
 }

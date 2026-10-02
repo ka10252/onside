@@ -247,3 +247,8 @@ With ten lessons left before the exam and twenty units, "what to teach next" is 
 The pairs are not invented. Counting across M22–N25, unit 10 appears in the same paper question as unit 13 twenty times, unit 3 with unit 4 fourteen times, unit 19 with unit 20 twelve times — so a pair is a pair the examiners already treat as one topic. A pair is also what a tutor can recap inside half an hour, which is why no two heavy units share a lesson: 16 goes with 17 (13 items), 13 with 10, 4 with 3. All twenty units are covered, which is every past question held.
 
 The student's standing still shows against each unit, and the three lessons where weight meets weakness are marked "Sooner".
+
+## What the lesson did not get to becomes homework (2026-10-03)
+A lesson rarely finishes its questions. The ones picked for it and never marked right or wrong are collected on the preparing screen and sent as homework, Helper off, with the tutor choosing whether the review quiz rides along — four left over is a different decision from eleven, so the checkbox says how many each way and the total. Sending them together counts as the review having gone out, so it is not owed twice.
+
+Any written answer can now carry a photo, not only a diagram: an essay drafted on paper, working done by hand. One-line answers and multiple choice cannot, since there is nothing to photograph.

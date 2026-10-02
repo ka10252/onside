@@ -211,7 +211,9 @@ CREATE TABLE IF NOT EXISTS lessons (
   created_at  TEXT NOT NULL DEFAULT (${NOW_SQL}),
   taught_at   TEXT,
   -- the review set sent afterwards, once it has been
-  review_assignment_id TEXT
+  review_assignment_id TEXT,
+  -- the set of questions the lesson never got to
+  homework_assignment_id TEXT
 );
 CREATE INDEX IF NOT EXISTS lessons_student ON lessons (student_id, created_at);
 
@@ -340,6 +342,7 @@ ${TABLES.map((t) => `ALTER TABLE ${t} ENABLE ROW LEVEL SECURITY;`).join("\n")}
 export const ADDED_COLUMNS = `
 ALTER TABLE unit_briefs ADD COLUMN IF NOT EXISTS tutor TEXT NOT NULL DEFAULT '';
 ALTER TABLE assignments ADD COLUMN IF NOT EXISTS results_seen_at TEXT;
+ALTER TABLE lessons ADD COLUMN IF NOT EXISTS homework_assignment_id TEXT;
 ALTER TABLE responses ADD COLUMN IF NOT EXISTS rewrite_note TEXT;
 ALTER TABLE responses ADD COLUMN IF NOT EXISTS rewrite_asked_at TEXT;
 ALTER TABLE responses ADD COLUMN IF NOT EXISTS rewrite_text TEXT;

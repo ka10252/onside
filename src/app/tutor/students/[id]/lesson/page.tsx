@@ -7,6 +7,7 @@ import { WeightPill } from "@/components/tutor/UnitWeight";
 import { getStudent } from "@/lib/admin";
 import { getLesson, lessonPool, lessonsFor, openLesson, prepareView, reviewPlan, teachView, unfinished, unitBrief } from "@/lib/lesson";
 import { TeachBoard } from "@/components/tutor/TeachBoard";
+import { noteRead } from "@/lib/revision";
 import { requireUser } from "@/lib/session";
 
 // The tutor's own room: preparing a lesson, running it, and sending a review quiz afterwards.
@@ -26,12 +27,13 @@ export default async function LessonPage({ params, searchParams }: PageProps<"/t
   // Opening a unit starts (or re-opens) its lesson, so the tutor's picks survive a refresh.
   const lesson = named ?? (unit && brief ? await getLesson((await openLesson(id, unit, `Unit ${unit} · ${brief.title}`)).id) : null);
   // In the lesson, only what the student should read is fetched at all.
-  const [pool, plan, teach, chosen, left] = await Promise.all([
+  const [pool, plan, teach, chosen, left, read] = await Promise.all([
     unit && !teaching ? lessonPool(unit, id) : Promise.resolve([]),
     lesson && !teaching ? reviewPlan(lesson.id) : Promise.resolve(null),
     lesson && teaching ? teachView(lesson.id) : Promise.resolve([]),
     lesson && !teaching ? prepareView(lesson.id) : Promise.resolve([]),
     lesson && !teaching ? unfinished(lesson.id) : Promise.resolve([]),
+    unit && !teaching ? noteRead(id, unit) : Promise.resolve(null),
   ]);
   const first = student.name.split(" ")[0];
 
@@ -98,6 +100,7 @@ export default async function LessonPage({ params, searchParams }: PageProps<"/t
               left={left}
               basePath={`/tutor/students/${id}/lesson`}
               studentFirstName={first}
+              noteRead={read}
             />
           )}
 

@@ -18,6 +18,10 @@ const TABLES: { name: string; where?: string }[] = [
   { name: "responses" },
   { name: "events" },
   { name: "ai_batches" },
+  // What was taught, and whether the student has read the notes from it.
+  { name: "lessons" },
+  { name: "lesson_items" },
+  { name: "note_reads" },
 ];
 
 async function columnsOf(db: Queryable, table: string) {

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Nav, STUDENT_TABS } from "@/components/Nav";
+import { Nav } from "@/components/Nav";
 import { formatDue } from "@/components/StatusPill";
 import { dateInSG, duePieces, isOverdue, shortDateSG } from "@/lib/due";
 import { UnitSelect } from "@/components/student/UnitSelect";
@@ -9,6 +9,7 @@ import { closeExpiredAssignments, hasAnswerSql } from "@/lib/student";
 import { AssignmentCalendar, type StudentDay } from "@/components/student/AssignmentCalendar";
 import { getSchedule, singaporeToday, upcomingSends } from "@/lib/schedule";
 import { rewritesWaiting } from "@/lib/rewrite";
+import { studentTabs } from "@/lib/revision";
 
 type Row = {
   id: string;
@@ -63,7 +64,7 @@ export default async function AssignmentsPage({ searchParams }: PageProps<"/stud
   for (const u of unitRows) unitsOf.set(u.assignment_id, [...(unitsOf.get(u.assignment_id) ?? []), u]);
 
   // Four weeks from this Monday: what arrived, what is due, and what the tutor has scheduled.
-  const [schedule, rewrites] = await Promise.all([getSchedule(user.id), rewritesWaiting(user.id)]);
+  const [schedule, rewrites, tabs] = await Promise.all([getSchedule(user.id), rewritesWaiting(user.id), studentTabs(user.id)]);
   const { date: todaySg } = singaporeToday();
   const monday = new Date(new Date(`${todaySg}T00:00:00Z`).getTime() - ((new Date(`${todaySg}T00:00:00Z`).getUTCDay() + 6) % 7) * 86_400_000);
   const coming = new Map<string, ReturnType<typeof upcomingSends>>();
@@ -141,7 +142,7 @@ export default async function AssignmentsPage({ searchParams }: PageProps<"/stud
 
   return (
     <>
-      <Nav user={user} tabs={STUDENT_TABS} active="/student" />
+      <Nav user={user} tabs={tabs} active="/student" />
       <main className="page">
         <div className="wrap stack">
           <div className="phead" style={{ marginBottom: 0 }}>

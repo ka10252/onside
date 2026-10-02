@@ -3,7 +3,7 @@ import { signOut } from "@/lib/auth-actions";
 import { initials } from "@/lib/format";
 import type { User } from "@/lib/session";
 
-export type Tab = { href: string; label: string };
+export type Tab = { href: string; label: string; /** A mark saying there is something new behind this tab. */ dot?: boolean };
 
 export function Nav({ user, tabs, active }: { user: User; tabs: Tab[]; active: string }) {
   return (
@@ -16,6 +16,7 @@ export function Nav({ user, tabs, active }: { user: User; tabs: Tab[]; active: s
           {tabs.map((t) => (
             <Link key={t.href} href={t.href} className={`tab${t.href === active ? " on" : ""}`} style={{ textDecoration: "none" }}>
               {t.label}
+              {t.dot && <span className="newdot" aria-label="Something new" />}
             </Link>
           ))}
         </nav>

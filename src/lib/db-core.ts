@@ -198,6 +198,15 @@ CREATE TABLE IF NOT EXISTS unit_briefs (
   updated_at  TEXT NOT NULL DEFAULT (${NOW_SQL})
 );
 
+-- When a student last opened a unit's revision notes. The tutor can see whether they have been
+-- read, and the student gets a mark on notes they have not opened since the lesson.
+CREATE TABLE IF NOT EXISTS note_reads (
+  student_id  TEXT NOT NULL REFERENCES users(id),
+  unit        INTEGER NOT NULL,
+  read_at     TEXT NOT NULL,
+  PRIMARY KEY (student_id, unit)
+);
+
 -- A lesson the tutor prepares and then teaches. Nothing here touches daily practice: a lesson is
 -- the tutor's own working space until they choose to send a set from it (docs/decisions.md).
 CREATE TABLE IF NOT EXISTS lessons (

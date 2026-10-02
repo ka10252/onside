@@ -4,6 +4,7 @@ import { Nav, STUDENT_TABS } from "@/components/Nav";
 import { Results } from "@/components/student/Results";
 import { requireUser } from "@/lib/session";
 import { finalizeAssignment, getAssignment, isLocked } from "@/lib/student";
+import { studentNotes } from "@/lib/revision";
 
 // A finished set, for review: the student's own answers, results, and (once the tutor has sent marks)
 // marks, the tutor's comments and the answers.
@@ -35,10 +36,19 @@ export default async function ResultsPage({ params, searchParams }: PageProps<"/
     );
   }
 
+  const notes = await studentNotes(user.id);
   return (
     <>
       <Nav user={user} tabs={STUDENT_TABS} active="/student" />
-      <Results a={a} basePath={`/student/a/${a.id}/done`} back={{ href: "/student", label: "Assignments" }} show={show} unit={unit} seenBy="student" />
+      <Results
+        a={a}
+        basePath={`/student/a/${a.id}/done`}
+        back={{ href: "/student", label: "Assignments" }}
+        show={show}
+        unit={unit}
+        seenBy="student"
+        notesOpen={notes.map((n) => n.unit)}
+      />
     </>
   );
 }

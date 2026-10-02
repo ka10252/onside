@@ -25,6 +25,7 @@ export async function Results({
   show,
   unit,
   seenBy,
+  notesOpen = [],
 }: {
   a: { id: string; set_id: string; title: string; status: string };
   /** Where the filter links point: this page. */
@@ -35,6 +36,8 @@ export async function Results({
   unit?: string;
   /** Who is reading: only the student opening their own marks counts as having seen them. */
   seenBy: "student" | "tutor";
+  /** Units whose revision notes are open to this student, so the set can link to them. */
+  notesOpen?: number[];
 }) {
   const rv = (await loadReview(a.id))!;
   const unitRows = await all<{ id: string; number: number; title: string }>(
@@ -58,6 +61,8 @@ export async function Results({
 
   const unitPick = Number(unit) || null;
   const units = [...new Map(unitRows.map((u) => [u.number, u])).values()];
+  // The notes for the units this set covers, where the lesson on them has been taught.
+  const notes = units.filter((u) => notesOpen.includes(u.number));
   const lost = (it: ReviewItem) => marked && (it.confirmed ?? 0) < it.q.marks;
   const helped = (it: ReviewItem) => (it.r?.hint_level ?? 0) > 0 || (it.r?.ai_questions ?? 0) > 0;
   const toRewrite = (it: ReviewItem) => Boolean(it.r?.rewrite_asked_at && !it.r.rewrite_text);
@@ -90,6 +95,19 @@ export async function Results({
                   {marked ? `${rv.score.marks} of ${rv.score.total} marks` : "Submitted · waiting for your tutor's marks"}{" "}
                   · {answered} of {rv.items.length} answered
                 </p>
+                {notes.length > 0 && (
+                  <p className="muted" style={{ margin: "4px 0 0", fontSize: 14 }}>
+                    Revision notes:{" "}
+                    {notes.map((u, i) => (
+                      <span key={u.number}>
+                        {i > 0 && " · "}
+                        <Link href={`/student/notes/${u.number}`}>
+                          Unit {u.number} · {u.title}
+                        </Link>
+                      </span>
+                    ))}
+                  </p>
+                )}
               </div>
             </div>
           </div>

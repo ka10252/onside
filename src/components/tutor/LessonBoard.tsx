@@ -4,6 +4,7 @@ import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { PreviewPanel, QuestionLine } from "@/components/QuestionPreview";
 import { reportIfStale } from "@/components/stale";
+import { shortDateSG } from "@/lib/due";
 import type { BankQuestion } from "@/lib/admin";
 import type { Lesson, LessonItem, PrepareQuestion, ReviewPlan, UnitBrief } from "@/lib/lesson";
 import { Blocks, Rich } from "@/components/Rich";
@@ -22,6 +23,7 @@ export function LessonBoard({
   left,
   basePath,
   studentFirstName,
+  noteRead,
 }: {
   brief: UnitBrief;
   lesson: Lesson & { items: LessonItem[] };
@@ -34,6 +36,8 @@ export function LessonBoard({
   /** This lesson's own address, for the handout link. */
   basePath: string;
   studentFirstName: string;
+  /** When the student last opened these notes on their own screen, if they have. */
+  noteRead: string | null;
 }) {
   const [picked, setPicked] = useState<string[]>(lesson.items.map((i) => i.question_id));
   const [outcomes, setOutcomes] = useState<Record<string, "right" | "wrong" | null>>(
@@ -94,7 +98,17 @@ export function LessonBoard({
           <summary className="card-hd" style={{ cursor: "pointer" }}>
             <h2>Revision notes</h2>
             <span className="rowacts">
-              <span className="muted" style={{ fontSize: 14 }}>What {studentFirstName} reads · the Teach screen opens on this</span>
+              <span className="muted" style={{ fontSize: 14 }}>
+                What {studentFirstName} reads · the Teach screen opens on this
+              </span>
+              {lesson.status === "taught" &&
+                (noteRead ? (
+                  <span className="pill gray">
+                    {studentFirstName} read these {shortDateSG(noteRead)}
+                  </span>
+                ) : (
+                  <span className="pill amber">{studentFirstName} has not opened these</span>
+                ))}
               <a className="btn ghost sm" href={`${basePath}/print?unit=${brief.unit}`} target="_blank" rel="noreferrer">
                 Print or save as PDF
               </a>

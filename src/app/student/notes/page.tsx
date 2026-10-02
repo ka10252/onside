@@ -1,18 +1,18 @@
 import Link from "next/link";
-import { Nav, STUDENT_TABS } from "@/components/Nav";
+import { Nav } from "@/components/Nav";
 import { shortDateSG } from "@/lib/due";
 import { requireUser } from "@/lib/session";
-import { studentNotes } from "@/lib/revision";
+import { studentNotes, studentTabs, unread } from "@/lib/revision";
 
 // The notes from the lessons already taught, to read again on the student's own. A unit appears
 // here the moment its lesson has been run, and not before.
 export default async function StudentNotesPage() {
   const user = await requireUser("student");
-  const notes = await studentNotes(user.id);
+  const [notes, tabs] = await Promise.all([studentNotes(user.id), studentTabs(user.id)]);
 
   return (
     <>
-      <Nav user={user} tabs={STUDENT_TABS} active="/student/notes" />
+      <Nav user={user} tabs={tabs} active="/student/notes" />
       <main className="page">
         <div className="wrap stack">
           <div className="phead" style={{ marginBottom: 0 }}>
@@ -46,6 +46,11 @@ export default async function StudentNotesPage() {
                     {n.headline && <p className="muted" style={{ margin: "4px 0 0" }}>{n.headline}</p>}
                     <div className="meta">
                       <span>Taught {shortDateSG(n.taught_at)}</span>
+                      {unread(n) ? (
+                        <span className="pill amber">{n.read_at ? "Changed since you read it" : "Not read yet"}</span>
+                      ) : (
+                        <span>Read {shortDateSG(n.read_at!)}</span>
+                      )}
                     </div>
                   </div>
                   <span className="btn ghost sm">Read</span>

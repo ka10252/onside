@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { Notes } from "@/components/Notes";
-import { PrintButton } from "@/components/tutor/PrintButton";
+import { PrintButton } from "@/components/PrintButton";
 import { unitBrief } from "@/lib/lesson";
 import { requireUser } from "@/lib/session";
 

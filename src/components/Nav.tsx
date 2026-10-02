@@ -38,7 +38,10 @@ export const TUTOR_TABS: Tab[] = [
   { href: "/tutor/bank", label: "Questions" },
 ];
 
-export const STUDENT_TABS: Tab[] = [{ href: "/student", label: "Assignments" }];
+export const STUDENT_TABS: Tab[] = [
+  { href: "/student", label: "Assignments" },
+  { href: "/student/notes", label: "Revision notes" },
+];
 
 /** The same bar without the person, for the moment before a page's data arrives. */
 export function NavFrame({ tabs, active }: { tabs: Tab[]; active: string }) {

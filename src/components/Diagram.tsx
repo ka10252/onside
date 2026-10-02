@@ -38,14 +38,22 @@ function crossPath(path: Pt[], l: Line): Pt {
 const shiftX = (l: Line, by: number): Line => ({ a: { x: l.a.x + by, y: l.a.y }, b: { x: l.b.x + by, y: l.b.y } });
 const d2 = (n: number) => Math.round(n * 10) / 10;
 
-/** The arrow that says a curve moved, drawn from a point on the first to the same point on the second. */
-function Shift({ from, to }: { from: Pt; to: Pt }) {
+/**
+ * The arrow that says a curve moved. It floats between the two positions without touching either,
+ * so it reads as a movement rather than as part of a curve.
+ */
+function Shift({ from, to, gap = 9 }: { from: Pt; to: Pt; gap?: number }) {
+  const dx = to.x - from.x;
+  const dy = to.y - from.y;
+  const len = Math.hypot(dx, dy) || 1;
+  const ux = (dx / len) * gap;
+  const uy = (dy / len) * gap;
   return (
     <line
-      x1={d2(from.x)}
-      y1={d2(from.y)}
-      x2={d2(to.x)}
-      y2={d2(to.y)}
+      x1={d2(from.x + ux)}
+      y1={d2(from.y + uy)}
+      x2={d2(to.x - ux)}
+      y2={d2(to.y - uy)}
       stroke={SHIFT}
       strokeWidth="1.6"
       markerEnd="url(#dgmarrow)"

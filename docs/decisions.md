@@ -215,3 +215,12 @@ Filling a unit 16 lesson picked nine Paper 2 questions, one Paper 1 and no Paper
 
 ## The answer box is the size of the answer (2026-10-02)
 Every written answer was a 180-pixel textarea, whether it was worth two marks or fifteen. A calculation's result and anything worth two marks or less is now a single line; four marks gets a small box, five to nine a larger one, an essay the full height. A student should be able to tell how much to write from the space they are given.
+
+## Revision notes carry their diagrams, and print (2026-10-02)
+Emphasis in a note is semi-bold rather than bold: it should lift a phrase, not shout. The diagrams the notes lean on are drawn rather than described — `src/components/Diagram.tsx` holds them as SVG, so they follow the page's colours in both themes and print cleanly, and a note places one with a line of its own (`:::diagram ad-as  caption`). Two exist so far, the exchange rate diagram and AD/AS, which are between them the diagrams of the two heaviest units.
+
+Each note opens with three things to take away rather than a paragraph saying what it covers, because a student reading it before a lesson should come away with three sentences if nothing else.
+
+`/tutor/students/[id]/lesson/print?unit=N` is the notes alone, laid out for paper, with the browser's own Save as PDF doing the export. No questions are on it, so it can be given to a student before the lesson.
+
+`scripts/cover.ts` checks the other direction: it takes the questions the template picks for a unit and asks whether the note covers what each one leans on. Unit 16's essay turned out to ask about unemployment, which the note had dropped when it was cut to twenty minutes.

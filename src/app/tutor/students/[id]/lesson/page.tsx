@@ -88,7 +88,15 @@ export default async function LessonPage({ params, searchParams }: PageProps<"/t
           ) : teaching ? (
             <TeachBoard lessonId={lesson!.id} questions={teach} notes={brief.notes?.body ?? null} />
           ) : (
-            <LessonBoard brief={brief} lesson={lesson!} pool={pool} plan={plan} chosen={chosen} studentFirstName={first} />
+            <LessonBoard
+              brief={brief}
+              lesson={lesson!}
+              pool={pool}
+              plan={plan}
+              chosen={chosen}
+              basePath={`/tutor/students/${id}/lesson`}
+              studentFirstName={first}
+            />
           )}
 
           {past.length > 0 && !teaching && (

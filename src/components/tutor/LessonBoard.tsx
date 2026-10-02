@@ -19,6 +19,7 @@ export function LessonBoard({
   pool,
   plan,
   chosen,
+  basePath,
   studentFirstName,
 }: {
   brief: UnitBrief;
@@ -27,6 +28,8 @@ export function LessonBoard({
   plan: ReviewPlan | null;
   /** The picked questions with their answers, for the preparing screen. */
   chosen: PrepareQuestion[];
+  /** This lesson's own address, for the handout link. */
+  basePath: string;
   studentFirstName: string;
 }) {
   const [picked, setPicked] = useState<string[]>(lesson.items.map((i) => i.question_id));
@@ -86,7 +89,12 @@ export function LessonBoard({
         <details className="card">
           <summary className="card-hd" style={{ cursor: "pointer" }}>
             <h2>Revision notes</h2>
-            <span className="muted" style={{ fontSize: 14 }}>What {studentFirstName} reads · the Teach screen opens on this</span>
+            <span className="rowacts">
+              <span className="muted" style={{ fontSize: 14 }}>What {studentFirstName} reads · the Teach screen opens on this</span>
+              <a className="btn ghost sm" href={`${basePath}/print?unit=${brief.unit}`} target="_blank" rel="noreferrer">
+                Print or save as PDF
+              </a>
+            </span>
           </summary>
           <div className="cardbody">
             <Notes text={brief.notes.body} />

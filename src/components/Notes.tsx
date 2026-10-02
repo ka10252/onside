@@ -1,3 +1,4 @@
+import { Diagram, hasDiagram } from "./Diagram";
 import { Rich } from "./Rich";
 
 /**
@@ -15,6 +16,13 @@ export function Notes({ text }: { text: string }) {
     const trimmed = line.trim();
 
     if (!trimmed) {
+      i++;
+      continue;
+    }
+    // ":::diagram ad-as  An optional caption"
+    const dgm = trimmed.match(/^:::diagram\s+([\w-]+)\s*(.*)$/);
+    if (dgm && hasDiagram(dgm[1]!)) {
+      out.push(<Diagram key={key++} name={dgm[1]!} caption={dgm[2]!.trim() || undefined} />);
       i++;
       continue;
     }

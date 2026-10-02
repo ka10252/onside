@@ -235,3 +235,8 @@ Every equilibrium in a note's diagram is worked out from where the curves actual
 
 ## Marks that have not been read (2026-10-03)
 `assignments.results_seen_at` is set the first time the student opens a reviewed set — only from their own screen, so the tutor looking at "See their screen" does not mark it read. The student's Done tab carries a dot while something is unread and each set says "New marks"; the tutor's assignment list says "Marks read" with the date, or "Not opened". A third tab, "Need revision", collects the sets with a rewrite still owed and links straight to it.
+
+## A rewrite is written from the comment, not from the mark scheme (2026-10-03)
+Sending the marks opens the mark scheme on the student's results screen, and a question with a rewrite owed sat directly above it — so the second version could be copied from the answer. While a rewrite is owed that question's mark scheme stays shut, and the screen says it opens once the rewrite is sent. The tutor's comment stays visible, because that is what the rewrite is written against.
+
+No hints and no Helper on a rewrite (Jin, 2026-10-03). A rewrite is there to show whether the feedback landed, and the help counts on a response measure the first attempt — mixing a second round of help into them would make "right without help" mean nothing.

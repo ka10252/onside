@@ -250,6 +250,9 @@ function ResultRow({ it, marked, context, unit }: { it: ReviewItem; marked: bool
   const attempts = json.parse<{ value: string; correct: boolean }[]>(r?.attempts, []);
   const autoResult = it.auto && attempts.length ? attempts.some((x) => x.correct) : null;
   const blank = it.result === "No answer" || it.result === "Not opened";
+  const rewrite = it.r ? rewriteOf(it.r) : null;
+  // While a rewrite is owed, the answer stays shut: writing it again is the point, not copying it.
+  const awaitingRewrite = Boolean(rewrite && !rewrite.text);
   const hintsUsed = r?.hint_level ?? 0;
   const asked = r?.ai_questions ?? 0;
   const help = [hintsUsed > 0 ? `Hint ${hintsUsed === 2 ? "1 + 2" : "1"}` : "", asked > 0 ? `Helper ×${asked}` : ""].filter(Boolean).join(" · ");
@@ -292,7 +295,7 @@ function ResultRow({ it, marked, context, unit }: { it: ReviewItem; marked: bool
           <YourAnswer q={q} it={it} marked={marked} />
         </div>
 
-        {it.r && rewriteOf(it.r) && <RewriteBox responseId={it.r.id} rewrite={rewriteOf(it.r)!} />}
+        {rewrite && <RewriteBox responseId={it.r!.id} rewrite={rewrite} />}
 
         {marked && it.tutorMark?.note && it.tutorMark.note !== ACCEPTED_NOTE && (
           <div className="why">
@@ -301,13 +304,18 @@ function ResultRow({ it, marked, context, unit }: { it: ReviewItem; marked: bool
           </div>
         )}
 
-        {marked && (
+        {marked && !awaitingRewrite && (
           <details className="sub" open={(it.confirmed ?? 0) < q.marks}>
             <summary>{past ? "Mark scheme" : "Answer"}</summary>
             <div className="mstext">
               <Rich text={answerText(q)} />
             </div>
           </details>
+        )}
+        {awaitingRewrite && (
+          <p className="note" style={{ margin: 0 }}>
+            The {past ? "mark scheme" : "answer"} opens once you have sent your rewrite.
+          </p>
         )}
       </div>
 

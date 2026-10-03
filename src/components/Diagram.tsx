@@ -775,6 +775,75 @@ function FixedRate({ caption }: { caption?: string }) {
   );
 }
 
+/** Demand for the currency falls: the rate depreciates. */
+function ExchangeRateFall({ caption }: { caption?: string }) {
+  const d1 = line({ x: 62, y: 46 }, { x: 246, y: 184 });
+  const s1 = line({ x: 62, y: 184 }, { x: 258, y: 42 });
+  const dFall = shiftX(d1, -46);
+  const e1 = cross(d1, s1);
+  const e2 = cross(dFall, s1);
+  return (
+    <Frame x="Quantity of the currency" y="Exchange rate" caption={caption}>
+      <Straight l={s1} label="S₁" colour={CURVE} />
+      <Straight l={d1} label="D₁" colour={CURVE} />
+      <Straight l={clip(dFall)} label="D₂" colour={SHIFT} dashed />
+      <Shift from={along(d1, 0.3)} to={along(dFall, 0.3)} />
+      <Eq at={e1} px="e₁" qx="Q₁" colour={CURVE} />
+      <Eq at={e2} px="e₂" qx="Q₂" colour={SHIFT} />
+    </Frame>
+  );
+}
+
+/** More of the currency is sold to pay for imports: supply shifts right and the rate falls. */
+function ExchangeRateSupply({ caption }: { caption?: string }) {
+  const d1 = line({ x: 62, y: 46 }, { x: 246, y: 184 });
+  const s1 = line({ x: 62, y: 184 }, { x: 240, y: 42 });
+  const s2 = shiftX(s1, 48);
+  const e1 = cross(d1, s1);
+  const e2 = cross(d1, s2);
+  return (
+    <Frame x="Quantity of the currency" y="Exchange rate" caption={caption}>
+      <Straight l={s1} label="S₁" colour={CURVE} />
+      <Straight l={clip(s2)} label="S₂" colour={SHIFT} dashed />
+      <Straight l={d1} label="D₁" colour={CURVE} />
+      <Shift from={along(s1, 0.34)} to={along(s2, 0.34)} />
+      <Eq at={e1} px="e₁" qx="Q₁" colour={CURVE} />
+      <Eq at={e2} px="e₂" qx="Q₂" colour={SHIFT} />
+    </Frame>
+  );
+}
+
+/**
+ * The J-curve. After a depreciation the trade balance falls further before it recovers, because
+ * quantities take time to respond, and it crosses back above its starting level once they do.
+ */
+function JCurve({ caption }: { caption?: string }) {
+  const zero = 118;
+  const start = 70;
+  const pts: Pt[] = [];
+  for (let i = 0; i <= 60; i++) {
+    const t = i / 60;
+    const x = start + t * 200;
+    // down into a trough, then up through the zero line into surplus
+    pts.push({ x, y: zero + Math.sin(t * Math.PI * 1.1) * 40 - t * 56 });
+  }
+  const trough = pts.reduce((a, b) => (b.y > a.y ? b : a), pts[0]!);
+  const crossing = pts.find((p) => p.x > trough.x && p.y < zero) ?? pts[pts.length - 1]!;
+  return (
+    <Frame x="Time" y="Trade balance" caption={caption}>
+      <line x1="48" y1={zero} x2="300" y2={zero} stroke={AXIS} strokeWidth="1.4" strokeDasharray="4 4" />
+      <text x="304" y={zero + 4} textAnchor="end" className="dgmlab">0</text>
+      <line x1={start} y1="200" x2={start} y2="34" stroke={GUIDE} strokeWidth="1" strokeDasharray="3 3" />
+      <text x={start} y="214" textAnchor="middle" className="dgmlab" fill={SHIFT}>depreciation</text>
+      <path d={`M${pts.map((p) => `${d2(p.x)} ${d2(p.y)}`).join(" L")}`} fill="none" stroke={CURVE} strokeWidth="2" />
+      <circle cx={d2(trough.x)} cy={d2(trough.y)} r="3.5" fill={SHIFT} />
+      <text x={d2(trough.x)} y={d2(trough.y) + 17} textAnchor="middle" className="dgmlab" fill={SHIFT}>deficit widens</text>
+      <circle cx={d2(crossing.x)} cy={d2(crossing.y)} r="3.5" fill={SHIFT} />
+      <text x={d2(crossing.x) + 7} y={d2(crossing.y) - 7} className="dgmlab" fill={SHIFT}>surplus</text>
+    </Frame>
+  );
+}
+
 const DIAGRAMS: Record<string, (p: { caption?: string }) => React.ReactElement> = {
   "exchange-rate": ExchangeRate,
   "ad-as": AdAs,
@@ -794,6 +863,9 @@ const DIAGRAMS: Record<string, (p: { caption?: string }) => React.ReactElement> 
   ppc: Ppc,
   lorenz: Lorenz,
   "fixed-rate": FixedRate,
+  "exchange-rate-fall": ExchangeRateFall,
+  "exchange-rate-supply": ExchangeRateSupply,
+  "j-curve": JCurve,
 };
 
 export function Diagram({ name, caption }: { name: string; caption?: string }) {

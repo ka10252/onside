@@ -16,8 +16,18 @@ export function Rich({ text }: { text: string }) {
     if (at > last) out.push(text.slice(last, at));
     if (m[1] !== undefined) out.push(<b key={key++}>{m[1]}</b>);
     else if (m[2] !== undefined) out.push(<span key={key++} className="qtag">{m[2]}</span>);
-    else if (m[3] !== undefined) out.push(<mark key={key++} className="hl-must">{m[3]}</mark>);
-    else out.push(<mark key={key++} className="hl-bonus">{m[4]}</mark>);
+    else if (m[3] !== undefined)
+      out.push(
+        <mark key={key++} className="hl-must">
+          <Rich text={m[3]} />
+        </mark>,
+      );
+    else
+      out.push(
+        <mark key={key++} className="hl-bonus">
+          <Rich text={m[4]!} />
+        </mark>,
+      );
     last = at + m[0].length;
   }
   out.push(text.slice(last));

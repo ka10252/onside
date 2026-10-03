@@ -12,9 +12,9 @@ import { unitReview, type UnitReview } from "./unit-weight";
  * inside half an hour, which is why the heavier unit never shares with another heavy one.
  */
 export const LESSONS: { units: number[]; why: string }[] = [
-  { units: [13, 10], why: "Policies and the objectives they aim at — set in the same question 20 times" },
-  { units: [16, 17], why: "Exchange rates and the accounts they move; 17.4 is 16's evaluation" },
-  { units: [4, 3], why: "Intervention rests on elasticity — who bears a tax, how big the loss is" },
+  { units: [13, 10], why: "Policies, and the objectives they are aimed at" },
+  { units: [16, 17], why: "Exchange rates, and the accounts that move with them" },
+  { units: [4, 3], why: "Intervention rests on elasticity: who bears a tax, and how big the loss is" },
   { units: [8, 9], why: "Measuring the economy, then the model that explains it" },
   { units: [2, 5], why: "The market first, then the failures read off the same diagram" },
   { units: [6, 7], why: "The failures that justify intervening, then market power itself" },

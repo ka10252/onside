@@ -2,77 +2,44 @@ import "server-only";
 import { bankRange, type BankQuestion } from "./admin";
 import { all, one } from "./db";
 import { unitsOfLesson } from "./lesson-plan";
+import { Q_TYPES, TYPE_LABEL, typeOf, type QType } from "./question-types";
 
-/**
- * A lesson's question mix, worked out from what the past papers ask of that unit rather than fixed
- * by hand. Unit 8 is two-thirds calculation, unit 9 is almost all explanation, unit 20 is mostly
- * evaluation — a lesson that ignores that spends its hour on the wrong thing.
- */
+export { Q_TYPES, TYPE_LABEL, typeOf, type QType };
+
 export type Recipe = {
   unit: number;
-  /** Warm-up, from the unit tests: the IB sets no multiple choice. */
   mcq: number;
-  /** 1–3 marks: definitions and calculations. */
+  definition: number;
   short: number;
-  /** 4–9 marks: the explanation questions. */
-  explain: number;
-  /** 10+ marks: written in the lesson, or planned and finished at home. */
+  diagram: number;
+  /** Essay sets, not essays: one set is an (a) and a (b) taken together. */
   essay: number;
-  /** What the papers do with this unit, as shares of its items. */
-  demand: { calculate: number; explain: number; evaluate: number; define: number };
   why: string;
 };
 
-/** The questions a lesson holds. Ten is a two-hour lesson's worth with time to talk. */
-const LESSON_SIZE = 10;
+/** What a two-hour lesson holds: a warm-up, the short work, the diagrams, and one essay set. */
+const FIXED: Omit<Recipe, "unit" | "why"> = { mcq: 2, definition: 2, short: 2, diagram: 4, essay: 1 };
 
 export async function recipeFor(unit: number): Promise<Recipe> {
-  const d = await one<{ calc: number; explain: number; evaluate: number; define: number; total: number }>(
-    `SELECT COUNT(*) FILTER (WHERE command_term IN ('calculate','show that','determine','construct'))::int AS calc,
-            COUNT(*) FILTER (WHERE command_term IN ('explain','describe','outline','distinguish'))::int AS explain,
-            COUNT(*) FILTER (WHERE command_term IN ('evaluate','discuss','examine','recommend','justify'))::int AS evaluate,
-            COUNT(*) FILTER (WHERE command_term IN ('define','state','identify','list'))::int AS define,
+  const d = await one<{ diagram: number; define: number; total: number }>(
+    `SELECT COUNT(*) FILTER (WHERE diagram_type IS NOT NULL AND diagram_type <> '')::int AS diagram,
+            COUNT(*) FILTER (WHERE command_term = 'define')::int AS define,
             COUNT(*)::int AS total
-       FROM past_items WHERE unit_number = ?`,
-    unit,
+       FROM past_items WHERE unit_number = ANY(?)`,
+    unitsOfLesson(unit),
   );
   const total = d?.total || 1;
-  const demand = {
-    calculate: (d?.calc ?? 0) / total,
-    explain: (d?.explain ?? 0) / total,
-    evaluate: (d?.evaluate ?? 0) / total,
-    define: (d?.define ?? 0) / total,
-  };
-
-  // One essay in a two-hour lesson; two only where the unit is mostly evaluation. A unit the
-  // papers never ask to evaluate — the AD/AS mechanics, the introduction — gets none.
-  const essay = demand.evaluate >= 0.45 ? 2 : demand.evaluate >= 0.08 ? 1 : 0;
-  const left = LESSON_SIZE - essay;
-  // Calculations and definitions are short questions; explanation is the 4–9 mark band.
-  const shortWeight = demand.calculate + demand.define;
-  const explainWeight = demand.explain;
-  const sum = shortWeight + explainWeight || 1;
-  const explain = Math.round((left * explainWeight) / sum);
-  const short = left - explain;
-
-  const why = [
-    demand.calculate >= 0.4 ? "mostly calculation" : "",
-    demand.explain >= 0.5 ? "mostly explanation" : "",
-    demand.evaluate >= 0.4 ? "mostly evaluation" : "",
-    demand.define >= 0.4 ? "mostly definitions" : "",
-  ]
-    .filter(Boolean)
-    .join(" and ");
-  return {
-    unit,
-    // A warm-up on top of the ten, never none: a lesson opens better with something quick.
-    mcq: Math.min(6, Math.max(2, Math.round(short / 2))),
-    short,
-    explain,
-    essay,
-    demand,
-    why: why || "a mix of explanation and short questions",
-  };
+  const drawn = (d?.diagram ?? 0) / total;
+  // A unit the papers rarely ask to draw spends those places on short answers instead.
+  const diagram = drawn >= 0.3 ? 4 : drawn >= 0.1 ? 3 : 1;
+  const short = FIXED.short + (FIXED.diagram - diagram);
+  const why =
+    drawn >= 0.3
+      ? "a diagram unit"
+      : drawn >= 0.1
+        ? "part diagram, part written"
+        : "almost no diagrams in the papers";
+  return { unit, ...FIXED, diagram, short, why };
 }
 
 export type FilledTemplate = { recipe: Recipe; picked: BankQuestion[]; short: string | null; spanned: number };
@@ -141,8 +108,8 @@ const stemOf = (q: BankQuestion): string | null => {
  * question, and a lesson that sends only the (b) hides half of it. Whole sets are preferred, so the
  * tutor can have the student outline either part (Jin, 2026-10-02).
  */
-function essays(free: BankQuestion[], want: number): BankQuestion[] {
-  if (want <= 0) return [];
+function essays(free: BankQuestion[], wantSets: number): BankQuestion[] {
+  if (wantSets <= 0) return [];
   const all = free.filter((q) => q.source === "past" && q.marks >= 10);
   const sets = new Map<string, BankQuestion[]>();
   for (const q of all) {
@@ -157,12 +124,12 @@ function essays(free: BankQuestion[], want: number): BankQuestion[] {
 
   const out: BankQuestion[] = [];
   for (const set of whole) {
-    if (out.length >= want) break;
+    if (out.length >= wantSets * 2) break;
     out.push(...set);
   }
   if (out.length > 0) return out;
   // No complete set left in this unit: one essay on its own is better than none.
-  return spread(all, want);
+  return spread(all, wantSets);
 }
 
 /**
@@ -182,28 +149,31 @@ export async function fillTemplate(unit: number, studentId: string): Promise<Fil
   ]);
   const had = new Set(sent.map((r) => r.question_id));
   const free = bank.filter((q) => !had.has(q.id));
-  const take = (n: number, pick: (q: BankQuestion) => boolean) => spread(free.filter(pick), n);
+  const take = (n: number, type: QType) => spread(free.filter((q) => typeOf(q) === type && (type === "mcq" || q.source === "past")), n);
 
+  // The five kinds, in the order the lesson runs, with the essay set last.
   const picked = [
-    ...take(recipe.mcq, (q) => q.format === "mcq"),
-    ...take(recipe.short, (q) => q.source === "past" && q.marks <= 3 && q.format !== "mcq"),
-    ...take(recipe.explain, (q) => q.source === "past" && q.marks >= 4 && q.marks <= 9),
-    ...essays(free, recipe.essay),
+    ...take(recipe.mcq, "mcq"),
+    ...take(recipe.definition, "definition"),
+    ...take(recipe.short, "short"),
+    ...take(recipe.diagram, "diagram"),
   ];
-  // A lesson of two units should ask at least one question that needs both of them. If the recipe
-  // picked none, the newest such question takes the place of one the same length.
-  if (units.length > 1 && !picked.some((q) => spans.has(q.id))) {
-    const band = (q: BankQuestion) => (q.marks <= 3 ? "short" : q.marks <= 9 ? "explain" : "essay");
-    for (const want of ["explain", "short", "essay"] as const) {
-      const both = spread(free.filter((q) => spans.has(q.id) && q.source === "past" && band(q) === want), 1);
-      const swap = picked.findLastIndex((q) => q.source === "past" && band(q) === want);
+  const essaySet = essays(free, recipe.essay);
+
+  // A lesson of two units should ask at least one question that needs both of them. If none of the
+  // picks does, the newest such question takes the place of one of the same kind.
+  if (units.length > 1 && ![...picked, ...essaySet].some((q) => spans.has(q.id))) {
+    for (const want of ["diagram", "short", "definition"] as const) {
+      const both = spread(free.filter((q) => spans.has(q.id) && q.source === "past" && typeOf(q) === want), 1);
+      const swap = picked.findLastIndex((q) => typeOf(q) === want);
       if (both[0] && swap >= 0) {
         picked[swap] = both[0];
         break;
       }
     }
   }
-  const asked = recipe.mcq + recipe.short + recipe.explain + recipe.essay;
+  picked.push(...essaySet);
+  const asked = recipe.mcq + recipe.definition + recipe.short + recipe.diagram + recipe.essay * 2;
   const where = units.length > 1 ? `units ${units.join(" and ")}` : `unit ${unit}`;
   return {
     recipe,

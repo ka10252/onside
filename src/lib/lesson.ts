@@ -147,7 +147,10 @@ async function alreadySent(studentId: string): Promise<Set<string>> {
 export async function lessonPool(unit: number, studentId: string): Promise<(BankQuestion & { seen: boolean; spans: boolean })[]> {
   const units = unitsOfLesson(unit);
   const [bank, had, spans] = await Promise.all([bankRange(units), alreadySent(studentId), spanningIds(units)]);
-  return bank.filter((q) => q.source === "past").map((q) => ({ ...q, seen: had.has(q.id), spans: spans.has(q.id) }));
+  // Past papers, and the unit tests' multiple choice, which is the only place a warm-up comes from.
+  return bank
+    .filter((q) => q.source === "past" || q.format === "mcq")
+    .map((q) => ({ ...q, seen: had.has(q.id), spans: spans.has(q.id) }));
 }
 
 export async function setLessonItems(lessonId: string, questionIds: string[]) {

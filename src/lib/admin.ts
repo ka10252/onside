@@ -153,13 +153,15 @@ export type BankQuestion = {
   level: string | null; // HL | SL | HLSL for past items
   session: string | null; // M24
   skill: string | null;
+  /** The diagram the paper asks for, when it asks for one. */
+  diagram_type: string | null;
 };
 
 const BANK_SELECT = `
   SELECT q.id, u.number AS unit_number, u.title AS unit_title, q.section_id, q.format, q.paper_style,
          q.command_term, q.marks, q.prompt, ((q.data::jsonb) -> 'targets')::text AS targets,
          q.source, (q.data::jsonb) #>> '{past,label}' AS past_label,
-         u.part_id, p.level, p.session, p.skill
+         u.part_id, p.level, p.session, p.skill, p.diagram_type
     FROM questions q JOIN units u ON u.id = q.unit_id
     LEFT JOIN past_items p ON q.source = 'past' AND p.id = substr(q.id, 4)`;
 

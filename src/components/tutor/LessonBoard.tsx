@@ -7,6 +7,7 @@ import { reportIfStale } from "@/components/stale";
 import { shortDateSG } from "@/lib/due";
 import type { BankQuestion } from "@/lib/admin";
 import type { Lesson, LessonItem, LessonNote, PrepareQuestion, ReviewPlan, UnitBrief } from "@/lib/lesson";
+import { Q_TYPES, TYPE_LABEL, typeOf, type QType } from "@/lib/question-types";
 import { Blocks, Rich } from "@/components/Rich";
 import { Notes } from "@/components/Notes";
 import { applyTemplate, pickQuestions, saveLessonNotes, sendHomework, sendReviewQuiz, setOutcome } from "@/lib/lesson-actions";
@@ -49,7 +50,7 @@ export function LessonBoard({
   const [notes, setNotes] = useState(lesson.notes);
   const [note, setNote] = useState<string | null>(null);
   const [open, setOpen] = useState<string | null>(null);
-  const [band, setBand] = useState<"short" | "explain" | "essay" | "both">("short");
+  const [band, setBand] = useState<QType | "both">("mcq");
   const [withReview, setWithReview] = useState(true);
   const [pending, start] = useTransition();
   const router = useRouter();
@@ -66,8 +67,7 @@ export function LessonBoard({
       }
     });
 
-  const inBand = (q: BankQuestion) => (q.marks <= 3 ? "short" : q.marks <= 9 ? "explain" : "essay");
-  const shown = band === "both" ? pool.filter((q) => q.spans) : pool.filter((q) => inBand(q) === band);
+  const shown = band === "both" ? pool.filter((q) => q.spans) : pool.filter((q) => typeOf(q) === band);
   const spanning = pool.filter((q) => q.spans).length;
   const wrong = picked.filter((id) => outcomes[id] === "wrong");
 
@@ -171,7 +171,7 @@ export function LessonBoard({
               type="button"
               className="btn sm"
               disabled={pending}
-              title={`${brief.recipe.mcq} MCQ · ${brief.recipe.short} short · ${brief.recipe.explain} explain · ${brief.recipe.essay} essay`}
+              title={`${brief.recipe.mcq} MCQ · ${brief.recipe.definition} definition · ${brief.recipe.short} short answer · ${brief.recipe.diagram} diagram · ${brief.recipe.essay} essay set`}
               onClick={() =>
                 run(async () => {
                   const res = await applyTemplate(lesson.id);
@@ -185,24 +185,26 @@ export function LessonBoard({
           </span>
         </div>
         <p className="cardbody note" style={{ margin: 0, paddingBottom: 0 }}>
-          The template for this unit: <b>{brief.recipe.mcq} MCQ</b> · <b>{brief.recipe.short} short</b> ·{" "}
-          <b>{brief.recipe.explain} explain</b> · <b>{brief.recipe.essay} essay</b> — because the papers make it{" "}
-          {brief.recipe.why}.
+          The template for this lesson: <b>{brief.recipe.mcq} multiple choice</b> · <b>{brief.recipe.definition} definition</b> ·{" "}
+          <b>{brief.recipe.short} short answer</b> · <b>{brief.recipe.diagram} diagram</b> ·{" "}
+          <b>{brief.recipe.essay} essay set (a + b)</b>{`, because the papers make it ${brief.recipe.why}.`}
         </p>
         <div className="cardbody modes">
           <span className="lbl">Show</span>
           <div className="seg">
-            {(spanning > 0 ? (["short", "explain", "essay", "both"] as const) : (["short", "explain", "essay"] as const)).map((b) => (
+            {[...Q_TYPES, ...(spanning > 0 ? (["both"] as const) : [])].map((b) => (
               <label key={b}>
                 <input type="radio" name="band" checked={band === b} onChange={() => setBand(b)} />
-                {{ short: "Short 1–3", explain: "Explain 4–9", essay: "Essay 10+", both: `Needs both units · ${spanning}` }[b]}
+                {b === "both" ? `Needs both units · ${spanning}` : `${TYPE_LABEL[b]} · ${pool.filter((q) => typeOf(q) === b).length}`}
               </label>
             ))}
           </div>
         </div>
         {shown.length === 0 ? (
           <p className="cardbody muted" style={{ margin: 0 }}>
-            {band === "both" ? "No past question in this lesson is tagged to both of its units." : `No past-paper questions of this length in unit ${brief.unit}.`}
+            {band === "both"
+              ? "No past question in this lesson is tagged to both of its units."
+              : `No ${TYPE_LABEL[band].toLowerCase()} questions in these units.`}
           </p>
         ) : (
           <ul className="pick">

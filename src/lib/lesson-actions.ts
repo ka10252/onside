@@ -83,7 +83,7 @@ export async function applyTemplate(lessonId: string): Promise<LessonState> {
   if (picked.length === 0) return { error: `No unseen questions are left in unit ${l.unit}.` };
   await setLessonItems(lessonId, picked.map((q) => q.id));
   revalidatePath(back(l.student_id));
-  const mix = `${recipe.mcq} MCQ · ${recipe.short} short · ${recipe.explain} explain · ${recipe.essay} essay`;
+  const mix = `${recipe.mcq} MCQ · ${recipe.definition} definition · ${recipe.short} short · ${recipe.diagram} diagram · ${recipe.essay} essay set`;
   const both = spanned > 0 ? `, ${spanned} needing both units` : "";
   return { ok: `${picked.length} questions — ${mix}${both}${short ? ` (${short})` : ""}.` };
 }

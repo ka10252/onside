@@ -1,26 +1,27 @@
 import type { Block } from "@/lib/content";
 
 /**
- * Text with **bold** spans (as extracted from the papers) and `tags`, which the revision notes use
- * to say which paper a thing is set in — `P1(b)`, `P3 calculation` — without a sentence about it.
+ * Text with **bold** spans (as extracted from the papers), `tags` saying which paper a thing is set
+ * in, and two highlights the model answer outlines use: ==what must be said== and ++what lifts the
+ * answer above a pass++.
  */
+const TOKEN = /\*\*(.+?)\*\*|`([^`]+)`|==(.+?)==|\+\+(.+?)\+\+/g;
+
 export function Rich({ text }: { text: string }) {
-  const parts = text.split(/\*\*(.+?)\*\*|`([^`]+)`/g);
-  return (
-    <>
-      {parts.map((p, i) =>
-        p === undefined ? null : i % 3 === 1 ? (
-          <b key={i}>{p}</b>
-        ) : i % 3 === 2 ? (
-          <span key={i} className="qtag">
-            {p}
-          </span>
-        ) : (
-          p
-        ),
-      )}
-    </>
-  );
+  const out: React.ReactNode[] = [];
+  let last = 0;
+  let key = 0;
+  for (const m of text.matchAll(TOKEN)) {
+    const at = m.index ?? 0;
+    if (at > last) out.push(text.slice(last, at));
+    if (m[1] !== undefined) out.push(<b key={key++}>{m[1]}</b>);
+    else if (m[2] !== undefined) out.push(<span key={key++} className="qtag">{m[2]}</span>);
+    else if (m[3] !== undefined) out.push(<mark key={key++} className="hl-must">{m[3]}</mark>);
+    else out.push(<mark key={key++} className="hl-bonus">{m[4]}</mark>);
+    last = at + m[0].length;
+  }
+  out.push(text.slice(last));
+  return <>{out}</>;
 }
 
 export function Blocks({ blocks }: { blocks: Block[] }) {

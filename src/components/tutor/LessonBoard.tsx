@@ -274,6 +274,10 @@ export function LessonBoard({
                   {q.outline && (
                     <details className="outline">
                       <summary>Model answer outline</summary>
+                      <p className="outlegend">
+                        <span className="key must">must be said</span>
+                        <span className="key bonus">lifts it above a pass</span>
+                      </p>
                       <Notes text={q.outline} />
                     </details>
                   )}

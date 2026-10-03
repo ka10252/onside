@@ -114,7 +114,7 @@ function Gap({ from, to, y, label, drop = 0 }: { from: number; to: number; y: nu
         markerStart="url(#dgmarrow)"
         markerEnd="url(#dgmarrow)"
       />
-      <text x={d2((from + to) / 2)} y={d2(y + drop) + 13} textAnchor="middle" className="dgmlab" fill={SHIFT}>{label}</text>
+      <text x={d2((from + to) / 2)} y={d2(y + drop) + (drop < 0 ? -6 : 13)} textAnchor="middle" className="dgmlab" fill={SHIFT}>{label}</text>
     </>
   );
 }
@@ -745,6 +745,36 @@ function Lorenz({ caption }: { caption?: string }) {
   );
 }
 
+/**
+ * A fixed rate under downward pressure. Demand for the currency falls, the announced rate ē does
+ * not move, and the gap at that rate is what the central bank has to buy with its reserves. The
+ * hollow point is where the rate would have gone if it had been left to float.
+ */
+function FixedRate({ caption }: { caption?: string }) {
+  const d1 = line({ x: 62, y: 46 }, { x: 246, y: 184 });
+  const s1 = line({ x: 62, y: 184 }, { x: 258, y: 42 });
+  const dFall = shiftX(d1, -44);
+  const e1 = cross(d1, s1);
+  const floatTo = cross(dFall, s1);
+  const qd = atY(dFall, e1.y);
+  return (
+    <Frame x="Quantity of $" y="Price of $ in €" caption={caption}>
+      <Straight l={s1} label="S₁" colour={CURVE} />
+      <Straight l={d1} label="D₁" colour={CURVE} />
+      <Straight l={clip(dFall)} label="D₂" colour={SHIFT} dashed />
+      <Shift from={along(d1, 0.72)} to={along(dFall, 0.72)} />
+      <line x1="44" y1={d2(e1.y)} x2="296" y2={d2(e1.y)} stroke={CURVE} strokeWidth="1.6" />
+      <text x="300" y={d2(e1.y) - 5} textAnchor="end" className="dgmlab">ē fixed</text>
+      <circle cx={d2(qd.x)} cy={d2(e1.y)} r="3" fill={SHIFT} />
+      <circle cx={d2(e1.x)} cy={d2(e1.y)} r="3.5" fill={CURVE} />
+      <Gap from={qd.x} to={e1.x} y={e1.y} drop={-18} label="central bank buys" />
+      <circle cx={d2(floatTo.x)} cy={d2(floatTo.y)} r="3.5" fill={AXIS} />
+      <line x1="44" y1={d2(floatTo.y)} x2={d2(floatTo.x)} y2={d2(floatTo.y)} stroke={GUIDE} strokeWidth="1" strokeDasharray="3 3" />
+      <text x="40" y={d2(floatTo.y) + 4} textAnchor="end" className="dgmlab" fill={AXIS}>e₂</text>
+    </Frame>
+  );
+}
+
 const DIAGRAMS: Record<string, (p: { caption?: string }) => React.ReactElement> = {
   "exchange-rate": ExchangeRate,
   "ad-as": AdAs,
@@ -763,6 +793,7 @@ const DIAGRAMS: Record<string, (p: { caption?: string }) => React.ReactElement> 
   tariff: Tariff,
   ppc: Ppc,
   lorenz: Lorenz,
+  "fixed-rate": FixedRate,
 };
 
 export function Diagram({ name, caption }: { name: string; caption?: string }) {

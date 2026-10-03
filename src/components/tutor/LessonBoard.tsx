@@ -271,6 +271,12 @@ export function LessonBoard({
                   <div className="mstext">
                     <Rich text={q.answer} />
                   </div>
+                  {q.outline && (
+                    <details className="outline">
+                      <summary>Model answer outline</summary>
+                      <Notes text={q.outline} />
+                    </details>
+                  )}
                 </div>
                 <span className="acts">
                   <button

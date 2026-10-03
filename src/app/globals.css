@@ -480,6 +480,13 @@ table.board { table-layout: fixed; min-width: 860px; }
 .sheetpage .noprint { max-width: 760px; margin: 0 auto 16px; display: flex; justify-content: flex-end; }
 .printsheet { max-width: 760px; margin: 0 auto; padding: 44px 48px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; }
 .printsheet.newpage { margin-top: 24px; }
+/* The model answer, shut until the tutor opens it on the screen the student is watching. */
+.outline { margin-top: 20px; border: 1px dashed var(--line); border-radius: 10px; background: var(--surface2, transparent); }
+.outline > summary { cursor: pointer; padding: 10px 14px; font-weight: 600; font-size: 15px; color: var(--ink2); }
+.outline > summary::marker { color: var(--ink2); }
+.outline[open] > summary { border-bottom: 1px solid var(--line); }
+.outline > *:not(summary) { padding: 4px 18px 14px; }
+
 /* Which paper a thing is set in, said as a tag rather than as a sentence. */
 .qtag {
   display: inline-block; margin: 0 2px; padding: 1px 7px; border-radius: 5px;

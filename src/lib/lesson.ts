@@ -239,6 +239,8 @@ export type TeachQuestion = {
   lead: Block[];
   options: { id: string; text: string }[];
   outcome: "right" | "wrong" | null;
+  /** For an essay: the outline of a model answer, which the tutor opens when the writing is done. */
+  outline: string | null;
 };
 
 export async function teachView(lessonId: string): Promise<TeachQuestion[]> {
@@ -251,6 +253,12 @@ export async function teachView(lessonId: string): Promise<TeachQuestion[]> {
     ...ids,
   );
   const byId = new Map(rows.map((r) => [r.id, r]));
+  const outlines = new Map(
+    (await all<{ question_id: string; outline: string }>(
+      `SELECT question_id, outline FROM essay_outlines WHERE question_id IN (${holes})`,
+      ...ids,
+    )).map((r) => [r.question_id, r.outline]),
+  );
   const out: TeachQuestion[] = [];
   for (const [i, item] of lesson.items.entries()) {
     const row = byId.get(item.question_id);
@@ -269,6 +277,7 @@ export async function teachView(lessonId: string): Promise<TeachQuestion[]> {
       // The options, in their own order, with nothing saying which is right.
       options: !past && q.format === "mcq" ? q.options.map((o: { id: string; text: string }) => ({ id: o.id, text: o.text })) : [],
       outcome: item.outcome,
+      outline: outlines.get(row.id) ?? null,
     });
   }
   return out;

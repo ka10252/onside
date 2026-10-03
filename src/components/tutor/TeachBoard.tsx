@@ -150,6 +150,12 @@ export function TeachBoard({
             ))}
           </ol>
         )}
+        {q.outline && (
+          <details className="outline">
+            <summary>Model answer outline</summary>
+            <Notes text={q.outline} />
+          </details>
+        )}
       </article>
 
       <div className="rowacts" style={{ justifyContent: "center" }}>

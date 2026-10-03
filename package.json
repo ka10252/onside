@@ -21,6 +21,7 @@
     "db:pull": "tsx scripts/pull.ts",
     "db:migrate": "tsx scripts/migrate.ts",
     "brief:load": "tsx scripts/load-briefs.ts",
+    "outline:load": "tsx scripts/load-outlines.ts",
     "notify:test": "tsx scripts/notify-test.ts",
     "notify:chatid": "tsx scripts/telegram-chat-id.ts"
   },

@@ -198,6 +198,14 @@ CREATE TABLE IF NOT EXISTS unit_briefs (
   updated_at  TEXT NOT NULL DEFAULT (${NOW_SQL})
 );
 
+-- The outline of a model answer for one essay question: the chains, the diagram and what to say
+-- about it. The tutor opens it on the teaching screen; it is never part of the student's notes.
+CREATE TABLE IF NOT EXISTS essay_outlines (
+  question_id TEXT PRIMARY KEY,
+  outline     TEXT NOT NULL DEFAULT '',
+  updated_at  TEXT NOT NULL DEFAULT (${NOW_SQL})
+);
+
 -- When a student last opened a unit's revision notes. The tutor can see whether they have been
 -- read, and the student gets a mark on notes they have not opened since the lesson.
 CREATE TABLE IF NOT EXISTS note_reads (

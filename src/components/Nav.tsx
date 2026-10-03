@@ -34,6 +34,7 @@ export function Nav({ user, tabs, active }: { user: User; tabs: Tab[]; active: s
 
 export const TUTOR_TABS: Tab[] = [
   { href: "/tutor", label: "Students" },
+  { href: "/tutor/teach", label: "Lessons" },
   { href: "/tutor/concepts", label: "Concepts" },
   { href: "/tutor/sets", label: "Sets" },
   { href: "/tutor/bank", label: "Questions" },

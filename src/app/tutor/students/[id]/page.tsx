@@ -21,8 +21,6 @@ import { initials } from "@/lib/format";
 import { latestSummary } from "@/lib/review";
 import { requireUser } from "@/lib/session";
 import { unitTestProgress } from "@/lib/unit-progress";
-import { plannedLessons } from "@/lib/lesson-plan";
-import { LessonPlanBoard } from "@/components/tutor/LessonPlanBoard";
 
 const day = shortDateSG;
 const percent = (a: AssignmentRow) => (a.marks_total ? Math.round((a.marks_got / a.marks_total) * 100) : 0);
@@ -39,7 +37,7 @@ export default async function StudentPage({ params, searchParams }: PageProps<"/
   const { sort, month: monthParam } = (await searchParams) as { sort?: string; month?: string };
   const student = await getStudent(id);
   if (!student) notFound();
-  const [assignments, progress, board, stats, latest, schedule, parts, units] = await Promise.all([
+  const [assignments, progress, board, stats, latest, schedule, parts] = await Promise.all([
     assignmentsForStudent(id),
     unitTestProgress(id),
     conceptBoard(id),
@@ -47,7 +45,6 @@ export default async function StudentPage({ params, searchParams }: PageProps<"/
     latestSummary(id),
     getSchedule(id),
     bankParts(),
-    plannedLessons(id),
   ]);
   const allUnits = parts.flatMap((p) => p.units);
   const unitName = (n: number | null) => (n === null ? "Every unit" : `Unit ${n} · ${allUnits.find((u) => u.number === n)?.title ?? ""}`);
@@ -130,6 +127,7 @@ export default async function StudentPage({ params, searchParams }: PageProps<"/
                 </div>
               </details>
               <div className="rowacts">
+                <Link href="/tutor/teach" className="btn">What to teach next</Link>
                 <Link href={`/tutor/students/${student.id}/concepts`} className="btn">Concept board</Link>
                 <Link href="/tutor/sets" className="btn">Sets</Link>
                 <Link href={`/tutor/sets/new?student=${student.id}`} className="btn accent">Build a set</Link>
@@ -165,18 +163,6 @@ export default async function StudentPage({ params, searchParams }: PageProps<"/
                   ? ` · pasted ${stats.paste_chars} characters, left the tab ${stats.blur_count}×`
                   : ""}
               </span>
-            </div>
-          </section>
-
-          <section className="card">
-            <div className="card-hd">
-              <h2>What to teach next</h2>
-              <span className="muted" style={{ fontSize: 14 }}>
-                Ten lessons, heaviest first. Each is a unit or two the papers set together.
-              </span>
-            </div>
-            <div className="cardbody">
-              <LessonPlanBoard lessons={units} studentId={id} />
             </div>
           </section>
 

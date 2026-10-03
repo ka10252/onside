@@ -1,9 +1,26 @@
 import type { Block } from "@/lib/content";
 
-/** Text with **bold** spans (as extracted from the papers). */
+/**
+ * Text with **bold** spans (as extracted from the papers) and `tags`, which the revision notes use
+ * to say which paper a thing is set in — `P1(b)`, `P3 calculation` — without a sentence about it.
+ */
 export function Rich({ text }: { text: string }) {
-  const parts = text.split(/\*\*(.+?)\*\*/g);
-  return <>{parts.map((p, i) => (i % 2 ? <b key={i}>{p}</b> : p))}</>;
+  const parts = text.split(/\*\*(.+?)\*\*|`([^`]+)`/g);
+  return (
+    <>
+      {parts.map((p, i) =>
+        p === undefined ? null : i % 3 === 1 ? (
+          <b key={i}>{p}</b>
+        ) : i % 3 === 2 ? (
+          <span key={i} className="qtag">
+            {p}
+          </span>
+        ) : (
+          p
+        ),
+      )}
+    </>
+  );
 }
 
 export function Blocks({ blocks }: { blocks: Block[] }) {

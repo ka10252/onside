@@ -103,7 +103,13 @@ export default async function LessonPage({ params, searchParams }: PageProps<"/t
               </div>
             </section>
           ) : teaching ? (
-            <TeachBoard lessonId={lesson!.id} questions={teach} notes={notes} />
+            <TeachBoard
+              lessonId={lesson!.id}
+              // On a screen the student is watching, only an essay's outline is worth opening: a
+              // four-mark answer would give the question away. The rest never leaves the server.
+              questions={teach.map((q) => (q.marks >= 10 ? q : { ...q, outline: null }))}
+              notes={notes}
+            />
           ) : (
             <LessonBoard
               brief={brief}

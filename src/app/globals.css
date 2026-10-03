@@ -491,6 +491,31 @@ mark.hl-bonus { background: rgba(21, 128, 61, 0.12); }
 .outlegend .must { background: rgba(190, 18, 60, 0.11); }
 .outlegend .bonus { background: rgba(21, 128, 61, 0.12); }
 
+/* A mark scheme read as bands and points rather than as one paragraph. */
+.msread > *:first-child { margin-top: 0; }
+.msread > *:last-child { margin-bottom: 0; }
+.mspoints { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 6px; }
+.mspoints li { padding-left: 2px; }
+.mspoints b { margin-right: 5px; }
+.msbands { width: 100%; border-collapse: collapse; margin: 2px 0 8px; }
+.msbands th {
+  width: 46px; text-align: left; vertical-align: top; padding: 6px 10px 6px 0; white-space: nowrap;
+  font-family: var(--serif); font-size: 15px; font-weight: 400; color: var(--ink2);
+}
+.msbands td { padding: 6px 0; border-top: 1px solid var(--line); }
+.msbands td p { margin: 0 0 5px; }
+.msbands td p:last-child, .msbands td ul:last-child { margin-bottom: 0; }
+.msbands td ul { margin: 0; padding-left: 17px; }
+.msbands td li { margin: 2px 0; }
+.mshead { font-weight: 600; }
+.msnotes { margin: 8px 0 0; padding-left: 17px; font-size: 13px; color: var(--ink2); }
+.msnotes li { margin: 3px 0; }
+.msbands tr:first-child th, .msbands tr:first-child td { border-top: 0; }
+.mscap { margin: 8px 0 0; padding: 6px 10px; border-radius: 6px; background: rgba(190, 18, 60, 0.09); font-size: 14px; }
+.mslevels { margin-top: 10px; }
+.mslevels > summary { cursor: pointer; font-size: 13px; color: var(--ink2); }
+.mslevels p { font-size: 13px; color: var(--ink2); margin: 6px 0; }
+
 /* The model answer, shut until the tutor opens it on the screen the student is watching. */
 .outline { margin-top: 20px; border: 1px dashed var(--line); border-radius: 10px; background: var(--surface2, transparent); }
 .outline > summary { cursor: pointer; padding: 10px 14px; font-weight: 600; font-size: 15px; color: var(--ink2); }

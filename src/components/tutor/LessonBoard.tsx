@@ -10,6 +10,7 @@ import type { Lesson, LessonItem, LessonNote, PrepareQuestion, ReviewPlan, UnitB
 import { Q_TYPES, TYPE_LABEL, typeOf, type QType } from "@/lib/question-types";
 import { Blocks, Rich } from "@/components/Rich";
 import { Notes } from "@/components/Notes";
+import { MarkScheme } from "./MarkScheme";
 import { applyTemplate, pickQuestions, saveLessonNotes, sendHomework, sendReviewQuiz, setOutcome } from "@/lib/lesson-actions";
 
 type Pool = (BankQuestion & { seen: boolean; spans: boolean })[];
@@ -269,7 +270,7 @@ export function LessonBoard({
                 <div className="a">
                   <span className="qlabel">{q.label ? "Mark scheme" : "Answer"}</span>
                   <div className="mstext">
-                    <Rich text={q.answer} />
+                    {q.label ? <MarkScheme text={q.answer} /> : <Rich text={q.answer} />}
                   </div>
                   {q.outline && (
                     <details className="outline">

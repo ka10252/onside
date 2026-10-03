@@ -6,7 +6,7 @@ import { PreviewPanel, QuestionLine } from "@/components/QuestionPreview";
 import { reportIfStale } from "@/components/stale";
 import { shortDateSG } from "@/lib/due";
 import type { BankQuestion } from "@/lib/admin";
-import type { Lesson, LessonItem, PrepareQuestion, ReviewPlan, UnitBrief } from "@/lib/lesson";
+import type { Lesson, LessonItem, LessonNote, PrepareQuestion, ReviewPlan, UnitBrief } from "@/lib/lesson";
 import { Blocks, Rich } from "@/components/Rich";
 import { Notes } from "@/components/Notes";
 import { applyTemplate, pickQuestions, saveLessonNotes, sendHomework, sendReviewQuiz, setOutcome } from "@/lib/lesson-actions";
@@ -24,6 +24,7 @@ export function LessonBoard({
   basePath,
   studentFirstName,
   noteRead,
+  notes: lessonNotes,
 }: {
   brief: UnitBrief;
   lesson: Lesson & { items: LessonItem[] };
@@ -38,6 +39,8 @@ export function LessonBoard({
   studentFirstName: string;
   /** When the student last opened these notes on their own screen, if they have. */
   noteRead: string | null;
+  /** Every unit in this lesson, in the order they are taught. One lesson, one set of notes. */
+  notes: LessonNote[];
 }) {
   const [picked, setPicked] = useState<string[]>(lesson.items.map((i) => i.question_id));
   const [outcomes, setOutcomes] = useState<Record<string, "right" | "wrong" | null>>(
@@ -81,25 +84,38 @@ export function LessonBoard({
 
   return (
     <div className="stack">
-      {brief.notes?.tutor && (
+      {lessonNotes.some((n) => n.tutor) && (
         <section className="card tutoronly">
           <div className="card-hd">
             <h2>For you only</h2>
             <span className="muted" style={{ fontSize: 14 }}>Never on the Teach screen</span>
           </div>
-          <div className="cardbody">
-            <Notes text={brief.notes.tutor} />
+          <div className="cardbody stack" style={{ gap: 18 }}>
+            {lessonNotes
+              .filter((n) => n.tutor)
+              .map((n) => (
+                <div key={n.unit}>
+                  {lessonNotes.length > 1 && (
+                    <p className="qlabel" style={{ marginTop: 0 }}>
+                      Unit {n.unit} · {n.title}
+                    </p>
+                  )}
+                  <Notes text={n.tutor} />
+                </div>
+              ))}
           </div>
         </section>
       )}
 
-      {brief.notes?.body && (
-        <details className="card">
+      {lessonNotes.some((n) => n.body) && (
+        <details className="card" open>
           <summary className="card-hd" style={{ cursor: "pointer" }}>
             <h2>Revision notes</h2>
             <span className="rowacts">
               <span className="muted" style={{ fontSize: 14 }}>
-                What {studentFirstName} reads · the Teach screen opens on this
+                {lessonNotes.length > 1
+                  ? `Both units in this lesson · what ${studentFirstName} reads`
+                  : `What ${studentFirstName} reads · the Teach screen opens on this`}
               </span>
               {lesson.status === "taught" &&
                 (noteRead ? (
@@ -114,8 +130,15 @@ export function LessonBoard({
               </a>
             </span>
           </summary>
-          <div className="cardbody">
-            <Notes text={brief.notes.body} />
+          <div className="cardbody stack" style={{ gap: 24 }}>
+            {lessonNotes
+              .filter((n) => n.body)
+              .map((n, i) => (
+                <div key={n.unit}>
+                  {i > 0 && <hr />}
+                  <Notes text={n.body} />
+                </div>
+              ))}
           </div>
         </details>
       )}

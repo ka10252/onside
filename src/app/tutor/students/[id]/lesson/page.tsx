@@ -5,7 +5,8 @@ import { Nav, TUTOR_TABS } from "@/components/Nav";
 import { LessonBoard } from "@/components/tutor/LessonBoard";
 import { WeightPill } from "@/components/tutor/UnitWeight";
 import { getStudent } from "@/lib/admin";
-import { getLesson, lessonPool, lessonsFor, openLesson, prepareView, reviewPlan, teachView, unfinished, unitBrief } from "@/lib/lesson";
+import { getLesson, lessonNotes, lessonPool, lessonsFor, openLesson, prepareView, reviewPlan, teachView, unfinished, unitBrief } from "@/lib/lesson";
+import { lessonOf } from "@/lib/lesson-plan";
 import { TeachBoard } from "@/components/tutor/TeachBoard";
 import { noteRead } from "@/lib/revision";
 import { requireUser } from "@/lib/session";
@@ -24,8 +25,14 @@ export default async function LessonPage({ params, searchParams }: PageProps<"/t
   const named = lessonParam ? await getLesson(lessonParam) : null;
   const unit = named?.unit ?? (Number(unitParam) || null);
   const brief = unit ? await unitBrief(unit) : null;
-  // Opening a unit starts (or re-opens) its lesson, so the tutor's picks survive a refresh.
-  const lesson = named ?? (unit && brief ? await getLesson((await openLesson(id, unit, `Unit ${unit} · ${brief.title}`)).id) : null);
+  // A lesson is one piece of material even when it covers two units: both sets of notes open here.
+  const inLesson = unit ? lessonOf(unit) : null;
+  const notes = await lessonNotes(inLesson?.units ?? (unit ? [unit] : []));
+  // Opening a unit starts (or re-opens) its lesson, so the tutor's picks survive a refresh. A pair
+  // of units is one lesson: both open the same record, under the first unit of the pair.
+  const key = inLesson?.units[0] ?? unit;
+  const title = inLesson && inLesson.units.length > 1 ? `Lesson ${inLesson.n} · Units ${inLesson.units.join(" + ")}` : `Unit ${unit} · ${brief?.title ?? ""}`;
+  const lesson = named ?? (unit && brief && key ? await getLesson((await openLesson(id, key, title)).id) : null);
   // In the lesson, only what the student should read is fetched at all.
   const [pool, plan, teach, chosen, left, read] = await Promise.all([
     unit && !teaching ? lessonPool(unit, id) : Promise.resolve([]),
@@ -52,8 +59,15 @@ export default async function LessonPage({ params, searchParams }: PageProps<"/t
             />
             <div className="phead" style={{ marginBottom: 0 }}>
               <div>
-                <h1>{brief ? `Unit ${brief.unit} · ${brief.title}` : "Prepare a lesson"}</h1>
+                <h1>
+                  {brief
+                    ? inLesson && inLesson.units.length > 1
+                      ? `Lesson ${inLesson.n} · Units ${inLesson.units.join(" + ")}`
+                      : `Unit ${brief.unit} · ${brief.title}`
+                    : "Prepare a lesson"}
+                </h1>
                 <p>
+                  {inLesson && inLesson.units.length > 1 && !teaching ? `${inLesson.why}. ` : ""}
                   {teaching
                     ? `Only what ${first} should read. Nothing on this page gives an answer away.`
                     : `Yours only, answers and all. ${first} sees nothing here until you send the review quiz, and daily practice carries on untouched.`}
@@ -89,7 +103,7 @@ export default async function LessonPage({ params, searchParams }: PageProps<"/t
               </div>
             </section>
           ) : teaching ? (
-            <TeachBoard lessonId={lesson!.id} questions={teach} notes={brief.notes?.body ?? null} />
+            <TeachBoard lessonId={lesson!.id} questions={teach} notes={notes} />
           ) : (
             <LessonBoard
               brief={brief}
@@ -101,6 +115,7 @@ export default async function LessonPage({ params, searchParams }: PageProps<"/t
               basePath={`/tutor/students/${id}/lesson`}
               studentFirstName={first}
               noteRead={read}
+              notes={notes}
             />
           )}
 

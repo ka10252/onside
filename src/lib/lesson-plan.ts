@@ -2,7 +2,8 @@ import "server-only";
 import { unitReview, type UnitReview } from "./unit-weight";
 
 /**
- * The lessons left before the exam, each one a unit or two.
+ * The lessons left before the exam, each one a unit or two, with the units in the order they are
+ * taught — the second unit of a pair is the one that builds on the first.
  *
  * Ordered by how much of the exam the lesson carries, which is what decides where a limited number
  * of lessons goes. The pairs are not arbitrary: each one is a pair the papers themselves set
@@ -15,13 +16,22 @@ export const LESSONS: { units: number[]; why: string }[] = [
   { units: [16, 17], why: "Exchange rates and the accounts they move; 17.4 is 16's evaluation" },
   { units: [4, 3], why: "Intervention rests on elasticity — who bears a tax, how big the loss is" },
   { units: [8, 9], why: "Measuring the economy, then the model that explains it" },
-  { units: [5, 2], why: "Market failure read off the demand and supply diagram" },
-  { units: [7, 6], why: "Market power and the failures that justify intervening" },
-  { units: [20, 19], why: "The barriers, then the strategies that answer them" },
+  { units: [2, 5], why: "The market first, then the failures read off the same diagram" },
+  { units: [6, 7], why: "The failures that justify intervening, then market power itself" },
+  { units: [19, 20], why: "The barriers, then the strategies that answer them" },
   { units: [14, 15], why: "Trade and the arguments about protecting it" },
   { units: [12, 18], why: "Inequality and poverty, and how development is measured" },
   { units: [11, 1], why: "Growth and debt, with the introduction tidied up" },
 ];
+
+/** The lesson a unit belongs to, with the other units taught beside it. */
+export function lessonOf(unit: number): { n: number; units: number[]; why: string } | null {
+  const i = LESSONS.findIndex((l) => l.units.includes(unit));
+  return i < 0 ? null : { n: i + 1, units: LESSONS[i]!.units, why: LESSONS[i]!.why };
+}
+
+/** Every unit taught in the same lesson as this one, so a lesson is one range of questions. */
+export const unitsOfLesson = (unit: number | null): number[] => (unit === null ? [] : (lessonOf(unit)?.units ?? [unit]));
 
 export type PlannedLesson = {
   n: number;

@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { Blocks, Rich } from "@/components/Rich";
 import { Notes } from "@/components/Notes";
 import { reportIfStale } from "@/components/stale";
-import type { TeachQuestion } from "@/lib/lesson";
+import type { LessonNote, TeachQuestion } from "@/lib/lesson";
 import { setOutcome } from "@/lib/lesson-actions";
 
 /**
@@ -19,10 +19,12 @@ export function TeachBoard({
 }: {
   lessonId: string;
   questions: TeachQuestion[];
-  /** The unit's revision notes, gone through before the questions. */
-  notes: string | null;
+  /** The lesson's revision notes, one entry per unit, gone through before the questions. */
+  notes: LessonNote[];
 }) {
-  const [showing, setShowing] = useState<"revision" | "questions">(notes ? "revision" : "questions");
+  const withNotes = notes.filter((n) => n.body);
+  const [showing, setShowing] = useState<"revision" | "questions">(withNotes.length ? "revision" : "questions");
+  const [part, setPart] = useState(0);
   const [at, setAt] = useState(0);
   const [outcomes, setOutcomes] = useState<Record<string, "right" | "wrong" | null>>(
     Object.fromEntries(questions.map((q) => [q.id, q.outcome])),
@@ -31,23 +33,33 @@ export function TeachBoard({
   const router = useRouter();
   const q = questions[at];
 
-  const tabs = notes ? (
+  const tabs = withNotes.length ? (
     <nav className="filters" aria-label="Which part of the lesson">
-      <button type="button" className={`chip${showing === "revision" ? " on" : ""}`} onClick={() => setShowing("revision")}>
-        Revision
-      </button>
+      {withNotes.map((n, i) => (
+        <button
+          key={n.unit}
+          type="button"
+          className={`chip${showing === "revision" && part === i ? " on" : ""}`}
+          onClick={() => {
+            setShowing("revision");
+            setPart(i);
+          }}
+        >
+          {withNotes.length > 1 ? `Unit ${n.unit}` : "Revision"}
+        </button>
+      ))}
       <button type="button" className={`chip${showing === "questions" ? " on" : ""}`} onClick={() => setShowing("questions")}>
         Questions · {questions.length}
       </button>
     </nav>
   ) : null;
 
-  if (showing === "revision" && notes) {
+  if (showing === "revision" && withNotes.length) {
     return (
       <div className="teach">
         {tabs}
         <article className="card teachcard">
-          <Notes text={notes} />
+          <Notes text={withNotes[Math.min(part, withNotes.length - 1)]!.body} />
         </article>
       </div>
     );

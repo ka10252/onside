@@ -7,6 +7,7 @@ import { relevantContext } from "./extract";
 import { all, one, run, tx } from "./db";
 import { weightByUnit, type UnitWeight } from "./unit-weight";
 import { recipeFor, type Recipe } from "./lesson-template";
+import { unitsOfLesson } from "./lesson-plan";
 
 /**
  * A lesson the tutor prepares, teaches, and then sends a review set from. It is their own working
@@ -114,6 +115,25 @@ export async function unitBrief(unit: number): Promise<UnitBrief | null> {
   };
 }
 
+export type LessonNote = { unit: number; title: string; headline: string; body: string; tutor: string };
+
+/**
+ * The revision notes for every unit in one lesson, in the order they are taught. A lesson that
+ * covers two units is one piece of material, not two files to open.
+ */
+export async function lessonNotes(units: number[]): Promise<LessonNote[]> {
+  if (units.length === 0) return [];
+  const holes = units.map(() => "?").join(", ");
+  const rows = await all<LessonNote>(
+    `SELECT b.unit, u.title, b.headline, b.body, b.tutor
+       FROM unit_briefs b JOIN units u ON u.number = b.unit
+      WHERE b.unit IN (${holes})`,
+    ...units,
+  );
+  const by = new Map(rows.map((r) => [r.unit, r]));
+  return units.map((n) => by.get(n)).filter((r): r is LessonNote => Boolean(r));
+}
+
 /** Every question this student has already been sent, whatever it came from. */
 async function alreadySent(studentId: string): Promise<Set<string>> {
   const rows = await all<{ question_id: string }>(
@@ -123,9 +143,9 @@ async function alreadySent(studentId: string): Promise<Set<string>> {
   return new Set(rows.map((r) => r.question_id));
 }
 
-/** Past-paper questions for a unit, with whether this student has had each. Lessons use past papers. */
+/** Past-paper questions for a lesson's units, with whether this student has had each. Lessons use past papers. */
 export async function lessonPool(unit: number, studentId: string): Promise<(BankQuestion & { seen: boolean })[]> {
-  const [bank, had] = await Promise.all([bankRange([unit]), alreadySent(studentId)]);
+  const [bank, had] = await Promise.all([bankRange(unitsOfLesson(unit)), alreadySent(studentId)]);
   return bank.filter((q) => q.source === "past").map((q) => ({ ...q, seen: had.has(q.id) }));
 }
 
@@ -169,7 +189,7 @@ export async function reviewPlan(lessonId: string, size = REVIEW_SIZE): Promise<
   // The whole unit, not just the past papers: the IB sets no multiple choice, so the short
   // questions that make a review quiz work come from the unit tests.
   const [bank, had] = await Promise.all([
-    lesson.unit === null ? Promise.resolve([] as BankQuestion[]) : bankRange([lesson.unit]),
+    lesson.unit === null ? Promise.resolve([] as BankQuestion[]) : bankRange(unitsOfLesson(lesson.unit)),
     alreadySent(lesson.student_id),
   ]);
   const inUnit = new Map(bank.map((q) => [q.id, q]));
@@ -192,7 +212,7 @@ export async function reviewPlan(lessonId: string, size = REVIEW_SIZE): Promise<
       ? null
       : [
           essayWrong > 0 ? `${essayWrong} of the wrong ones were essays, which a review quiz doesn't re-ask` : "",
-          `only ${got} questions could be found in unit ${lesson.unit}`,
+          `only ${got} questions could be found in ${unitsOfLesson(lesson.unit).map((u) => `unit ${u}`).join(" and ")}`,
         ]
           .filter(Boolean)
           .join(" · ");
@@ -279,7 +299,7 @@ export async function unfinished(lessonId: string): Promise<BankQuestion[]> {
   if (!lesson) return [];
   const left = lesson.items.filter((i) => i.outcome === null).map((i) => i.question_id);
   if (left.length === 0 || lesson.unit === null) return [];
-  const bank = await bankRange([lesson.unit]);
+  const bank = await bankRange(unitsOfLesson(lesson.unit));
   const byId = new Map(bank.map((q) => [q.id, q]));
   return left.map((id) => byId.get(id)).filter((q): q is BankQuestion => Boolean(q));
 }

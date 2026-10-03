@@ -479,11 +479,13 @@ table.board { table-layout: fixed; min-width: 860px; }
 .sheetpage { padding: 28px 24px 72px; }
 .sheetpage .noprint { max-width: 760px; margin: 0 auto 16px; display: flex; justify-content: flex-end; }
 .printsheet { max-width: 760px; margin: 0 auto; padding: 44px 48px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; }
+.printsheet.newpage { margin-top: 24px; }
 /* On paper the sheet is set tighter: a unit's recap should be a handout, not a booklet. */
 @media print {
   .noprint, .nav, .stalebar { display: none !important; }
   .sheetpage { padding: 0; }
   .printsheet { max-width: none; margin: 0; padding: 0; border: 0; border-radius: 0; background: #FFFFFF; }
+  .printsheet.newpage { break-before: page; margin-top: 0; }
   body { background: #FFFFFF; font-size: 10.5pt; }
   .notes { gap: 7px; }
   .notes > p { line-height: 1.45; }

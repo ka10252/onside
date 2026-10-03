@@ -1,6 +1,7 @@
 import "server-only";
 import { bankRange, type BankQuestion } from "./admin";
 import { all, one } from "./db";
+import { unitsOfLesson } from "./lesson-plan";
 
 /**
  * A lesson's question mix, worked out from what the past papers ask of that unit rather than fixed
@@ -149,7 +150,7 @@ function essays(free: BankQuestion[], want: number): BankQuestion[] {
 export async function fillTemplate(unit: number, studentId: string): Promise<FilledTemplate> {
   const [recipe, bank, sent] = await Promise.all([
     recipeFor(unit),
-    bankRange([unit]),
+    bankRange(unitsOfLesson(unit)),
     all<{ question_id: string }>(
       "SELECT DISTINCT i.question_id FROM assignments a JOIN set_items i ON i.set_id = a.set_id WHERE a.student_id = ?",
       studentId,

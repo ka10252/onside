@@ -4,7 +4,8 @@ import { Nav } from "@/components/Nav";
 import { Notes } from "@/components/Notes";
 import { PrintButton } from "@/components/PrintButton";
 import { requireUser } from "@/lib/session";
-import { markNoteRead, studentNote, studentTabs } from "@/lib/revision";
+import { markNoteRead, studentNote, studentNotes, studentTabs } from "@/lib/revision";
+import { lessonOf } from "@/lib/lesson-plan";
 
 // One unit's notes, laid out the way the handout is, so "Save as PDF" gives the student the same
 // pages the tutor prints. Only the student half of the note is read.
@@ -15,16 +16,25 @@ export default async function StudentNotePage({ params }: PageProps<"/student/no
   if (!note) notFound();
   // Opening it is reading it, as far as the tutor's screen is concerned.
   await markNoteRead(user.id, note.unit);
-  const tabs = await studentTabs(user.id);
+  const [tabs, open] = await Promise.all([studentTabs(user.id), studentNotes(user.id)]);
+  // The other unit from the same lesson, when it is open to them too.
+  const beside = (lessonOf(note.unit)?.units ?? []).filter((u) => u !== note.unit && open.some((o) => o.unit === u));
 
   return (
     <>
       <Nav user={user} tabs={tabs} active="/student/notes" />
       <main className="sheetpage">
         <div className="noprint" style={{ justifyContent: "space-between", alignItems: "center" }}>
-          <Link href="/student/notes" className="btn ghost sm">
-            All notes
-          </Link>
+          <span className="rowacts">
+            <Link href="/student/notes" className="btn ghost sm">
+              All notes
+            </Link>
+            {beside.map((u) => (
+              <Link key={u} href={`/student/notes/${u}`} className="btn ghost sm">
+                Unit {u}, from the same lesson
+              </Link>
+            ))}
+          </span>
           <PrintButton />
         </div>
         <article className="printsheet">

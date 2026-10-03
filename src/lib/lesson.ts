@@ -6,7 +6,7 @@ import { isPast, pastContext, tableBlock, type Block, type Question } from "./co
 import { relevantContext } from "./extract";
 import { all, one, run, tx } from "./db";
 import { weightByUnit, type UnitWeight } from "./unit-weight";
-import { recipeFor, type Recipe } from "./lesson-template";
+import { recipeFor, spanningIds, type Recipe } from "./lesson-template";
 import { unitsOfLesson } from "./lesson-plan";
 
 /**
@@ -144,9 +144,10 @@ async function alreadySent(studentId: string): Promise<Set<string>> {
 }
 
 /** Past-paper questions for a lesson's units, with whether this student has had each. Lessons use past papers. */
-export async function lessonPool(unit: number, studentId: string): Promise<(BankQuestion & { seen: boolean })[]> {
-  const [bank, had] = await Promise.all([bankRange(unitsOfLesson(unit)), alreadySent(studentId)]);
-  return bank.filter((q) => q.source === "past").map((q) => ({ ...q, seen: had.has(q.id) }));
+export async function lessonPool(unit: number, studentId: string): Promise<(BankQuestion & { seen: boolean; spans: boolean })[]> {
+  const units = unitsOfLesson(unit);
+  const [bank, had, spans] = await Promise.all([bankRange(units), alreadySent(studentId), spanningIds(units)]);
+  return bank.filter((q) => q.source === "past").map((q) => ({ ...q, seen: had.has(q.id), spans: spans.has(q.id) }));
 }
 
 export async function setLessonItems(lessonId: string, questionIds: string[]) {

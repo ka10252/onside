@@ -75,7 +75,29 @@ export async function recipeFor(unit: number): Promise<Recipe> {
   };
 }
 
-export type FilledTemplate = { recipe: Recipe; picked: BankQuestion[]; short: string | null };
+export type FilledTemplate = { recipe: Recipe; picked: BankQuestion[]; short: string | null; spanned: number };
+
+/**
+ * The questions that tie a lesson's units together: tagged to one of them, and in the paper's own
+ * secondary tags to another. Those are the questions a lesson of two units should actually ask.
+ */
+export async function spanningIds(units: number[]): Promise<Set<string>> {
+  if (units.length < 2) return new Set();
+  const holes = units.map(() => "?").join(", ");
+  const rows = await all<{ id: string; number: number; secondary: string }>(
+    `SELECT q.id, u.number, p.secondary
+       FROM questions q JOIN units u ON u.id = q.unit_id JOIN past_items p ON p.id = substr(q.id, 4)
+      WHERE u.number IN (${holes}) AND p.secondary IS NOT NULL AND p.secondary <> ''`,
+    ...units,
+  );
+  const out = new Set<string>();
+  for (const r of rows) {
+    // Secondary tags are syllabus sections — "17.1 9.2" — so the unit is the part before the dot.
+    const tagged = r.secondary.split(/\s+/).map((t) => Number(t.split(".")[0]));
+    if (units.some((u) => u !== r.number && tagged.includes(u))) out.add(r.id);
+  }
+  return out;
+}
 
 /** Which paper a question came from, for spreading a lesson across all three. */
 const paperOf = (q: BankQuestion): string => q.past_label?.match(/\bP(\d)\b/)?.[0] ?? q.paper_style?.slice(0, 2) ?? "unit test";
@@ -148,13 +170,15 @@ function essays(free: BankQuestion[], want: number): BankQuestion[] {
  * the multiple-choice warm-up, and never one this student has already been sent.
  */
 export async function fillTemplate(unit: number, studentId: string): Promise<FilledTemplate> {
-  const [recipe, bank, sent] = await Promise.all([
+  const units = unitsOfLesson(unit);
+  const [recipe, bank, sent, spans] = await Promise.all([
     recipeFor(unit),
-    bankRange(unitsOfLesson(unit)),
+    bankRange(units),
     all<{ question_id: string }>(
       "SELECT DISTINCT i.question_id FROM assignments a JOIN set_items i ON i.set_id = a.set_id WHERE a.student_id = ?",
       studentId,
     ),
+    spanningIds(units),
   ]);
   const had = new Set(sent.map((r) => r.question_id));
   const free = bank.filter((q) => !had.has(q.id));
@@ -166,10 +190,25 @@ export async function fillTemplate(unit: number, studentId: string): Promise<Fil
     ...take(recipe.explain, (q) => q.source === "past" && q.marks >= 4 && q.marks <= 9),
     ...essays(free, recipe.essay),
   ];
+  // A lesson of two units should ask at least one question that needs both of them. If the recipe
+  // picked none, the newest such question takes the place of one the same length.
+  if (units.length > 1 && !picked.some((q) => spans.has(q.id))) {
+    const band = (q: BankQuestion) => (q.marks <= 3 ? "short" : q.marks <= 9 ? "explain" : "essay");
+    for (const want of ["explain", "short", "essay"] as const) {
+      const both = spread(free.filter((q) => spans.has(q.id) && q.source === "past" && band(q) === want), 1);
+      const swap = picked.findLastIndex((q) => q.source === "past" && band(q) === want);
+      if (both[0] && swap >= 0) {
+        picked[swap] = both[0];
+        break;
+      }
+    }
+  }
   const asked = recipe.mcq + recipe.short + recipe.explain + recipe.essay;
+  const where = units.length > 1 ? `units ${units.join(" and ")}` : `unit ${unit}`;
   return {
     recipe,
     picked,
-    short: picked.length < asked ? `only ${picked.length} of ${asked} are left unseen in unit ${unit}` : null,
+    spanned: picked.filter((q) => spans.has(q.id)).length,
+    short: picked.length < asked ? `only ${picked.length} of ${asked} are left unseen in ${where}` : null,
   };
 }

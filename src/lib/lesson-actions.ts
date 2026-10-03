@@ -79,12 +79,13 @@ export async function applyTemplate(lessonId: string): Promise<LessonState> {
   const l = await getLesson(lessonId);
   if (!l) return { error: "That lesson is gone." };
   if (l.unit === null) return { error: "This lesson has no unit." };
-  const { recipe, picked, short } = await fillTemplate(l.unit, l.student_id);
+  const { recipe, picked, short, spanned } = await fillTemplate(l.unit, l.student_id);
   if (picked.length === 0) return { error: `No unseen questions are left in unit ${l.unit}.` };
   await setLessonItems(lessonId, picked.map((q) => q.id));
   revalidatePath(back(l.student_id));
   const mix = `${recipe.mcq} MCQ · ${recipe.short} short · ${recipe.explain} explain · ${recipe.essay} essay`;
-  return { ok: `${picked.length} questions — ${mix}${short ? ` (${short})` : ""}.` };
+  const both = spanned > 0 ? `, ${spanned} needing both units` : "";
+  return { ok: `${picked.length} questions — ${mix}${both}${short ? ` (${short})` : ""}.` };
 }
 
 /**

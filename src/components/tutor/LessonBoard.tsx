@@ -11,7 +11,7 @@ import { Blocks, Rich } from "@/components/Rich";
 import { Notes } from "@/components/Notes";
 import { applyTemplate, pickQuestions, saveLessonNotes, sendHomework, sendReviewQuiz, setOutcome } from "@/lib/lesson-actions";
 
-type Pool = (BankQuestion & { seen: boolean })[];
+type Pool = (BankQuestion & { seen: boolean; spans: boolean })[];
 
 /** Preparing a lesson, running it, and sending what went wrong back as a review quiz. */
 export function LessonBoard({
@@ -49,7 +49,7 @@ export function LessonBoard({
   const [notes, setNotes] = useState(lesson.notes);
   const [note, setNote] = useState<string | null>(null);
   const [open, setOpen] = useState<string | null>(null);
-  const [band, setBand] = useState<"short" | "explain" | "essay">("short");
+  const [band, setBand] = useState<"short" | "explain" | "essay" | "both">("short");
   const [withReview, setWithReview] = useState(true);
   const [pending, start] = useTransition();
   const router = useRouter();
@@ -67,7 +67,8 @@ export function LessonBoard({
     });
 
   const inBand = (q: BankQuestion) => (q.marks <= 3 ? "short" : q.marks <= 9 ? "explain" : "essay");
-  const shown = pool.filter((q) => inBand(q) === band);
+  const shown = band === "both" ? pool.filter((q) => q.spans) : pool.filter((q) => inBand(q) === band);
+  const spanning = pool.filter((q) => q.spans).length;
   const wrong = picked.filter((id) => outcomes[id] === "wrong");
 
   function toggle(id: string) {
@@ -191,16 +192,18 @@ export function LessonBoard({
         <div className="cardbody modes">
           <span className="lbl">Show</span>
           <div className="seg">
-            {(["short", "explain", "essay"] as const).map((b) => (
+            {(spanning > 0 ? (["short", "explain", "essay", "both"] as const) : (["short", "explain", "essay"] as const)).map((b) => (
               <label key={b}>
                 <input type="radio" name="band" checked={band === b} onChange={() => setBand(b)} />
-                {{ short: "Short 1–3", explain: "Explain 4–9", essay: "Essay 10+" }[b]}
+                {{ short: "Short 1–3", explain: "Explain 4–9", essay: "Essay 10+", both: `Needs both units · ${spanning}` }[b]}
               </label>
             ))}
           </div>
         </div>
         {shown.length === 0 ? (
-          <p className="cardbody muted" style={{ margin: 0 }}>No past-paper questions of this length in unit {brief.unit}.</p>
+          <p className="cardbody muted" style={{ margin: 0 }}>
+            {band === "both" ? "No past question in this lesson is tagged to both of its units." : `No past-paper questions of this length in unit ${brief.unit}.`}
+          </p>
         ) : (
           <ul className="pick">
             {shown.map((q) => (
@@ -210,6 +213,7 @@ export function LessonBoard({
                   <QuestionLine q={q} seen={q.seen ? { state: "sent", at: "", set: "" } : undefined} />
                 </button>
                 <span className="rowacts">
+                  {q.spans && <span className="pill ink">both units</span>}
                   <button type="button" className={`btn sm${picked.includes(q.id) ? " ghost" : ""}`} onClick={() => toggle(q.id)} disabled={pending}>
                     {picked.includes(q.id) ? "In the lesson ✓" : "Add"}
                   </button>

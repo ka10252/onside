@@ -198,6 +198,19 @@ CREATE TABLE IF NOT EXISTS unit_briefs (
   updated_at  TEXT NOT NULL DEFAULT (${NOW_SQL})
 );
 
+-- A set the tutor has built and dated for a later day. The daily run sends it when that day comes,
+-- which is how the questions a lesson never got to land in next week's practice.
+CREATE TABLE IF NOT EXISTS queued_sets (
+  id          TEXT PRIMARY KEY,
+  student_id  TEXT NOT NULL REFERENCES users(id),
+  set_id      TEXT NOT NULL REFERENCES sets(id),
+  -- the Singapore date it should go out on
+  send_on     TEXT NOT NULL,
+  due_at      TEXT,
+  sent_at     TEXT,
+  created_at  TEXT NOT NULL DEFAULT (${NOW_SQL})
+);
+
 -- The outline of a model answer for one essay question: the chains, the diagram and what to say
 -- about it. The tutor opens it on the teaching screen; it is never part of the student's notes.
 CREATE TABLE IF NOT EXISTS essay_outlines (

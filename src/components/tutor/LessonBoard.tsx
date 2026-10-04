@@ -27,6 +27,7 @@ export function LessonBoard({
   studentFirstName,
   noteRead,
   notes: lessonNotes,
+  today,
 }: {
   brief: UnitBrief;
   lesson: Lesson & { items: LessonItem[] };
@@ -43,6 +44,8 @@ export function LessonBoard({
   noteRead: string | null;
   /** Every unit in this lesson, in the order they are taught. One lesson, one set of notes. */
   notes: LessonNote[];
+  /** Today in Singapore, so a date held for later can be told from one that is already here. */
+  today: string;
 }) {
   const [picked, setPicked] = useState<string[]>(lesson.items.map((i) => i.question_id));
   const [outcomes, setOutcomes] = useState<Record<string, "right" | "wrong" | null>>(
@@ -53,6 +56,7 @@ export function LessonBoard({
   const [open, setOpen] = useState<string | null>(null);
   const [band, setBand] = useState<QType | "both">("mcq");
   const [withReview, setWithReview] = useState(true);
+  const [sendOn, setSendOn] = useState("");
   const [pending, start] = useTransition();
   const router = useRouter();
 
@@ -315,7 +319,23 @@ export function LessonBoard({
           </div>
           <div className="cardbody stack" style={{ gap: 12 }}>
             {lesson.homework_assignment_id ? (
-              <p className="formmsg good" style={{ margin: 0 }}>Already sent to {studentFirstName}.</p>
+              <span className="rowacts">
+                <span className="formmsg good" style={{ margin: 0 }}>
+                  {lesson.homework_assignment_id.startsWith("queued:")
+                    ? `Built and waiting. The daily run sends it to ${studentFirstName} on the day you chose.`
+                    : `Already sent to ${studentFirstName}.`}
+                </span>
+                {lesson.homework_assignment_id.startsWith("queued:") && (
+                  <a
+                    className="btn ghost sm"
+                    href={`/tutor/sets/${lesson.homework_assignment_id.slice("queued:".length)}/preview`}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    See it as {studentFirstName} will
+                  </a>
+                )}
+              </span>
             ) : (
               <>
                 <ol className="pick">
@@ -338,15 +358,22 @@ export function LessonBoard({
                   </span>
                 </label>
                 <div className="rowacts">
+                  <label className="opt" style={{ gap: 6 }}>
+                    <span className="muted" style={{ fontSize: 13 }}>Send on</span>
+                    <input type="date" className="in sm" value={sendOn} min={today} onChange={(e) => setSendOn(e.target.value)} />
+                  </label>
                   <button
                     type="button"
                     className="btn accent"
                     disabled={pending}
-                    onClick={() => run(() => sendHomework(lesson.id, withReview))}
+                    onClick={() => run(() => sendHomework(lesson.id, withReview, null, sendOn || null))}
                   >
-                    {pending ? "Sending…" : `Send to ${studentFirstName}`}
+                    {pending ? "Sending…" : sendOn && sendOn > today ? `Hold until ${sendOn}` : `Send to ${studentFirstName}`}
                   </button>
-                  <span className="muted" style={{ fontSize: 13 }}>Helper off. They can photograph work done on paper.</span>
+                  <span className="muted" style={{ fontSize: 13 }}>
+                    Helper off. They can photograph work done on paper.
+                    {sendOn && sendOn > today ? " The daily run sends it that morning." : ""}
+                  </span>
                 </div>
               </>
             )}

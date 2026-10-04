@@ -11,7 +11,7 @@ export type StudentDay = {
   /** Sets to finish by that day. */
   due: { id: string; title: string; time: string | null; late: boolean; done: boolean }[];
   /** Sets that will arrive that day. */
-  coming: { time: string; unit: number | null; count: number }[];
+  coming: { time: string; unit: number | null; count: number; label?: string }[];
 };
 
 /** Four weeks: what arrived, what is due, and what is on its way. */
@@ -52,9 +52,9 @@ export function AssignmentCalendar({ cells, monthLabel }: { cells: StudentDay[];
                       Due{d.time ? ` ${d.time}` : ""} · {d.title}
                     </Link>
                   ))}
-                {c.coming.map((p) => (
-                  <span key={`p${p.time}`} className="chip planned">
-                    {p.time} · {p.unit === null ? "New set" : `Unit ${p.unit}`} · {p.count}
+                {c.coming.map((p, i) => (
+                  <span key={`p${p.time}${i}`} className="chip planned">
+                    {p.label ?? `${p.time} · ${p.unit === null ? "New set" : `Unit ${p.unit}`} · ${p.count}`}
                   </span>
                 ))}
               </div>

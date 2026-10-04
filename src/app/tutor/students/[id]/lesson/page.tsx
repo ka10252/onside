@@ -7,6 +7,7 @@ import { WeightPill } from "@/components/tutor/UnitWeight";
 import { getStudent } from "@/lib/admin";
 import { getLesson, lessonNotes, lessonPool, lessonsFor, openLesson, prepareView, reviewPlan, teachView, unfinished, unitBrief } from "@/lib/lesson";
 import { lessonOf } from "@/lib/lesson-plan";
+import { singaporeToday } from "@/lib/schedule";
 import { TeachBoard } from "@/components/tutor/TeachBoard";
 import { noteRead } from "@/lib/revision";
 import { requireUser } from "@/lib/session";
@@ -122,6 +123,7 @@ export default async function LessonPage({ params, searchParams }: PageProps<"/t
               studentFirstName={first}
               noteRead={read}
               notes={notes}
+              today={singaporeToday().date}
             />
           )}
 

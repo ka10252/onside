@@ -78,6 +78,7 @@ function SetTable({ title, sets, note }: { title: string; sets: SetRow[]; note?:
                 </td>
                 <td>
                   <div className="rowacts">
+                    <Link href={`/tutor/sets/${s.id}/preview`} className="btn ghost sm">As the student sees it</Link>
                     <Link href={`/tutor/sets/${s.id}`} className="btn sm">Open</Link>
                   </div>
                 </td>

@@ -5,6 +5,8 @@ import { getLesson, markOutcome, openLesson, reviewPlan, setLessonItems, unfinis
 import { fillTemplate } from "./lesson-template";
 import { one, run } from "./db";
 import { saveSet } from "./admin-actions";
+import { queueSet } from "./queue";
+import { singaporeToday } from "./schedule";
 import { requireUser } from "./session";
 
 export type LessonState = { error?: string; ok?: string };
@@ -92,7 +94,12 @@ export async function applyTemplate(lessonId: string): Promise<LessonState> {
  * Sends what the lesson never got to as homework, with the review quiz added if the tutor wants it.
  * Whether to add it depends on how many are left, which only they can judge.
  */
-export async function sendHomework(lessonId: string, withReview: boolean, due: string | null = null): Promise<LessonState> {
+export async function sendHomework(
+  lessonId: string,
+  withReview: boolean,
+  due: string | null = null,
+  sendOn: string | null = null,
+): Promise<LessonState> {
   await requireUser("tutor");
   const l = await getLesson(lessonId);
   if (!l) return { error: "That lesson is gone." };
@@ -101,14 +108,25 @@ export async function sendHomework(lessonId: string, withReview: boolean, due: s
   const extra = withReview ? await reviewPlan(lessonId, REVIEW_SIZE) : null;
   const ids = [...new Set([...left.map((q) => q.id), ...(extra ? [...extra.missed, ...extra.variants].map((q) => q.id) : [])])];
   if (ids.length === 0) return { error: "Nothing is left over from this lesson." };
+  const later = sendOn && sendOn > singaporeToday().date ? sendOn : null;
   const res = await saveSet(null, {
     title: `Homework · Unit ${l.unit} · ${new Date().toLocaleDateString("en-SG", { day: "numeric", month: "short", timeZone: "Asia/Singapore" })}`,
     helper: "off",
     timeLimitMin: null,
     questionIds: ids,
-    sendTo: { studentId: l.student_id, due },
+    // Dated for a later day, the set is built now and held until the daily run sends it.
+    sendTo: later ? undefined : { studentId: l.student_id, due },
   });
   if (res?.error) return { error: res.error };
+  if (later) {
+    const set = await one<{ id: string }>("SELECT id FROM sets ORDER BY created_at DESC LIMIT 1");
+    if (!set) return { error: "The set was not saved." };
+    await queueSet(l.student_id, set.id, later, due);
+    await run("UPDATE lessons SET homework_assignment_id = ? WHERE id = ?", `queued:${set.id}`, lessonId);
+    revalidatePath(back(l.student_id));
+    const when = new Date(`${later}T00:00:00Z`).toLocaleDateString("en-SG", { day: "numeric", month: "short", timeZone: "UTC" });
+    return { ok: `${ids.length} questions, waiting until ${when}.` };
+  }
   const a = await one<{ id: string }>("SELECT id FROM assignments WHERE student_id = ? ORDER BY assigned_at DESC LIMIT 1", l.student_id);
   if (a) {
     await run("UPDATE lessons SET homework_assignment_id = ? WHERE id = ?", a.id, lessonId);

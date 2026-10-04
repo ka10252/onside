@@ -10,6 +10,7 @@ import { AssignmentCalendar, type StudentDay } from "@/components/student/Assign
 import { getSchedule, singaporeToday, upcomingSends } from "@/lib/schedule";
 import { rewritesWaiting } from "@/lib/rewrite";
 import { studentTabs } from "@/lib/revision";
+import { waitingFor } from "@/lib/queue";
 
 type Row = {
   id: string;
@@ -64,12 +65,25 @@ export default async function AssignmentsPage({ searchParams }: PageProps<"/stud
   for (const u of unitRows) unitsOf.set(u.assignment_id, [...(unitsOf.get(u.assignment_id) ?? []), u]);
 
   // Four weeks from this Monday: what arrived, what is due, and what the tutor has scheduled.
-  const [schedule, rewrites, tabs] = await Promise.all([getSchedule(user.id), rewritesWaiting(user.id), studentTabs(user.id)]);
+  const [schedule, rewrites, tabs, waiting] = await Promise.all([
+    getSchedule(user.id),
+    rewritesWaiting(user.id),
+    studentTabs(user.id),
+    waitingFor(user.id),
+  ]);
   const { date: todaySg } = singaporeToday();
   const monday = new Date(new Date(`${todaySg}T00:00:00Z`).getTime() - ((new Date(`${todaySg}T00:00:00Z`).getUTCDay() + 6) % 7) * 86_400_000);
-  const coming = new Map<string, ReturnType<typeof upcomingSends>>();
+  type Coming = { time: string; unit: number | null; count: number; label?: string };
+  const coming = new Map<string, Coming[]>();
   // Not gated on `enabled`: days the tutor set by hand go out whichever way the switch is.
   for (const u of upcomingSends(schedule, 42)) coming.set(u.date, [...(coming.get(u.date) ?? []), u]);
+  // A set the tutor has already built and dated shows on the day it is due to arrive.
+  for (const w of waiting) {
+    coming.set(w.send_on, [
+      ...(coming.get(w.send_on) ?? []),
+      { time: "", unit: null, count: w.questions, label: `${w.title} · ${w.questions}` },
+    ]);
+  }
   const shortTitle = (t: string) => (t.length > 22 ? `${t.slice(0, 21)}…` : t);
   const days: StudentDay[] = Array.from({ length: 28 }, (_, i) => {
     const d = new Date(monday.getTime() + i * 86_400_000);
@@ -90,7 +104,7 @@ export default async function AssignmentsPage({ searchParams }: PageProps<"/stud
           late: isOverdue(r.due_at),
           done: r.status === "submitted" || r.status === "reviewed",
         })),
-      coming: (coming.get(iso) ?? []).map((p) => ({ time: p.time, unit: p.unit, count: p.count })),
+      coming: coming.get(iso) ?? [],
     };
   });
   const monthLabel = new Date(days[0]!.date).toLocaleDateString("en-SG", { month: "long", year: "numeric", timeZone: "UTC" });

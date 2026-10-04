@@ -3,6 +3,7 @@ import { randomBytes } from "node:crypto";
 import { bankQuestions, type BankQuestion } from "./admin";
 import { pickRandom, sourceOf } from "./bank-filter";
 import { all, json, one, run, tx } from "./db";
+import { sendDueQueue } from "./queue";
 import { DEFAULT_SCHEDULE, timesOf, type Schedule } from "./schedule-shared";
 
 export { DAY_NAMES, DEFAULT_SCHEDULE, planPreview, timesOf } from "./schedule-shared";
@@ -355,6 +356,8 @@ export type RunResult = { student: string; result: string };
 /** Sends today's practice to every student whose schedule says so. Safe to call more than once a day. */
 export async function runSchedules(now = new Date()): Promise<RunResult[]> {
   const { date, time } = singaporeToday(now);
+  // Sets the tutor dated for today go out first, whatever the weekly schedule says.
+  const queued = await sendDueQueue(date);
   const tutor = await one<{ id: string }>("SELECT id FROM users WHERE role = 'tutor' ORDER BY id LIMIT 1");
   if (!tutor) return [];
   // Not just the switched-on schedules: a day the tutor set by hand on the calendar is an
@@ -363,7 +366,7 @@ export async function runSchedules(now = new Date()): Promise<RunResult[]> {
     `SELECT s.*, u.name, u.archived_at FROM schedules s JOIN users u ON u.id = s.student_id
       WHERE u.archived_at IS NULL`,
   );
-  const out: RunResult[] = [];
+  const out: RunResult[] = queued.map((q) => ({ student: q.student, result: `sent "${q.title}" from the queue` }));
   for (const row of rows) {
     let s = row;
     if (!sendsOn(s, date)) {

@@ -42,10 +42,14 @@ export function lessonsFor(studentId: string): Promise<Lesson[]> {
   return all<Lesson>("SELECT * FROM lessons WHERE student_id = ? ORDER BY created_at DESC", studentId);
 }
 
-/** The lesson being prepared for a unit, or a new one. */
+/**
+ * This unit's lesson, or a new one. Whatever its status: marking the first question in class makes
+ * a lesson "taught", and opening the unit again afterwards has to come back to that same lesson —
+ * its questions, its outcomes, and the homework still to send — rather than start an empty one.
+ */
 export async function openLesson(studentId: string, unit: number | null, title: string): Promise<Lesson> {
   const open = await one<Lesson>(
-    `SELECT * FROM lessons WHERE student_id = ? AND status = 'planning' AND unit IS NOT DISTINCT FROM ?
+    `SELECT * FROM lessons WHERE student_id = ? AND unit IS NOT DISTINCT FROM ?
       ORDER BY created_at DESC LIMIT 1`,
     studentId,
     unit,

@@ -243,7 +243,10 @@ CREATE TABLE IF NOT EXISTS lessons (
   -- the review set sent afterwards, once it has been
   review_assignment_id TEXT,
   -- the set of questions the lesson never got to
-  homework_assignment_id TEXT
+  homework_assignment_id TEXT,
+  -- the sets themselves, built before they are sent, so they can be looked at first
+  review_set_id   TEXT,
+  homework_set_id TEXT
 );
 CREATE INDEX IF NOT EXISTS lessons_student ON lessons (student_id, created_at);
 
@@ -373,6 +376,8 @@ export const ADDED_COLUMNS = `
 ALTER TABLE unit_briefs ADD COLUMN IF NOT EXISTS tutor TEXT NOT NULL DEFAULT '';
 ALTER TABLE assignments ADD COLUMN IF NOT EXISTS results_seen_at TEXT;
 ALTER TABLE lessons ADD COLUMN IF NOT EXISTS homework_assignment_id TEXT;
+ALTER TABLE lessons ADD COLUMN IF NOT EXISTS review_set_id TEXT;
+ALTER TABLE lessons ADD COLUMN IF NOT EXISTS homework_set_id TEXT;
 ALTER TABLE responses ADD COLUMN IF NOT EXISTS rewrite_note TEXT;
 ALTER TABLE responses ADD COLUMN IF NOT EXISTS rewrite_asked_at TEXT;
 ALTER TABLE responses ADD COLUMN IF NOT EXISTS rewrite_text TEXT;

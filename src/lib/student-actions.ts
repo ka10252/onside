@@ -63,17 +63,23 @@ function isBlankPlan(plan: string) {
   }
 }
 
-// HEIC is not accepted: desktop browsers can't show it to the tutor.
-const PHOTO_TYPES: Record<string, string> = { "image/jpeg": "jpg", "image/png": "png", "image/webp": "webp" };
+// HEIC is not accepted: desktop browsers can't show it to the tutor. A PDF is, because a diagram
+// drawn on a tablet or scanned at home arrives as one.
+const PHOTO_TYPES: Record<string, string> = {
+  "image/jpeg": "jpg",
+  "image/png": "png",
+  "image/webp": "webp",
+  "application/pdf": "pdf",
+};
 
 export async function uploadPhoto(fd: FormData): Promise<{ ok: true } | Fail> {
   const { r, a } = await load(String(fd.get("responseId") ?? ""));
   if (isLocked(a)) return TIME_UP;
   if (r.submitted_at) return { error: "Already submitted." };
   const file = fd.get("photo");
-  if (!(file instanceof File) || file.size === 0) return { error: "Choose a photo." };
+  if (!(file instanceof File) || file.size === 0) return { error: "Choose a photo or a PDF." };
   const ext = PHOTO_TYPES[file.type];
-  if (!ext) return { error: "Use a JPG or PNG photo. On an iPhone, set Camera → Formats → Most Compatible." };
+  if (!ext) return { error: "Use a JPG, PNG or PDF. On an iPhone, set Camera → Formats → Most Compatible." };
   // The browser shrinks photos first; Vercel accepts request bodies up to about 4.5 MB.
   if (file.size > 4 * 1024 * 1024) return { error: "The photo is too large. Try a smaller photo." };
   const key = `uploads/${a.id}/${r.id}.${ext}`;

@@ -11,7 +11,16 @@ import { Q_TYPES, TYPE_LABEL, typeOf, type QType } from "@/lib/question-types";
 import { Blocks, Rich } from "@/components/Rich";
 import { Notes } from "@/components/Notes";
 import { MarkScheme } from "./MarkScheme";
-import { applyTemplate, pickQuestions, saveLessonNotes, sendHomework, sendReviewQuiz, setOutcome } from "@/lib/lesson-actions";
+import {
+  applyTemplate,
+  buildReviewQuiz,
+  dropReviewQuiz,
+  pickQuestions,
+  saveLessonNotes,
+  sendHomework,
+  sendReviewQuiz,
+  setOutcome,
+} from "@/lib/lesson-actions";
 
 type Pool = (BankQuestion & { seen: boolean; spans: boolean })[];
 
@@ -58,6 +67,7 @@ export function LessonBoard({
   const [withReview, setWithReview] = useState(true);
   const [sendOn, setSendOn] = useState("");
   const [dropped, setDropped] = useState<string[]>([]);
+  const [reviewOn, setReviewOn] = useState("");
   const [pending, start] = useTransition();
   const router = useRouter();
 
@@ -328,13 +338,8 @@ export function LessonBoard({
                     ? `Built and waiting. The daily run sends it to ${studentFirstName} on the day you chose.`
                     : `Already sent to ${studentFirstName}.`}
                 </span>
-                {lesson.homework_assignment_id.startsWith("queued:") && (
-                  <a
-                    className="btn ghost sm"
-                    href={`/tutor/sets/${lesson.homework_assignment_id.slice("queued:".length)}/preview`}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
+                {lesson.homework_set_id && (
+                  <a className="btn ghost sm" href={`/tutor/sets/${lesson.homework_set_id}/preview`} target="_blank" rel="noreferrer">
                     See it as {studentFirstName} will
                   </a>
                 )}
@@ -412,7 +417,44 @@ export function LessonBoard({
         </div>
         <div className="cardbody stack" style={{ gap: 12 }}>
           {lesson.review_assignment_id ? (
-            <p className="formmsg good" style={{ margin: 0 }}>Already sent to {studentFirstName}.</p>
+            <span className="rowacts">
+              <span className="formmsg good" style={{ margin: 0 }}>
+                {lesson.review_assignment_id.startsWith("queued:")
+                  ? `Waiting. The daily run sends it to ${studentFirstName} on the day you chose.`
+                  : `Already sent to ${studentFirstName}.`}
+              </span>
+              {lesson.review_set_id && (
+                <a className="btn ghost sm" href={`/tutor/sets/${lesson.review_set_id}/preview`} target="_blank" rel="noreferrer">
+                  See it as {studentFirstName} will
+                </a>
+              )}
+            </span>
+          ) : lesson.review_set_id ? (
+            <>
+              <p className="note" style={{ margin: 0 }}>
+                Built and not sent. Look at it the way {studentFirstName} will, then send it.
+              </p>
+              <div className="rowacts" style={{ flexWrap: "wrap" }}>
+                <a className="btn" href={`/tutor/sets/${lesson.review_set_id}/preview`} target="_blank" rel="noreferrer">
+                  See it as {studentFirstName} will
+                </a>
+                <label className="opt" style={{ gap: 6 }}>
+                  <span className="muted" style={{ fontSize: 13 }}>Send on</span>
+                  <input type="date" className="in sm" value={reviewOn} min={today} onChange={(e) => setReviewOn(e.target.value)} />
+                </label>
+                <button
+                  type="button"
+                  className="btn accent"
+                  disabled={pending}
+                  onClick={() => run(() => sendReviewQuiz(lesson.id, null, reviewOn || null))}
+                >
+                  {pending ? "Sending…" : reviewOn && reviewOn > today ? `Hold until ${reviewOn}` : `Send to ${studentFirstName}`}
+                </button>
+                <button type="button" className="btn ghost" disabled={pending} onClick={() => run(() => dropReviewQuiz(lesson.id))}>
+                  Build it again
+                </button>
+              </div>
+            </>
           ) : !plan || plan.missed.length === 0 ? (
             <p className="muted" style={{ margin: 0 }}>
               Mark what {studentFirstName} missed above. The quiz is those questions plus others on the same ground —
@@ -441,9 +483,12 @@ export function LessonBoard({
                 )}
               </ol>
               <div className="rowacts">
-                <button type="button" className="btn accent" onClick={() => run(() => sendReviewQuiz(lesson.id, null))} disabled={pending}>
-                  {pending ? "Sending…" : `Send to ${studentFirstName}`}
+                <button type="button" className="btn accent" onClick={() => run(() => buildReviewQuiz(lesson.id))} disabled={pending}>
+                  {pending ? "Building…" : "Build the quiz"}
                 </button>
+                <span className="muted" style={{ fontSize: 13 }}>
+                  Nothing is sent yet: you look at it first.
+                </span>
               </div>
             </>
           )}

@@ -493,6 +493,21 @@ mark.hl-bonus { background: rgba(21, 128, 61, 0.12); }
 
 .previewlist { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 14px; counter-reset: pq; }
 
+/* The questions chosen to go out as homework, on the teaching screen. */
+.picknums { display: flex; flex-wrap: wrap; gap: 6px; }
+.picknums .num {
+  display: inline-flex; align-items: baseline; gap: 5px; padding: 5px 11px; border-radius: 999px;
+  border: 1px solid var(--line2); background: var(--surface); color: var(--ink2);
+  font-size: 14px; font-weight: 600; cursor: pointer;
+}
+.picknums .num .m { font-size: 12px; font-weight: 400; }
+.picknums .num.on { background: var(--ink); border-color: var(--ink); color: #fff; }
+.picknums .num.on .m { color: rgba(255, 255, 255, 0.72); }
+.picknums .num:not(.on) { text-decoration: line-through; opacity: 0.6; }
+
+.uploadbox { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; }
+.uploadbox .upload { max-width: 100%; }
+
 /* Choosing an option on the teaching screen, then seeing whether it was the right one. */
 .choices.picking .choice { padding: 0; }
 .choices.picking .pick {

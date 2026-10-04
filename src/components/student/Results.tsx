@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Upload } from "@/components/Upload";
 import { Choices } from "@/components/Choices";
 import { MarkStamp } from "@/components/Icons";
 import { RewriteBox } from "@/components/student/RewriteBox";
@@ -414,8 +415,8 @@ function YourAnswer({ q, it, marked }: { q: Question; it: ReviewItem; marked: bo
     }
     if (r.final_text) parts.push(<div key="final" className="answerbox">{r.final_text}</div>);
     if (r.photo_path) {
-      // eslint-disable-next-line @next/next/no-img-element -- private upload served by an auth-checked route
-      parts.push(<img key="photo" className="upload" src={`/api/photo?r=${r.id}`} alt="Your diagram" />);
+       
+      parts.push(<Upload key="photo" responseId={r.id} alt="Your diagram" />);
     }
   }
   if (!parts.length) return <p className="muted" style={{ margin: 0 }}>No answer.</p>;

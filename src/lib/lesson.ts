@@ -25,6 +25,9 @@ export type Lesson = {
   taught_at: string | null;
   review_assignment_id: string | null;
   homework_assignment_id: string | null;
+  /** The sets, built and waiting to be looked at before they go. */
+  review_set_id: string | null;
+  homework_set_id: string | null;
 };
 
 export type LessonItem = { question_id: string; position: number; outcome: "right" | "wrong" | null };
@@ -319,4 +322,40 @@ export async function unfinished(lessonId: string): Promise<BankQuestion[]> {
   const bank = await bankRange(unitsOfLesson(lesson.unit));
   const byId = new Map(bank.map((q) => [q.id, q]));
   return left.map((id) => byId.get(id)).filter((q): q is BankQuestion => Boolean(q));
+}
+
+/**
+ * Builds a set and gives back its id. `saveSet` is a form action and ends in a redirect, so the
+ * lesson's own sends — the homework and the review quiz — write their set here instead and stay on
+ * the page they were called from.
+ */
+export async function buildSet(input: {
+  title: string;
+  helper: "on" | "off";
+  questionIds: string[];
+  createdBy: string;
+}): Promise<string> {
+  const id = newId("set");
+  await tx(async (t) => {
+    await t.run(
+      "INSERT INTO sets (id, title, mode, helper, created_by) VALUES (?, ?, 'assigned', ?, ?)",
+      id,
+      input.title,
+      input.helper,
+      input.createdBy,
+    );
+    const holes = input.questionIds.map(() => "(?, ?, ?)").join(", ");
+    await t.run(
+      `INSERT INTO set_items (set_id, position, question_id) VALUES ${holes}`,
+      ...input.questionIds.flatMap((q, i) => [id, i + 1, q]),
+    );
+  });
+  return id;
+}
+
+/** Sends a built set to the student now. */
+export async function assignNow(setId: string, studentId: string, due: string | null): Promise<string> {
+  const id = newId("asg");
+  await run("INSERT INTO assignments (id, set_id, student_id, due_at) VALUES (?, ?, ?, ?)", id, setId, studentId, due);
+  return id;
 }

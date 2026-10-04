@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { Upload } from "@/components/Upload";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import type { StudentQuestion, StudentResponse } from "@/lib/student";
@@ -648,10 +649,11 @@ function WrittenAnswer({
 
   async function upload(original: File) {
     setError(null);
-    if (original.size > 25 * 1024 * 1024) return setError("The photo must be under 25 MB.");
+    if (original.size > 25 * 1024 * 1024) return setError("The file must be under 25 MB.");
     setUploading(true);
     try {
-      const file = await shrinkPhoto(original);
+      // A PDF goes up as it is; a photo is shrunk first so it fits the request limit.
+      const file = original.type === "application/pdf" ? original : await shrinkPhoto(original);
       const fd = new FormData();
       fd.set("responseId", r.id);
       fd.set("photo", file);
@@ -716,23 +718,27 @@ function WrittenAnswer({
 
       {canPhoto && (
         <div className="field">
-          <label htmlFor="photo">{isDiagram ? "Photo of your diagram" : "Photo of your work"}</label>
+          <label htmlFor="photo">{isDiagram ? "Your diagram — photo or PDF" : "Photo of your work"}</label>
           {r.photo && (
-            // eslint-disable-next-line @next/next/no-img-element -- private upload served by an auth-checked route
-            <img className="upload" src={`/api/photo?r=${r.id}&v=${photoVersion}`} alt="Your uploaded diagram" />
+             
+            <Upload responseId={r.id} v={photoVersion} alt="Your uploaded diagram" />
           )}
           {!done && (
             <input
               id="photo"
               type="file"
-              accept="image/jpeg,image/png,image/webp"
+              accept="image/jpeg,image/png,image/webp,application/pdf"
               disabled={uploading}
               onClick={pauseTracking}
               onChange={(e) => e.target.files?.[0] && void upload(e.target.files[0])}
             />
           )}
           <span className="note">
-            {uploading ? "Uploading…" : isDiagram ? "Label the axes and every curve." : "If you wrote it on paper, photograph it here."}
+            {uploading
+              ? "Uploading…"
+              : isDiagram
+                ? "Label the axes and every curve. A photo or a PDF both work."
+                : "If you wrote it on paper, photograph it here."}
           </span>
         </div>
       )}

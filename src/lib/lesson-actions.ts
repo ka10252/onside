@@ -1,10 +1,10 @@
 "use server";
 
+
 import { revalidatePath } from "next/cache";
-import { getLesson, markOutcome, openLesson, reviewPlan, setLessonItems, unfinished, REVIEW_SIZE } from "./lesson";
+import { assignNow, buildSet, getLesson, markOutcome, openLesson, reviewPlan, setLessonItems, unfinished, REVIEW_SIZE } from "./lesson";
 import { fillTemplate } from "./lesson-template";
-import { one, run } from "./db";
-import { saveSet } from "./admin-actions";
+import { run } from "./db";
 import { queueSet } from "./queue";
 import { singaporeToday } from "./schedule";
 import { requireUser } from "./session";
@@ -49,31 +49,62 @@ export async function saveLessonNotes(lessonId: string, notes: string): Promise<
   return { ok: "Saved." };
 }
 
-/** Sends the review quiz as an ordinary assignment, and remembers which one it was. */
-export async function sendReviewQuiz(lessonId: string, due: string | null): Promise<LessonState> {
+/**
+ * Builds the review quiz and stops. The tutor looks at it the way the student will, and sends it
+ * when they are happy with it: a quiz built from what went wrong is worth a second pair of eyes.
+ */
+export async function buildReviewQuiz(lessonId: string): Promise<LessonState> {
   await requireUser("tutor");
   const l = await getLesson(lessonId);
   if (!l) return { error: "That lesson is gone." };
   if (l.review_assignment_id) return { error: "The review quiz for this lesson has already gone out." };
   const plan = await reviewPlan(lessonId, REVIEW_SIZE);
   const ids = [...plan.missed, ...plan.variants].map((q) => q.id);
-  if (ids.length === 0) return { error: plan.short ?? "Nothing to send." };
-  const res = await saveSet(null, {
+  if (ids.length === 0) return { error: plan.short ?? "Nothing to build." };
+  const tutor = await requireUser("tutor");
+  const setId = await buildSet({
     title: `Review · Unit ${l.unit} · ${new Date().toLocaleDateString("en-SG", { day: "numeric", month: "short", timeZone: "Asia/Singapore" })}`,
     helper: "off",
-    timeLimitMin: null,
     questionIds: ids,
-    sendTo: { studentId: l.student_id, due },
+    createdBy: tutor.id,
   });
-  if (res?.error) return { error: res.error };
-  const a = await one<{ id: string }>(
-    "SELECT id FROM assignments WHERE student_id = ? ORDER BY assigned_at DESC LIMIT 1",
-    l.student_id,
-  );
-  if (a) await run("UPDATE lessons SET review_assignment_id = ? WHERE id = ?", a.id, lessonId);
+  await run("UPDATE lessons SET review_set_id = ? WHERE id = ?", setId, lessonId);
   revalidatePath(back(l.student_id));
-  return { ok: `Sent ${ids.length} questions.` };
+  return { ok: `${ids.length} questions built. Look at it before you send it.` };
 }
+
+/** Sends the quiz that was built, now or on a day the tutor chooses. */
+export async function sendReviewQuiz(lessonId: string, due: string | null, sendOn: string | null = null): Promise<LessonState> {
+  await requireUser("tutor");
+  const l = await getLesson(lessonId);
+  if (!l) return { error: "That lesson is gone." };
+  if (l.review_assignment_id) return { error: "The review quiz for this lesson has already gone out." };
+  if (!l.review_set_id) return { error: "Build the quiz first." };
+  const later = sendOn && sendOn > singaporeToday().date ? sendOn : null;
+  if (later) {
+    await queueSet(l.student_id, l.review_set_id, later, due);
+    await run("UPDATE lessons SET review_assignment_id = ? WHERE id = ?", `queued:${l.review_set_id}`, lessonId);
+    revalidatePath(back(l.student_id));
+    const when = new Date(`${later}T00:00:00Z`).toLocaleDateString("en-SG", { day: "numeric", month: "short", timeZone: "UTC" });
+    return { ok: `Waiting until ${when}.` };
+  }
+  const assignmentId = await assignNow(l.review_set_id, l.student_id, due);
+  await run("UPDATE lessons SET review_assignment_id = ? WHERE id = ?", assignmentId, lessonId);
+  revalidatePath(back(l.student_id));
+  return { ok: "Sent." };
+}
+
+/** Throws away a built quiz so it can be built again from what is marked now. */
+export async function dropReviewQuiz(lessonId: string): Promise<LessonState> {
+  await requireUser("tutor");
+  const l = await getLesson(lessonId);
+  if (!l) return { error: "That lesson is gone." };
+  if (l.review_assignment_id) return { error: "It has already gone out." };
+  await run("UPDATE lessons SET review_set_id = NULL WHERE id = ?", lessonId);
+  revalidatePath(back(l.student_id));
+  return { ok: "Dropped. Build it again when you are ready." };
+}
+
 
 /** Fills the lesson with the mix this unit's past papers call for. Replaces whatever was picked. */
 export async function applyTemplate(lessonId: string): Promise<LessonState> {
@@ -91,8 +122,8 @@ export async function applyTemplate(lessonId: string): Promise<LessonState> {
 }
 
 /**
- * Sends what the lesson never got to as homework, with the review quiz added if the tutor wants it.
- * Whether to add it depends on how many are left, which only they can judge.
+ * Sends what the lesson never got to as homework, now or on a day the tutor chooses, with the
+ * review quiz added if they want it. Which of the leftovers go is their choice too.
  */
 export async function sendHomework(
   lessonId: string,
@@ -102,7 +133,7 @@ export async function sendHomework(
   /** Which of the ones left to send. Empty or missing means all of them. */
   only: string[] = [],
 ): Promise<LessonState> {
-  await requireUser("tutor");
+  const tutor = await requireUser("tutor");
   const l = await getLesson(lessonId);
   if (!l) return { error: "That lesson is gone." };
   if (l.homework_assignment_id) return { error: "The homework for this lesson has already gone out." };
@@ -112,33 +143,28 @@ export async function sendHomework(
   const extra = withReview ? await reviewPlan(lessonId, REVIEW_SIZE) : null;
   const ids = [...new Set([...left.map((q) => q.id), ...(extra ? [...extra.missed, ...extra.variants].map((q) => q.id) : [])])];
   if (ids.length === 0) return { error: "Nothing is left over from this lesson." };
-  const later = sendOn && sendOn > singaporeToday().date ? sendOn : null;
-  const res = await saveSet(null, {
+
+  const setId = await buildSet({
     title: `Homework · Unit ${l.unit} · ${new Date().toLocaleDateString("en-SG", { day: "numeric", month: "short", timeZone: "Asia/Singapore" })}`,
     // Work done at home is work done alone: the hints and the helper are there, as in daily
     // practice, and the marking screen separates what was answered with help from what was not.
     helper: "on",
-    timeLimitMin: null,
     questionIds: ids,
-    // Dated for a later day, the set is built now and held until the daily run sends it.
-    sendTo: later ? undefined : { studentId: l.student_id, due },
+    createdBy: tutor.id,
   });
-  if (res?.error) return { error: res.error };
+  const later = sendOn && sendOn > singaporeToday().date ? sendOn : null;
   if (later) {
-    const set = await one<{ id: string }>("SELECT id FROM sets ORDER BY created_at DESC LIMIT 1");
-    if (!set) return { error: "The set was not saved." };
-    await queueSet(l.student_id, set.id, later, due);
-    await run("UPDATE lessons SET homework_assignment_id = ? WHERE id = ?", `queued:${set.id}`, lessonId);
+    await queueSet(l.student_id, setId, later, due);
+    await run("UPDATE lessons SET homework_assignment_id = ?, homework_set_id = ? WHERE id = ?", `queued:${setId}`, setId, lessonId);
+    if (withReview && !l.review_assignment_id) await run("UPDATE lessons SET review_assignment_id = ? WHERE id = ?", `queued:${setId}`, lessonId);
     revalidatePath(back(l.student_id));
     const when = new Date(`${later}T00:00:00Z`).toLocaleDateString("en-SG", { day: "numeric", month: "short", timeZone: "UTC" });
     return { ok: `${ids.length} questions, waiting until ${when}.` };
   }
-  const a = await one<{ id: string }>("SELECT id FROM assignments WHERE student_id = ? ORDER BY assigned_at DESC LIMIT 1", l.student_id);
-  if (a) {
-    await run("UPDATE lessons SET homework_assignment_id = ? WHERE id = ?", a.id, lessonId);
-    // The review quiz went out inside the homework, so it is not owed twice.
-    if (withReview && !l.review_assignment_id) await run("UPDATE lessons SET review_assignment_id = ? WHERE id = ?", a.id, lessonId);
-  }
+  const assignmentId = await assignNow(setId, l.student_id, due);
+  await run("UPDATE lessons SET homework_assignment_id = ?, homework_set_id = ? WHERE id = ?", assignmentId, setId, lessonId);
+  // The review quiz went out inside the homework, so it is not owed twice.
+  if (withReview && !l.review_assignment_id) await run("UPDATE lessons SET review_assignment_id = ? WHERE id = ?", assignmentId, lessonId);
   revalidatePath(back(l.student_id));
   return { ok: `Sent ${ids.length} questions${withReview ? ", review quiz included" : ""}.` };
 }

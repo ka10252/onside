@@ -228,16 +228,18 @@ export function TeachBoard({
               {chosen.length} of {left} chosen
             </span>
           </div>
-          <div className="rowacts" style={{ flexWrap: "wrap", gap: 6 }}>
+          <div className="picknums">
             {leftQs.map((x) => (
               <button
                 key={x.id}
                 type="button"
-                className={`chip${dropped.includes(x.id) ? "" : " on"}`}
+                className={`num${dropped.includes(x.id) ? "" : " on"}`}
+                aria-pressed={!dropped.includes(x.id)}
                 onClick={() => setDropped((d) => (d.includes(x.id) ? d.filter((y) => y !== x.id) : [...d, x.id]))}
                 title={x.prompt.slice(0, 90)}
               >
-                {x.n} · {x.marks}m
+                {x.n}
+                <span className="m">{x.marks}m</span>
               </button>
             ))}
           </div>

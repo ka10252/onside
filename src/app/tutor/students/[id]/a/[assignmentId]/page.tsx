@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Upload } from "@/components/Upload";
 import { after } from "next/server";
 import { notFound } from "next/navigation";
 import { Blocks, Rich } from "@/components/Rich";
@@ -322,8 +323,8 @@ function Detail({ it, assignmentId, first }: { it: ReviewItem; assignmentId: str
             {r?.working_text && <div className="answerbox"><b>Working</b>{"\n"}{r.working_text}</div>}
             {r?.final_text && <div className="answerbox">{r.final_text}</div>}
             {r?.photo_path && (
-              // eslint-disable-next-line @next/next/no-img-element -- private upload
-              <img className="upload" src={`/api/photo?r=${r.id}`} alt="Student's diagram" />
+               
+              <Upload responseId={r.id} alt="Student's diagram" />
             )}
           </div>
         </section>

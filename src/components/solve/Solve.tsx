@@ -737,7 +737,7 @@ function WrittenAnswer({
             {uploading
               ? "Uploading…"
               : isDiagram
-                ? "Label the axes and every curve. A photo or a PDF both work."
+                ? "Draw it on paper and photograph it. Label the axes and every curve, and write the explanation beside the diagram. A PDF works too."
                 : "If you wrote it on paper, photograph it here."}
           </span>
         </div>
@@ -761,8 +761,9 @@ function WrittenAnswer({
         </div>
       )}
 
+      {!isDiagram && (
       <div className="field">
-        <label htmlFor="answer">{isCalc ? "Final answer" : isDiagram ? "Explanation" : "Your answer"}</label>
+        <label htmlFor="answer">{isCalc ? "Final answer" : "Your answer"}</label>
         {oneLine ? (
           // A calculation's result, a definition, a "state whether" — a box the size of the answer.
           <input
@@ -800,6 +801,7 @@ function WrittenAnswer({
           />
         )}
       </div>
+      )}
 
       {error && <p className="formmsg bad" role="alert">{error}</p>}
     </>

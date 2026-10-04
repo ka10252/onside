@@ -58,7 +58,13 @@ export default async function SetPreviewPage({ params }: PageProps<"/tutor/sets/
 
 /** One question, laid out the way the solving screen lays it out, with nothing live. */
 function Ask({ q, n, helper }: { q: StudentQuestion; n: number; helper: boolean }) {
+  // The same rules the solving screen uses, so this is what the student will meet.
+  const isCalc = q.format === "calculation";
+  const isDiagram = q.format === "diagram" || Boolean(q.label && /\b(diagram|sketch|draw)\b/i.test(q.prompt));
+  const oneLine = !isDiagram && (isCalc || q.marks <= 2);
   const written = q.mode === "written";
+  const canPhoto = written && !oneLine;
+
   return (
     <article className="card cardbody stack" style={{ gap: 12 }}>
       <p className="meta" style={{ margin: 0 }}>
@@ -105,28 +111,37 @@ function Ask({ q, n, helper }: { q: StudentQuestion; n: number; helper: boolean 
         </div>
       )}
 
-      {written && (
-        <div className="stack" style={{ gap: 10 }}>
-          {q.planPrompts && q.planPrompts.length > 0 && (
-            <div className="sub" style={{ padding: 12 }}>
-              <span className="qlabel">Plan</span>
-              <ul style={{ margin: "6px 0 0", paddingLeft: 18 }}>
-                {q.planPrompts.map((p, i) => (
-                  <li key={i} className="muted" style={{ fontSize: 14 }}>
-                    {p}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-          <label className="stack" style={{ gap: 4 }}>
-            <span className="qlabel">Your answer</span>
-            <textarea className="working" style={{ minHeight: 120 }} disabled placeholder="The student types here." />
-          </label>
-          <p className="muted" style={{ margin: 0, fontSize: 13 }}>
-            They can also photograph work done on paper.
-          </p>
+      {q.planPrompts && q.planPrompts.length > 0 && (
+        <div className="sub" style={{ padding: 12 }}>
+          <span className="qlabel">Plan</span>
+          <ul style={{ margin: "6px 0 0", paddingLeft: 18 }}>
+            {q.planPrompts.map((p, i) => (
+              <li key={i} className="muted" style={{ fontSize: 14 }}>
+                {p}
+              </li>
+            ))}
+          </ul>
         </div>
+      )}
+
+      {canPhoto && (
+        <div className="field">
+          <label>{isDiagram ? "Your diagram — photo or PDF" : "Photo of your work"}</label>
+          <input type="file" disabled accept="image/jpeg,image/png,image/webp,application/pdf" />
+          <span className="note">
+            {isDiagram
+              ? "Draw it on paper and photograph it. Label the axes and every curve, and write the explanation beside the diagram."
+              : "If you wrote it on paper, photograph it here."}
+          </span>
+        </div>
+      )}
+
+      {/* A diagram question is answered on paper, so there is no box to type in. */}
+      {written && !isDiagram && (
+        <label className="stack" style={{ gap: 4 }}>
+          <span className="qlabel">{isCalc ? "Final answer" : "Your answer"}</span>
+          <textarea className="working" style={{ minHeight: 120 }} disabled placeholder="The student types here." />
+        </label>
       )}
 
       {!written && (!q.options || q.options.length === 0) && !q.parts?.length && (

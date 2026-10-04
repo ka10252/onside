@@ -110,6 +110,9 @@ export default async function LessonPage({ params, searchParams }: PageProps<"/t
               // four-mark answer would give the question away. The rest never leaves the server.
               questions={teach.map((q) => (q.marks >= 10 ? q : { ...q, outline: null }))}
               notes={notes}
+              studentFirstName={first}
+              today={singaporeToday().date}
+              homeworkSent={Boolean(lesson!.homework_assignment_id)}
             />
           ) : (
             <LessonBoard

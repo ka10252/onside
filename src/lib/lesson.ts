@@ -245,6 +245,8 @@ export type TeachQuestion = {
   outcome: "right" | "wrong" | null;
   /** For an essay: the outline of a model answer, which the tutor opens when the writing is done. */
   outline: string | null;
+  /** For multiple choice only: which option is right, revealed when the class has chosen. */
+  right: string | null;
 };
 
 export async function teachView(lessonId: string): Promise<TeachQuestion[]> {
@@ -282,13 +284,15 @@ export async function teachView(lessonId: string): Promise<TeachQuestion[]> {
       options: !past && q.format === "mcq" ? q.options.map((o: { id: string; text: string }) => ({ id: o.id, text: o.text })) : [],
       outcome: item.outcome,
       outline: outlines.get(row.id) ?? null,
+      // Only the letter, and only for multiple choice: nothing else about the answer is fetched.
+      right: !past && q.format === "mcq" ? String(q.answer).toUpperCase() : null,
     });
   }
   return out;
 }
 
 /** The same questions with their answers beside them. The preparing screen only — never the lesson. */
-export type PrepareQuestion = TeachQuestion & { answer: string; right: string | null };
+export type PrepareQuestion = TeachQuestion & { answer: string };
 
 export async function prepareView(lessonId: string): Promise<PrepareQuestion[]> {
   const lesson = await getLesson(lessonId);
@@ -299,13 +303,9 @@ export async function prepareView(lessonId: string): Promise<PrepareQuestion[]> 
   const byId = new Map(rows.map((r) => [r.id, JSON.parse(r.data) as Question]));
   return shown.map((s) => {
     const q = byId.get(s.id);
-    if (!q) return { ...s, answer: "", right: null };
+    if (!q) return { ...s, answer: "" };
     const past = isPast(q);
-    return {
-      ...s,
-      answer: past ? q.marking.text || "Not found in the mark scheme file." : answerText(q),
-      right: !past && q.format === "mcq" ? String(q.answer).toUpperCase() : null,
-    };
+    return { ...s, answer: past ? q.marking.text || "Not found in the mark scheme file." : answerText(q) };
   });
 }
 

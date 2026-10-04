@@ -6,7 +6,7 @@ import { Blocks, Rich } from "@/components/Rich";
 import { Notes } from "@/components/Notes";
 import { reportIfStale } from "@/components/stale";
 import type { LessonNote, TeachQuestion } from "@/lib/lesson";
-import { setOutcome } from "@/lib/lesson-actions";
+import { sendHomework, setOutcome } from "@/lib/lesson-actions";
 
 /**
  * The lesson itself, on a screen the student is looking at too: one question at a time, large, with
@@ -16,11 +16,18 @@ export function TeachBoard({
   lessonId,
   questions,
   notes,
+  studentFirstName,
+  today,
+  homeworkSent,
 }: {
   lessonId: string;
   questions: TeachQuestion[];
   /** The lesson's revision notes, one entry per unit, gone through before the questions. */
   notes: LessonNote[];
+  studentFirstName: string;
+  /** Today in Singapore, so a date held for later can be told from one that is already here. */
+  today: string;
+  homeworkSent: boolean;
 }) {
   const withNotes = notes.filter((n) => n.body);
   const [showing, setShowing] = useState<"revision" | "questions">(withNotes.length ? "revision" : "questions");
@@ -30,6 +37,12 @@ export function TeachBoard({
     Object.fromEntries(questions.map((q) => [q.id, q.outcome])),
   );
   const [pending, start] = useTransition();
+  const [picked, setPicked] = useState<string | null>(null);
+  const [shown, setShown] = useState<string | null>(null);
+  const [sendOn, setSendOn] = useState("");
+  const [withReview, setWithReview] = useState(true);
+  const [sent, setSent] = useState(homeworkSent);
+  const [note, setNote] = useState<string | null>(null);
   const router = useRouter();
   const q = questions[at];
 
@@ -73,8 +86,20 @@ export function TeachBoard({
     );
   }
 
-  function mark(outcome: "right" | "wrong") {
-    const next = outcomes[q!.id] === outcome ? null : outcome;
+  function go(to: number) {
+    setAt(Math.max(0, Math.min(questions.length - 1, to)));
+    setPicked(null);
+    setShown(null);
+  }
+
+  function check() {
+    if (!q || !picked || !q.right) return;
+    setShown(q.id);
+    mark(picked === q.right ? "right" : "wrong", false);
+  }
+
+  function mark(outcome: "right" | "wrong", move = true) {
+    const next = outcomes[q!.id] === outcome && move ? null : outcome;
     setOutcomes((o) => ({ ...o, [q!.id]: next }));
     start(async () => {
       try {
@@ -84,16 +109,17 @@ export function TeachBoard({
         if (!reportIfStale(e)) throw e;
       }
     });
-    if (next && at < questions.length - 1) setTimeout(() => setAt((i) => Math.min(i + 1, questions.length - 1)), 250);
+    if (move && next && at < questions.length - 1) setTimeout(() => setAt((i) => Math.min(i + 1, questions.length - 1)), 250);
   }
 
   const done = questions.filter((x) => outcomes[x.id]).length;
+  const left = questions.length - done;
   return (
     <div className="teach">
       {tabs}
       <div className="teachbar">
         <span className="rowacts">
-          <button type="button" className="btn ghost sm" onClick={() => setAt((i) => Math.max(0, i - 1))} disabled={at === 0}>
+          <button type="button" className="btn ghost sm" onClick={() => go(at - 1)} disabled={at === 0}>
             ‹
           </button>
           <span className="pos">
@@ -102,7 +128,7 @@ export function TeachBoard({
           <button
             type="button"
             className="btn ghost sm"
-            onClick={() => setAt((i) => Math.min(questions.length - 1, i + 1))}
+            onClick={() => go(at + 1)}
             disabled={at === questions.length - 1}
           >
             ›
@@ -114,7 +140,7 @@ export function TeachBoard({
               key={x.id}
               type="button"
               className={`dot${i === at ? " on" : ""}${outcomes[x.id] === "right" ? " right" : outcomes[x.id] === "wrong" ? " wrong" : ""}`}
-              onClick={() => setAt(i)}
+              onClick={() => go(i)}
             />
           ))}
         </span>
@@ -141,14 +167,34 @@ export function TeachBoard({
           <Rich text={q.prompt} />
         </p>
         {q.options.length > 0 && (
-          <ol className="choices readback">
-            {q.options.map((o) => (
-              <li key={o.id} className="choice">
-                <span className="k">{o.id.toUpperCase()}</span>
-                <span className="grow">{o.text}</span>
-              </li>
-            ))}
-          </ol>
+          <>
+            <ol className="choices readback picking">
+              {q.options.map((o) => {
+                const letter = o.id.toUpperCase();
+                const open = shown === q.id;
+                const isRight = open && q.right === letter;
+                const isWrong = open && picked === letter && q.right !== letter;
+                return (
+                  <li key={o.id} className={`choice${picked === letter ? " picked" : ""}${isRight ? " right" : ""}${isWrong ? " wrong" : ""}`}>
+                    <button type="button" className="pick" onClick={() => setPicked(letter)} disabled={open}>
+                      <span className="k">{letter}</span>
+                      <span className="grow">{o.text}</span>
+                      {isRight && <span className="tag good">Right</span>}
+                      {isWrong && <span className="tag bad">Not this one</span>}
+                    </button>
+                  </li>
+                );
+              })}
+            </ol>
+            {q.right && shown !== q.id && (
+              <div className="rowacts">
+                <button type="button" className="btn" disabled={!picked || pending} onClick={() => check()}>
+                  Check the answer
+                </button>
+                {!picked && <span className="muted" style={{ fontSize: 14 }}>Choose an option first.</span>}
+              </div>
+            )}
+          </>
         )}
         {q.outline && (
           <details className="outline">
@@ -170,6 +216,49 @@ export function TeachBoard({
           Missed
         </button>
       </div>
+
+      {left > 0 && !sent && (
+        <section className="card cardbody stack" style={{ gap: 10 }}>
+          <div className="card-hd" style={{ padding: 0, border: 0 }}>
+            <h2 style={{ fontSize: 17 }}>Send the rest to {studentFirstName}</h2>
+            <span className="muted" style={{ fontSize: 14 }}>
+              {left} {left === 1 ? "question" : "questions"} not marked yet
+            </span>
+          </div>
+          <div className="rowacts" style={{ flexWrap: "wrap" }}>
+            <label className="opt">
+              <input type="checkbox" checked={withReview} onChange={(e) => setWithReview(e.target.checked)} />
+              <span>Add the review quiz too</span>
+            </label>
+            <label className="opt" style={{ gap: 6 }}>
+              <span className="muted" style={{ fontSize: 13 }}>Send on</span>
+              <input type="date" className="in sm" value={sendOn} min={today} onChange={(e) => setSendOn(e.target.value)} />
+            </label>
+            <button
+              type="button"
+              className="btn accent"
+              disabled={pending}
+              onClick={() =>
+                start(async () => {
+                  try {
+                    const res = await sendHomework(lessonId, withReview, null, sendOn || null);
+                    setNote(res.error ?? res.ok ?? null);
+                    if (!res.error) setSent(true);
+                    router.refresh();
+                  } catch (e) {
+                    if (!reportIfStale(e)) throw e;
+                    setNote("This page is out of date. Refresh and try again.");
+                  }
+                })
+              }
+            >
+              {pending ? "Sending…" : sendOn && sendOn > today ? `Hold until ${sendOn}` : "Send as homework"}
+            </button>
+            {note && <span className={`formmsg ${note.includes("already") ? "bad" : "good"}`}>{note}</span>}
+          </div>
+        </section>
+      )}
+      {sent && note && <p className="formmsg good">{note}</p>}
     </div>
   );
 }

@@ -3,6 +3,7 @@
 
 import { revalidatePath } from "next/cache";
 import { assignNow, buildSet, getLesson, markOutcome, openLesson, reviewPlan, setLessonItems, unfinished, REVIEW_SIZE } from "./lesson";
+import type { QType } from "./question-types";
 import { fillTemplate } from "./lesson-template";
 import { run } from "./db";
 import { queueSet } from "./queue";
@@ -53,12 +54,12 @@ export async function saveLessonNotes(lessonId: string, notes: string): Promise<
  * Builds the review quiz and stops. The tutor looks at it the way the student will, and sends it
  * when they are happy with it: a quiz built from what went wrong is worth a second pair of eyes.
  */
-export async function buildReviewQuiz(lessonId: string): Promise<LessonState> {
+export async function buildReviewQuiz(lessonId: string, size = REVIEW_SIZE, types?: QType[]): Promise<LessonState> {
   await requireUser("tutor");
   const l = await getLesson(lessonId);
   if (!l) return { error: "That lesson is gone." };
   if (l.review_assignment_id) return { error: "The review quiz for this lesson has already gone out." };
-  const plan = await reviewPlan(lessonId, REVIEW_SIZE);
+  const plan = await reviewPlan(lessonId, size, types?.length ? types : undefined);
   const ids = [...plan.missed, ...plan.variants].map((q) => q.id);
   if (ids.length === 0) return { error: plan.short ?? "Nothing to build." };
   const tutor = await requireUser("tutor");

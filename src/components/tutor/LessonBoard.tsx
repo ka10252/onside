@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { PreviewPanel, QuestionLine } from "@/components/QuestionPreview";
@@ -37,6 +39,7 @@ export function LessonBoard({
   noteRead,
   notes: lessonNotes,
   today,
+  review,
 }: {
   brief: UnitBrief;
   lesson: Lesson & { items: LessonItem[] };
@@ -55,6 +58,8 @@ export function LessonBoard({
   notes: LessonNote[];
   /** Today in Singapore, so a date held for later can be told from one that is already here. */
   today: string;
+  /** What the review quiz should hold, as the tutor has set it. */
+  review: { size: number; kinds: QType[] };
 }) {
   const [picked, setPicked] = useState<string[]>(lesson.items.map((i) => i.question_id));
   const [outcomes, setOutcomes] = useState<Record<string, "right" | "wrong" | null>>(
@@ -462,6 +467,36 @@ export function LessonBoard({
             </p>
           ) : (
             <>
+              <div className="rowacts" style={{ flexWrap: "wrap" }}>
+                <span className="muted" style={{ fontSize: 13 }}>How many</span>
+                {[5, 10, 15].map((n) => (
+                  <Link
+                    key={n}
+                    href={`${basePath}?lesson=${lesson.id}&size=${n}&kinds=${review.kinds.join(",")}`}
+                    className={`chip${review.size === n ? " on" : ""}`}
+                    scroll={false}
+                  >
+                    {n}
+                  </Link>
+                ))}
+                <span className="filtersep" aria-hidden />
+                <span className="muted" style={{ fontSize: 13 }}>Which kinds</span>
+                {Q_TYPES.filter((t) => t !== "essay").map((t) => {
+                  const on = review.kinds.includes(t);
+                  const next = on ? review.kinds.filter((k) => k !== t) : [...review.kinds, t];
+                  return (
+                    <Link
+                      key={t}
+                      href={`${basePath}?lesson=${lesson.id}&size=${review.size}&kinds=${next.join(",")}`}
+                      className={`chip${on ? " on" : ""}`}
+                      scroll={false}
+                      aria-disabled={on && review.kinds.length === 1}
+                    >
+                      {TYPE_LABEL[t]}
+                    </Link>
+                  );
+                })}
+              </div>
               <p className="note" style={{ margin: 0 }}>
                 <b>{plan.missed.length} missed</b> + <b>{plan.variants.length} on the same ground</b> ={" "}
                 {plan.missed.length + plan.variants.length} questions. Helper off.
@@ -483,7 +518,12 @@ export function LessonBoard({
                 )}
               </ol>
               <div className="rowacts">
-                <button type="button" className="btn accent" onClick={() => run(() => buildReviewQuiz(lesson.id))} disabled={pending}>
+                <button
+                  type="button"
+                  className="btn accent"
+                  onClick={() => run(() => buildReviewQuiz(lesson.id, review.size, review.kinds))}
+                  disabled={pending}
+                >
                   {pending ? "Building…" : "Build the quiz"}
                 </button>
                 <span className="muted" style={{ fontSize: 13 }}>

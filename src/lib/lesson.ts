@@ -7,6 +7,7 @@ import { relevantContext } from "./extract";
 import { all, one, run, tx } from "./db";
 import { weightByUnit, type UnitWeight } from "./unit-weight";
 import { recipeFor, spanningIds, type Recipe } from "./lesson-template";
+import { typeOf, type QType } from "./question-types";
 import { unitsOfLesson } from "./lesson-plan";
 
 /**
@@ -173,8 +174,8 @@ export async function markOutcome(lessonId: string, questionId: string, outcome:
   await run("UPDATE lesson_items SET outcome = ? WHERE lesson_id = ? AND question_id = ?", outcome, lessonId, questionId);
 }
 
-/** The review quiz is short: things a student can answer in a few minutes, not another essay. */
-const REVIEW_FORMATS = ["mcq", "short_answer", "calculation"];
+/** What a review quiz asks by default: things a student can answer in a few minutes, not an essay. */
+export const REVIEW_TYPES: QType[] = ["mcq", "definition", "short"];
 export const REVIEW_SIZE = 10;
 
 export type ReviewPlan = {
@@ -191,7 +192,8 @@ export type ReviewPlan = {
  * same idea is met a second time rather than the same wording memorised. Multiple choice and short
  * answers only — a review quiz is for checking a hole has closed, not for writing an essay.
  */
-export async function reviewPlan(lessonId: string, size = REVIEW_SIZE): Promise<ReviewPlan> {
+export async function reviewPlan(lessonId: string, size = REVIEW_SIZE, types: QType[] = REVIEW_TYPES): Promise<ReviewPlan> {
+  const wanted = (q: BankQuestion) => types.includes(typeOf(q));
   const lesson = await getLesson(lessonId);
   if (!lesson) return { missed: [], variants: [], short: "That lesson is gone." };
   const wrongIds = lesson.items.filter((i) => i.outcome === "wrong").map((i) => i.question_id);
@@ -206,13 +208,13 @@ export async function reviewPlan(lessonId: string, size = REVIEW_SIZE): Promise<
   const inUnit = new Map(bank.map((q) => [q.id, q]));
 
   // A wrong question is re-asked only if it is short enough to be worth re-asking.
-  const missed = wrongIds.map((id) => inUnit.get(id)).filter((q): q is BankQuestion => Boolean(q) && REVIEW_FORMATS.includes(q!.format));
+  const missed = wrongIds.map((id) => inUnit.get(id)).filter((q): q is BankQuestion => Boolean(q) && wanted(q!));
   const essayWrong = wrongIds.length - missed.length;
 
   // Same section first, then the rest of the unit; never one they have already been sent.
   const sections = new Set(missed.map((q) => q.section_id).filter(Boolean));
   const taken = new Set(wrongIds);
-  const unseen = bank.filter((q) => !taken.has(q.id) && REVIEW_FORMATS.includes(q.format) && !had.has(q.id));
+  const unseen = bank.filter((q) => !taken.has(q.id) && wanted(q) && !had.has(q.id));
   const sameSection = unseen.filter((q) => q.section_id && sections.has(q.section_id));
   const rest = unseen.filter((q) => !(q.section_id && sections.has(q.section_id)));
   const variants = [...sameSection, ...rest].slice(0, Math.max(0, size - missed.length));
@@ -222,7 +224,7 @@ export async function reviewPlan(lessonId: string, size = REVIEW_SIZE): Promise<
     got >= size
       ? null
       : [
-          essayWrong > 0 ? `${essayWrong} of the wrong ones were essays, which a review quiz doesn't re-ask` : "",
+          essayWrong > 0 ? `${essayWrong} of the wrong ones are not of the kinds you chose` : "",
           `only ${got} questions could be found in ${unitsOfLesson(lesson.unit).map((u) => `unit ${u}`).join(" and ")}`,
         ]
           .filter(Boolean)

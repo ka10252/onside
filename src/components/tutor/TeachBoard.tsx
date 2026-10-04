@@ -154,9 +154,9 @@ export function TeachBoard({
           <span className="muted" style={{ fontSize: 14 }}>
             {done} of {questions.length} marked
           </span>
-          {!sent && (
-            <button type="button" className="btn ghost sm" onClick={() => setEnded((v) => !v)}>
-              {ended ? "Back to the questions" : "End the lesson"}
+          {!sent && !ended && (
+            <button type="button" className="btn ghost sm" onClick={() => setEnded(true)}>
+              End the lesson
             </button>
           )}
         </span>
@@ -234,8 +234,13 @@ export function TeachBoard({
         <section className="card cardbody stack" style={{ gap: 10 }}>
           <div className="card-hd" style={{ padding: 0, border: 0 }}>
             <h2 style={{ fontSize: 17 }}>Send the rest to {studentFirstName}</h2>
-            <span className="muted" style={{ fontSize: 14 }}>
-              {chosen.length} of {left} chosen
+            <span className="rowacts">
+              <span className="muted" style={{ fontSize: 14 }}>
+                {chosen.length} of {left} chosen
+              </span>
+              <button type="button" className="btn ghost sm" onClick={() => setEnded(false)}>
+                Back to the questions
+              </button>
             </span>
           </div>
           <div className="picknums">
@@ -287,7 +292,12 @@ export function TeachBoard({
         </section>
       )}
       {ended && left === 0 && !sent && (
-        <p className="muted" style={{ textAlign: "center" }}>Every question was marked. There is nothing left to set.</p>
+        <p className="muted" style={{ textAlign: "center" }}>
+          Every question was marked. There is nothing left to set.{" "}
+          <button type="button" className="link" onClick={() => setEnded(false)}>
+            Back to the questions
+          </button>
+        </p>
       )}
       {sent && note && <p className="formmsg good">{note}</p>}
     </div>

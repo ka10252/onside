@@ -5,7 +5,21 @@ import { Nav, TUTOR_TABS } from "@/components/Nav";
 import { LessonBoard } from "@/components/tutor/LessonBoard";
 import { WeightPill } from "@/components/tutor/UnitWeight";
 import { getStudent } from "@/lib/admin";
-import { getLesson, lessonNotes, lessonPool, lessonsFor, openLesson, prepareView, reviewPlan, teachView, unfinished, unitBrief } from "@/lib/lesson";
+import {
+  getLesson,
+  lessonNotes,
+  lessonPool,
+  lessonsFor,
+  openLesson,
+  prepareView,
+  reviewPlan,
+  teachView,
+  unfinished,
+  unitBrief,
+  REVIEW_SIZE,
+  REVIEW_TYPES,
+} from "@/lib/lesson";
+import { Q_TYPES, type QType } from "@/lib/question-types";
 import { lessonOf } from "@/lib/lesson-plan";
 import { singaporeToday } from "@/lib/schedule";
 import { TeachBoard } from "@/components/tutor/TeachBoard";
@@ -17,7 +31,16 @@ import { requireUser } from "@/lib/session";
 export default async function LessonPage({ params, searchParams }: PageProps<"/tutor/students/[id]/lesson">) {
   const user = await requireUser("tutor");
   const { id } = await params;
-  const { unit: unitParam, lesson: lessonParam, mode } = (await searchParams) as { unit?: string; lesson?: string; mode?: string };
+  const {
+    unit: unitParam,
+    lesson: lessonParam,
+    mode,
+    size: sizeParam,
+    kinds: kindsParam,
+  } = (await searchParams) as { unit?: string; lesson?: string; mode?: string; size?: string; kinds?: string };
+  // What the review quiz should hold, which the tutor sets on the page itself.
+  const size = Math.min(20, Math.max(3, Number(sizeParam) || REVIEW_SIZE));
+  const kinds = (kindsParam ? kindsParam.split(",") : REVIEW_TYPES).filter((k): k is QType => Q_TYPES.includes(k as QType));
   const teaching = mode === "teach";
   const student = await getStudent(id);
   if (!student) notFound();
@@ -37,7 +60,7 @@ export default async function LessonPage({ params, searchParams }: PageProps<"/t
   // In the lesson, only what the student should read is fetched at all.
   const [pool, plan, teach, chosen, left, read] = await Promise.all([
     unit && !teaching ? lessonPool(unit, id) : Promise.resolve([]),
-    lesson && !teaching ? reviewPlan(lesson.id) : Promise.resolve(null),
+    lesson && !teaching ? reviewPlan(lesson.id, size, kinds.length ? kinds : undefined) : Promise.resolve(null),
     lesson && teaching ? teachView(lesson.id) : Promise.resolve([]),
     lesson && !teaching ? prepareView(lesson.id) : Promise.resolve([]),
     lesson && !teaching ? unfinished(lesson.id) : Promise.resolve([]),
@@ -127,6 +150,7 @@ export default async function LessonPage({ params, searchParams }: PageProps<"/t
               noteRead={read}
               notes={notes}
               today={singaporeToday().date}
+              review={{ size, kinds }}
             />
           )}
 

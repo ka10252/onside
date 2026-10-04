@@ -10,7 +10,7 @@ import { queueSet } from "./queue";
 import { singaporeToday } from "./schedule";
 import { requireUser } from "./session";
 
-export type LessonState = { error?: string; ok?: string };
+export type LessonState = { error?: string; ok?: string; setId?: string };
 
 const back = (studentId: string) => `/tutor/students/${studentId}/lesson`;
 
@@ -71,7 +71,7 @@ export async function buildReviewQuiz(lessonId: string, size = REVIEW_SIZE, type
   });
   await run("UPDATE lessons SET review_set_id = ? WHERE id = ?", setId, lessonId);
   revalidatePath(back(l.student_id));
-  return { ok: `${ids.length} questions built. Look at it before you send it.` };
+  return { ok: `${ids.length} questions built. Look at it before you send it.`, setId };
 }
 
 /** Sends the quiz that was built, now or on a day the tutor chooses. */
@@ -122,18 +122,15 @@ export async function applyTemplate(lessonId: string): Promise<LessonState> {
   return { ok: `${picked.length} questions — ${mix}${both}${short ? ` (${short})` : ""}.` };
 }
 
+/** A homework set worth setting: fewer than this and it is not worth a trip to the app. */
+const MIN_HOMEWORK = 5;
+
 /**
- * Sends what the lesson never got to as homework, now or on a day the tutor chooses, with the
- * review quiz added if they want it. Which of the leftovers go is their choice too.
+ * Builds the homework and stops, so the tutor can look at it the way the student will before it
+ * goes anywhere. Whatever was chosen from the questions the lesson never reached, topped up to five
+ * with questions on the same ground as the ones that went wrong.
  */
-export async function sendHomework(
-  lessonId: string,
-  withReview: boolean,
-  due: string | null = null,
-  sendOn: string | null = null,
-  /** Which of the ones left to send. Empty or missing means all of them. */
-  only: string[] = [],
-): Promise<LessonState> {
+export async function buildHomework(lessonId: string, only: string[] = []): Promise<LessonState> {
   const tutor = await requireUser("tutor");
   const l = await getLesson(lessonId);
   if (!l) return { error: "That lesson is gone." };
@@ -141,9 +138,19 @@ export async function sendHomework(
   const all = await unfinished(lessonId);
   const left = only.length ? all.filter((q) => only.includes(q.id)) : all;
   if (left.length === 0) return { error: "No questions chosen." };
-  const extra = withReview ? await reviewPlan(lessonId, REVIEW_SIZE) : null;
-  const ids = [...new Set([...left.map((q) => q.id), ...(extra ? [...extra.missed, ...extra.variants].map((q) => q.id) : [])])];
-  if (ids.length === 0) return { error: "Nothing is left over from this lesson." };
+
+  const ids = left.map((q) => q.id);
+  let added = 0;
+  if (ids.length < MIN_HOMEWORK) {
+    // Short of five: fill up with questions on the same ground as the ones that went wrong.
+    const plan = await reviewPlan(lessonId, MIN_HOMEWORK + ids.length);
+    for (const q of plan.variants) {
+      if (ids.length >= MIN_HOMEWORK) break;
+      if (ids.includes(q.id)) continue;
+      ids.push(q.id);
+      added++;
+    }
+  }
 
   const setId = await buildSet({
     title: `Homework · Unit ${l.unit} · ${new Date().toLocaleDateString("en-SG", { day: "numeric", month: "short", timeZone: "Asia/Singapore" })}`,
@@ -153,19 +160,40 @@ export async function sendHomework(
     questionIds: ids,
     createdBy: tutor.id,
   });
+  await run("UPDATE lessons SET homework_set_id = ? WHERE id = ?", setId, lessonId);
+  revalidatePath(back(l.student_id));
+  const topped = added > 0 ? `, ${added} on the same ground as what went wrong` : "";
+  return { ok: `${ids.length} questions built${topped}. Look at it before you send it.`, setId };
+}
+
+/** Sends the homework that was built, now or on a day the tutor chooses. */
+export async function sendHomework(lessonId: string, due: string | null = null, sendOn: string | null = null): Promise<LessonState> {
+  await requireUser("tutor");
+  const l = await getLesson(lessonId);
+  if (!l) return { error: "That lesson is gone." };
+  if (l.homework_assignment_id) return { error: "The homework for this lesson has already gone out." };
+  if (!l.homework_set_id) return { error: "Build the homework first." };
   const later = sendOn && sendOn > singaporeToday().date ? sendOn : null;
   if (later) {
-    await queueSet(l.student_id, setId, later, due);
-    await run("UPDATE lessons SET homework_assignment_id = ?, homework_set_id = ? WHERE id = ?", `queued:${setId}`, setId, lessonId);
-    if (withReview && !l.review_assignment_id) await run("UPDATE lessons SET review_assignment_id = ? WHERE id = ?", `queued:${setId}`, lessonId);
+    await queueSet(l.student_id, l.homework_set_id, later, due);
+    await run("UPDATE lessons SET homework_assignment_id = ? WHERE id = ?", `queued:${l.homework_set_id}`, lessonId);
     revalidatePath(back(l.student_id));
     const when = new Date(`${later}T00:00:00Z`).toLocaleDateString("en-SG", { day: "numeric", month: "short", timeZone: "UTC" });
-    return { ok: `${ids.length} questions, waiting until ${when}.` };
+    return { ok: `Waiting until ${when}.` };
   }
-  const assignmentId = await assignNow(setId, l.student_id, due);
-  await run("UPDATE lessons SET homework_assignment_id = ?, homework_set_id = ? WHERE id = ?", assignmentId, setId, lessonId);
-  // The review quiz went out inside the homework, so it is not owed twice.
-  if (withReview && !l.review_assignment_id) await run("UPDATE lessons SET review_assignment_id = ? WHERE id = ?", assignmentId, lessonId);
+  const assignmentId = await assignNow(l.homework_set_id, l.student_id, due);
+  await run("UPDATE lessons SET homework_assignment_id = ? WHERE id = ?", assignmentId, lessonId);
   revalidatePath(back(l.student_id));
-  return { ok: `Sent ${ids.length} questions${withReview ? ", review quiz included" : ""}.` };
+  return { ok: "Sent." };
+}
+
+/** Throws away built homework so it can be built again from a different choice. */
+export async function dropHomework(lessonId: string): Promise<LessonState> {
+  await requireUser("tutor");
+  const l = await getLesson(lessonId);
+  if (!l) return { error: "That lesson is gone." };
+  if (l.homework_assignment_id) return { error: "It has already gone out." };
+  await run("UPDATE lessons SET homework_set_id = NULL WHERE id = ?", lessonId);
+  revalidatePath(back(l.student_id));
+  return { ok: "Dropped. Choose again and build it." };
 }

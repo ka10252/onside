@@ -147,6 +147,7 @@ export default async function LessonPage({ params, searchParams }: PageProps<"/t
               studentFirstName={first}
               today={singaporeToday().date}
               homeworkSent={sends.homework}
+              homeworkSetId={live!.homework_set_id}
             />
           ) : (
             <LessonBoard

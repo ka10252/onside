@@ -15,7 +15,9 @@ import { Notes } from "@/components/Notes";
 import { MarkScheme } from "./MarkScheme";
 import {
   applyTemplate,
+  buildHomework,
   buildReviewQuiz,
+  dropHomework,
   dropReviewQuiz,
   pickQuestions,
   saveLessonNotes,
@@ -69,7 +71,6 @@ export function LessonBoard({
   const [note, setNote] = useState<string | null>(null);
   const [open, setOpen] = useState<string | null>(null);
   const [band, setBand] = useState<QType | "both">("mcq");
-  const [withReview, setWithReview] = useState(true);
   const [sendOn, setSendOn] = useState("");
   const [dropped, setDropped] = useState<string[]>([]);
   const [reviewOn, setReviewOn] = useState("");
@@ -349,6 +350,32 @@ export function LessonBoard({
                   </a>
                 )}
               </span>
+            ) : lesson.homework_set_id ? (
+              <>
+                <p className="note" style={{ margin: 0 }}>
+                  Built and not sent. Look at it the way {studentFirstName} will, then choose the day.
+                </p>
+                <div className="rowacts" style={{ flexWrap: "wrap" }}>
+                  <a className="btn" href={`/tutor/sets/${lesson.homework_set_id}/preview`} target="_blank" rel="noreferrer">
+                    See it as {studentFirstName} will
+                  </a>
+                  <label className="opt" style={{ gap: 6 }}>
+                    <span className="muted" style={{ fontSize: 13 }}>Send on</span>
+                    <input type="date" className="in sm" value={sendOn} min={today} onChange={(e) => setSendOn(e.target.value)} />
+                  </label>
+                  <button
+                    type="button"
+                    className="btn accent"
+                    disabled={pending}
+                    onClick={() => run(() => sendHomework(lesson.id, null, sendOn || null))}
+                  >
+                    {pending ? "Sending…" : sendOn && sendOn > today ? `Hold until ${sendOn}` : `Send to ${studentFirstName}`}
+                  </button>
+                  <button type="button" className="btn ghost" disabled={pending} onClick={() => run(() => dropHomework(lesson.id))}>
+                    Choose again
+                  </button>
+                </div>
+              </>
             ) : (
               <>
                 <ol className="pick">
@@ -370,42 +397,23 @@ export function LessonBoard({
                     </li>
                   ))}
                 </ol>
-                <label className="opt">
-                  <input type="checkbox" checked={withReview} onChange={(e) => setWithReview(e.target.checked)} />
-                  <span>
-                    Add the review quiz too
-                    {plan && plan.missed.length > 0
-                      ? ` (${plan.missed.length + plan.variants.length} more, ${left.length + plan.missed.length + plan.variants.length} in all)`
-                      : " (nothing marked wrong yet)"}
-                  </span>
-                </label>
+                <p className="muted" style={{ margin: 0, fontSize: 13 }}>
+                  {left.filter((q) => !dropped.includes(q.id)).length < 5
+                    ? `Fewer than five, so ${5 - left.filter((q) => !dropped.includes(q.id)).length} more will be added on the same ground as what went wrong.`
+                    : "Hints and the helper are on, as in daily practice. They can photograph work done on paper."}
+                </p>
                 <div className="rowacts">
-                  <label className="opt" style={{ gap: 6 }}>
-                    <span className="muted" style={{ fontSize: 13 }}>Send on</span>
-                    <input type="date" className="in sm" value={sendOn} min={today} onChange={(e) => setSendOn(e.target.value)} />
-                  </label>
                   <button
                     type="button"
                     className="btn accent"
-                    disabled={pending}
+                    disabled={pending || left.filter((q) => !dropped.includes(q.id)).length === 0}
                     onClick={() =>
-                      run(() =>
-                        sendHomework(
-                          lesson.id,
-                          withReview,
-                          null,
-                          sendOn || null,
-                          left.filter((q) => !dropped.includes(q.id)).map((q) => q.id),
-                        ),
-                      )
+                      run(() => buildHomework(lesson.id, left.filter((q) => !dropped.includes(q.id)).map((q) => q.id)))
                     }
                   >
-                    {pending ? "Sending…" : sendOn && sendOn > today ? `Hold until ${sendOn}` : `Send to ${studentFirstName}`}
+                    {pending ? "Building…" : "Build it"}
                   </button>
-                  <span className="muted" style={{ fontSize: 13 }}>
-                    Hints and the helper are on, as in daily practice. They can photograph work done on paper.
-                    {sendOn && sendOn > today ? " The daily run sends it that morning." : ""}
-                  </span>
+                  <span className="muted" style={{ fontSize: 13 }}>Nothing is sent yet: you look at it first.</span>
                 </div>
               </>
             )}

@@ -6,7 +6,7 @@ import { Blocks, Rich } from "@/components/Rich";
 import { Notes } from "@/components/Notes";
 import { reportIfStale } from "@/components/stale";
 import type { LessonNote, TeachQuestion } from "@/lib/lesson";
-import { sendHomework, setOutcome } from "@/lib/lesson-actions";
+import { buildHomework, dropHomework, sendHomework, setOutcome } from "@/lib/lesson-actions";
 
 /**
  * The lesson itself, on a screen the student is looking at too: one question at a time, large, with
@@ -19,6 +19,7 @@ export function TeachBoard({
   studentFirstName,
   today,
   homeworkSent,
+  homeworkSetId,
 }: {
   lessonId: string;
   questions: TeachQuestion[];
@@ -28,6 +29,8 @@ export function TeachBoard({
   /** Today in Singapore, so a date held for later can be told from one that is already here. */
   today: string;
   homeworkSent: boolean;
+  /** The set built and not yet sent, which the tutor can look at first. */
+  homeworkSetId: string | null;
 }) {
   const withNotes = notes.filter((n) => n.body);
   const [showing, setShowing] = useState<"revision" | "questions">(withNotes.length ? "revision" : "questions");
@@ -40,9 +43,9 @@ export function TeachBoard({
   const [picked, setPicked] = useState<string | null>(null);
   const [shown, setShown] = useState<string | null>(null);
   const [sendOn, setSendOn] = useState("");
-  const [withReview, setWithReview] = useState(true);
   const [dropped, setDropped] = useState<string[]>([]);
   const [sent, setSent] = useState(homeworkSent);
+  const [builtId, setBuiltId] = useState(homeworkSetId);
   // The student is watching this screen, so what to set for homework stays out of sight until the
   // lesson is over and the tutor asks for it.
   const [ended, setEnded] = useState(false);
@@ -88,6 +91,19 @@ export function TeachBoard({
         <p className="muted">No questions in this lesson yet. Add some on the Prepare screen.</p>
       </div>
     );
+  }
+
+  function act(job: () => Promise<{ error?: string; ok?: string }>) {
+    start(async () => {
+      try {
+        const res = await job();
+        setNote(res.error ?? res.ok ?? null);
+        router.refresh();
+      } catch (e) {
+        if (!reportIfStale(e)) throw e;
+        setNote("This page is out of date. Refresh and try again.");
+      }
+    });
   }
 
   function go(to: number) {
@@ -233,64 +249,105 @@ export function TeachBoard({
       {ended && left > 0 && !sent && (
         <section className="card cardbody stack" style={{ gap: 10 }}>
           <div className="card-hd" style={{ padding: 0, border: 0 }}>
-            <h2 style={{ fontSize: 17 }}>Send the rest to {studentFirstName}</h2>
+            <h2 style={{ fontSize: 17 }}>Homework for {studentFirstName}</h2>
             <span className="rowacts">
               <span className="muted" style={{ fontSize: 14 }}>
-                {chosen.length} of {left} chosen
+                {builtId ? "built, not sent" : `${chosen.length} of ${left} chosen`}
               </span>
               <button type="button" className="btn ghost sm" onClick={() => setEnded(false)}>
                 Back to the questions
               </button>
             </span>
           </div>
-          <div className="picknums">
-            {leftQs.map((x) => (
-              <button
-                key={x.id}
-                type="button"
-                className={`num${dropped.includes(x.id) ? "" : " on"}`}
-                aria-pressed={!dropped.includes(x.id)}
-                onClick={() => setDropped((d) => (d.includes(x.id) ? d.filter((y) => y !== x.id) : [...d, x.id]))}
-                title={x.prompt.slice(0, 90)}
-              >
-                {x.n}
-                <span className="m">{x.marks}m</span>
-              </button>
-            ))}
-          </div>
-          <div className="rowacts" style={{ flexWrap: "wrap" }}>
-            <label className="opt">
-              <input type="checkbox" checked={withReview} onChange={(e) => setWithReview(e.target.checked)} />
-              <span>Add the review quiz too</span>
-            </label>
-            <label className="opt" style={{ gap: 6 }}>
-              <span className="muted" style={{ fontSize: 13 }}>Send on</span>
-              <input type="date" className="in sm" value={sendOn} min={today} onChange={(e) => setSendOn(e.target.value)} />
-            </label>
-            <button
-              type="button"
-              className="btn accent"
-              disabled={pending || chosen.length === 0}
-              onClick={() =>
-                start(async () => {
-                  try {
-                    const res = await sendHomework(lessonId, withReview, null, sendOn || null, chosen.map((x) => x.id));
-                    setNote(res.error ?? res.ok ?? null);
-                    if (!res.error) setSent(true);
-                    router.refresh();
-                  } catch (e) {
-                    if (!reportIfStale(e)) throw e;
-                    setNote("This page is out of date. Refresh and try again.");
+
+          {builtId ? (
+            <>
+              <p className="muted" style={{ margin: 0, fontSize: 14 }}>
+                Look at it the way {studentFirstName} will, then choose the day.
+              </p>
+              <div className="rowacts" style={{ flexWrap: "wrap" }}>
+                <a className="btn" href={`/tutor/sets/${builtId}/preview`} target="_blank" rel="noreferrer">
+                  See it as {studentFirstName} will
+                </a>
+                <label className="opt" style={{ gap: 6 }}>
+                  <span className="muted" style={{ fontSize: 13 }}>Send on</span>
+                  <input type="date" className="in sm" value={sendOn} min={today} onChange={(e) => setSendOn(e.target.value)} />
+                </label>
+                <button
+                  type="button"
+                  className="btn accent"
+                  disabled={pending}
+                  onClick={() =>
+                    act(async () => {
+                      const res = await sendHomework(lessonId, null, sendOn || null);
+                      if (!res.error) setSent(true);
+                      return res;
+                    })
                   }
-                })
-              }
-            >
-              {pending ? "Sending…" : sendOn && sendOn > today ? `Hold until ${sendOn}` : "Send as homework"}
-            </button>
-            {note && <span className={`formmsg ${note.includes("already") ? "bad" : "good"}`}>{note}</span>}
-          </div>
+                >
+                  {pending ? "Sending…" : sendOn && sendOn > today ? `Hold until ${sendOn}` : "Send it"}
+                </button>
+                <button
+                  type="button"
+                  className="btn ghost"
+                  disabled={pending}
+                  onClick={() =>
+                    act(async () => {
+                      const res = await dropHomework(lessonId);
+                      if (!res.error) setBuiltId(null);
+                      return res;
+                    })
+                  }
+                >
+                  Choose again
+                </button>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="picknums">
+                {leftQs.map((x) => (
+                  <button
+                    key={x.id}
+                    type="button"
+                    className={`num${dropped.includes(x.id) ? "" : " on"}`}
+                    aria-pressed={!dropped.includes(x.id)}
+                    onClick={() => setDropped((d) => (d.includes(x.id) ? d.filter((y) => y !== x.id) : [...d, x.id]))}
+                    title={x.prompt.slice(0, 90)}
+                  >
+                    {x.n}
+                    <span className="m">{x.marks}m</span>
+                  </button>
+                ))}
+              </div>
+              <p className="muted" style={{ margin: 0, fontSize: 13 }}>
+                {chosen.length < 5
+                  ? `Fewer than five, so ${5 - chosen.length} more will be added on the same ground as what went wrong.`
+                  : "Hints and the helper are on, as in daily practice."}
+              </p>
+              <div className="rowacts">
+                <button
+                  type="button"
+                  className="btn accent"
+                  disabled={pending || chosen.length === 0}
+                  onClick={() =>
+                    act(async () => {
+                      const res = await buildHomework(lessonId, chosen.map((x) => x.id));
+                      if (res.setId) setBuiltId(res.setId);
+                      return res;
+                    })
+                  }
+                >
+                  {pending ? "Building…" : "Build it"}
+                </button>
+                <span className="muted" style={{ fontSize: 13 }}>Nothing is sent yet: you look at it first.</span>
+              </div>
+            </>
+          )}
+          {note && <span className={`formmsg ${note.includes("already") || note.includes("No ") ? "bad" : "good"}`}>{note}</span>}
         </section>
       )}
+
       {ended && sent && (
         <p className="formmsg good">
           The homework has gone to {studentFirstName}.{" "}

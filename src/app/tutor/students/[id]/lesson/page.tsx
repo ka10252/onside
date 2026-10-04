@@ -16,6 +16,7 @@ import {
   teachView,
   unfinished,
   unitBrief,
+  lessonSends,
   REVIEW_SIZE,
   REVIEW_TYPES,
 } from "@/lib/lesson";
@@ -57,6 +58,16 @@ export default async function LessonPage({ params, searchParams }: PageProps<"/t
   const key = inLesson?.units[0] ?? unit;
   const title = inLesson && inLesson.units.length > 1 ? `Lesson ${inLesson.n} · Units ${inLesson.units.join(" + ")}` : `Unit ${unit} · ${brief?.title ?? ""}`;
   const lesson = named ?? (unit && brief && key ? await getLesson((await openLesson(id, key, title)).id) : null);
+  // A set can be deleted after it was sent; the lesson should not go on claiming it sent one.
+  const sends = lesson ? await lessonSends(lesson) : { homework: false, review: false };
+  const live = lesson
+    ? {
+        ...lesson,
+        homework_assignment_id: sends.homework ? lesson.homework_assignment_id : null,
+        homework_set_id: sends.homework ? lesson.homework_set_id : null,
+        review_assignment_id: sends.review ? lesson.review_assignment_id : null,
+      }
+    : null;
   // In the lesson, only what the student should read is fetched at all.
   const [pool, plan, teach, chosen, left, read] = await Promise.all([
     unit && !teaching ? lessonPool(unit, id) : Promise.resolve([]),
@@ -135,12 +146,12 @@ export default async function LessonPage({ params, searchParams }: PageProps<"/t
               notes={notes}
               studentFirstName={first}
               today={singaporeToday().date}
-              homeworkSent={Boolean(lesson!.homework_assignment_id)}
+              homeworkSent={sends.homework}
             />
           ) : (
             <LessonBoard
               brief={brief}
-              lesson={lesson!}
+              lesson={live!}
               pool={pool}
               plan={plan}
               chosen={chosen}

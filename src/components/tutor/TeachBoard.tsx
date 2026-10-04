@@ -154,7 +154,7 @@ export function TeachBoard({
           <span className="muted" style={{ fontSize: 14 }}>
             {done} of {questions.length} marked
           </span>
-          {!sent && !ended && (
+          {!ended && (
             <button type="button" className="btn ghost sm" onClick={() => setEnded(true)}>
               End the lesson
             </button>
@@ -290,6 +290,14 @@ export function TeachBoard({
             {note && <span className={`formmsg ${note.includes("already") ? "bad" : "good"}`}>{note}</span>}
           </div>
         </section>
+      )}
+      {ended && sent && (
+        <p className="formmsg good">
+          The homework has gone to {studentFirstName}.{" "}
+          <button type="button" className="link" onClick={() => setEnded(false)}>
+            Back to the questions
+          </button>
+        </p>
       )}
       {ended && left === 0 && !sent && (
         <p className="muted" style={{ textAlign: "center" }}>

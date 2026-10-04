@@ -361,3 +361,26 @@ export async function assignNow(setId: string, studentId: string, due: string | 
   await run("INSERT INTO assignments (id, set_id, student_id, due_at) VALUES (?, ?, ?, ?)", id, setId, studentId, due);
   return id;
 }
+
+/**
+ * What this lesson has actually sent. A set can be deleted from the sets screen after it has gone
+ * out, and the lesson would go on pointing at it — hiding the controls for something that no longer
+ * exists. Anything that has gone is forgotten here, so the lesson can send again.
+ */
+export async function lessonSends(lesson: Lesson): Promise<{ homework: boolean; review: boolean }> {
+  const alive = async (id: string | null, table: "assignments" | "sets") => {
+    if (!id) return false;
+    const real = id.startsWith("queued:") ? id.slice("queued:".length) : id;
+    const where = id.startsWith("queued:") ? "sets" : table;
+    return Boolean(await one(`SELECT 1 FROM ${where} WHERE id = ?`, real));
+  };
+  const homework = await alive(lesson.homework_assignment_id, "assignments");
+  const review = await alive(lesson.review_assignment_id, "assignments");
+  const built = await alive(lesson.review_set_id, "sets");
+  const clear: string[] = [];
+  if (lesson.homework_assignment_id && !homework) clear.push("homework_assignment_id = NULL, homework_set_id = NULL");
+  if (lesson.review_assignment_id && !review) clear.push("review_assignment_id = NULL");
+  if (lesson.review_set_id && !built) clear.push("review_set_id = NULL");
+  if (clear.length) await run(`UPDATE lessons SET ${clear.join(", ")} WHERE id = ?`, lesson.id);
+  return { homework, review };
+}

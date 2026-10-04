@@ -126,7 +126,7 @@ function Ask({ q, n, helper }: { q: StudentQuestion; n: number; helper: boolean 
 
       {canPhoto && (
         <div className="field">
-          <label>{isDiagram ? "Your diagram — photo or PDF" : "Photo of your work"}</label>
+          <label>{isDiagram ? "Upload your diagram and explanation" : "Photo of your work"}</label>
           <input type="file" disabled accept="image/jpeg,image/png,image/webp,application/pdf" />
           <span className="note">
             {isDiagram

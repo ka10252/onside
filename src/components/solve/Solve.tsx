@@ -718,7 +718,7 @@ function WrittenAnswer({
 
       {canPhoto && (
         <div className="field">
-          <label htmlFor="photo">{isDiagram ? "Your diagram — photo or PDF" : "Photo of your work"}</label>
+          <label htmlFor="photo">{isDiagram ? "Upload your diagram and explanation" : "Photo of your work"}</label>
           {r.photo && (
              
             <Upload responseId={r.id} v={photoVersion} alt="Your uploaded diagram" />

@@ -43,6 +43,9 @@ export function TeachBoard({
   const [withReview, setWithReview] = useState(true);
   const [dropped, setDropped] = useState<string[]>([]);
   const [sent, setSent] = useState(homeworkSent);
+  // The student is watching this screen, so what to set for homework stays out of sight until the
+  // lesson is over and the tutor asks for it.
+  const [ended, setEnded] = useState(false);
   const [note, setNote] = useState<string | null>(null);
   const router = useRouter();
   const q = questions[at];
@@ -147,8 +150,15 @@ export function TeachBoard({
             />
           ))}
         </span>
-        <span className="muted" style={{ fontSize: 14 }}>
-          {done} of {questions.length} marked
+        <span className="rowacts">
+          <span className="muted" style={{ fontSize: 14 }}>
+            {done} of {questions.length} marked
+          </span>
+          {!sent && (
+            <button type="button" className="btn ghost sm" onClick={() => setEnded((v) => !v)}>
+              {ended ? "Back to the questions" : "End the lesson"}
+            </button>
+          )}
         </span>
       </div>
 
@@ -220,7 +230,7 @@ export function TeachBoard({
         </button>
       </div>
 
-      {left > 0 && !sent && (
+      {ended && left > 0 && !sent && (
         <section className="card cardbody stack" style={{ gap: 10 }}>
           <div className="card-hd" style={{ padding: 0, border: 0 }}>
             <h2 style={{ fontSize: 17 }}>Send the rest to {studentFirstName}</h2>
@@ -275,6 +285,9 @@ export function TeachBoard({
             {note && <span className={`formmsg ${note.includes("already") ? "bad" : "good"}`}>{note}</span>}
           </div>
         </section>
+      )}
+      {ended && left === 0 && !sent && (
+        <p className="muted" style={{ textAlign: "center" }}>Every question was marked. There is nothing left to set.</p>
       )}
       {sent && note && <p className="formmsg good">{note}</p>}
     </div>

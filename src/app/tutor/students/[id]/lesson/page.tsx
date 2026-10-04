@@ -24,7 +24,7 @@ import { Q_TYPES, type QType } from "@/lib/question-types";
 import { lessonOf } from "@/lib/lesson-plan";
 import { singaporeToday } from "@/lib/schedule";
 import { TeachBoard } from "@/components/tutor/TeachBoard";
-import { noteRead } from "@/lib/revision";
+import { noteRead, releasedUnits } from "@/lib/revision";
 import { requireUser } from "@/lib/session";
 
 // The tutor's own room: preparing a lesson, running it, and sending a review quiz afterwards.
@@ -60,6 +60,9 @@ export default async function LessonPage({ params, searchParams }: PageProps<"/t
   const lesson = named ?? (unit && brief && key ? await getLesson((await openLesson(id, key, title)).id) : null);
   // A set can be deleted after it was sent; the lesson should not go on claiming it sent one.
   const sends = lesson ? await lessonSends(lesson) : { homework: false, review: false };
+  // Which of this lesson's notes the student can read, so the screen can send the ones they cannot.
+  const released = await releasedUnits(id);
+  const sentNotes = notes.map((n) => ({ unit: n.unit, title: n.title, sentAt: released.get(n.unit) ?? null }));
   const live = lesson
     ? {
         ...lesson,
@@ -163,6 +166,8 @@ export default async function LessonPage({ params, searchParams }: PageProps<"/t
               notes={notes}
               today={singaporeToday().date}
               review={{ size, kinds }}
+              sentNotes={sentNotes}
+              studentId={id}
             />
           )}
 

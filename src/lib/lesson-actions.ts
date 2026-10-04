@@ -7,6 +7,8 @@ import type { QType } from "./question-types";
 import { fillTemplate } from "./lesson-template";
 import { run } from "./db";
 import { queueSet } from "./queue";
+import { unitsOfLesson } from "./lesson-plan";
+import { releaseNotes, unreleaseNotes } from "./revision";
 import { singaporeToday } from "./schedule";
 import { requireUser } from "./session";
 
@@ -36,7 +38,11 @@ export async function setOutcome(lessonId: string, questionId: string, outcome: 
   const l = await getLesson(lessonId);
   if (!l) return { error: "That lesson is gone." };
   await markOutcome(lessonId, questionId, outcome);
-  if (l.status === "planning") await run("UPDATE lessons SET status = 'taught', taught_at = ? WHERE id = ?", new Date().toISOString(), lessonId);
+  if (l.status === "planning") {
+    await run("UPDATE lessons SET status = 'taught', taught_at = ? WHERE id = ?", new Date().toISOString(), lessonId);
+    // A lesson covers one unit or two, and teaching it opens the notes for all of them.
+    await releaseNotes(l.student_id, unitsOfLesson(l.unit));
+  }
   revalidatePath(back(l.student_id));
   return {};
 }
@@ -196,4 +202,25 @@ export async function dropHomework(lessonId: string): Promise<LessonState> {
   await run("UPDATE lessons SET homework_set_id = NULL WHERE id = ?", lessonId);
   revalidatePath(back(l.student_id));
   return { ok: "Dropped. Choose again and build it." };
+}
+
+/** Sends the revision notes for these units: the whole lesson's, or one unit on its own. */
+export async function sendNotes(studentId: string, units: number[]): Promise<LessonState> {
+  await requireUser("tutor");
+  if (units.length === 0) return { error: "No units chosen." };
+  await releaseNotes(studentId, units);
+  revalidatePath(back(studentId));
+  revalidatePath("/tutor/teach");
+  revalidatePath("/student", "layout");
+  return { ok: `Unit ${units.join(" and ")} ${units.length === 1 ? "notes are" : "notes are"} open to them now.` };
+}
+
+/** Takes one unit's notes back. */
+export async function unsendNotes(studentId: string, unit: number): Promise<LessonState> {
+  await requireUser("tutor");
+  await unreleaseNotes(studentId, unit);
+  revalidatePath(back(studentId));
+  revalidatePath("/tutor/teach");
+  revalidatePath("/student", "layout");
+  return { ok: `Unit ${unit} notes are closed again.` };
 }

@@ -19,6 +19,8 @@ import {
   buildReviewQuiz,
   dropHomework,
   dropReviewQuiz,
+  sendNotes,
+  unsendNotes,
   pickQuestions,
   saveLessonNotes,
   sendHomework,
@@ -42,6 +44,8 @@ export function LessonBoard({
   notes: lessonNotes,
   today,
   review,
+  sentNotes,
+  studentId,
 }: {
   brief: UnitBrief;
   lesson: Lesson & { items: LessonItem[] };
@@ -62,6 +66,9 @@ export function LessonBoard({
   today: string;
   /** What the review quiz should hold, as the tutor has set it. */
   review: { size: number; kinds: QType[] };
+  /** Which of this lesson's units the student can already read, and when they were sent. */
+  sentNotes: { unit: number; title: string; sentAt: string | null }[];
+  studentId: string;
 }) {
   const [picked, setPicked] = useState<string[]>(lesson.items.map((i) => i.question_id));
   const [outcomes, setOutcomes] = useState<Record<string, "right" | "wrong" | null>>(
@@ -127,6 +134,50 @@ export function LessonBoard({
                 </div>
               ))}
           </div>
+        </section>
+      )}
+
+      {sentNotes.length > 0 && (
+        <section className="card">
+          <div className="card-hd">
+            <h2>Revision notes for {studentFirstName}</h2>
+            <span className="rowacts">
+              {sentNotes.some((n) => !n.sentAt) && (
+                <button
+                  type="button"
+                  className="btn accent sm"
+                  disabled={pending}
+                  onClick={() => run(() => sendNotes(studentId, sentNotes.filter((n) => !n.sentAt).map((n) => n.unit)))}
+                >
+                  Send {sentNotes.filter((n) => !n.sentAt).length === sentNotes.length ? "both" : "the rest"}
+                </button>
+              )}
+            </span>
+          </div>
+          <ul className="pick">
+            {sentNotes.map((n) => (
+              <li key={n.unit}>
+                <span className="n">{n.unit}</span>
+                <span className="pickopen" style={{ textAlign: "left", cursor: "default" }}>
+                  {n.title}
+                </span>
+                <span className="rowacts">
+                  {n.sentAt ? (
+                    <>
+                      <span className="pill green">Sent {shortDateSG(n.sentAt)}</span>
+                      <button type="button" className="btn ghost sm" disabled={pending} onClick={() => run(() => unsendNotes(studentId, n.unit))}>
+                        Take back
+                      </button>
+                    </>
+                  ) : (
+                    <button type="button" className="btn sm" disabled={pending} onClick={() => run(() => sendNotes(studentId, [n.unit]))}>
+                      Send unit {n.unit}
+                    </button>
+                  )}
+                </span>
+              </li>
+            ))}
+          </ul>
         </section>
       )}
 

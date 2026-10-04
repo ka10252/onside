@@ -25,6 +25,11 @@ export function LessonPlanBoard({ lessons, studentId }: { lessons: PlannedLesson
                   <b>Units {l.units.map((u) => u.unit).join(" + ")}</b>
                   <span className={`pill ${TONE[state]}`}>{WORD[state]}</span>
                   {l.urgent && <span className="pill red">Sooner</span>}
+                  {l.notesSent > 0 && (
+                    <span className="pill gray">
+                      Notes sent{l.notesSent < l.units.length ? ` · ${l.notesSent} of ${l.units.length}` : ""}
+                    </span>
+                  )}
                 </span>
                 <span className="titles">{l.units.map((u) => u.title).join(" · ")}</span>
                 <span className="reason">{l.why}</span>

@@ -219,6 +219,15 @@ CREATE TABLE IF NOT EXISTS essay_outlines (
   updated_at  TEXT NOT NULL DEFAULT (${NOW_SQL})
 );
 
+-- Which units' revision notes the student may read. A lesson opens the notes for every unit it
+-- covers when it is taught, and the tutor can send one unit's notes on their own.
+CREATE TABLE IF NOT EXISTS note_releases (
+  student_id  TEXT NOT NULL REFERENCES users(id),
+  unit        INTEGER NOT NULL,
+  sent_at     TEXT NOT NULL DEFAULT (${NOW_SQL}),
+  PRIMARY KEY (student_id, unit)
+);
+
 -- When a student last opened a unit's revision notes. The tutor can see whether they have been
 -- read, and the student gets a mark on notes they have not opened since the lesson.
 CREATE TABLE IF NOT EXISTS note_reads (

@@ -1,5 +1,6 @@
 import "server-only";
 import { unitReview, type UnitReview } from "./unit-weight";
+import { releasedUnits } from "./revision";
 
 /**
  * The lessons left before the exam, each one a unit or two, with the units in the order they are
@@ -42,11 +43,13 @@ export type PlannedLesson = {
   /** Worth teaching sooner: it carries a lot and is going badly, or has never been tested. */
   urgency: number;
   urgent: boolean;
+  /** How many of the lesson's units the student can already read the notes for. */
+  notesSent: number;
 };
 
 /** The plan with this student's standing in each unit, in the order the lessons should be taught. */
 export async function plannedLessons(studentId: string): Promise<PlannedLesson[]> {
-  const rows = await unitReview(studentId);
+  const [rows, released] = await Promise.all([unitReview(studentId), releasedUnits(studentId)]);
   const by = new Map(rows.map((r) => [r.unit, r]));
   return LESSONS.map(({ units, why }, i) => {
     const us = units.map((u) => by.get(u)).filter((u): u is UnitReview => Boolean(u));
@@ -55,6 +58,7 @@ export async function plannedLessons(studentId: string): Promise<PlannedLesson[]
       units: us,
       why,
       items: us.reduce((n, u) => n + u.items, 0),
+      notesSent: units.filter((u) => released.has(u)).length,
       urgency: us.reduce((n, u) => n + u.urgency, 0),
       urgent: false,
     };

@@ -11,16 +11,39 @@ export type StudentNote = { unit: number; title: string; headline: string; taugh
 
 export function studentNotes(studentId: string): Promise<StudentNote[]> {
   return all<StudentNote>(
-    `SELECT b.unit, u.title, b.headline, b.updated_at, MIN(l.taught_at) AS taught_at, r.read_at
+    `SELECT b.unit, u.title, b.headline, b.updated_at, n.sent_at AS taught_at, r.read_at
        FROM unit_briefs b
        JOIN units u ON u.number = b.unit
-       JOIN lessons l ON l.unit = b.unit AND l.student_id = ? AND l.status = 'taught' AND l.taught_at IS NOT NULL
-       LEFT JOIN note_reads r ON r.student_id = l.student_id AND r.unit = b.unit
+       JOIN note_releases n ON n.unit = b.unit AND n.student_id = ?
+       LEFT JOIN note_reads r ON r.student_id = n.student_id AND r.unit = b.unit
       WHERE b.body <> ''
-      GROUP BY b.unit, u.title, b.headline, b.updated_at, r.read_at
-      ORDER BY MIN(l.taught_at) DESC`,
+      ORDER BY n.sent_at DESC`,
     studentId,
   );
+}
+
+/** Opens these units' notes to the student. Sending the same unit twice changes nothing. */
+export async function releaseNotes(studentId: string, units: number[]) {
+  for (const unit of units) {
+    await run(
+      `INSERT INTO note_releases (student_id, unit, sent_at) VALUES (?, ?, ?)
+       ON CONFLICT (student_id, unit) DO NOTHING`,
+      studentId,
+      unit,
+      new Date().toISOString(),
+    );
+  }
+}
+
+/** Takes a unit's notes back, for a unit sent by mistake. */
+export async function unreleaseNotes(studentId: string, unit: number) {
+  await run("DELETE FROM note_releases WHERE student_id = ? AND unit = ?", studentId, unit);
+}
+
+/** Which units this student can read, for the tutor's screens. */
+export async function releasedUnits(studentId: string): Promise<Map<number, string>> {
+  const rows = await all<{ unit: number; sent_at: string }>("SELECT unit, sent_at FROM note_releases WHERE student_id = ?", studentId);
+  return new Map(rows.map((r) => [r.unit, r.sent_at]));
 }
 
 export async function studentNote(studentId: string, unit: number): Promise<{ unit: number; title: string; body: string } | null> {
@@ -29,8 +52,7 @@ export async function studentNote(studentId: string, unit: number): Promise<{ un
        FROM unit_briefs b
        JOIN units u ON u.number = b.unit
       WHERE b.unit = ? AND b.body <> ''
-        AND EXISTS (SELECT 1 FROM lessons l
-                     WHERE l.unit = b.unit AND l.student_id = ? AND l.status = 'taught' AND l.taught_at IS NOT NULL)`,
+        AND EXISTS (SELECT 1 FROM note_releases n WHERE n.unit = b.unit AND n.student_id = ?)`,
     unit,
     studentId,
   )) ?? null;

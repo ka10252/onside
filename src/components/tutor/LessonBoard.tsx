@@ -57,6 +57,7 @@ export function LessonBoard({
   const [band, setBand] = useState<QType | "both">("mcq");
   const [withReview, setWithReview] = useState(true);
   const [sendOn, setSendOn] = useState("");
+  const [dropped, setDropped] = useState<string[]>([]);
   const [pending, start] = useTransition();
   const router = useRouter();
 
@@ -315,7 +316,9 @@ export function LessonBoard({
         <section className="card">
           <div className="card-hd">
             <h2>Homework</h2>
-            <span className="muted" style={{ fontSize: 14 }}>{left.length} never got marked in the lesson</span>
+            <span className="muted" style={{ fontSize: 14 }}>
+              {left.filter((q) => !dropped.includes(q.id)).length} of {left.length} chosen, from the ones never marked
+            </span>
           </div>
           <div className="cardbody stack" style={{ gap: 12 }}>
             {lesson.homework_assignment_id ? (
@@ -345,6 +348,15 @@ export function LessonBoard({
                       <span className="pickopen" style={{ textAlign: "left", cursor: "default" }}>
                         <QuestionLine q={q} />
                       </span>
+                      <span className="rowacts">
+                        <button
+                          type="button"
+                          className={`btn sm${dropped.includes(q.id) ? " ghost" : ""}`}
+                          onClick={() => setDropped((d) => (d.includes(q.id) ? d.filter((y) => y !== q.id) : [...d, q.id]))}
+                        >
+                          {dropped.includes(q.id) ? "Left out" : "Sending ✓"}
+                        </button>
+                      </span>
                     </li>
                   ))}
                 </ol>
@@ -366,12 +378,22 @@ export function LessonBoard({
                     type="button"
                     className="btn accent"
                     disabled={pending}
-                    onClick={() => run(() => sendHomework(lesson.id, withReview, null, sendOn || null))}
+                    onClick={() =>
+                      run(() =>
+                        sendHomework(
+                          lesson.id,
+                          withReview,
+                          null,
+                          sendOn || null,
+                          left.filter((q) => !dropped.includes(q.id)).map((q) => q.id),
+                        ),
+                      )
+                    }
                   >
                     {pending ? "Sending…" : sendOn && sendOn > today ? `Hold until ${sendOn}` : `Send to ${studentFirstName}`}
                   </button>
                   <span className="muted" style={{ fontSize: 13 }}>
-                    Helper off. They can photograph work done on paper.
+                    Hints and the helper are on, as in daily practice. They can photograph work done on paper.
                     {sendOn && sendOn > today ? " The daily run sends it that morning." : ""}
                   </span>
                 </div>

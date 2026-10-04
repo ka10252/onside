@@ -41,6 +41,7 @@ export function TeachBoard({
   const [shown, setShown] = useState<string | null>(null);
   const [sendOn, setSendOn] = useState("");
   const [withReview, setWithReview] = useState(true);
+  const [dropped, setDropped] = useState<string[]>([]);
   const [sent, setSent] = useState(homeworkSent);
   const [note, setNote] = useState<string | null>(null);
   const router = useRouter();
@@ -113,7 +114,9 @@ export function TeachBoard({
   }
 
   const done = questions.filter((x) => outcomes[x.id]).length;
-  const left = questions.length - done;
+  const leftQs = questions.filter((x) => !outcomes[x.id]);
+  const left = leftQs.length;
+  const chosen = leftQs.filter((x) => !dropped.includes(x.id));
   return (
     <div className="teach">
       {tabs}
@@ -222,8 +225,21 @@ export function TeachBoard({
           <div className="card-hd" style={{ padding: 0, border: 0 }}>
             <h2 style={{ fontSize: 17 }}>Send the rest to {studentFirstName}</h2>
             <span className="muted" style={{ fontSize: 14 }}>
-              {left} {left === 1 ? "question" : "questions"} not marked yet
+              {chosen.length} of {left} chosen
             </span>
+          </div>
+          <div className="rowacts" style={{ flexWrap: "wrap", gap: 6 }}>
+            {leftQs.map((x) => (
+              <button
+                key={x.id}
+                type="button"
+                className={`chip${dropped.includes(x.id) ? "" : " on"}`}
+                onClick={() => setDropped((d) => (d.includes(x.id) ? d.filter((y) => y !== x.id) : [...d, x.id]))}
+                title={x.prompt.slice(0, 90)}
+              >
+                {x.n} · {x.marks}m
+              </button>
+            ))}
           </div>
           <div className="rowacts" style={{ flexWrap: "wrap" }}>
             <label className="opt">
@@ -237,11 +253,11 @@ export function TeachBoard({
             <button
               type="button"
               className="btn accent"
-              disabled={pending}
+              disabled={pending || chosen.length === 0}
               onClick={() =>
                 start(async () => {
                   try {
-                    const res = await sendHomework(lessonId, withReview, null, sendOn || null);
+                    const res = await sendHomework(lessonId, withReview, null, sendOn || null, chosen.map((x) => x.id));
                     setNote(res.error ?? res.ok ?? null);
                     if (!res.error) setSent(true);
                     router.refresh();

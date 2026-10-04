@@ -99,19 +99,25 @@ export async function sendHomework(
   withReview: boolean,
   due: string | null = null,
   sendOn: string | null = null,
+  /** Which of the ones left to send. Empty or missing means all of them. */
+  only: string[] = [],
 ): Promise<LessonState> {
   await requireUser("tutor");
   const l = await getLesson(lessonId);
   if (!l) return { error: "That lesson is gone." };
   if (l.homework_assignment_id) return { error: "The homework for this lesson has already gone out." };
-  const left = await unfinished(lessonId);
+  const all = await unfinished(lessonId);
+  const left = only.length ? all.filter((q) => only.includes(q.id)) : all;
+  if (left.length === 0) return { error: "No questions chosen." };
   const extra = withReview ? await reviewPlan(lessonId, REVIEW_SIZE) : null;
   const ids = [...new Set([...left.map((q) => q.id), ...(extra ? [...extra.missed, ...extra.variants].map((q) => q.id) : [])])];
   if (ids.length === 0) return { error: "Nothing is left over from this lesson." };
   const later = sendOn && sendOn > singaporeToday().date ? sendOn : null;
   const res = await saveSet(null, {
     title: `Homework · Unit ${l.unit} · ${new Date().toLocaleDateString("en-SG", { day: "numeric", month: "short", timeZone: "Asia/Singapore" })}`,
-    helper: "off",
+    // Work done at home is work done alone: the hints and the helper are there, as in daily
+    // practice, and the marking screen separates what was answered with help from what was not.
+    helper: "on",
     timeLimitMin: null,
     questionIds: ids,
     // Dated for a later day, the set is built now and held until the daily run sends it.

@@ -845,6 +845,74 @@ function JCurve({ caption }: { caption?: string }) {
 }
 
 /**
+ * A minimum price set above equilibrium: the mirror of the price ceiling, and the diagram behind a
+ * minimum wage question. Quantity supplied runs past quantity demanded, and the gap is the surplus
+ * somebody has to buy or store.
+ */
+function PriceFloor({ caption }: { caption?: string }) {
+  const e1 = cross(D1, S1);
+  // Up the page is a higher price, so a floor above equilibrium is a smaller y.
+  const pf = e1.y - 34;
+  const qd = atY(D1, pf);
+  const qs = atY(S1, pf);
+  return (
+    <Frame x="Quantity" y="Price" caption={caption}>
+      <Straight l={S1} label="S₁" colour={CURVE} />
+      <Straight l={D1} label="D₁" colour={CURVE} />
+      <Eq at={e1} px="P₁" qx="Q₁" colour={CURVE} />
+      <Flat y={pf} label="Pf" />
+      <circle cx={d2(qd.x)} cy={d2(pf)} r="3" fill={SHIFT} />
+      <circle cx={d2(qs.x)} cy={d2(pf)} r="3" fill={SHIFT} />
+      <Gap from={qd.x} to={qs.x} y={pf} drop={-16} label="surplus" />
+      <text x={d2(qd.x)} y="214" textAnchor="middle" className="dgmlab" fill={SHIFT}>Qd</text>
+      <text x={d2(qs.x)} y="214" textAnchor="middle" className="dgmlab" fill={SHIFT}>Qs</text>
+    </Frame>
+  );
+}
+
+/**
+ * An import quota: imports are capped at a quantity rather than taxed, so the domestic price rises
+ * until home supply plus the quota meets home demand. The difference from a tariff is the shaded
+ * box — with a quota it goes to whoever holds the licence to import, not to the government, which
+ * is the comparison the essay is asking for.
+ */
+function Quota({ caption }: { caption?: string }) {
+  const d = line({ x: 58, y: 36 }, { x: 268, y: 192 });
+  const sup = line({ x: 58, y: 192 }, { x: 240, y: 36 });
+  const pw = cross(d, sup).y + 48;
+  const QUOTA = 56;
+  // The price at which home supply plus the quota exactly meets home demand.
+  let pq = pw;
+  for (let i = 0; i < 40; i++) {
+    const gap = atY(d, pq).x - atY(sup, pq).x;
+    if (gap <= QUOTA) break;
+    pq -= 1;
+  }
+  const q1 = atY(sup, pw).x;
+  const q4 = atY(d, pw).x;
+  const q2 = atY(sup, pq).x;
+  const q3 = atY(d, pq).x;
+  return (
+    <Frame x="Quantity" y="Price" caption={caption}>
+      <Box x1={q2} x2={q3} y1={pw} y2={pq} label="gain" />
+      <Straight l={sup} label="S domestic" colour={CURVE} />
+      <Straight l={d} label="D domestic" colour={CURVE} />
+      <line x1="48" y1={d2(pw)} x2="296" y2={d2(pw)} stroke={AXIS} strokeWidth="1.6" />
+      <text x="300" y={d2(pw) + 13} textAnchor="end" className="dgmlab">Pw</text>
+      <line x1="48" y1={d2(pq)} x2="296" y2={d2(pq)} stroke={SHIFT} strokeWidth="1.6" />
+      <text x="300" y={d2(pq) - 5} textAnchor="end" className="dgmlab" fill={SHIFT}>Pq</text>
+      <Gap from={q2} to={q3} y={pw} drop={18} label="quota" />
+      {([[q1, "Q₁"], [q2, "Q₂"], [q3, "Q₃"], [q4, "Q₄"]] as [number, string][]).map(([x, t]) => (
+        <g key={t}>
+          <line x1={d2(x)} y1="200" x2={d2(x)} y2={d2(x === q1 || x === q4 ? pw : pq)} stroke={GUIDE} strokeWidth="1" strokeDasharray="3 3" />
+          <text x={d2(x)} y="214" textAnchor="middle" className="dgmlab">{t}</text>
+        </g>
+      ))}
+    </Frame>
+  );
+}
+
+/**
  * Cost-push inflation: short-run supply shifts left, so the price level rises and output falls at
  * the same time. This is the diagram a stagflation question wants, and the one a student who has
  * only learnt the demand-pull picture draws wrongly.
@@ -953,6 +1021,8 @@ const DIAGRAMS: Record<string, (p: { caption?: string }) => React.ReactElement> 
   "indirect-tax": IndirectTax,
   subsidy: Subsidy,
   "price-ceiling": PriceCeiling,
+  "price-floor": PriceFloor,
+  quota: Quota,
   "supply-elasticity": SupplyElasticity,
   "ad-as-monetarist": AdAsMonetarist,
   "business-cycle": BusinessCycle,

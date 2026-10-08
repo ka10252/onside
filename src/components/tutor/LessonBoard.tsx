@@ -44,6 +44,7 @@ export function LessonBoard({
   notes: lessonNotes,
   today,
   review,
+  reviewQuestions,
   sentNotes,
   studentId,
 }: {
@@ -66,6 +67,8 @@ export function LessonBoard({
   today: string;
   /** What the review quiz should hold, as the tutor has set it. */
   review: { size: number; kinds: ReviewKind[] };
+  /** The built review quiz with its answers, to go through before running it. */
+  reviewQuestions: PrepareQuestion[];
   /** Which of this lesson's units the student can already read, and when they were sent. */
   sentNotes: { unit: number; title: string; sentAt: string | null }[];
   studentId: string;
@@ -115,11 +118,11 @@ export function LessonBoard({
   return (
     <div className="stack">
       {lessonNotes.some((n) => n.tutor) && (
-        <section className="card tutoronly">
-          <div className="card-hd">
+        <details className="card tutoronly">
+          <summary className="card-hd" style={{ cursor: "pointer" }}>
             <h2>For you only</h2>
             <span className="muted" style={{ fontSize: 14 }}>Never on the Teach screen</span>
-          </div>
+          </summary>
           <div className="cardbody stack" style={{ gap: 18 }}>
             {lessonNotes
               .filter((n) => n.tutor)
@@ -134,7 +137,7 @@ export function LessonBoard({
                 </div>
               ))}
           </div>
-        </section>
+        </details>
       )}
 
       {sentNotes.length > 0 && (
@@ -182,7 +185,7 @@ export function LessonBoard({
       )}
 
       {lessonNotes.some((n) => n.body) && (
-        <details className="card" open>
+        <details className="card">
           <summary className="card-hd" style={{ cursor: "pointer" }}>
             <h2>Revision notes</h2>
             <span className="rowacts">
@@ -217,11 +220,11 @@ export function LessonBoard({
         </details>
       )}
 
-      <section className="card">
-        <div className="card-hd">
+      <details className="card">
+        <summary className="card-hd" style={{ cursor: "pointer" }}>
           <h2>What the papers ask for</h2>
           <span className="muted" style={{ fontSize: 14 }}>M22–N25 · counted, not guessed</span>
-        </div>
+        </summary>
         <div className="cardbody briefgrid">
           <Facet label="Diagrams to be able to draw" items={brief.diagrams} />
           <Facet label="How it is asked" items={brief.commands} />
@@ -231,10 +234,10 @@ export function LessonBoard({
           Past-paper questions held for this unit: {brief.stock.short} short · {brief.stock.explain} explain ·{" "}
           {brief.stock.essay} essay. Multiple choice comes from the unit tests — the IB sets none.
         </p>
-      </section>
+      </details>
 
-      <section className="card">
-        <div className="card-hd">
+      <details className="card">
+        <summary className="card-hd" style={{ cursor: "pointer" }}>
           <h2>Questions for the lesson</h2>
           <span className="rowacts">
             <span className="muted" style={{ fontSize: 14 }}>
@@ -245,18 +248,19 @@ export function LessonBoard({
               className="btn sm"
               disabled={pending}
               title={`${brief.recipe.mcq} MCQ · ${brief.recipe.definition} definition · ${brief.recipe.short} short answer · ${brief.recipe.diagram} diagram · ${brief.recipe.essay} essay set`}
-              onClick={() =>
+              onClick={(e) => {
+                e.preventDefault();
                 run(async () => {
                   const res = await applyTemplate(lesson.id);
                   if (!res.error) setPicked([]);
                   return res;
-                })
-              }
+                });
+              }}
             >
               Fill from the template
             </button>
           </span>
-        </div>
+        </summary>
         <p className="cardbody note" style={{ margin: 0, paddingBottom: 0 }}>
           The template for this lesson: <b>{brief.recipe.mcq} multiple choice</b> · <b>{brief.recipe.definition} definition</b> ·{" "}
           <b>{brief.recipe.short} short answer</b> · <b>{brief.recipe.diagram} diagram</b> ·{" "}
@@ -298,95 +302,30 @@ export function LessonBoard({
             ))}
           </ul>
         )}
-      </section>
+      </details>
 
       {chosen.length > 0 && (
-        <section className="card">
-          <div className="card-hd">
+        <details className="card">
+          <summary className="card-hd" style={{ cursor: "pointer" }}>
             <h2>In the lesson</h2>
             <span className="muted" style={{ fontSize: 14 }}>The answer sits beside each one. Mark them here or on the Teach screen.</span>
-          </div>
+          </summary>
           <ol className="preplist">
             {chosen.map((q) => (
-              <li key={q.id}>
-                <span className="n">{q.n}</span>
-                <div className="q">
-                  <span className="meta">
-                    {q.label && <span className="pill ink">{q.label}</span>}
-                    <span>
-                      {q.marks} {q.marks === 1 ? "mark" : "marks"}
-                    </span>
-                  </span>
-                  {q.context.length > 0 && (
-                    <details className="sub">
-                      <summary>Extracts and data ({q.context.length})</summary>
-                      <Blocks blocks={q.context} />
-                    </details>
-                  )}
-                  {q.lead.length > 0 && <Blocks blocks={q.lead} />}
-                  <p className="qtext">
-                    <Rich text={q.prompt} />
-                  </p>
-                  {q.options.length > 0 && (
-                    <ol className="choices readback">
-                      {q.options.map((o) => (
-                        <li key={o.id} className={`choice${q.right === o.id.toUpperCase() ? " right" : ""}`}>
-                          <span className="k">{o.id.toUpperCase()}</span>
-                          <span className="grow">{o.text}</span>
-                          {q.right === o.id.toUpperCase() && <span className="tag good">Right</span>}
-                        </li>
-                      ))}
-                    </ol>
-                  )}
-                </div>
-                <div className="a">
-                  <span className="qlabel">{q.label ? "Mark scheme" : "Answer"}</span>
-                  <div className="mstext">
-                    {q.label ? <MarkScheme text={q.answer} /> : <Rich text={q.answer} />}
-                  </div>
-                  {q.outline && (
-                    <details className="outline">
-                      <summary>Model answer outline</summary>
-                      <p className="outlegend">
-                        <span className="key must">must be said</span>
-                        <span className="key bonus">lifts it above a pass</span>
-                      </p>
-                      <Notes text={q.outline} />
-                    </details>
-                  )}
-                </div>
-                <span className="acts">
-                  <button
-                    type="button"
-                    className={`btn sm${outcomes[q.id] === "right" ? " primary" : " ghost"}`}
-                    onClick={() => mark(q.id, "right")}
-                    disabled={pending}
-                  >
-                    Got it
-                  </button>
-                  <button
-                    type="button"
-                    className={`btn sm${outcomes[q.id] === "wrong" ? " danger" : " ghost"}`}
-                    onClick={() => mark(q.id, "wrong")}
-                    disabled={pending}
-                  >
-                    Missed
-                  </button>
-                </span>
-              </li>
+              <PrepRow key={q.id} q={q} outcome={outcomes[q.id] ?? null} pending={pending} onMark={mark} />
             ))}
           </ol>
-        </section>
+        </details>
       )}
 
       {left.length > 0 && (
-        <section className="card">
-          <div className="card-hd">
+        <details className="card">
+          <summary className="card-hd" style={{ cursor: "pointer" }}>
             <h2>Homework</h2>
             <span className="muted" style={{ fontSize: 14 }}>
               {left.filter((q) => !dropped.includes(q.id)).length} of {left.length} chosen, from the ones never marked
             </span>
-          </div>
+          </summary>
           <div className="cardbody stack" style={{ gap: 12 }}>
             {lesson.homework_assignment_id ? (
               <span className="rowacts">
@@ -469,16 +408,16 @@ export function LessonBoard({
               </>
             )}
           </div>
-        </section>
+        </details>
       )}
 
-      <section className="card">
-        <div className="card-hd">
+      <details className="card">
+        <summary className="card-hd" style={{ cursor: "pointer" }}>
           <h2>Review quiz</h2>
           <span className="muted" style={{ fontSize: 14 }}>
             {wrong.length} missed in the lesson
           </span>
-        </div>
+        </summary>
         <div className="cardbody stack" style={{ gap: 12 }}>
           {lesson.review_assignment_id ? (
             <span className="rowacts">
@@ -492,12 +431,32 @@ export function LessonBoard({
                   See it as {studentFirstName} will
                 </a>
               )}
+              {reviewQuestions.length > 0 && (
+                <details className="sub" style={{ width: "100%" }}>
+                  <summary>The answers ({reviewQuestions.length} questions)</summary>
+                  <ol className="preplist">
+                    {reviewQuestions.map((q) => (
+                      <PrepRow key={q.id} q={q} outcome={null} pending={pending} />
+                    ))}
+                  </ol>
+                </details>
+              )}
             </span>
           ) : lesson.review_set_id ? (
             <>
               <p className="note" style={{ margin: 0 }}>
                 Built and not sent. Look at it the way {studentFirstName} will, then send it.
               </p>
+              {reviewQuestions.length > 0 && (
+                <details className="sub">
+                  <summary>The answers ({reviewQuestions.length} questions)</summary>
+                  <ol className="preplist">
+                    {reviewQuestions.map((q) => (
+                      <PrepRow key={q.id} q={q} outcome={null} pending={pending} />
+                    ))}
+                  </ol>
+                </details>
+              )}
               <div className="rowacts" style={{ flexWrap: "wrap" }}>
                 <a className="btn" href={`/tutor/sets/${lesson.review_set_id}/preview`} target="_blank" rel="noreferrer">
                   See it as {studentFirstName} will
@@ -592,13 +551,13 @@ export function LessonBoard({
             </>
           )}
         </div>
-      </section>
+      </details>
 
-      <section className="card">
-        <div className="card-hd">
+      <details className="card">
+        <summary className="card-hd" style={{ cursor: "pointer" }}>
           <h2>Notes</h2>
           <span className="muted" style={{ fontSize: 14 }}>Yours only</span>
-        </div>
+        </summary>
         <div className="cardbody stack" style={{ gap: 10 }}>
           <textarea
             className="answer"
@@ -613,7 +572,7 @@ export function LessonBoard({
             </button>
           </div>
         </div>
-      </section>
+      </details>
 
       {note && <p className="formmsg good" role="status">{note}</p>}
     </div>
@@ -637,5 +596,90 @@ function Facet({ label, items }: { label: string; items: { name: string; n: numb
         </ul>
       )}
     </div>
+  );
+}
+
+/**
+ * One question with its answer beside it, as the preparing screen shows them. The lesson's own
+ * questions can be marked from here; the review quiz is only read, and marked on the Teach screen.
+ */
+function PrepRow({
+  q,
+  outcome,
+  pending,
+  onMark,
+}: {
+  q: PrepareQuestion;
+  outcome: "right" | "wrong" | null;
+  pending: boolean;
+  onMark?: (id: string, outcome: "right" | "wrong") => void;
+}) {
+  return (
+    <li>
+      <span className="n">{q.n}</span>
+      <div className="q">
+        <span className="meta">
+          {q.label && <span className="pill ink">{q.label}</span>}
+          <span>
+            {q.marks} {q.marks === 1 ? "mark" : "marks"}
+          </span>
+        </span>
+        {q.context.length > 0 && (
+          <details className="sub">
+            <summary>Extracts and data ({q.context.length})</summary>
+            <Blocks blocks={q.context} />
+          </details>
+        )}
+        {q.lead.length > 0 && <Blocks blocks={q.lead} />}
+        <p className="qtext">
+          <Rich text={q.prompt} />
+        </p>
+        {q.options.length > 0 && (
+          <ol className="choices readback">
+            {q.options.map((o) => (
+              <li key={o.id} className={`choice${q.right === o.id.toUpperCase() ? " right" : ""}`}>
+                <span className="k">{o.id.toUpperCase()}</span>
+                <span className="grow">{o.text}</span>
+                {q.right === o.id.toUpperCase() && <span className="tag good">Right</span>}
+              </li>
+            ))}
+          </ol>
+        )}
+      </div>
+      <div className="a">
+        <span className="qlabel">{q.label ? "Mark scheme" : "Answer"}</span>
+        <div className="mstext">{q.label ? <MarkScheme text={q.answer} /> : <Rich text={q.answer} />}</div>
+        {q.outline && (
+          <details className="outline">
+            <summary>Model answer outline</summary>
+            <p className="outlegend">
+              <span className="key must">must be said</span>
+              <span className="key bonus">lifts it above a pass</span>
+            </p>
+            <Notes text={q.outline} />
+          </details>
+        )}
+      </div>
+      {onMark && (
+        <span className="acts">
+          <button
+            type="button"
+            className={`btn sm${outcome === "right" ? " primary" : " ghost"}`}
+            onClick={() => onMark(q.id, "right")}
+            disabled={pending}
+          >
+            Got it
+          </button>
+          <button
+            type="button"
+            className={`btn sm${outcome === "wrong" ? " danger" : " ghost"}`}
+            onClick={() => onMark(q.id, "wrong")}
+            disabled={pending}
+          >
+            Missed
+          </button>
+        </span>
+      )}
+    </li>
   );
 }

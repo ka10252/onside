@@ -357,9 +357,16 @@ async function teachQuestions(items: LessonItem[]): Promise<TeachQuestion[]> {
 export type PrepareQuestion = TeachQuestion & { answer: string };
 
 export async function prepareView(lessonId: string): Promise<PrepareQuestion[]> {
-  const lesson = await getLesson(lessonId);
-  if (!lesson || lesson.items.length === 0) return [];
-  const shown = await teachView(lessonId);
+  return withAnswers(await teachView(lessonId));
+}
+
+/** The review quiz with its answers, so the tutor can go through it before running it. */
+export async function prepareReviewView(lessonId: string): Promise<PrepareQuestion[]> {
+  return withAnswers(await reviewQuizView(lessonId));
+}
+
+async function withAnswers(shown: TeachQuestion[]): Promise<PrepareQuestion[]> {
+  if (shown.length === 0) return [];
   const holes = shown.map(() => "?").join(", ");
   const rows = await all<{ id: string; data: string }>(`SELECT id, data FROM questions WHERE id IN (${holes})`, ...shown.map((q) => q.id));
   const byId = new Map(rows.map((r) => [r.id, JSON.parse(r.data) as Question]));

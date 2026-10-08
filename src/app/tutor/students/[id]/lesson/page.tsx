@@ -11,6 +11,7 @@ import {
   lessonPool,
   lessonsFor,
   openLesson,
+  prepareReviewView,
   prepareView,
   reviewPlan,
   reviewQuizView,
@@ -75,12 +76,13 @@ export default async function LessonPage({ params, searchParams }: PageProps<"/t
       }
     : null;
   // In the lesson, only what the student should read is fetched at all.
-  const [pool, plan, teach, quiz, chosen, left, read] = await Promise.all([
+  const [pool, plan, teach, quiz, chosen, quizAnswers, left, read] = await Promise.all([
     unit && !teaching ? lessonPool(unit, id) : Promise.resolve([]),
     lesson && !teaching ? reviewPlan(lesson.id, size, kinds.length ? kinds : undefined) : Promise.resolve(null),
     lesson && teaching ? teachView(lesson.id) : Promise.resolve([]),
     lesson && teaching ? reviewQuizView(lesson.id) : Promise.resolve([]),
     lesson && !teaching ? prepareView(lesson.id) : Promise.resolve([]),
+    lesson && !teaching ? prepareReviewView(lesson.id) : Promise.resolve([]),
     lesson && !teaching ? unfinished(lesson.id) : Promise.resolve([]),
     unit && !teaching ? noteRead(id, unit) : Promise.resolve(null),
   ]);
@@ -171,6 +173,7 @@ export default async function LessonPage({ params, searchParams }: PageProps<"/t
               notes={notes}
               today={singaporeToday().date}
               review={{ size, kinds }}
+              reviewQuestions={quizAnswers}
               sentNotes={sentNotes}
               studentId={id}
             />

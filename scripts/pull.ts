@@ -18,11 +18,25 @@ const TABLES: { name: string; where?: string }[] = [
   { name: "responses" },
   { name: "events" },
   { name: "ai_batches" },
-  // What was taught, and whether the student has read the notes from it.
+  // What was taught, which notes the student can read, and whether they have read them.
   { name: "lessons" },
   { name: "lesson_items" },
   { name: "note_reads" },
+  { name: "note_releases" },
+  { name: "queued_sets" },
+  { name: "schedules" },
+  // Written by the tutor, not by the seed: outlines and note corrections.
+  { name: "essay_outlines" },
+  { name: "note_corrections" },
 ];
+
+/** Loaded by `npm run db:seed` from content/ and the past papers, so there is nothing to copy. */
+const SEEDED = [
+  "units", "parts", "sections", "concepts", "question_concepts", "unit_briefs", "diagram_checklists",
+  "past_papers", "past_items", "past_questions", "unit_past_items",
+];
+/** Rebuilt locally rather than copied: sign-ins are local, and the lockout log is not data. */
+const LOCAL_ONLY = ["sessions", "login_failures"];
 
 async function columnsOf(db: Queryable, table: string) {
   const rows = await db.all<{ column_name: string }>("SELECT column_name FROM information_schema.columns WHERE table_name = ?", table);
@@ -43,6 +57,18 @@ async function main() {
   const dst = await openDb({ local: true, migrate: true });
   if (src.kind !== "postgres") throw new Error("DATABASE_URL does not point at Supabase.");
   console.log("From Supabase to data/pglite");
+
+  // A table added to the schema and not to one of the lists above is either copied as nothing or
+  // deleted and never put back, which is how note_releases went missing (2026-10-08). Say so.
+  const known = new Set([...TABLES.map((t) => t.name), ...SEEDED, ...LOCAL_ONLY, "questions"]);
+  const missing = (
+    await src.all<{ table_name: string }>(
+      "SELECT table_name FROM information_schema.tables WHERE table_schema = 'public' ORDER BY table_name",
+    )
+  )
+    .map((r) => r.table_name)
+    .filter((t) => !known.has(t));
+  if (missing.length) console.log(`Not copied, not seeded: ${missing.join(", ")}. Add them to TABLES or SEEDED.`);
 
   await dst.tx(async (t) => {
     await t.run("DELETE FROM sessions"); // everyone signs in again locally

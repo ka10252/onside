@@ -26,3 +26,29 @@ export function typeOf(q: BankQuestion): QType {
   if (q.diagram_type || /\b(diagram|sketch|draw|curve)\b/i.test(q.prompt)) return "diagram";
   return "short";
 }
+
+/**
+ * A review quiz sorts questions a little more finely than a lesson does. A lesson counts
+ * calculations with the short answers, but after the lesson "can they do the arithmetic" and "can
+ * they explain the mechanism" are different holes, and a quiz meant to check that last week closed
+ * should be able to ask for one of each (Jin, 2026-10-08). Essays are never in a review quiz.
+ */
+export type ReviewKind = "mcq" | "definition" | "short" | "calculation" | "diagram";
+
+export const REVIEW_KINDS: ReviewKind[] = ["mcq", "definition", "short", "calculation", "diagram"];
+
+export const KIND_LABEL: Record<ReviewKind, string> = {
+  mcq: "Multiple choice",
+  definition: "Definition",
+  short: "Short answer",
+  calculation: "Calculation",
+  diagram: "Diagram",
+};
+
+/** Which kind a review quiz would ask this as, or null for an essay, which it never asks. */
+export function reviewKindOf(q: BankQuestion): ReviewKind | null {
+  const t = typeOf(q);
+  if (t === "essay") return null;
+  if (t !== "short") return t;
+  return q.format === "calculation" || q.command_term === "calculate" ? "calculation" : "short";
+}

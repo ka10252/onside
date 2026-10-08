@@ -13,6 +13,7 @@ import {
   openLesson,
   prepareView,
   reviewPlan,
+  reviewQuizView,
   teachView,
   unfinished,
   unitBrief,
@@ -20,7 +21,7 @@ import {
   REVIEW_SIZE,
   REVIEW_TYPES,
 } from "@/lib/lesson";
-import { Q_TYPES, type QType } from "@/lib/question-types";
+import { REVIEW_KINDS, type ReviewKind } from "@/lib/question-types";
 import { lessonOf } from "@/lib/lesson-plan";
 import { singaporeToday } from "@/lib/schedule";
 import { TeachBoard } from "@/components/tutor/TeachBoard";
@@ -41,7 +42,9 @@ export default async function LessonPage({ params, searchParams }: PageProps<"/t
   } = (await searchParams) as { unit?: string; lesson?: string; mode?: string; size?: string; kinds?: string };
   // What the review quiz should hold, which the tutor sets on the page itself.
   const size = Math.min(20, Math.max(3, Number(sizeParam) || REVIEW_SIZE));
-  const kinds = (kindsParam ? kindsParam.split(",") : REVIEW_TYPES).filter((k): k is QType => Q_TYPES.includes(k as QType));
+  const kinds = (kindsParam ? kindsParam.split(",") : REVIEW_TYPES).filter((k): k is ReviewKind =>
+    REVIEW_KINDS.includes(k as ReviewKind),
+  );
   const teaching = mode === "teach";
   const student = await getStudent(id);
   if (!student) notFound();
@@ -72,10 +75,11 @@ export default async function LessonPage({ params, searchParams }: PageProps<"/t
       }
     : null;
   // In the lesson, only what the student should read is fetched at all.
-  const [pool, plan, teach, chosen, left, read] = await Promise.all([
+  const [pool, plan, teach, quiz, chosen, left, read] = await Promise.all([
     unit && !teaching ? lessonPool(unit, id) : Promise.resolve([]),
     lesson && !teaching ? reviewPlan(lesson.id, size, kinds.length ? kinds : undefined) : Promise.resolve(null),
     lesson && teaching ? teachView(lesson.id) : Promise.resolve([]),
+    lesson && teaching ? reviewQuizView(lesson.id) : Promise.resolve([]),
     lesson && !teaching ? prepareView(lesson.id) : Promise.resolve([]),
     lesson && !teaching ? unfinished(lesson.id) : Promise.resolve([]),
     unit && !teaching ? noteRead(id, unit) : Promise.resolve(null),
@@ -146,6 +150,7 @@ export default async function LessonPage({ params, searchParams }: PageProps<"/t
               // On a screen the student is watching, only an essay's outline is worth opening: a
               // four-mark answer would give the question away. The rest never leaves the server.
               questions={teach.map((q) => (q.marks >= 10 ? q : { ...q, outline: null }))}
+              review={quiz.map((q) => (q.marks >= 10 ? q : { ...q, outline: null }))}
               notes={notes}
               studentFirstName={first}
               today={singaporeToday().date}

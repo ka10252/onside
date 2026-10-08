@@ -9,7 +9,7 @@ import { reportIfStale } from "@/components/stale";
 import { shortDateSG } from "@/lib/due";
 import type { BankQuestion } from "@/lib/admin";
 import type { Lesson, LessonItem, LessonNote, PrepareQuestion, ReviewPlan, UnitBrief } from "@/lib/lesson";
-import { Q_TYPES, TYPE_LABEL, typeOf, type QType } from "@/lib/question-types";
+import { KIND_LABEL, Q_TYPES, REVIEW_KINDS, TYPE_LABEL, typeOf, type QType, type ReviewKind } from "@/lib/question-types";
 import { Blocks, Rich } from "@/components/Rich";
 import { Notes } from "@/components/Notes";
 import { MarkScheme } from "./MarkScheme";
@@ -65,7 +65,7 @@ export function LessonBoard({
   /** Today in Singapore, so a date held for later can be told from one that is already here. */
   today: string;
   /** What the review quiz should hold, as the tutor has set it. */
-  review: { size: number; kinds: QType[] };
+  review: { size: number; kinds: ReviewKind[] };
   /** Which of this lesson's units the student can already read, and when they were sent. */
   sentNotes: { unit: number; title: string; sentAt: string | null }[];
   studentId: string;
@@ -521,8 +521,8 @@ export function LessonBoard({
             </>
           ) : !plan || plan.missed.length === 0 ? (
             <p className="muted" style={{ margin: 0 }}>
-              Mark what {studentFirstName} missed above. The quiz is those questions plus others on the same ground —
-              ten in all, multiple choice and short answers only.
+              Mark what {studentFirstName} missed above. The quiz is those questions plus others on the same ground,
+              spread evenly over the kinds you choose. Never an essay.
             </p>
           ) : (
             <>
@@ -540,7 +540,7 @@ export function LessonBoard({
                 ))}
                 <span className="filtersep" aria-hidden />
                 <span className="muted" style={{ fontSize: 13 }}>Which kinds</span>
-                {Q_TYPES.filter((t) => t !== "essay").map((t) => {
+                {REVIEW_KINDS.map((t) => {
                   const on = review.kinds.includes(t);
                   const next = on ? review.kinds.filter((k) => k !== t) : [...review.kinds, t];
                   return (
@@ -551,7 +551,7 @@ export function LessonBoard({
                       scroll={false}
                       aria-disabled={on && review.kinds.length === 1}
                     >
-                      {TYPE_LABEL[t]}
+                      {KIND_LABEL[t]}
                     </Link>
                   );
                 })}

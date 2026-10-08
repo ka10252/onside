@@ -3,7 +3,7 @@
 
 import { revalidatePath } from "next/cache";
 import { assignNow, buildSet, getLesson, markOutcome, openLesson, reviewPlan, setLessonItems, unfinished, REVIEW_SIZE } from "./lesson";
-import type { QType } from "./question-types";
+import { REVIEW_KINDS, reviewKindOf, type ReviewKind } from "./question-types";
 import { fillTemplate } from "./lesson-template";
 import { run } from "./db";
 import { queueSet } from "./queue";
@@ -47,6 +47,31 @@ export async function setOutcome(lessonId: string, questionId: string, outcome: 
   return {};
 }
 
+/** How a review-quiz question went, run on the shared screen at the start of the next lesson. */
+export async function setReviewOutcome(
+  lessonId: string,
+  questionId: string,
+  outcome: "right" | "wrong" | null,
+): Promise<LessonState> {
+  await requireUser("tutor");
+  const l = await getLesson(lessonId);
+  if (!l) return { error: "That lesson is gone." };
+  if (outcome === null) {
+    await run("DELETE FROM review_outcomes WHERE lesson_id = ? AND question_id = ?", lessonId, questionId);
+  } else {
+    await run(
+      `INSERT INTO review_outcomes (lesson_id, question_id, outcome, at) VALUES (?, ?, ?, ?)
+         ON CONFLICT (lesson_id, question_id) DO UPDATE SET outcome = excluded.outcome, at = excluded.at`,
+      lessonId,
+      questionId,
+      outcome,
+      new Date().toISOString(),
+    );
+  }
+  revalidatePath(back(l.student_id));
+  return {};
+}
+
 export async function saveLessonNotes(lessonId: string, notes: string): Promise<LessonState> {
   await requireUser("tutor");
   const l = await getLesson(lessonId);
@@ -60,13 +85,18 @@ export async function saveLessonNotes(lessonId: string, notes: string): Promise<
  * Builds the review quiz and stops. The tutor looks at it the way the student will, and sends it
  * when they are happy with it: a quiz built from what went wrong is worth a second pair of eyes.
  */
-export async function buildReviewQuiz(lessonId: string, size = REVIEW_SIZE, types?: QType[]): Promise<LessonState> {
+export async function buildReviewQuiz(lessonId: string, size = REVIEW_SIZE, kinds?: ReviewKind[]): Promise<LessonState> {
   await requireUser("tutor");
   const l = await getLesson(lessonId);
   if (!l) return { error: "That lesson is gone." };
   if (l.review_assignment_id) return { error: "The review quiz for this lesson has already gone out." };
-  const plan = await reviewPlan(lessonId, size, types?.length ? types : undefined);
-  const ids = [...plan.missed, ...plan.variants].map((q) => q.id);
+  const plan = await reviewPlan(lessonId, size, kinds?.length ? kinds : undefined);
+  // The quiz runs in the order a paper asks: multiple choice first, then definitions, and so on,
+  // whether a question is there because it went wrong or because it is on the same ground.
+  const asked = kinds?.length ? kinds : REVIEW_KINDS;
+  const ids = [...plan.missed, ...plan.variants]
+    .sort((a, b) => asked.indexOf(reviewKindOf(a)!) - asked.indexOf(reviewKindOf(b)!))
+    .map((q) => q.id);
   if (ids.length === 0) return { error: plan.short ?? "Nothing to build." };
   const tutor = await requireUser("tutor");
   const setId = await buildSet({

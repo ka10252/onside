@@ -268,6 +268,17 @@ CREATE TABLE IF NOT EXISTS lesson_items (
   PRIMARY KEY (lesson_id, question_id)
 );
 
+-- How the review quiz went when it was run at the start of the next lesson. Kept apart from
+-- lesson_items so that a question asked both in the lesson and in its review quiz has two records,
+-- and so the lesson's own outcomes keep deciding what the review quiz holds.
+CREATE TABLE IF NOT EXISTS review_outcomes (
+  lesson_id   TEXT NOT NULL REFERENCES lessons(id) ON DELETE CASCADE,
+  question_id TEXT NOT NULL REFERENCES questions(id),
+  outcome     TEXT,
+  at          TEXT,
+  PRIMARY KEY (lesson_id, question_id)
+);
+
 -- Daily practice: one row per student (docs/decisions.md).
 CREATE TABLE IF NOT EXISTS schedules (
   student_id   TEXT PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE,

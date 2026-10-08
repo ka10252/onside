@@ -6,7 +6,7 @@ import { Blocks, Rich } from "@/components/Rich";
 import { Notes } from "@/components/Notes";
 import { reportIfStale } from "@/components/stale";
 import type { LessonNote, TeachQuestion } from "@/lib/lesson";
-import { buildHomework, dropHomework, sendHomework, setOutcome } from "@/lib/lesson-actions";
+import { buildHomework, dropHomework, sendHomework, setOutcome, setReviewOutcome } from "@/lib/lesson-actions";
 
 /**
  * The lesson itself, on a screen the student is looking at too: one question at a time, large, with
@@ -15,6 +15,7 @@ import { buildHomework, dropHomework, sendHomework, setOutcome } from "@/lib/les
 export function TeachBoard({
   lessonId,
   questions,
+  review,
   notes,
   studentFirstName,
   today,
@@ -23,6 +24,8 @@ export function TeachBoard({
 }: {
   lessonId: string;
   questions: TeachQuestion[];
+  /** The review quiz built for this lesson, run at the start of the next one. */
+  review: TeachQuestion[];
   /** The lesson's revision notes, one entry per unit, gone through before the questions. */
   notes: LessonNote[];
   studentFirstName: string;
@@ -33,15 +36,15 @@ export function TeachBoard({
   homeworkSetId: string | null;
 }) {
   const withNotes = notes.filter((n) => n.body);
-  const [showing, setShowing] = useState<"revision" | "questions">(withNotes.length ? "revision" : "questions");
+  const [showing, setShowing] = useState<"revision" | "questions" | "review">(withNotes.length ? "revision" : "questions");
   const [part, setPart] = useState(0);
-  const [at, setAt] = useState(0);
   const [outcomes, setOutcomes] = useState<Record<string, "right" | "wrong" | null>>(
     Object.fromEntries(questions.map((q) => [q.id, q.outcome])),
   );
+  const [reviewOutcomes, setReviewOutcomes] = useState<Record<string, "right" | "wrong" | null>>(
+    Object.fromEntries(review.map((q) => [q.id, q.outcome])),
+  );
   const [pending, start] = useTransition();
-  const [picked, setPicked] = useState<string | null>(null);
-  const [shown, setShown] = useState<string | null>(null);
   const [sendOn, setSendOn] = useState("");
   const [dropped, setDropped] = useState<string[]>([]);
   const [sent, setSent] = useState(homeworkSent);
@@ -51,9 +54,8 @@ export function TeachBoard({
   const [ended, setEnded] = useState(false);
   const [note, setNote] = useState<string | null>(null);
   const router = useRouter();
-  const q = questions[at];
 
-  const tabs = withNotes.length ? (
+  const tabs = withNotes.length || review.length ? (
     <nav className="filters" aria-label="Which part of the lesson">
       {withNotes.map((n, i) => (
         <button
@@ -71,6 +73,11 @@ export function TeachBoard({
       <button type="button" className={`chip${showing === "questions" ? " on" : ""}`} onClick={() => setShowing("questions")}>
         Questions · {questions.length}
       </button>
+      {review.length > 0 && (
+        <button type="button" className={`chip${showing === "review" ? " on" : ""}`} onClick={() => setShowing("review")}>
+          Review quiz · {review.length}
+        </button>
+      )}
     </nav>
   ) : null;
 
@@ -84,7 +91,31 @@ export function TeachBoard({
       </div>
     );
   }
-  if (!q) {
+  if (showing === "review" && review.length) {
+    return (
+      <div className="teach">
+        {tabs}
+        <Run
+          key="review"
+          questions={review}
+          outcomes={reviewOutcomes}
+          pending={pending}
+          onMark={(id, outcome) => {
+            setReviewOutcomes((o) => ({ ...o, [id]: outcome }));
+            start(async () => {
+              try {
+                await setReviewOutcome(lessonId, id, outcome);
+                router.refresh();
+              } catch (e) {
+                if (!reportIfStale(e)) throw e;
+              }
+            });
+          }}
+        />
+      </div>
+    );
+  }
+  if (!questions[0]) {
     return (
       <div className="teach">
         {tabs}
@@ -106,145 +137,38 @@ export function TeachBoard({
     });
   }
 
-  function go(to: number) {
-    setAt(Math.max(0, Math.min(questions.length - 1, to)));
-    setPicked(null);
-    setShown(null);
-  }
-
-  function check() {
-    if (!q || !picked || !q.right) return;
-    setShown(q.id);
-    mark(picked === q.right ? "right" : "wrong", false);
-  }
-
-  function mark(outcome: "right" | "wrong", move = true) {
-    const next = outcomes[q!.id] === outcome && move ? null : outcome;
-    setOutcomes((o) => ({ ...o, [q!.id]: next }));
+  function mark(id: string, outcome: "right" | "wrong" | null) {
+    setOutcomes((o) => ({ ...o, [id]: outcome }));
     start(async () => {
       try {
-        await setOutcome(lessonId, q!.id, next);
+        await setOutcome(lessonId, id, outcome);
         router.refresh();
       } catch (e) {
         if (!reportIfStale(e)) throw e;
       }
     });
-    if (move && next && at < questions.length - 1) setTimeout(() => setAt((i) => Math.min(i + 1, questions.length - 1)), 250);
   }
 
-  const done = questions.filter((x) => outcomes[x.id]).length;
   const leftQs = questions.filter((x) => !outcomes[x.id]);
   const left = leftQs.length;
   const chosen = leftQs.filter((x) => !dropped.includes(x.id));
   return (
     <div className="teach">
       {tabs}
-      <div className="teachbar">
-        <span className="rowacts">
-          <button type="button" className="btn ghost sm" onClick={() => go(at - 1)} disabled={at === 0}>
-            ‹
-          </button>
-          <span className="pos">
-            {q.n} / {questions.length}
-          </span>
-          <button
-            type="button"
-            className="btn ghost sm"
-            onClick={() => go(at + 1)}
-            disabled={at === questions.length - 1}
-          >
-            ›
-          </button>
-        </span>
-        <span className="dots" aria-hidden>
-          {questions.map((x, i) => (
-            <button
-              key={x.id}
-              type="button"
-              className={`dot${i === at ? " on" : ""}${outcomes[x.id] === "right" ? " right" : outcomes[x.id] === "wrong" ? " wrong" : ""}`}
-              onClick={() => go(i)}
-            />
-          ))}
-        </span>
-        <span className="rowacts">
-          <span className="muted" style={{ fontSize: 14 }}>
-            {done} of {questions.length} marked
-          </span>
-          {!ended && (
+      <Run
+        key="lesson"
+        questions={questions}
+        outcomes={outcomes}
+        pending={pending}
+        onMark={mark}
+        barEnd={
+          !ended ? (
             <button type="button" className="btn ghost sm" onClick={() => setEnded(true)}>
               End the lesson
             </button>
-          )}
-        </span>
-      </div>
-
-      <article className="card teachcard">
-        <p className="meta" style={{ margin: 0 }}>
-          {q.label && <span className="pill ink">{q.label}</span>}
-          <span>
-            {q.marks} {q.marks === 1 ? "mark" : "marks"}
-          </span>
-        </p>
-        {q.context.length > 0 && (
-          <details className="sub" open={q.marks >= 10 || /\b(text|table|figure|paragraph|extract|data)\b/i.test(q.prompt) || undefined}>
-            <summary>Extracts and data</summary>
-            <Blocks blocks={q.context} />
-          </details>
-        )}
-        {q.lead.length > 0 && <Blocks blocks={q.lead} />}
-        <p className="teachq">
-          <Rich text={q.prompt} />
-        </p>
-        {q.options.length > 0 && (
-          <>
-            <ol className="choices readback picking">
-              {q.options.map((o) => {
-                const letter = o.id.toUpperCase();
-                const open = shown === q.id;
-                const isRight = open && q.right === letter;
-                const isWrong = open && picked === letter && q.right !== letter;
-                return (
-                  <li key={o.id} className={`choice${picked === letter ? " picked" : ""}${isRight ? " right" : ""}${isWrong ? " wrong" : ""}`}>
-                    <button type="button" className="pick" onClick={() => setPicked(letter)} disabled={open}>
-                      <span className="k">{letter}</span>
-                      <span className="grow">{o.text}</span>
-                      {isRight && <span className="tag good">Right</span>}
-                      {isWrong && <span className="tag bad">Not this one</span>}
-                    </button>
-                  </li>
-                );
-              })}
-            </ol>
-            {q.right && shown !== q.id && (
-              <div className="rowacts">
-                <button type="button" className="btn" disabled={!picked || pending} onClick={() => check()}>
-                  Check the answer
-                </button>
-                {!picked && <span className="muted" style={{ fontSize: 14 }}>Choose an option first.</span>}
-              </div>
-            )}
-          </>
-        )}
-        {q.outline && (
-          <details className="outline">
-            <summary>Model answer outline</summary>
-            <p className="outlegend">
-              <span className="key must">must be said</span>
-              <span className="key bonus">lifts it above a pass</span>
-            </p>
-            <Notes text={q.outline} />
-          </details>
-        )}
-      </article>
-
-      <div className="rowacts" style={{ justifyContent: "center" }}>
-        <button type="button" className={`btn lg${outcomes[q.id] === "right" ? " primary" : ""}`} onClick={() => mark("right")} disabled={pending}>
-          Got it
-        </button>
-        <button type="button" className={`btn lg${outcomes[q.id] === "wrong" ? " danger" : ""}`} onClick={() => mark("wrong")} disabled={pending}>
-          Missed
-        </button>
-      </div>
+          ) : null
+        }
+      />
 
       {ended && left > 0 && !sent && (
         <section className="card cardbody stack" style={{ gap: 10 }}>
@@ -366,5 +290,157 @@ export function TeachBoard({
       )}
       {sent && note && <p className="formmsg good">{note}</p>}
     </div>
+  );
+}
+
+/**
+ * One question at a time on a screen the student is looking at too, with the class picking an
+ * option before the answer is shown. The lesson's questions and its review quiz both run through
+ * this, so they behave identically; only where the marks are recorded differs.
+ */
+function Run({
+  questions,
+  outcomes,
+  pending,
+  onMark,
+  barEnd,
+}: {
+  questions: TeachQuestion[];
+  outcomes: Record<string, "right" | "wrong" | null>;
+  pending: boolean;
+  onMark: (id: string, outcome: "right" | "wrong" | null) => void;
+  /** Anything the lesson wants beside the count, such as ending the lesson. */
+  barEnd?: React.ReactNode;
+}) {
+  const [at, setAt] = useState(0);
+  const [picked, setPicked] = useState<string | null>(null);
+  const [shown, setShown] = useState<string | null>(null);
+  const q = questions[Math.min(at, questions.length - 1)];
+  if (!q) return null;
+  const done = questions.filter((x) => outcomes[x.id]).length;
+
+  function go(to: number) {
+    setAt(Math.max(0, Math.min(questions.length - 1, to)));
+    setPicked(null);
+    setShown(null);
+  }
+
+  function mark(outcome: "right" | "wrong", move = true) {
+    const next = outcomes[q!.id] === outcome && move ? null : outcome;
+    onMark(q!.id, next);
+    if (move && next && at < questions.length - 1) setTimeout(() => setAt((i) => Math.min(i + 1, questions.length - 1)), 250);
+  }
+
+  function check() {
+    if (!q || !picked || !q.right) return;
+    setShown(q.id);
+    mark(picked === q.right ? "right" : "wrong", false);
+  }
+
+  return (
+    <>
+      <div className="teachbar">
+        <span className="rowacts">
+          <button type="button" className="btn ghost sm" onClick={() => go(at - 1)} disabled={at === 0}>
+            ‹
+          </button>
+          <span className="pos">
+            {q.n} / {questions.length}
+          </span>
+          <button
+            type="button"
+            className="btn ghost sm"
+            onClick={() => go(at + 1)}
+            disabled={at === questions.length - 1}
+          >
+            ›
+          </button>
+        </span>
+        <span className="dots" aria-hidden>
+          {questions.map((x, i) => (
+            <button
+              key={x.id}
+              type="button"
+              className={`dot${i === at ? " on" : ""}${outcomes[x.id] === "right" ? " right" : outcomes[x.id] === "wrong" ? " wrong" : ""}`}
+              onClick={() => go(i)}
+            />
+          ))}
+        </span>
+        <span className="rowacts">
+          <span className="muted" style={{ fontSize: 14 }}>
+            {done} of {questions.length} marked
+          </span>
+          {barEnd}
+        </span>
+      </div>
+
+      <article className="card teachcard">
+        <p className="meta" style={{ margin: 0 }}>
+          {q.label && <span className="pill ink">{q.label}</span>}
+          <span>
+            {q.marks} {q.marks === 1 ? "mark" : "marks"}
+          </span>
+        </p>
+        {q.context.length > 0 && (
+          <details className="sub" open={q.marks >= 10 || /\b(text|table|figure|paragraph|extract|data)\b/i.test(q.prompt) || undefined}>
+            <summary>Extracts and data</summary>
+            <Blocks blocks={q.context} />
+          </details>
+        )}
+        {q.lead.length > 0 && <Blocks blocks={q.lead} />}
+        <p className="teachq">
+          <Rich text={q.prompt} />
+        </p>
+        {q.options.length > 0 && (
+          <>
+            <ol className="choices readback picking">
+              {q.options.map((o) => {
+                const letter = o.id.toUpperCase();
+                const open = shown === q.id;
+                const isRight = open && q.right === letter;
+                const isWrong = open && picked === letter && q.right !== letter;
+                return (
+                  <li key={o.id} className={`choice${picked === letter ? " picked" : ""}${isRight ? " right" : ""}${isWrong ? " wrong" : ""}`}>
+                    <button type="button" className="pick" onClick={() => setPicked(letter)} disabled={open}>
+                      <span className="k">{letter}</span>
+                      <span className="grow">{o.text}</span>
+                      {isRight && <span className="tag good">Right</span>}
+                      {isWrong && <span className="tag bad">Not this one</span>}
+                    </button>
+                  </li>
+                );
+              })}
+            </ol>
+            {q.right && shown !== q.id && (
+              <div className="rowacts">
+                <button type="button" className="btn" disabled={!picked || pending} onClick={() => check()}>
+                  Check the answer
+                </button>
+                {!picked && <span className="muted" style={{ fontSize: 14 }}>Choose an option first.</span>}
+              </div>
+            )}
+          </>
+        )}
+        {q.outline && (
+          <details className="outline">
+            <summary>Model answer outline</summary>
+            <p className="outlegend">
+              <span className="key must">must be said</span>
+              <span className="key bonus">lifts it above a pass</span>
+            </p>
+            <Notes text={q.outline} />
+          </details>
+        )}
+      </article>
+
+      <div className="rowacts" style={{ justifyContent: "center" }}>
+        <button type="button" className={`btn lg${outcomes[q.id] === "right" ? " primary" : ""}`} onClick={() => mark("right")} disabled={pending}>
+          Got it
+        </button>
+        <button type="button" className={`btn lg${outcomes[q.id] === "wrong" ? " danger" : ""}`} onClick={() => mark("wrong")} disabled={pending}>
+          Missed
+        </button>
+      </div>
+    </>
   );
 }

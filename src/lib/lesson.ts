@@ -7,7 +7,7 @@ import { relevantContext } from "./extract";
 import { all, one, run, tx } from "./db";
 import { weightByUnit, type UnitWeight } from "./unit-weight";
 import { recipeFor, spanningIds, type Recipe } from "./lesson-template";
-import { typeOf, type QType } from "./question-types";
+import { reviewKindOf, type ReviewKind } from "./question-types";
 import { unitsOfLesson } from "./lesson-plan";
 
 /**
@@ -175,8 +175,28 @@ export async function markOutcome(lessonId: string, questionId: string, outcome:
 }
 
 /** What a review quiz asks by default: things a student can answer in a few minutes, not an essay. */
-export const REVIEW_TYPES: QType[] = ["mcq", "definition", "short"];
+export const REVIEW_TYPES: ReviewKind[] = ["mcq", "definition", "short", "calculation"];
 export const REVIEW_SIZE = 10;
+
+/**
+ * Fills n places by taking turns between the kinds, so a quiz of five over four kinds is one of
+ * each and not four definitions. Each kind's list is already in the order it should be drawn from —
+ * the questions that went wrong first, then others on the same ground — and the kind with the
+ * fewest places so far goes next, ties broken by the order the kinds are asked in.
+ */
+function spread(byKind: Map<ReviewKind, BankQuestion[]>, kinds: ReviewKind[], n: number): BankQuestion[] {
+  const held = new Map<ReviewKind, number>(kinds.map((k) => [k, 0]));
+  const out: BankQuestion[] = [];
+  while (out.length < n) {
+    const next = kinds
+      .filter((k) => (byKind.get(k)?.length ?? 0) > 0)
+      .sort((a, b) => held.get(a)! - held.get(b)! || kinds.indexOf(a) - kinds.indexOf(b))[0];
+    if (!next) break;
+    out.push(byKind.get(next)!.shift()!);
+    held.set(next, held.get(next)! + 1);
+  }
+  return out;
+}
 
 export type ReviewPlan = {
   /** The ones that went wrong in the lesson, as far as they can be re-asked. */
@@ -192,8 +212,12 @@ export type ReviewPlan = {
  * same idea is met a second time rather than the same wording memorised. Multiple choice and short
  * answers only — a review quiz is for checking a hole has closed, not for writing an essay.
  */
-export async function reviewPlan(lessonId: string, size = REVIEW_SIZE, types: QType[] = REVIEW_TYPES): Promise<ReviewPlan> {
-  const wanted = (q: BankQuestion) => types.includes(typeOf(q));
+export async function reviewPlan(lessonId: string, size = REVIEW_SIZE, kinds: ReviewKind[] = REVIEW_TYPES): Promise<ReviewPlan> {
+  const kindOf = (q: BankQuestion) => reviewKindOf(q);
+  const wanted = (q: BankQuestion) => {
+    const k = kindOf(q);
+    return k !== null && kinds.includes(k);
+  };
   const lesson = await getLesson(lessonId);
   if (!lesson) return { missed: [], variants: [], short: "That lesson is gone." };
   const wrongIds = lesson.items.filter((i) => i.outcome === "wrong").map((i) => i.question_id);
@@ -207,24 +231,33 @@ export async function reviewPlan(lessonId: string, size = REVIEW_SIZE, types: QT
   ]);
   const inUnit = new Map(bank.map((q) => [q.id, q]));
 
-  // A wrong question is re-asked only if it is short enough to be worth re-asking.
-  const missed = wrongIds.map((id) => inUnit.get(id)).filter((q): q is BankQuestion => Boolean(q) && wanted(q!));
-  const essayWrong = wrongIds.length - missed.length;
+  // A wrong question is re-asked only if it is of a kind the tutor asked for.
+  const reask = wrongIds.map((id) => inUnit.get(id)).filter((q): q is BankQuestion => Boolean(q) && wanted(q!));
+  const leftOut = wrongIds.length - reask.length;
 
   // Same section first, then the rest of the unit; never one they have already been sent.
-  const sections = new Set(missed.map((q) => q.section_id).filter(Boolean));
+  const sections = new Set(reask.map((q) => q.section_id).filter(Boolean));
   const taken = new Set(wrongIds);
   const unseen = bank.filter((q) => !taken.has(q.id) && wanted(q) && !had.has(q.id));
   const sameSection = unseen.filter((q) => q.section_id && sections.has(q.section_id));
   const rest = unseen.filter((q) => !(q.section_id && sections.has(q.section_id)));
-  const variants = [...sameSection, ...rest].slice(0, Math.max(0, size - missed.length));
+
+  // Each kind draws from its own list: what went wrong, then the same ground, then the unit.
+  const byKind = new Map<ReviewKind, BankQuestion[]>(
+    kinds.map((k) => [k, [...reask, ...sameSection, ...rest].filter((q) => kindOf(q) === k)]),
+  );
+  const picked = spread(byKind, kinds, size);
+  const wrongSet = new Set(wrongIds);
+  const order = (q: BankQuestion) => kinds.indexOf(kindOf(q)!);
+  const missed = picked.filter((q) => wrongSet.has(q.id)).sort((a, b) => order(a) - order(b));
+  const variants = picked.filter((q) => !wrongSet.has(q.id)).sort((a, b) => order(a) - order(b));
 
   const got = missed.length + variants.length;
   const short =
     got >= size
       ? null
       : [
-          essayWrong > 0 ? `${essayWrong} of the wrong ones are not of the kinds you chose` : "",
+          leftOut > 0 ? `${leftOut} of the wrong ones are not of the kinds you chose` : "",
           `only ${got} questions could be found in ${unitsOfLesson(lesson.unit).map((u) => `unit ${u}`).join(" and ")}`,
         ]
           .filter(Boolean)
@@ -256,8 +289,32 @@ export type TeachQuestion = {
 
 export async function teachView(lessonId: string): Promise<TeachQuestion[]> {
   const lesson = await getLesson(lessonId);
-  if (!lesson || lesson.items.length === 0) return [];
-  const ids = lesson.items.map((i) => i.question_id);
+  if (!lesson) return [];
+  return teachQuestions(lesson.items);
+}
+
+/**
+ * The review quiz on the same screen as the lesson's own questions, and marked the same way. The
+ * two are different procedures: the lesson's questions check what the student understood on the
+ * day, the review quiz checks at the start of the next lesson whether the revision happened
+ * (Jin, 2026-10-08). Nothing here is sent to the student.
+ */
+export async function reviewQuizView(lessonId: string): Promise<TeachQuestion[]> {
+  const lesson = await getLesson(lessonId);
+  if (!lesson?.review_set_id) return [];
+  const items = await all<LessonItem>(
+    `SELECT i.question_id, i.position, o.outcome
+       FROM set_items i LEFT JOIN review_outcomes o ON o.lesson_id = ? AND o.question_id = i.question_id
+      WHERE i.set_id = ? ORDER BY i.position`,
+    lessonId,
+    lesson.review_set_id,
+  );
+  return teachQuestions(items);
+}
+
+async function teachQuestions(items: LessonItem[]): Promise<TeachQuestion[]> {
+  if (items.length === 0) return [];
+  const ids = items.map((i) => i.question_id);
   const holes = ids.map(() => "?").join(", ");
   const rows = await all<{ id: string; marks: number; format: string; data: string }>(
     `SELECT id, marks, format, data FROM questions WHERE id IN (${holes})`,
@@ -271,7 +328,7 @@ export async function teachView(lessonId: string): Promise<TeachQuestion[]> {
     )).map((r) => [r.question_id, r.outline]),
   );
   const out: TeachQuestion[] = [];
-  for (const [i, item] of lesson.items.entries()) {
+  for (const [i, item] of items.entries()) {
     const row = byId.get(item.question_id);
     if (!row) continue;
     const q = JSON.parse(row.data) as Question;

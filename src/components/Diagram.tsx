@@ -844,9 +844,112 @@ function JCurve({ caption }: { caption?: string }) {
   );
 }
 
+/**
+ * Cost-push inflation: short-run supply shifts left, so the price level rises and output falls at
+ * the same time. This is the diagram a stagflation question wants, and the one a student who has
+ * only learnt the demand-pull picture draws wrongly.
+ */
+function AdAsCostPush({ caption }: { caption?: string }) {
+  const e1 = { x: 168, y: 140 };
+  const sras1 = thru(e1, { x: 1, y: -0.85 }, 104, 70);
+  const ad1 = thru(e1, { x: 1, y: 0.95 }, 100, 60);
+  const sras2 = shiftX(sras1, -54);
+  const e2 = cross(ad1, sras2);
+  return (
+    <Frame x="Real output" y="Price level" caption={caption}>
+      <Straight l={clip(sras1)} label="SRAS₁" colour={CURVE} />
+      <Straight l={clip(sras2)} label="SRAS₂" colour={SHIFT} dashed />
+      <Straight l={clip(ad1)} label="AD" colour={CURVE} />
+      <Shift from={along(clip(sras1), 0.35)} to={along(clip(sras2), 0.35)} />
+      <Eq at={e1} px="P₁" qx="Y₁" colour={CURVE} />
+      <Eq at={e2} px="P₂" qx="Y₂" colour={SHIFT} />
+    </Frame>
+  );
+}
+
+/**
+ * What a supply-side policy is for: long-run supply shifts right, so output rises and the price
+ * level falls. Growth and inflation are dealt with at once, which is the evaluation point the
+ * fifteen-mark question is set up to reward.
+ */
+function AdAsSupplySide({ caption }: { caption?: string }) {
+  const YF = 150;
+  const YF2 = 212;
+  // Flat enough that the second equilibrium stays clear of the axis and the label clears the dot.
+  const ad1 = thru({ x: YF, y: 104 }, { x: 1, y: 0.58 }, 96, 86);
+  const e1 = atX(ad1, YF);
+  const e2 = atX(ad1, YF2);
+  return (
+    <Frame x="Real output" y="Price level" caption={caption}>
+      <line x1={YF} y1="200" x2={YF} y2="34" stroke={CURVE} strokeWidth="2" />
+      <text x={YF} y="30" textAnchor="middle" className="dgmcur">LRAS₁</text>
+      <line x1={YF2} y1="200" x2={YF2} y2="34" stroke={SHIFT} strokeWidth="2" strokeDasharray="5 4" />
+      <text x={YF2} y="30" textAnchor="middle" className="dgmcur" fill={SHIFT}>LRAS₂</text>
+      <Straight l={clip(ad1)} label="AD" colour={CURVE} />
+      <Shift from={{ x: YF, y: 182 }} to={{ x: YF2, y: 182 }} />
+      <Eq at={e1} px="P₁" qx="Y₁" colour={CURVE} />
+      <Eq at={e2} px="P₂" qx="Y₂" colour={SHIFT} />
+    </Frame>
+  );
+}
+
+/**
+ * The money market, which is how unit 13 asks a monetary policy question when it does not ask for
+ * AD/AS: the supply of money is set by the central bank, so it is vertical, and increasing it moves
+ * the interest rate down along a fixed demand for money.
+ */
+function MoneyMarket({ caption }: { caption?: string }) {
+  const dm = line({ x: 60, y: 44 }, { x: 268, y: 188 });
+  const sm1 = line({ x: 136, y: 196 }, { x: 136, y: 30 });
+  const sm2 = line({ x: 196, y: 196 }, { x: 196, y: 30 });
+  const e1 = cross(dm, sm1);
+  const e2 = cross(dm, sm2);
+  return (
+    <Frame x="Quantity of money" y="Interest rate" caption={caption}>
+      <Straight l={dm} label="Dm" colour={CURVE} />
+      <Straight l={sm1} label="Sm₁" colour={CURVE} />
+      <Straight l={sm2} label="Sm₂" colour={SHIFT} dashed />
+      <Shift from={{ x: sm1.a.x, y: 150 }} to={{ x: sm2.a.x, y: 150 }} />
+      <Eq at={e1} px="r₁" qx="M₁" colour={CURVE} />
+      <Eq at={e2} px="r₂" qx="M₂" colour={SHIFT} />
+    </Frame>
+  );
+}
+
+/**
+ * The Phillips curve. The short-run curve carries the trade-off the fifteen-mark question asks
+ * about; the long-run curve is vertical at the natural rate, which is the answer to whether the
+ * trade-off lasts. Expected inflation rising moves the short-run curve out, which is stagflation.
+ */
+function Phillips({ caption }: { caption?: string }) {
+  const NAT = 130;
+  const LOW = 90;
+  // A rectangular hyperbola: inflation climbs steeply as unemployment is pushed below the natural rate.
+  const at = (x: number) => ({ x, y: 196 - 4380 / (x - 40) });
+  const src: Pt[] = [];
+  for (let i = 0; i <= 48; i++) src.push(at(70 + (248 - 70) * (i / 48)));
+  const a = at(NAT);
+  const b = at(LOW);
+  return (
+    <Frame x="Unemployment rate" y="Inflation rate" caption={caption}>
+      <line x1={NAT} y1="200" x2={NAT} y2="30" stroke={CURVE} strokeWidth="2" />
+      <text x={NAT} y="26" textAnchor="middle" className="dgmcur">LRPC</text>
+      <path d={`M${src.map((q) => `${d2(q.x)} ${d2(q.y)}`).join(" L")}`} fill="none" stroke={CURVE} strokeWidth="2" />
+      <text x="252" y={d2(at(248).y) - 8} className="dgmcur">SRPC</text>
+      <Eq at={a} px="π₁" qx="Un" colour={CURVE} />
+      <Eq at={b} px="π₂" qx="U₂" colour={SHIFT} />
+      <Shift from={{ x: a.x - 4, y: a.y - 6 }} to={{ x: b.x + 4, y: b.y + 6 }} />
+    </Frame>
+  );
+}
+
 const DIAGRAMS: Record<string, (p: { caption?: string }) => React.ReactElement> = {
   "exchange-rate": ExchangeRate,
   "ad-as": AdAs,
+  "ad-as-cost-push": AdAsCostPush,
+  "ad-as-supply-side": AdAsSupplySide,
+  "money-market": MoneyMarket,
+  "phillips": Phillips,
   "indirect-tax": IndirectTax,
   subsidy: Subsidy,
   "price-ceiling": PriceCeiling,

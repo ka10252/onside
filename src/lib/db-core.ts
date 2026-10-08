@@ -391,6 +391,9 @@ ALTER TABLE responses ADD COLUMN IF NOT EXISTS rewrite_note TEXT;
 ALTER TABLE responses ADD COLUMN IF NOT EXISTS rewrite_asked_at TEXT;
 ALTER TABLE responses ADD COLUMN IF NOT EXISTS rewrite_text TEXT;
 ALTER TABLE responses ADD COLUMN IF NOT EXISTS rewrite_at TEXT;
+-- When the tutor finished with a rewrite. Set instead of deleting it: closing a rewrite used to
+-- clear the student's second version, which threw away work they had done (Jin, 2026-10-08).
+ALTER TABLE responses ADD COLUMN IF NOT EXISTS rewrite_done_at TEXT;
 ALTER TABLE schedules ADD COLUMN IF NOT EXISTS send_at TEXT NOT NULL DEFAULT '07:00';
 ALTER TABLE schedules ADD COLUMN IF NOT EXISTS due_time TEXT;
 ALTER TABLE schedules ADD COLUMN IF NOT EXISTS plan TEXT NOT NULL DEFAULT '[]';

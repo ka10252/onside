@@ -1,7 +1,7 @@
 "use client";
 
 import { useActionState, useState, useTransition } from "react";
-import { dropRewrite, requestRewrite, type RewriteState } from "@/lib/rewrite-actions";
+import { dropRewrite, finishRewrite, requestRewrite, type RewriteState } from "@/lib/rewrite-actions";
 import type { Rewrite } from "@/lib/rewrite";
 
 /** The tutor asks for an answer again, and reads the second version when it comes. */
@@ -18,6 +18,7 @@ export function RewriteAsk({ responseId, rewrite }: { responseId: string; rewrit
           <b>Their rewrite</b>
           <span className="muted" style={{ fontSize: 13 }}>
             {new Date(rewrite.at!).toLocaleDateString("en-SG", { day: "numeric", month: "short", timeZone: "Asia/Singapore" })}
+            {rewrite.doneAt ? " · done with" : ""}
           </span>
         </div>
         <p className="asked">You asked: {rewrite.note}</p>
@@ -26,9 +27,16 @@ export function RewriteAsk({ responseId, rewrite }: { responseId: string; rewrit
           <button type="button" className="btn ghost sm" onClick={() => setOpen(true)} disabled={dropping}>
             Ask again
           </button>
-          <button type="button" className="btn ghost sm" onClick={() => startDrop(() => void dropRewrite(responseId))} disabled={dropping}>
-            Done with it
-          </button>
+          {!rewrite.doneAt && (
+            <button
+              type="button"
+              className="btn ghost sm"
+              onClick={() => startDrop(() => void finishRewrite(responseId))}
+              disabled={dropping}
+            >
+              Done with it
+            </button>
+          )}
         </div>
         {open && <AskForm responseId={responseId} note={note} setNote={setNote} ask={ask} asking={asking} state={state} />}
       </div>

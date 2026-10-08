@@ -4,7 +4,7 @@ import { after } from "next/server";
 import { revalidatePath } from "next/cache";
 import { one } from "./db";
 import { send } from "./notify";
-import { askRewrite, cancelRewrite, saveRewrite } from "./rewrite";
+import { askRewrite, cancelRewrite, closeRewrite, saveRewrite } from "./rewrite";
 import { requireUser } from "./session";
 
 export type RewriteState = { error?: string; ok?: string };
@@ -26,14 +26,24 @@ export async function requestRewrite(_prev: RewriteState, fd: FormData): Promise
   return { ok: "Asked for a rewrite." };
 }
 
+/** Takes back a rewrite the student has not written yet. */
 export async function dropRewrite(responseId: string): Promise<RewriteState> {
+  return act(responseId, cancelRewrite);
+}
+
+/** The tutor has read the rewrite and is finished with it. What the student wrote stays. */
+export async function finishRewrite(responseId: string): Promise<RewriteState> {
+  return act(responseId, closeRewrite);
+}
+
+async function act(responseId: string, change: (id: string) => Promise<unknown>): Promise<RewriteState> {
   await requireUser("tutor");
   const r = await one<{ assignment_id: string; student_id: string }>(
     "SELECT assignment_id, student_id FROM responses WHERE id = ?",
     responseId,
   );
   if (!r) return { error: "That answer is gone." };
-  await cancelRewrite(responseId);
+  await change(responseId);
   revalidatePath(`/tutor/students/${r.student_id}/a/${r.assignment_id}`);
   return {};
 }

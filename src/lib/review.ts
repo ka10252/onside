@@ -29,6 +29,7 @@ export type ReviewItem = {
         rewrite_asked_at: string | null;
         rewrite_text: string | null;
         rewrite_at: string | null;
+        rewrite_done_at: string | null;
       })
     | null;
   confirmed: number | null;

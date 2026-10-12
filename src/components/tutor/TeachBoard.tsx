@@ -186,13 +186,13 @@ export function TeachBoard({
         }
       />
 
-      {ended && left > 0 && !sent && (
+      {ended && (
         <section className="card cardbody stack" style={{ gap: 10 }}>
           <div className="card-hd" style={{ padding: 0, border: 0 }}>
             <h2 style={{ fontSize: 17 }}>Homework for {studentFirstName}</h2>
             <span className="rowacts">
               <span className="muted" style={{ fontSize: 14 }}>
-                {builtId ? "built, not sent" : `${chosen.length} of ${left} chosen`}
+                {sent ? "sent" : builtId ? "built, not sent" : `${chosen.length} of ${left} chosen`}
               </span>
               <button type="button" className="btn ghost sm" onClick={() => setEnded(false)}>
                 Back to the questions
@@ -200,7 +200,13 @@ export function TeachBoard({
             </span>
           </div>
 
-          {builtId ? (
+          {sent ? (
+            <p className="formmsg good" style={{ margin: 0 }}>The homework has gone to {studentFirstName}.</p>
+          ) : left === 0 ? (
+            <p className="muted" style={{ margin: 0, fontSize: 14 }}>
+              Every question was marked, so there is nothing left to set.
+            </p>
+          ) : builtId ? (
             <>
               <p className="muted" style={{ margin: 0, fontSize: 14 }}>
                 Look at it the way {studentFirstName} will, then choose the day.
@@ -323,8 +329,8 @@ export function TeachBoard({
             </>
           ) : (
             <>
-              <div className="rowacts" style={{ flexWrap: "wrap" }}>
-                <span className="muted" style={{ fontSize: 13 }}>How many</span>
+              <div className="filters">
+                <span className="muted" style={{ fontSize: 13, alignSelf: "center" }}>How many</span>
                 {[5, 10].map((n) => (
                   <button key={n} type="button" className={`chip${quizSize === n ? " on" : ""}`} onClick={() => setQuizSize(n)}>
                     {n}
@@ -373,22 +379,6 @@ export function TeachBoard({
         </section>
       )}
 
-      {ended && sent && (
-        <p className="formmsg good">
-          The homework has gone to {studentFirstName}.{" "}
-          <button type="button" className="link" onClick={() => setEnded(false)}>
-            Back to the questions
-          </button>
-        </p>
-      )}
-      {ended && left === 0 && !sent && (
-        <p className="muted" style={{ textAlign: "center" }}>
-          Every question was marked. There is nothing left to set.{" "}
-          <button type="button" className="link" onClick={() => setEnded(false)}>
-            Back to the questions
-          </button>
-        </p>
-      )}
       {sent && note && <p className="formmsg good">{note}</p>}
     </div>
   );

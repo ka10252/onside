@@ -485,8 +485,8 @@ export function LessonBoard({
             </p>
           ) : (
             <>
-              <div className="rowacts" style={{ flexWrap: "wrap" }}>
-                <span className="muted" style={{ fontSize: 13 }}>How many</span>
+              <div className="filters">
+                <span className="muted" style={{ fontSize: 13, alignSelf: "center" }}>How many</span>
                 {[5, 10, 15].map((n) => (
                   <Link
                     key={n}

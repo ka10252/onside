@@ -323,6 +323,36 @@ export function LessonBoard({
         </details>
       )}
 
+      {chosen.some((q) => q.outline) && (
+        <details className="card" open>
+          <summary className="card-hd" style={{ cursor: "pointer" }}>
+            <h2>Model answer outlines</h2>
+            <span className="muted" style={{ fontSize: 14 }}>
+              {chosen.filter((q) => q.outline).length} of this lesson&rsquo;s {chosen.filter((q) => q.marks >= 10).length} essays
+            </span>
+          </summary>
+          <div className="cardbody stack" style={{ gap: 22 }}>
+            {chosen
+              .filter((q) => q.outline)
+              .map((q) => (
+                <div key={q.id}>
+                  <p className="meta" style={{ margin: "0 0 6px" }}>
+                    {q.label && <span className="pill ink">{q.label}</span>}
+                    <span>
+                      {q.marks} {q.marks === 1 ? "mark" : "marks"}
+                    </span>
+                  </p>
+                  <p className="outlegend">
+                    <span className="key must">must be said</span>
+                    <span className="key bonus">lifts it above a pass</span>
+                  </p>
+                  <Notes text={q.outline!} />
+                </div>
+              ))}
+          </div>
+        </details>
+      )}
+
       {left.length > 0 && (
         <details className="card">
           <summary className="card-hd" style={{ cursor: "pointer" }}>

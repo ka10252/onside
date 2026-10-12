@@ -6,7 +6,16 @@ import { Blocks, Rich } from "@/components/Rich";
 import { Notes } from "@/components/Notes";
 import { reportIfStale } from "@/components/stale";
 import type { LessonNote, TeachQuestion } from "@/lib/lesson";
-import { buildHomework, dropHomework, sendHomework, setOutcome, setReviewOutcome } from "@/lib/lesson-actions";
+import {
+  buildHomework,
+  buildReviewQuiz,
+  dropHomework,
+  dropReviewQuiz,
+  sendHomework,
+  setOutcome,
+  setReviewOutcome,
+} from "@/lib/lesson-actions";
+import { KIND_LABEL, REVIEW_DEFAULT_KINDS, REVIEW_DEFAULT_SIZE, REVIEW_KINDS, type ReviewKind } from "@/lib/question-types";
 
 /**
  * The lesson itself, on a screen the student is looking at too: one question at a time, large, with
@@ -21,6 +30,7 @@ export function TeachBoard({
   today,
   homeworkSent,
   homeworkSetId,
+  reviewSetId,
 }: {
   lessonId: string;
   questions: TeachQuestion[];
@@ -34,6 +44,8 @@ export function TeachBoard({
   homeworkSent: boolean;
   /** The set built and not yet sent, which the tutor can look at first. */
   homeworkSetId: string | null;
+  /** The review quiz built for the start of the next lesson, if there is one already. */
+  reviewSetId: string | null;
 }) {
   const withNotes = notes.filter((n) => n.body);
   const [showing, setShowing] = useState<"revision" | "questions" | "review">(withNotes.length ? "revision" : "questions");
@@ -49,6 +61,9 @@ export function TeachBoard({
   const [dropped, setDropped] = useState<string[]>([]);
   const [sent, setSent] = useState(homeworkSent);
   const [builtId, setBuiltId] = useState(homeworkSetId);
+  const [quizId, setQuizId] = useState(reviewSetId);
+  const [quizSize, setQuizSize] = useState(REVIEW_DEFAULT_SIZE);
+  const [quizKinds, setQuizKinds] = useState<ReviewKind[]>(REVIEW_DEFAULT_KINDS);
   // The student is watching this screen, so what to set for homework stays out of sight until the
   // lesson is over and the tutor asks for it.
   const [ended, setEnded] = useState(false);
@@ -149,6 +164,7 @@ export function TeachBoard({
     });
   }
 
+  const wrong = questions.filter((x) => outcomes[x.id] === "wrong").length;
   const leftQs = questions.filter((x) => !outcomes[x.id]);
   const left = leftQs.length;
   const chosen = leftQs.filter((x) => !dropped.includes(x.id));
@@ -265,6 +281,91 @@ export function TeachBoard({
                   {pending ? "Building…" : "Build it"}
                 </button>
                 <span className="muted" style={{ fontSize: 13 }}>Nothing is sent yet: you look at it first.</span>
+              </div>
+            </>
+          )}
+          {note && <span className={`formmsg ${note.includes("already") || note.includes("No ") ? "bad" : "good"}`}>{note}</span>}
+        </section>
+      )}
+
+      {ended && (
+        <section className="card cardbody stack" style={{ gap: 10 }}>
+          <div className="card-hd" style={{ padding: 0, border: 0 }}>
+            <h2 style={{ fontSize: 17 }}>Review quiz for next time</h2>
+            <span className="muted" style={{ fontSize: 14 }}>
+              {quizId ? "built" : `${wrong} marked wrong`}
+            </span>
+          </div>
+          {quizId ? (
+            <>
+              <p className="muted" style={{ margin: 0, fontSize: 14 }}>
+                It is waiting on the Review quiz tab. Open it at the start of the next lesson.
+              </p>
+              <div className="rowacts" style={{ flexWrap: "wrap" }}>
+                <a className="btn ghost sm" href={`/tutor/sets/${quizId}/preview`} target="_blank" rel="noreferrer">
+                  Look at it
+                </a>
+                <button
+                  type="button"
+                  className="btn ghost sm"
+                  disabled={pending}
+                  onClick={() =>
+                    act(async () => {
+                      const res = await dropReviewQuiz(lessonId);
+                      if (!res.error) setQuizId(null);
+                      return res;
+                    })
+                  }
+                >
+                  Build it again
+                </button>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="rowacts" style={{ flexWrap: "wrap" }}>
+                <span className="muted" style={{ fontSize: 13 }}>How many</span>
+                {[5, 10].map((n) => (
+                  <button key={n} type="button" className={`chip${quizSize === n ? " on" : ""}`} onClick={() => setQuizSize(n)}>
+                    {n}
+                  </button>
+                ))}
+                <span className="filtersep" aria-hidden />
+                {REVIEW_KINDS.map((k) => {
+                  const on = quizKinds.includes(k);
+                  return (
+                    <button
+                      key={k}
+                      type="button"
+                      className={`chip${on ? " on" : ""}`}
+                      disabled={on && quizKinds.length === 1}
+                      onClick={() => setQuizKinds((ks) => (on ? ks.filter((x) => x !== k) : [...ks, k]))}
+                    >
+                      {KIND_LABEL[k]}
+                    </button>
+                  );
+                })}
+              </div>
+              <div className="rowacts">
+                <button
+                  type="button"
+                  className="btn accent"
+                  disabled={pending}
+                  onClick={() =>
+                    act(async () => {
+                      const res = await buildReviewQuiz(lessonId, quizSize, quizKinds);
+                      if (res.setId) setQuizId(res.setId);
+                      return res;
+                    })
+                  }
+                >
+                  {pending ? "Building…" : "Build the review quiz"}
+                </button>
+                <span className="muted" style={{ fontSize: 13 }}>
+                  {wrong > 0
+                    ? "What went wrong today, then others on the same ground. Not sent."
+                    : "Nothing marked wrong, so it comes off the lesson's ground. Not sent."}
+                </span>
               </div>
             </>
           )}

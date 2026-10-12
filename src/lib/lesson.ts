@@ -7,7 +7,7 @@ import { relevantContext } from "./extract";
 import { all, one, run, tx } from "./db";
 import { weightByUnit, type UnitWeight } from "./unit-weight";
 import { recipeFor, spanningIds, type Recipe } from "./lesson-template";
-import { reviewKindOf, type ReviewKind } from "./question-types";
+import { REVIEW_DEFAULT_KINDS, reviewKindOf, type ReviewKind } from "./question-types";
 import { unitsOfLesson } from "./lesson-plan";
 
 /**
@@ -174,8 +174,7 @@ export async function markOutcome(lessonId: string, questionId: string, outcome:
   await run("UPDATE lesson_items SET outcome = ? WHERE lesson_id = ? AND question_id = ?", outcome, lessonId, questionId);
 }
 
-/** What a review quiz asks by default: things a student can answer in a few minutes, not an essay. */
-export const REVIEW_TYPES: ReviewKind[] = ["mcq", "definition", "short", "calculation"];
+export const REVIEW_TYPES = REVIEW_DEFAULT_KINDS;
 export const REVIEW_SIZE = 10;
 
 /**
@@ -220,8 +219,10 @@ export async function reviewPlan(lessonId: string, size = REVIEW_SIZE, kinds: Re
   };
   const lesson = await getLesson(lessonId);
   if (!lesson) return { missed: [], variants: [], short: "That lesson is gone." };
+  // A quiz can be wanted before anything has gone wrong — the lesson may have gone well, or may
+  // not be marked yet. Then there is nothing to re-ask and the whole quiz comes off the lesson's
+  // ground instead, which still answers whether the revision happened (Jin, 2026-10-12).
   const wrongIds = lesson.items.filter((i) => i.outcome === "wrong").map((i) => i.question_id);
-  if (wrongIds.length === 0) return { missed: [], variants: [], short: "Nothing was marked wrong in this lesson." };
 
   // The whole unit, not just the past papers: the IB sets no multiple choice, so the short
   // questions that make a review quiz work come from the unit tests.
@@ -235,16 +236,29 @@ export async function reviewPlan(lessonId: string, size = REVIEW_SIZE, kinds: Re
   const reask = wrongIds.map((id) => inUnit.get(id)).filter((q): q is BankQuestion => Boolean(q) && wanted(q!));
   const leftOut = wrongIds.length - reask.length;
 
-  // Same section first, then the rest of the unit; never one they have already been sent.
-  const sections = new Set(reask.map((q) => q.section_id).filter(Boolean));
+  // Same ground first, then the rest of the unit; never one they have already been sent. The
+  // ground is the sections the wrong answers were in, or, when nothing went wrong, the sections
+  // the lesson actually covered — which is narrower and more useful than the whole unit.
+  const wrongSections = new Set(reask.map((q) => q.section_id).filter(Boolean));
+  const sections = wrongSections.size
+    ? wrongSections
+    : new Set(lesson.items.map((i) => inUnit.get(i.question_id)?.section_id).filter(Boolean));
   const taken = new Set(wrongIds);
   const unseen = bank.filter((q) => !taken.has(q.id) && wanted(q) && !had.has(q.id));
   const sameSection = unseen.filter((q) => q.section_id && sections.has(q.section_id));
   const rest = unseen.filter((q) => !(q.section_id && sections.has(q.section_id)));
 
-  // Each kind draws from its own list: what went wrong, then the same ground, then the unit.
+  // Each kind draws from its own list: what went wrong, then the same ground, then the unit. A
+  // lesson of two units takes turns between them, or one unit fills the whole quiz.
+  const units = unitsOfLesson(lesson.unit);
+  const byUnit = (qs: BankQuestion[]) => {
+    const queues = units.map((u) => qs.filter((q) => q.unit_number === u));
+    const out: BankQuestion[] = [];
+    while (queues.some((l) => l.length)) for (const l of queues) { const n = l.shift(); if (n) out.push(n); }
+    return out;
+  };
   const byKind = new Map<ReviewKind, BankQuestion[]>(
-    kinds.map((k) => [k, [...reask, ...sameSection, ...rest].filter((q) => kindOf(q) === k)]),
+    kinds.map((k) => [k, [...reask, ...byUnit(sameSection), ...byUnit(rest)].filter((q) => kindOf(q) === k)]),
   );
   const picked = spread(byKind, kinds, size);
   const wrongSet = new Set(wrongIds);
@@ -253,6 +267,9 @@ export async function reviewPlan(lessonId: string, size = REVIEW_SIZE, kinds: Re
   const variants = picked.filter((q) => !wrongSet.has(q.id)).sort((a, b) => order(a) - order(b));
 
   const got = missed.length + variants.length;
+  if (got === 0) {
+    return { missed: [], variants: [], short: `No questions are left unseen in ${unitsOfLesson(lesson.unit).map((u) => `unit ${u}`).join(" and ")}.` };
+  }
   const short =
     got >= size
       ? null

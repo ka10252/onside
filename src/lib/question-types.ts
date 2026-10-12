@@ -37,6 +37,11 @@ export type ReviewKind = "mcq" | "definition" | "short" | "calculation" | "diagr
 
 export const REVIEW_KINDS: ReviewKind[] = ["mcq", "definition", "short", "calculation", "diagram"];
 
+/** What a review quiz asks unless the tutor says otherwise: nothing that takes long to answer. */
+export const REVIEW_DEFAULT_KINDS: ReviewKind[] = ["mcq", "definition", "short", "calculation"];
+/** Five is a lesson's opening check; the Prepare screen offers more. */
+export const REVIEW_DEFAULT_SIZE = 5;
+
 export const KIND_LABEL: Record<ReviewKind, string> = {
   mcq: "Multiple choice",
   definition: "Definition",

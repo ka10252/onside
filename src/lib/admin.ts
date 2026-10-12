@@ -124,7 +124,7 @@ export async function studentStats(studentId: string): Promise<StudentStats> {
   const row = await one<StudentStats>(
     `SELECT (SELECT MAX(e.at) FROM events e JOIN responses x ON x.id = e.response_id WHERE x.student_id = ?) AS last_active,
             COUNT(*) FILTER (WHERE r.submitted_at IS NOT NULL) AS answered,
-            COALESCE(SUM(r.active_ms), 0) / 60000 AS minutes,
+            COALESCE(ROUND(SUM(r.active_ms) / 60000.0), 0)::int AS minutes,
             COALESCE(SUM(r.ai_questions), 0) AS ai_questions,
             COALESCE(SUM(r.hint_level), 0) AS hints,
             COALESCE(SUM(r.paste_chars), 0) AS paste_chars,

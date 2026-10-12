@@ -77,8 +77,7 @@ const sessionOf = (q: BankQuestion): number =>
  * lesson with nine Paper 2 questions and no Paper 3 at all, though nineteen Paper 3 questions were
  * sitting there. Papers take turns, newest session first within each.
  */
-function spread(pool: BankQuestion[], n: number): BankQuestion[] {
-  if (n <= 0) return [];
+function byPaper(pool: BankQuestion[]): BankQuestion[] {
   const queues = new Map<string, BankQuestion[]>();
   for (const q of [...pool].sort((a, b) => sessionOf(b) - sessionOf(a))) {
     const key = paperOf(q);
@@ -86,8 +85,27 @@ function spread(pool: BankQuestion[], n: number): BankQuestion[] {
   }
   const lists = [...queues.entries()].sort((a, b) => a[0].localeCompare(b[0])).map(([, v]) => v);
   const out: BankQuestion[] = [];
-  while (out.length < n && lists.some((l) => l.length)) {
+  while (lists.some((l) => l.length)) {
     for (const list of lists) {
+      const next = list.shift();
+      if (next) out.push(next);
+    }
+  }
+  return out;
+}
+
+/**
+ * Takes n questions across the papers rather than down one, and, for a lesson of two units, across
+ * both units rather than down one — units 4 and 3 produced nine questions on elasticity and three
+ * on intervention before the units took turns too (Jin, 2026-10-12).
+ */
+function spread(pool: BankQuestion[], n: number, units: number[] = []): BankQuestion[] {
+  if (n <= 0) return [];
+  if (units.length < 2) return byPaper(pool).slice(0, n);
+  const queues = units.map((u) => byPaper(pool.filter((q) => q.unit_number === u)));
+  const out: BankQuestion[] = [];
+  while (out.length < n && queues.some((l) => l.length)) {
+    for (const list of queues) {
       if (out.length >= n) break;
       const next = list.shift();
       if (next) out.push(next);
@@ -149,7 +167,8 @@ export async function fillTemplate(unit: number, studentId: string): Promise<Fil
   ]);
   const had = new Set(sent.map((r) => r.question_id));
   const free = bank.filter((q) => !had.has(q.id));
-  const take = (n: number, type: QType) => spread(free.filter((q) => typeOf(q) === type && (type === "mcq" || q.source === "past")), n);
+  const take = (n: number, type: QType) =>
+    spread(free.filter((q) => typeOf(q) === type && (type === "mcq" || q.source === "past")), n, units);
 
   // The five kinds, in the order the lesson runs, with the essay set last.
   const picked = [

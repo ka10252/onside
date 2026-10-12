@@ -913,6 +913,40 @@ function Quota({ caption }: { caption?: string }) {
 }
 
 /**
+ * Contractionary policy on the Keynesian AS curve: aggregate demand shifts left. Drawn with the
+ * economy near capacity, where the curve is steep, because that is where the price level does most
+ * of the adjusting and output least — which is the case for using it against inflation.
+ */
+function AdAsContractionary({ caption }: { caption?: string }) {
+  const FLAT_Y = 162;
+  const KINK = 132;
+  const FULL = 250;
+  const as: Pt[] = [{ x: 52, y: FLAT_Y }, { x: KINK, y: FLAT_Y }];
+  for (let i = 1; i <= 24; i++) {
+    const t = i / 24;
+    as.push({ x: KINK + (FULL - KINK) * t, y: FLAT_Y - (FLAT_Y - 30) * t * t });
+  }
+  // Stops short of the frame so the label clears the supply curve it would otherwise sit on.
+  const ad1 = line({ x: 116, y: 50 }, { x: 246, y: 150 });
+  const ad2 = shiftX(ad1, -56);
+  const e1 = crossPath(as, ad1);
+  const e2 = crossPath(as, ad2);
+  return (
+    <Frame x="Real output" y="Price level" caption={caption}>
+      <path d={`M${as.map((p) => `${d2(p.x)} ${d2(p.y)}`).join(" L")}`} fill="none" stroke={CURVE} strokeWidth="2" />
+      <text x={FULL - 24} y="26" className="dgmcur">AS</text>
+      <line x1={FULL} y1="200" x2={FULL} y2="28" stroke={AXIS} strokeWidth="1.5" strokeDasharray="4 4" />
+      <text x={FULL + 4} y="42" className="dgmlab">Yf</text>
+      <Straight l={clip(ad1)} label="AD₁" colour={CURVE} />
+      <Straight l={clip(ad2)} label="AD₂" colour={SHIFT} dashed />
+      <Shift from={along(clip(ad1), 0.25)} to={along(clip(ad2), 0.25)} />
+      <Eq at={e1} px="P₁" qx="Y₁" colour={CURVE} />
+      <Eq at={e2} px="P₂" qx="Y₂" colour={SHIFT} />
+    </Frame>
+  );
+}
+
+/**
  * Cost-push inflation: short-run supply shifts left, so the price level rises and output falls at
  * the same time. This is the diagram a stagflation question wants, and the one a student who has
  * only learnt the demand-pull picture draws wrongly.
@@ -1014,6 +1048,7 @@ function Phillips({ caption }: { caption?: string }) {
 const DIAGRAMS: Record<string, (p: { caption?: string }) => React.ReactElement> = {
   "exchange-rate": ExchangeRate,
   "ad-as": AdAs,
+  "ad-as-contractionary": AdAsContractionary,
   "ad-as-cost-push": AdAsCostPush,
   "ad-as-supply-side": AdAsSupplySide,
   "money-market": MoneyMarket,

@@ -512,6 +512,9 @@ function Run({
             )}
           </>
         )}
+        {!q.outline && q.marks >= 10 && (
+          <p className="muted" style={{ fontSize: 13, marginTop: 14 }}>No model answer outline for this one.</p>
+        )}
         {q.outline && (
           <details className="outline">
             <summary>Model answer outline</summary>

@@ -308,7 +308,12 @@ export function LessonBoard({
         <details className="card">
           <summary className="card-hd" style={{ cursor: "pointer" }}>
             <h2>In the lesson</h2>
-            <span className="muted" style={{ fontSize: 14 }}>The answer sits beside each one. Mark them here or on the Teach screen.</span>
+            <span className="muted" style={{ fontSize: 14 }}>
+              {chosen.length} questions, answers beside them
+              {chosen.filter((q) => q.outline).length > 0
+                ? ` · ${chosen.filter((q) => q.outline).length} with a model answer outline`
+                : ""}
+            </span>
           </summary>
           <ol className="preplist">
             {chosen.map((q) => (
@@ -658,8 +663,8 @@ function PrepRow({
       <div className="a">
         <span className="qlabel">{q.label ? "Mark scheme" : "Answer"}</span>
         <div className="mstext">{q.label ? <MarkScheme text={q.answer} /> : <Rich text={q.answer} />}</div>
-        {q.outline && (
-          <details className="outline">
+        {q.outline ? (
+          <details className="outline" open>
             <summary>Model answer outline</summary>
             <p className="outlegend">
               <span className="key must">must be said</span>
@@ -667,6 +672,12 @@ function PrepRow({
             </p>
             <Notes text={q.outline} />
           </details>
+        ) : (
+          q.marks >= 10 && (
+            <p className="muted" style={{ fontSize: 13, marginTop: 14 }}>
+              No model answer outline written for this one.
+            </p>
+          )
         )}
       </div>
       {onMark && (

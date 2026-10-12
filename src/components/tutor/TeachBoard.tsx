@@ -48,7 +48,9 @@ export function TeachBoard({
   reviewSetId: string | null;
 }) {
   const withNotes = notes.filter((n) => n.body);
-  const [showing, setShowing] = useState<"revision" | "questions" | "review">(withNotes.length ? "revision" : "questions");
+  const [showing, setShowing] = useState<"revision" | "questions" | "review" | "outlines">(
+    withNotes.length ? "revision" : "questions",
+  );
   const [part, setPart] = useState(0);
   const [outcomes, setOutcomes] = useState<Record<string, "right" | "wrong" | null>>(
     Object.fromEntries(questions.map((q) => [q.id, q.outcome])),
@@ -70,7 +72,9 @@ export function TeachBoard({
   const [note, setNote] = useState<string | null>(null);
   const router = useRouter();
 
-  const tabs = withNotes.length || review.length ? (
+  const outlines = questions.filter((q) => q.outline);
+
+  const tabs = withNotes.length || review.length || outlines.length ? (
     <nav className="filters" aria-label="Which part of the lesson">
       {withNotes.map((n, i) => (
         <button
@@ -93,8 +97,40 @@ export function TeachBoard({
           Review quiz · {review.length}
         </button>
       )}
+      {outlines.length > 0 && (
+        <button type="button" className={`chip${showing === "outlines" ? " on" : ""}`} onClick={() => setShowing("outlines")}>
+          Model answers · {outlines.length}
+        </button>
+      )}
     </nav>
   ) : null;
+
+  // The essays' outlines on their own tab. They are the tutor's, and the student is looking at this
+  // screen, so nothing opens them but a deliberate click — same as the toggle under each question.
+  if (showing === "outlines" && outlines.length) {
+    return (
+      <div className="teach">
+        {tabs}
+        <article className="card teachcard stack" style={{ gap: 24 }}>
+          {outlines.map((q) => (
+            <div key={q.id}>
+              <p className="meta" style={{ margin: "0 0 8px" }}>
+                {q.label && <span className="pill ink">{q.label}</span>}
+                <span>
+                  {q.marks} {q.marks === 1 ? "mark" : "marks"}
+                </span>
+              </p>
+              <p className="outlegend">
+                <span className="key must">must be said</span>
+                <span className="key bonus">lifts it above a pass</span>
+              </p>
+              <Notes text={q.outline!} />
+            </div>
+          ))}
+        </article>
+      </div>
+    );
+  }
 
   if (showing === "revision" && withNotes.length) {
     return (

@@ -94,7 +94,7 @@ export async function buildReviewQuiz(lessonId: string, size = REVIEW_SIZE, kind
   // The quiz runs in the order a paper asks: multiple choice first, then definitions, and so on,
   // whether a question is there because it went wrong or because it is on the same ground.
   const asked = kinds?.length ? kinds : REVIEW_KINDS;
-  const ids = [...plan.missed, ...plan.variants]
+  const ids = [...plan.sameIdea, ...plan.others]
     .sort((a, b) => asked.indexOf(reviewKindOf(a)!) - asked.indexOf(reviewKindOf(b)!))
     .map((q) => q.id);
   if (ids.length === 0) return { error: plan.short ?? "Nothing to build." };
@@ -180,7 +180,7 @@ export async function buildHomework(lessonId: string, only: string[] = []): Prom
   if (ids.length < MIN_HOMEWORK) {
     // Short of five: fill up with questions on the same ground as the ones that went wrong.
     const plan = await reviewPlan(lessonId, MIN_HOMEWORK + ids.length);
-    for (const q of plan.variants) {
+    for (const q of [...plan.sameIdea, ...plan.others]) {
       if (ids.length >= MIN_HOMEWORK) break;
       if (ids.includes(q.id)) continue;
       ids.push(q.id);

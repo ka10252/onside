@@ -478,7 +478,7 @@ export function LessonBoard({
                 </button>
               </div>
             </>
-          ) : !plan || plan.missed.length + plan.variants.length === 0 ? (
+          ) : !plan || plan.sameIdea.length + plan.others.length === 0 ? (
             <p className="muted" style={{ margin: 0 }}>
               Mark what {studentFirstName} missed above. The quiz is those questions plus others on the same ground,
               spread evenly over the kinds you choose. Never an essay.
@@ -516,18 +516,21 @@ export function LessonBoard({
                 })}
               </div>
               <p className="note" style={{ margin: 0 }}>
-                {plan.missed.length > 0 ? (
+                {plan.sameIdea.length > 0 ? (
                   <>
-                    <b>{plan.missed.length} missed</b> + <b>{plan.variants.length} on the same ground</b> ={" "}
+                    <b>{plan.sameIdea.length} on what went wrong</b> + <b>{plan.others.length} on the rest of the ground</b> ={" "}
                   </>
                 ) : (
                   <>Nothing marked wrong, so all of them are on the lesson&rsquo;s ground: </>
                 )}
-                {plan.missed.length + plan.variants.length} questions. Helper off.
+                {plan.sameIdea.length + plan.others.length} questions. Helper off.
                 {plan.short ? ` ${plan.short}.` : ""}
               </p>
               <ol className="pick">
-                {[...plan.missed.map((q) => [q, "missed"] as const), ...plan.variants.map((q) => [q, "same ground"] as const)].map(
+                {[
+                  ...plan.sameIdea.map((q) => [q, "same idea"] as const),
+                  ...plan.others.map((q) => [q, "same ground"] as const),
+                ].map(
                   ([q, why]) => (
                     <li key={q.id}>
                       <span className="n">{q.marks}</span>
@@ -535,7 +538,7 @@ export function LessonBoard({
                         <QuestionLine q={q} />
                       </span>
                       <span className="rowacts">
-                        <span className={`pill ${why === "missed" ? "amber" : "gray"}`}>{why}</span>
+                        <span className={`pill ${why === "same idea" ? "amber" : "gray"}`}>{why}</span>
                       </span>
                     </li>
                   ),

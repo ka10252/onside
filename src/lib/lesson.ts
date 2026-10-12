@@ -198,17 +198,19 @@ function spread(byKind: Map<ReviewKind, BankQuestion[]>, kinds: ReviewKind[], n:
 }
 
 export type ReviewPlan = {
-  /** The ones that went wrong in the lesson, as far as they can be re-asked. */
-  missed: BankQuestion[];
-  /** Questions on the same ground, to meet them from another angle. */
-  variants: BankQuestion[];
+  /** Different questions on the idea that went wrong. */
+  sameIdea: BankQuestion[];
+  /** Others on the lesson's ground, to make up the number. */
+  others: BankQuestion[];
   /** Why there are fewer than asked for, when there are. */
   short: string | null;
 };
 
 /**
- * What to send after a lesson: the questions that went wrong, and others on the same ground so the
- * same idea is met a second time rather than the same wording memorised. Multiple choice and short
+ * What to ask after a lesson. Never the question that went wrong itself: a week later the student
+ * may remember the wording rather than the idea, and the point is to find out whether the idea
+ * landed (Jin, 2026-10-12). So the quiz is other questions on the same concept, then the same
+ * syllabus section, then the rest of the ground the lesson covered. Multiple choice and short
  * answers only — a review quiz is for checking a hole has closed, not for writing an essay.
  */
 export async function reviewPlan(lessonId: string, size = REVIEW_SIZE, kinds: ReviewKind[] = REVIEW_TYPES): Promise<ReviewPlan> {
@@ -218,7 +220,7 @@ export async function reviewPlan(lessonId: string, size = REVIEW_SIZE, kinds: Re
     return k !== null && kinds.includes(k);
   };
   const lesson = await getLesson(lessonId);
-  if (!lesson) return { missed: [], variants: [], short: "That lesson is gone." };
+  if (!lesson) return { sameIdea: [], others: [], short: "That lesson is gone." };
   // A quiz can be wanted before anything has gone wrong — the lesson may have gone well, or may
   // not be marked yet. Then there is nothing to re-ask and the whole quiz comes off the lesson's
   // ground instead, which still answers whether the revision happened (Jin, 2026-10-12).
@@ -233,23 +235,47 @@ export async function reviewPlan(lessonId: string, size = REVIEW_SIZE, kinds: Re
   const inUnit = new Map(bank.map((q) => [q.id, q]));
 
   // A wrong question is re-asked only if it is of a kind the tutor asked for.
-  const reask = wrongIds.map((id) => inUnit.get(id)).filter((q): q is BankQuestion => Boolean(q) && wanted(q!));
-  const leftOut = wrongIds.length - reask.length;
+  const wrong = wrongIds.map((id) => inUnit.get(id)).filter((q): q is BankQuestion => Boolean(q));
 
-  // Same ground first, then the rest of the unit; never one they have already been sent. The
-  // ground is the sections the wrong answers were in, or, when nothing went wrong, the sections
-  // the lesson actually covered — which is narrower and more useful than the whole unit.
-  const wrongSections = new Set(reask.map((q) => q.section_id).filter(Boolean));
+  // The idea that went wrong, as finely as the content says: the concepts tagged on those
+  // questions, then the syllabus sections they sit in. Where nothing went wrong, the ground is
+  // the sections the lesson itself covered, which is narrower than the whole unit.
+  const concepts = new Set(
+    wrongIds.length === 0
+      ? []
+      : (
+          await all<{ concept_id: string }>(
+            `SELECT DISTINCT concept_id FROM question_concepts WHERE question_id = ANY(?)`,
+            wrongIds,
+          )
+        ).map((r) => r.concept_id),
+  );
+  const onConcept = new Set(
+    concepts.size === 0
+      ? []
+      : (
+          await all<{ question_id: string }>(
+            `SELECT DISTINCT question_id FROM question_concepts WHERE concept_id = ANY(?)`,
+            [...concepts],
+          )
+        ).map((r) => r.question_id),
+  );
+  const wrongSections = new Set(wrong.map((q) => q.section_id).filter(Boolean));
   const sections = wrongSections.size
     ? wrongSections
     : new Set(lesson.items.map((i) => inUnit.get(i.question_id)?.section_id).filter(Boolean));
-  const taken = new Set(wrongIds);
-  const unseen = bank.filter((q) => !taken.has(q.id) && wanted(q) && !had.has(q.id));
-  const sameSection = unseen.filter((q) => q.section_id && sections.has(q.section_id));
-  const rest = unseen.filter((q) => !(q.section_id && sections.has(q.section_id)));
 
-  // Each kind draws from its own list: what went wrong, then the same ground, then the unit. A
-  // lesson of two units takes turns between them, or one unit fills the whole quiz.
+  // Every question the lesson itself used is out, not only the ones that went wrong: the quiz asks
+  // the idea again through something the student has not already sat in front of.
+  const taken = new Set(lesson.items.map((i) => i.question_id));
+  const unseen = bank.filter((q) => !taken.has(q.id) && wanted(q) && !had.has(q.id));
+  const sameConcept = unseen.filter((q) => onConcept.has(q.id));
+  const sameSection = unseen.filter((q) => !onConcept.has(q.id) && q.section_id && sections.has(q.section_id));
+  const rest = unseen.filter((q) => !onConcept.has(q.id) && !(q.section_id && sections.has(q.section_id)));
+  const closeIds = new Set([...sameConcept, ...sameSection].map((q) => q.id));
+
+  // Each kind draws from its own list: nearest the wrong idea first, then the rest of the ground.
+  // A lesson of two units takes turns between them, or one unit fills the whole quiz.
   const units = unitsOfLesson(lesson.unit);
   const byUnit = (qs: BankQuestion[]) => {
     const queues = units.map((u) => qs.filter((q) => q.unit_number === u));
@@ -258,28 +284,27 @@ export async function reviewPlan(lessonId: string, size = REVIEW_SIZE, kinds: Re
     return out;
   };
   const byKind = new Map<ReviewKind, BankQuestion[]>(
-    kinds.map((k) => [k, [...reask, ...byUnit(sameSection), ...byUnit(rest)].filter((q) => kindOf(q) === k)]),
+    kinds.map((k) => [k, [...byUnit(sameConcept), ...byUnit(sameSection), ...byUnit(rest)].filter((q) => kindOf(q) === k)]),
   );
   const picked = spread(byKind, kinds, size);
-  const wrongSet = new Set(wrongIds);
   const order = (q: BankQuestion) => kinds.indexOf(kindOf(q)!);
-  const missed = picked.filter((q) => wrongSet.has(q.id)).sort((a, b) => order(a) - order(b));
-  const variants = picked.filter((q) => !wrongSet.has(q.id)).sort((a, b) => order(a) - order(b));
+  const sameIdea = picked.filter((q) => closeIds.has(q.id)).sort((a, b) => order(a) - order(b));
+  const others = picked.filter((q) => !closeIds.has(q.id)).sort((a, b) => order(a) - order(b));
 
-  const got = missed.length + variants.length;
+  const got = sameIdea.length + others.length;
   if (got === 0) {
-    return { missed: [], variants: [], short: `No questions are left unseen in ${unitsOfLesson(lesson.unit).map((u) => `unit ${u}`).join(" and ")}.` };
+    return { sameIdea: [], others: [], short: `No questions are left unseen in ${unitsOfLesson(lesson.unit).map((u) => `unit ${u}`).join(" and ")}.` };
   }
   const short =
     got >= size
       ? null
       : [
-          leftOut > 0 ? `${leftOut} of the wrong ones are not of the kinds you chose` : "",
+          wrongIds.length > 0 && sameIdea.length === 0 ? "nothing unseen was left on the ground that went wrong" : "",
           `only ${got} questions could be found in ${unitsOfLesson(lesson.unit).map((u) => `unit ${u}`).join(" and ")}`,
         ]
           .filter(Boolean)
           .join(" · ");
-  return { missed, variants, short };
+  return { sameIdea, others, short };
 }
 
 /**

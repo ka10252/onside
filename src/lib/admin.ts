@@ -2,6 +2,7 @@ import "server-only";
 import { hasAnswerSql } from "./answered";
 import { memo } from "./cache";
 import { all, one } from "./db";
+import { scoreSet, type ScoredQuestion, type SetScore } from "./scoring";
 import type { Format } from "./content";
 
 export type AssignmentStatus = "not_started" | "in_progress" | "submitted" | "reviewed";
@@ -222,4 +223,51 @@ export async function getSet(id: string): Promise<SetDetail | null> {
 export async function setIsLocked(setId: string): Promise<boolean> {
   const row = await one<{ n: number }>("SELECT COUNT(*) AS n FROM assignments WHERE set_id = ? AND status <> 'not_started'", setId);
   return (row?.n ?? 0) > 0;
+}
+
+/**
+ * Marks split by whether the student had help, per assignment, for the dashboard. The rules for
+ * what counts as help live in scoring.ts and are not restated here: the rows are fed through the
+ * same scoreSet the marking screen uses, so the two screens can never disagree (Jin, 2026-10-14).
+ *
+ * A question answered only as a rewrite counts as answered. The shared hasAnswer does not look at
+ * rewrites, which would leave those marks in neither column and stop the two adding up to the total.
+ */
+export async function splitsForStudent(studentId: string): Promise<Map<string, SetScore["split"]>> {
+  const rows = await all<{
+    assignment_id: string;
+    question_id: string;
+    marks: number;
+    hint_level: number | null;
+    ai_questions: number | null;
+    flags: string | null;
+    confirmed: number | null;
+    answered: boolean | null;
+  }>(
+    `SELECT a.id AS assignment_id, q.id AS question_id, q.marks,
+            r.hint_level, r.ai_questions, r.flags,
+            COALESCE((r.tutor_mark::jsonb ->> 'marks')::float, r.auto_marks) AS confirmed,
+            (${hasAnswerSql()} OR COALESCE(r.rewrite_text, '') <> '') AS answered
+       FROM assignments a
+       JOIN set_items i ON i.set_id = a.set_id
+       JOIN questions q ON q.id = i.question_id
+       LEFT JOIN responses r ON r.assignment_id = a.id AND r.question_id = q.id
+      WHERE a.student_id = ?`,
+    studentId,
+  );
+  const byAssignment = new Map<string, ScoredQuestion[]>();
+  for (const r of rows) {
+    const q: ScoredQuestion = {
+      id: r.question_id,
+      marks: r.marks,
+      hintLevel: r.hint_level ?? 0,
+      aiQuestions: r.ai_questions ?? 0,
+      flags: r.flags ? ((JSON.parse(r.flags) as string[]) ?? []) : [],
+      confirmed: r.confirmed,
+      concepts: [],
+      answered: Boolean(r.answered),
+    };
+    byAssignment.set(r.assignment_id, [...(byAssignment.get(r.assignment_id) ?? []), q]);
+  }
+  return new Map([...byAssignment].map(([id, qs]) => [id, scoreSet(qs).split]));
 }

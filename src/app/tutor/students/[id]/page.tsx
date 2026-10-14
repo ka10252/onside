@@ -6,7 +6,8 @@ import { Nav, TUTOR_TABS } from "@/components/Nav";
 import { StatusBadge } from "@/components/review/StatusBadge";
 import { formatDue, StatusPill } from "@/components/StatusPill";
 import { StudentForm } from "@/components/StudentForm";
-import { assignmentsForStudent, getStudent, studentStats, type AssignmentRow } from "@/lib/admin";
+import { assignmentsForStudent, getStudent, splitsForStudent, studentStats, type AssignmentRow } from "@/lib/admin";
+import type { MarkSplit } from "@/lib/scoring";
 import { deleteAssignment, setStudentArchived, unassign, updateStudent } from "@/lib/admin-actions";
 import { conceptBoard } from "@/lib/concept-board";
 import { DailyPractice } from "@/components/tutor/DailyPractice";
@@ -37,8 +38,9 @@ export default async function StudentPage({ params, searchParams }: PageProps<"/
   const { sort, month: monthParam } = (await searchParams) as { sort?: string; month?: string };
   const student = await getStudent(id);
   if (!student) notFound();
-  const [assignments, progress, board, stats, latest, schedule, parts] = await Promise.all([
+  const [assignments, splits, progress, board, stats, latest, schedule, parts] = await Promise.all([
     assignmentsForStudent(id),
+    splitsForStudent(id),
     unitTestProgress(id),
     conceptBoard(id),
     studentStats(id),
@@ -299,6 +301,8 @@ export default async function StudentPage({ params, searchParams }: PageProps<"/
                       <th>Units</th>
                       <th>Status</th>
                       <th>Marks</th>
+                      <th title="Marks on questions answered with no hint and no Helper">AI-free</th>
+                      <th title="Marks on questions where a hint or the Helper was used">AI-supported</th>
                       <th>Sent</th>
                       <th>Due</th>
                       <th>Submitted</th>
@@ -339,6 +343,8 @@ export default async function StudentPage({ params, searchParams }: PageProps<"/
                             <span className="muted">—</span>
                           )}
                         </td>
+                        <Split split={a.status === "reviewed" ? splits.get(a.id)?.withoutAi : undefined} />
+                        <Split split={a.status === "reviewed" ? splits.get(a.id)?.withAi : undefined} />
                         <td className="muted">{day(a.assigned_at)}</td>
                         <td className="muted">{a.due_at ? formatDue(a.due_at) : "—"}</td>
                         <td className="muted">{a.submitted_at ? day(a.submitted_at) : "—"}</td>
@@ -469,5 +475,21 @@ export default async function StudentPage({ params, searchParams }: PageProps<"/
         </div>
       </main>
     </>
+  );
+}
+
+/**
+ * One assignment's marks in one of the two help columns. The number of questions is shown beside
+ * the marks, because "0/0" and "0/8" mean entirely different things about a lesson.
+ */
+function Split({ split }: { split?: MarkSplit }) {
+  if (!split || split.questions === 0) return <td className="muted">—</td>;
+  return (
+    <td>
+      {Math.round(split.got * 10) / 10}/{split.available}
+      <span className="muted" style={{ fontSize: 12, marginLeft: 5 }}>
+        {split.questions}q
+      </span>
+    </td>
   );
 }

@@ -16,11 +16,13 @@ import { hasPendingBatches, isMarking, pollMarkingBatches, queueMarking } from "
 import { isPast, pastContext, tableBlock, type Question } from "@/lib/content";
 import { ConfirmForm } from "@/components/ConfirmForm";
 import { all, json } from "@/lib/db";
-import { relevantContext } from "@/lib/extract";
+import { diagramForTag } from "@/lib/diagram-for";
+import { neededBlocks } from "@/lib/extract";
 import { FORMAT_LABEL, initials } from "@/lib/format";
 import { acceptAiMarks, markReviewed, rerunMarking } from "@/lib/review-actions";
 import { ACCEPTED_NOTE, loadReview, type ReviewItem } from "@/lib/review";
 import { requireUser } from "@/lib/session";
+import { Diagram } from "@/components/Diagram";
 import { Notes } from "@/components/Notes";
 import { answerText } from "@/lib/answer-text";
 
@@ -47,6 +49,15 @@ export default async function ReviewPage({ params }: PageProps<"/tutor/students/
   const lastQuiz = quizzes.at(-1);
   // The model answer outlines for this set's essays. Marking an essay is exactly when they are
   // wanted, and until now they lived only on the lesson screens (Jin, 2026-10-14).
+  const diagrams = new Map(
+    (
+      await all<{ id: string; diagram_type: string | null }>(
+        `SELECT p.id, p.diagram_type FROM set_items i JOIN past_items p ON p.id = substr(i.question_id, 4)
+          WHERE i.set_id = ? AND p.diagram_type IS NOT NULL AND p.diagram_type <> ''`,
+        a.set_id,
+      )
+    ).map((r) => [`pp-${r.id}`, diagramForTag(r.diagram_type)]),
+  );
   const outlines = new Map(
     (
       await all<{ question_id: string; outline: string }>(
@@ -277,7 +288,7 @@ export default async function ReviewPage({ params }: PageProps<"/tutor/students/
                       </>
                     }
                   >
-                    <Detail it={it} assignmentId={a.id} first={first} outline={outlines.get(it.q.id) ?? null} />
+                    <Detail it={it} assignmentId={a.id} first={first} outline={outlines.get(it.q.id) ?? null} diagram={diagrams.get(it.q.id) ?? null} />
                   </QuestionRow>
                 ))}
               </div>
@@ -299,12 +310,15 @@ function Detail({
   assignmentId,
   first,
   outline,
+  diagram,
 }: {
   it: ReviewItem;
   assignmentId: string;
   first: string;
   /** The model answer outline, where one has been written for this question. */
   outline: string | null;
+  /** The figure the mark scheme asks for, drawn. Mark schemes themselves print no diagram. */
+  diagram: string | null;
 }) {
   const { q, r, aiMark } = it;
   const attempts = json.parse<{ value: string; correct: boolean }[]>(r?.attempts, []);
@@ -329,6 +343,7 @@ function Detail({
           <div className="answerbox mstext">
             <Rich text={past ? q.marking.text || "Not found in the mark scheme file." : answerText(q)} />
           </div>
+          {diagram && <Diagram name={diagram} caption="The figure the mark scheme asks for" />}
           {outline && (
             <details className="outline" open>
               <summary>Model answer outline</summary>
@@ -491,15 +506,16 @@ function planText(plan: string) {
 /** The question as the student had it: the extracts, the lead, the prompt and every option. */
 async function QuestionBody({ q, tried }: { q: Question; tried: string[] }) {
   const past = isPast(q);
+  const needed = past ? neededBlocks(q.past.lead, await pastContext(q.past.paper, q.past.question), q.prompt) : null;
   return (
     <div className="stack" style={{ gap: 10 }}>
-      {past && (
+      {needed && needed.context.length > 0 && (
         <details className="sub" open>
           <summary>Extracts and data</summary>
-          <Blocks blocks={relevantContext(await pastContext(q.past.paper, q.past.question), q.prompt)} />
+          <Blocks blocks={needed.context} />
         </details>
       )}
-      {past ? q.past.lead.length > 0 && <Blocks blocks={q.past.lead} /> : q.table && <Blocks blocks={tableBlock(q.table)} />}
+      {needed ? needed.lead.length > 0 && <Blocks blocks={needed.lead} /> : q.table && <Blocks blocks={tableBlock(q.table)} />}
       <p className="qtext" style={{ margin: 0 }}>
         <Rich text={q.prompt} /> <span className="muted">[{q.marks}]</span>
       </p>

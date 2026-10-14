@@ -1,7 +1,7 @@
 import "server-only";
 import { randomBytes } from "node:crypto";
 import { isPast, pastContext, tableBlock, type Block, type Format, type Question } from "./content";
-import { relevantContext } from "./extract";
+import { neededBlocks } from "./extract";
 import { all, json, one, run, tx } from "./db";
 import { after } from "next/server";
 import { queueMarking } from "./ai/marking";
@@ -281,8 +281,7 @@ export async function studentView(q: Question, seed = ""): Promise<StudentQuesti
     return {
       ...base,
       label: q.past.label,
-      context: relevantContext(await pastContext(q.past.paper, q.past.question), q.prompt),
-      lead: q.past.lead,
+      ...neededBlocks(q.past.lead, await pastContext(q.past.paper, q.past.question), q.prompt),
       mode: "written",
       planPrompts: q.format === "essay" ? DEFAULT_PLAN_PROMPTS : undefined,
     };

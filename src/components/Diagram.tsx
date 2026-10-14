@@ -947,6 +947,40 @@ function AdAsContractionary({ caption }: { caption?: string }) {
 }
 
 /**
+ * Why elasticity of demand decides how much a price change costs in sales: the same rise in price
+ * loses little quantity along a steep demand curve and a great deal along a flat one. Both curves
+ * pass through the first point, so only the elasticity differs. The primary commodity is the steep
+ * one; the manufactured good with substitutes is the flat one.
+ */
+function DemandElasticity({ caption }: { caption?: string }) {
+  const at = { x: 180, y: 152 };
+  const UP = 112;
+  // Both curves pass through the same point, so only the slope differs. Each is drawn from the
+  // bottom up, which puts its label at the top end and off the quantity axis.
+  const steep = line({ x: 202, y: 196 }, { x: 150, y: 92 });
+  const flat = line({ x: 282, y: 198 }, { x: 72, y: 103.4 });
+  const qSteep = atY(steep, UP);
+  const qFlat = atY(flat, UP);
+  const drop = (x: number, label: string, colour: string) => (
+    <>
+      <line x1={d2(x)} y1={d2(UP)} x2={d2(x)} y2="200" stroke={GUIDE} strokeWidth="1" strokeDasharray="3 3" />
+      <circle cx={d2(x)} cy={d2(UP)} r="3.5" fill={colour} />
+      <text x={d2(x)} y="214" textAnchor="middle" className="dgmlab" fill={colour}>{label}</text>
+    </>
+  );
+  return (
+    <Frame x="Quantity" y="Price" caption={caption}>
+      <Straight l={clip(steep)} label="D inelastic" colour={CURVE} />
+      <Straight l={clip(flat)} label="D elastic" colour={AXIS} />
+      <Flat y={UP} label="P₂" />
+      <Eq at={at} px="P₁" qx="Q₁" colour={CURVE} />
+      {drop(qFlat.x, "Q₃", AXIS)}
+      {drop(qSteep.x, "Q₂", CURVE)}
+    </Frame>
+  );
+}
+
+/**
  * Cost-push inflation: short-run supply shifts left, so the price level rises and output falls at
  * the same time. This is the diagram a stagflation question wants, and the one a student who has
  * only learnt the demand-pull picture draws wrongly.
@@ -1059,6 +1093,7 @@ const DIAGRAMS: Record<string, (p: { caption?: string }) => React.ReactElement> 
   "price-floor": PriceFloor,
   quota: Quota,
   "supply-elasticity": SupplyElasticity,
+  "demand-elasticity": DemandElasticity,
   "ad-as-monetarist": AdAsMonetarist,
   "business-cycle": BusinessCycle,
   "externality-production": ExternalityProduction,

@@ -3,7 +3,8 @@ import { randomBytes } from "node:crypto";
 import { bankRange, type BankQuestion } from "./admin";
 import { answerText } from "./answer-text";
 import { isPast, pastContext, tableBlock, type Block, type Question } from "./content";
-import { relevantContext } from "./extract";
+import { diagramForTag } from "./diagram-for";
+import { neededBlocks } from "./extract";
 import { all, one, run, tx } from "./db";
 import { weightByUnit, type UnitWeight } from "./unit-weight";
 import { recipeFor, spanningIds, type Recipe } from "./lesson-template";
@@ -327,6 +328,8 @@ export type TeachQuestion = {
   outline: string | null;
   /** For multiple choice only: which option is right, revealed when the class has chosen. */
   right: string | null;
+  /** The figure the paper's own tag asks for, as one of the drawn diagrams, where we have it. */
+  diagram: string | null;
 };
 
 export async function teachView(lessonId: string): Promise<TeachQuestion[]> {
@@ -358,8 +361,10 @@ async function teachQuestions(items: LessonItem[]): Promise<TeachQuestion[]> {
   if (items.length === 0) return [];
   const ids = items.map((i) => i.question_id);
   const holes = ids.map(() => "?").join(", ");
-  const rows = await all<{ id: string; marks: number; format: string; data: string }>(
-    `SELECT id, marks, format, data FROM questions WHERE id IN (${holes})`,
+  const rows = await all<{ id: string; marks: number; format: string; data: string; diagram_type: string | null }>(
+    `SELECT q.id, q.marks, q.format, q.data, p.diagram_type
+       FROM questions q LEFT JOIN past_items p ON p.id = substr(q.id, 4)
+      WHERE q.id IN (${holes})`,
     ...ids,
   );
   const byId = new Map(rows.map((r) => [r.id, r]));
@@ -382,14 +387,16 @@ async function teachQuestions(items: LessonItem[]): Promise<TeachQuestion[]> {
       format: row.format,
       label: past ? q.past.label : null,
       prompt: q.prompt,
-      context: past ? relevantContext(await pastContext(q.past.paper, q.past.question), q.prompt) : [],
-      lead: past ? q.past.lead : q.table ? tableBlock(q.table) : [],
+      ...(past
+        ? neededBlocks(q.past.lead, await pastContext(q.past.paper, q.past.question), q.prompt)
+        : { context: [], lead: q.table ? tableBlock(q.table) : [] }),
       // The options, in their own order, with nothing saying which is right.
       options: !past && q.format === "mcq" ? q.options.map((o: { id: string; text: string }) => ({ id: o.id, text: o.text })) : [],
       outcome: item.outcome,
       outline: outlines.get(row.id) ?? null,
       // Only the letter, and only for multiple choice: nothing else about the answer is fetched.
       right: !past && q.format === "mcq" ? String(q.answer).toUpperCase() : null,
+      diagram: diagramForTag(row.diagram_type),
     });
   }
   return out;

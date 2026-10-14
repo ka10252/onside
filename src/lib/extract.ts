@@ -66,6 +66,15 @@ export function relevantContext(blocks: Block[], prompt: string): Block[] {
       if (section) out.push(b);
       continue;
     }
+    // A sentence that names what the question named belongs with it: "Figure 3 illustrates a market
+    // for fuel" is how the paper explains the figure, and the figure alone does not say what it is.
+    if (b.type === "text" && !section) {
+      const named = referencesIn(b.text).some((r) => wanted(r.kind, r.id));
+      if (named) {
+        out.push(b);
+        continue;
+      }
+    }
     const caption = captionOf(b);
     if (caption) {
       const c = caption.replace(/\*\*/g, "").match(/^(Table|Figure|Chart|Graph|Exhibit)\s+([A-Z]|\d+)/i);
@@ -83,4 +92,20 @@ export function relevantContext(blocks: Block[], prompt: string): Block[] {
   }
   // Never hand back nothing: if the references matched no block, the whole extract is safer.
   return out.length > 0 ? out : blocks;
+}
+
+/**
+ * The question's own stem and the paper's extracts, filtered as one. Filtered apart, a question
+ * whose "Figure 3" lives in the stem finds nothing in the extracts, and the safety net there hands
+ * back the whole stimulus — which is how a one-mark calculation about fuel arrived carrying a table
+ * about palm oil (Jin, 2026-10-14).
+ */
+export function neededBlocks(lead: Block[], context: Block[], prompt: string): { lead: Block[]; context: Block[] } {
+  const all = [...lead, ...context];
+  if (all.length === 0) return { lead, context };
+  const kept = relevantContext(all, prompt);
+  // The filter hands back its input when the question names nothing it can find: keep both whole.
+  if (kept.length === all.length) return { lead, context };
+  const keep = new Set(kept);
+  return { lead: lead.filter((b) => keep.has(b)), context: context.filter((b) => keep.has(b)) };
 }

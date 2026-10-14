@@ -11,6 +11,7 @@ import type { BankQuestion } from "@/lib/admin";
 import type { Lesson, LessonItem, LessonNote, PrepareQuestion, ReviewPlan, UnitBrief } from "@/lib/lesson";
 import { KIND_LABEL, Q_TYPES, REVIEW_KINDS, TYPE_LABEL, typeOf, type QType, type ReviewKind } from "@/lib/question-types";
 import { Blocks, Rich } from "@/components/Rich";
+import { Diagram } from "@/components/Diagram";
 import { Notes } from "@/components/Notes";
 import { MarkScheme } from "./MarkScheme";
 import {
@@ -693,6 +694,7 @@ function PrepRow({
       <div className="a">
         <span className="qlabel">{q.label ? "Mark scheme" : "Answer"}</span>
         <div className="mstext">{q.label ? <MarkScheme text={q.answer} /> : <Rich text={q.answer} />}</div>
+        {q.diagram && <Diagram name={q.diagram} caption="The figure the mark scheme asks for" />}
         {q.outline ? (
           <details className="outline" open>
             <summary>Model answer outline</summary>

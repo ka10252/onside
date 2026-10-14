@@ -39,7 +39,7 @@ export type ReviewItem = {
   result: string;
   bullets: string[];
   honesty: string | null;
-  log: { at: string; who: "student" | "helper" | "marker"; text: string }[];
+  log: { at: string; who: "student" | "helper" | "marker" | "flag"; text: string }[];
   snapshots: { at: string; text: string }[];
   concepts: { key: string; label: string }[];
   timeMin: number;
@@ -110,6 +110,19 @@ function describe(q: Question, r: NonNullable<ReviewItem["r"]>, events: EventRow
   return { bullets: bullets.slice(0, 4), honesty: honesty.length ? honesty.join(" · ") : null };
 }
 
+/** The answer box a paste landed in, as the student saw it named. */
+function fieldName(field: string): string {
+  if (field === "plan") return "plan";
+  if (field === "working") return "working";
+  return "answer";
+}
+
+function leftTab(count: number, awayMs: number): string {
+  const secs = Math.round(awayMs / 1000);
+  const how = secs >= 60 ? `${Math.round(secs / 60)} min` : `${secs} s`;
+  return `Left the tab${count > 1 ? ` ${count}×` : ""}${secs > 0 ? ` — away ${how}` : ""}`;
+}
+
 function result(q: Question, r: ReviewItem["r"], confirmed: number | null, auto: boolean): string {
   if (!r) return "Not opened";
   const attempts = json.parse<{ correct: boolean }[]>(r.attempts, []);
@@ -165,6 +178,12 @@ export const loadReview = cache(async (assignmentId: string) => {
       if (e.type === "ai_message_student") log.push({ at: rel(e.at), who: "student", text: String(d.text ?? "") });
       else if (e.type === "ai_message_helper") log.push({ at: rel(e.at), who: "helper", text: String(d.text ?? "") + (d.blocked ? " (reply replaced: it gave too much away)" : "") });
       else if (e.type === "hint_open") log.push({ at: rel(e.at), who: "marker", text: `Hint ${d.level} opened` });
+      // Pasting and leaving the tab go in the timeline too, so they can be read against the
+      // snapshots: a paste is only worth anything if you can see where the answer jumped.
+      else if (e.type === "paste")
+        log.push({ at: rel(e.at), who: "flag", text: `Pasted ${d.chars} characters into the ${fieldName(String(d.field ?? ""))}` });
+      else if (e.type === "blur")
+        log.push({ at: rel(e.at), who: "flag", text: leftTab(Number(d.count) || 1, Number(d.awayMs) || 0) });
       else if (e.type === "snapshot" && typeof d.final === "string") {
         if (!snapshots.length || snapshots.at(-1)!.text !== d.final) snapshots.push({ at: rel(e.at), text: d.final });
       }

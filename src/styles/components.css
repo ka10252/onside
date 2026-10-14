@@ -309,3 +309,9 @@ table.t tr.hov:hover td { background: var(--surface2); }
 .skel.block { height: 120px; border-radius: 12px; }
 @keyframes skelpulse { 0%, 100% { opacity: 0.55; } 50% { opacity: 0.25; } }
 @media (prefers-reduced-motion: reduce) { .skel { animation: none; } }
+
+/* Pasting and leaving the tab, in the question's timeline: the same marker row as a hint, in the
+   colour the rest of the app uses for things the tutor should look at rather than trust. */
+.convo li.mk.flag .tm { color: var(--redtext, var(--red)); }
+.convo li.mk.flag span:last-child { color: var(--redtext, var(--red)); }
+.convo li.mk.flag span:last-child::after { background: var(--redtint, rgba(190, 18, 60, 0.14)); }

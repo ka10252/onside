@@ -443,11 +443,11 @@ function Detail({
 
       {it.log.length > 0 && (
         <section className="stack" style={{ gap: 8 }}>
-          <h3>What {first} asked the Helper</h3>
+          <h3>What {first} did</h3>
           <ol className="convo">
             {it.log.map((l, i) =>
-              l.who === "marker" ? (
-                <li key={i} className="mk">
+              l.who === "marker" || l.who === "flag" ? (
+                <li key={i} className={l.who === "flag" ? "mk flag" : "mk"}>
                   <span className="tm">{l.at}</span>
                   <span>{l.text}</span>
                 </li>

@@ -343,8 +343,8 @@ export default async function StudentPage({ params, searchParams }: PageProps<"/
                             <span className="muted">—</span>
                           )}
                         </td>
-                        <Split split={a.status === "reviewed" ? splits.get(a.id)?.withoutAi : undefined} />
-                        <Split split={a.status === "reviewed" ? splits.get(a.id)?.withAi : undefined} />
+                        <Split side="AI-free" split={a.status === "reviewed" ? splits.get(a.id)?.withoutAi : undefined} />
+                        <Split side="AI-supported" split={a.status === "reviewed" ? splits.get(a.id)?.withAi : undefined} />
                         <td className="muted">{day(a.assigned_at)}</td>
                         <td className="muted">{a.due_at ? formatDue(a.due_at) : "—"}</td>
                         <td className="muted">{a.submitted_at ? day(a.submitted_at) : "—"}</td>
@@ -482,8 +482,17 @@ export default async function StudentPage({ params, searchParams }: PageProps<"/
  * One assignment's marks in one of the two help columns. The number of questions is shown beside
  * the marks, because "0/0" and "0/8" mean entirely different things about a lesson.
  */
-function Split({ split }: { split?: MarkSplit }) {
-  if (!split || split.questions === 0) return <td className="muted">—</td>;
+function Split({ split, side }: { split?: MarkSplit; side: "AI-free" | "AI-supported" }) {
+  if (!split) return <td className="muted">—</td>;
+  // No question fell this side. That is a fact about the set, not missing data, so it says zero.
+  if (split.questions === 0) {
+    return (
+      <td className="muted" title={`No question in this set was ${side === "AI-free" ? "answered unaided" : "answered with a hint or the Helper"}`}>
+        0
+        <span style={{ fontSize: 12, marginLeft: 5 }}>0q</span>
+      </td>
+    );
+  }
   return (
     <td>
       {Math.round(split.got * 10) / 10}/{split.available}

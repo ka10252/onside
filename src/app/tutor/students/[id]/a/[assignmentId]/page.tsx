@@ -21,6 +21,7 @@ import { FORMAT_LABEL, initials } from "@/lib/format";
 import { acceptAiMarks, markReviewed, rerunMarking } from "@/lib/review-actions";
 import { ACCEPTED_NOTE, loadReview, type ReviewItem } from "@/lib/review";
 import { requireUser } from "@/lib/session";
+import { Notes } from "@/components/Notes";
 import { answerText } from "@/lib/answer-text";
 
 export default async function ReviewPage({ params }: PageProps<"/tutor/students/[id]/a/[assignmentId]">) {
@@ -44,6 +45,17 @@ export default async function ReviewPage({ params }: PageProps<"/tutor/students/
     a.id,
   );
   const lastQuiz = quizzes.at(-1);
+  // The model answer outlines for this set's essays. Marking an essay is exactly when they are
+  // wanted, and until now they lived only on the lesson screens (Jin, 2026-10-14).
+  const outlines = new Map(
+    (
+      await all<{ question_id: string; outline: string }>(
+        `SELECT o.question_id, o.outline FROM essay_outlines o
+           JOIN set_items i ON i.question_id = o.question_id WHERE i.set_id = ?`,
+        a.set_id,
+      )
+    ).map((r) => [r.question_id, r.outline]),
+  );
   const reviewed = a.status === "reviewed";
   const statusLabel = { not_started: "Not started", in_progress: "In progress", submitted: "Submitted", reviewed: "Reviewed" }[a.status];
 
@@ -265,7 +277,7 @@ export default async function ReviewPage({ params }: PageProps<"/tutor/students/
                       </>
                     }
                   >
-                    <Detail it={it} assignmentId={a.id} first={first} />
+                    <Detail it={it} assignmentId={a.id} first={first} outline={outlines.get(it.q.id) ?? null} />
                   </QuestionRow>
                 ))}
               </div>
@@ -282,7 +294,18 @@ export default async function ReviewPage({ params }: PageProps<"/tutor/students/
  * the right, and the marking underneath. The mark scheme sits with the question, because marking
  * means holding the two side by side.
  */
-function Detail({ it, assignmentId, first }: { it: ReviewItem; assignmentId: string; first: string }) {
+function Detail({
+  it,
+  assignmentId,
+  first,
+  outline,
+}: {
+  it: ReviewItem;
+  assignmentId: string;
+  first: string;
+  /** The model answer outline, where one has been written for this question. */
+  outline: string | null;
+}) {
   const { q, r, aiMark } = it;
   const attempts = json.parse<{ value: string; correct: boolean }[]>(r?.attempts, []);
   const past = isPast(q);
@@ -306,6 +329,16 @@ function Detail({ it, assignmentId, first }: { it: ReviewItem; assignmentId: str
           <div className="answerbox mstext">
             <Rich text={past ? q.marking.text || "Not found in the mark scheme file." : answerText(q)} />
           </div>
+          {outline && (
+            <details className="outline" open>
+              <summary>Model answer outline</summary>
+              <p className="outlegend">
+                <span className="key must">must be said</span>
+                <span className="key bonus">lifts it above a pass</span>
+              </p>
+              <Notes text={outline} />
+            </details>
+          )}
         </section>
 
         <section>

@@ -25,6 +25,7 @@ export function TeachBoard({
   lessonId,
   questions,
   review,
+  practice,
   notes,
   studentFirstName,
   today,
@@ -36,6 +37,8 @@ export function TeachBoard({
   questions: TeachQuestion[];
   /** The review quiz built for this lesson, run at the start of the next one. */
   review: TeachQuestion[];
+  /** Extra practice built for this lesson, to look over. It is not marked here. */
+  practice: TeachQuestion[];
   /** The lesson's revision notes, one entry per unit, gone through before the questions. */
   notes: LessonNote[];
   studentFirstName: string;
@@ -48,7 +51,7 @@ export function TeachBoard({
   reviewSetId: string | null;
 }) {
   const withNotes = notes.filter((n) => n.body);
-  const [showing, setShowing] = useState<"revision" | "questions" | "review" | "outlines">(
+  const [showing, setShowing] = useState<"revision" | "questions" | "review" | "practice" | "outlines">(
     withNotes.length ? "revision" : "questions",
   );
   const [part, setPart] = useState(0);
@@ -74,7 +77,7 @@ export function TeachBoard({
 
   const outlines = questions.filter((q) => q.outline);
 
-  const tabs = withNotes.length || review.length || outlines.length ? (
+  const tabs = withNotes.length || review.length || practice.length || outlines.length ? (
     <nav className="filters" aria-label="Which part of the lesson">
       {withNotes.map((n, i) => (
         <button
@@ -97,6 +100,11 @@ export function TeachBoard({
           Review quiz · {review.length}
         </button>
       )}
+      {practice.length > 0 && (
+        <button type="button" className={`chip${showing === "practice" ? " on" : ""}`} onClick={() => setShowing("practice")}>
+          Extra practice · {practice.length}
+        </button>
+      )}
       {outlines.length > 0 && (
         <button type="button" className={`chip${showing === "outlines" ? " on" : ""}`} onClick={() => setShowing("outlines")}>
           Model answers · {outlines.length}
@@ -107,6 +115,14 @@ export function TeachBoard({
 
   // The essays' outlines on their own tab. They are the tutor's, and the student is looking at this
   // screen, so nothing opens them but a deliberate click — same as the toggle under each question.
+  if (showing === "practice" && practice.length) {
+    return (
+      <div className="teach">
+        {tabs}
+        <Run key="practice" questions={practice} outcomes={{}} pending={pending} />
+      </div>
+    );
+  }
   if (showing === "outlines" && outlines.length) {
     return (
       <div className="teach">
@@ -435,7 +451,8 @@ function Run({
   questions: TeachQuestion[];
   outcomes: Record<string, "right" | "wrong" | null>;
   pending: boolean;
-  onMark: (id: string, outcome: "right" | "wrong" | null) => void;
+  /** Left out where the questions are not being marked, as extra practice is not. */
+  onMark?: (id: string, outcome: "right" | "wrong" | null) => void;
   /** Anything the lesson wants beside the count, such as ending the lesson. */
   barEnd?: React.ReactNode;
 }) {
@@ -453,6 +470,7 @@ function Run({
   }
 
   function mark(outcome: "right" | "wrong", move = true) {
+    if (!onMark) return;
     const next = outcomes[q!.id] === outcome && move ? null : outcome;
     onMark(q!.id, next);
     if (move && next && at < questions.length - 1) setTimeout(() => setAt((i) => Math.min(i + 1, questions.length - 1)), 250);
@@ -563,6 +581,7 @@ function Run({
         )}
       </article>
 
+      {onMark && (
       <div className="rowacts" style={{ justifyContent: "center" }}>
         <button type="button" className={`btn lg${outcomes[q.id] === "right" ? " primary" : ""}`} onClick={() => mark("right")} disabled={pending}>
           Got it
@@ -571,6 +590,7 @@ function Run({
           Missed
         </button>
       </div>
+      )}
     </>
   );
 }

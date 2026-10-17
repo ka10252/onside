@@ -12,6 +12,7 @@ import {
   lessonsFor,
   openLesson,
   practiceSets,
+  practiceView,
   prepareReviewView,
   prepareView,
   reviewPlan,
@@ -77,11 +78,12 @@ export default async function LessonPage({ params, searchParams }: PageProps<"/t
       }
     : null;
   // In the lesson, only what the student should read is fetched at all.
-  const [pool, plan, teach, quiz, chosen, quizAnswers, practice, left, read] = await Promise.all([
+  const [pool, plan, teach, quiz, extra, chosen, quizAnswers, practice, left, read] = await Promise.all([
     unit && !teaching ? lessonPool(unit, id) : Promise.resolve([]),
     lesson && !teaching ? reviewPlan(lesson.id, size, kinds.length ? kinds : undefined) : Promise.resolve(null),
     lesson && teaching ? teachView(lesson.id) : Promise.resolve([]),
     lesson && teaching ? reviewQuizView(lesson.id) : Promise.resolve([]),
+    lesson && teaching ? practiceView(lesson.id) : Promise.resolve([]),
     lesson && !teaching ? prepareView(lesson.id) : Promise.resolve([]),
     lesson && !teaching ? prepareReviewView(lesson.id) : Promise.resolve([]),
     lesson && !teaching ? practiceSets(lesson.id) : Promise.resolve([]),
@@ -155,6 +157,7 @@ export default async function LessonPage({ params, searchParams }: PageProps<"/t
               // four-mark answer would give the question away. The rest never leaves the server.
               questions={teach.map((q) => (q.marks >= 10 ? q : { ...q, outline: null }))}
               review={quiz.map((q) => (q.marks >= 10 ? q : { ...q, outline: null }))}
+              practice={extra.map((q) => (q.marks >= 10 ? q : { ...q, outline: null }))}
               notes={notes}
               studentFirstName={first}
               today={singaporeToday().date}

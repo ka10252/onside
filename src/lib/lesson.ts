@@ -359,6 +359,20 @@ export async function reviewQuizView(lessonId: string): Promise<TeachQuestion[]>
   return teachQuestions(items);
 }
 
+/**
+ * Every extra practice set a lesson has built, as one run of questions. It is not marked here —
+ * this is work the student does at home — so the teaching screen only pages through it.
+ */
+export async function practiceView(lessonId: string): Promise<TeachQuestion[]> {
+  const items = await all<LessonItem>(
+    `SELECT i.question_id, i.position, NULL::text AS outcome
+       FROM practice_sets p JOIN set_items i ON i.set_id = p.set_id
+      WHERE p.lesson_id = ? ORDER BY p.created_at, i.position`,
+    lessonId,
+  );
+  return teachQuestions(items);
+}
+
 async function teachQuestions(items: LessonItem[]): Promise<TeachQuestion[]> {
   if (items.length === 0) return [];
   const ids = items.map((i) => i.question_id);

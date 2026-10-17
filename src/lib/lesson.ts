@@ -332,6 +332,12 @@ export type TeachQuestion = {
   right: string | null;
   /** The figure the paper's own tag asks for, as one of the drawn diagrams, where we have it. */
   diagram: string | null;
+  /**
+   * What a diagram question's marks are given for. Sent only for those: a diagram is marked on what
+   * is drawn and labelled, and the tutor needs that in front of them while the class draws it. Every
+   * other kind keeps its mark scheme on the server (Jin, 2026-10-18).
+   */
+  marking: string | null;
 };
 
 export async function teachView(lessonId: string): Promise<TeachQuestion[]> {
@@ -371,6 +377,13 @@ export async function practiceView(lessonId: string): Promise<TeachQuestion[]> {
     lessonId,
   );
   return teachQuestions(items);
+}
+
+/** Whether a row is a diagram question, from what teachQuestions already has to hand. */
+function typeOf2(format: string, marks: number, q: Question): "diagram" | "other" {
+  if (format === "mcq" || marks >= 10) return "other";
+  if (format === "diagram") return "diagram";
+  return /\b(diagram|sketch|draw|curve)\b/i.test(q.prompt) ? "diagram" : "other";
 }
 
 async function teachQuestions(items: LessonItem[]): Promise<TeachQuestion[]> {
@@ -413,6 +426,7 @@ async function teachQuestions(items: LessonItem[]): Promise<TeachQuestion[]> {
       // Only the letter, and only for multiple choice: nothing else about the answer is fetched.
       right: !past && q.format === "mcq" ? String(q.answer).toUpperCase() : null,
       diagram: diagramForTag(row.diagram_type),
+      marking: typeOf2(row.format, row.marks, q) === "diagram" ? (past ? q.marking.text || null : answerText(q)) : null,
     });
   }
   return out;
@@ -428,6 +442,11 @@ export async function prepareView(lessonId: string): Promise<PrepareQuestion[]> 
 /** The review quiz with its answers, so the tutor can go through it before running it. */
 export async function prepareReviewView(lessonId: string): Promise<PrepareQuestion[]> {
   return withAnswers(await reviewQuizView(lessonId));
+}
+
+/** The extra practice with its answers, for checking a set before it is sent. */
+export async function preparePracticeView(lessonId: string): Promise<PrepareQuestion[]> {
+  return withAnswers(await practiceView(lessonId));
 }
 
 async function withAnswers(shown: TeachQuestion[]): Promise<PrepareQuestion[]> {

@@ -50,6 +50,7 @@ export function LessonBoard({
   review,
   reviewQuestions,
   practice,
+  practiceAnswers,
   sentNotes,
   studentId,
 }: {
@@ -76,6 +77,8 @@ export function LessonBoard({
   reviewQuestions: PrepareQuestion[];
   /** Extra practice already built for this lesson, newest last. */
   practice: PracticeSet[];
+  /** Those sets' questions with their answers, for checking a set before it goes. */
+  practiceAnswers: PrepareQuestion[];
   /** Which of this lesson's units the student can already read, and when they were sent. */
   sentNotes: { unit: number; title: string; sentAt: string | null }[];
   studentId: string;
@@ -619,6 +622,16 @@ export function LessonBoard({
           {practice.map((p) => (
             <PracticeRow key={p.id} p={p} studentFirstName={studentFirstName} today={today} pending={pending} run={run} />
           ))}
+          {practiceAnswers.length > 0 && (
+            <details className="sub">
+              <summary>The answers ({practiceAnswers.length} questions)</summary>
+              <ol className="preplist">
+                {practiceAnswers.map((q) => (
+                  <PrepRow key={q.id} q={q} outcome={null} pending={pending} />
+                ))}
+              </ol>
+            </details>
+          )}
           <div className="filters">
             <span className="muted" style={{ fontSize: 13, alignSelf: "center" }}>How many</span>
             {[5, 10, 15].map((n) => (

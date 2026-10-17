@@ -13,6 +13,7 @@ import {
   openLesson,
   practiceSets,
   practiceView,
+  preparePracticeView,
   prepareReviewView,
   prepareView,
   reviewPlan,
@@ -78,7 +79,7 @@ export default async function LessonPage({ params, searchParams }: PageProps<"/t
       }
     : null;
   // In the lesson, only what the student should read is fetched at all.
-  const [pool, plan, teach, quiz, extra, chosen, quizAnswers, practice, left, read] = await Promise.all([
+  const [pool, plan, teach, quiz, extra, chosen, quizAnswers, practice, practiceAnswers, left, read] = await Promise.all([
     unit && !teaching ? lessonPool(unit, id) : Promise.resolve([]),
     lesson && !teaching ? reviewPlan(lesson.id, size, kinds.length ? kinds : undefined) : Promise.resolve(null),
     lesson && teaching ? teachView(lesson.id) : Promise.resolve([]),
@@ -87,6 +88,7 @@ export default async function LessonPage({ params, searchParams }: PageProps<"/t
     lesson && !teaching ? prepareView(lesson.id) : Promise.resolve([]),
     lesson && !teaching ? prepareReviewView(lesson.id) : Promise.resolve([]),
     lesson && !teaching ? practiceSets(lesson.id) : Promise.resolve([]),
+    lesson && !teaching ? preparePracticeView(lesson.id) : Promise.resolve([]),
     lesson && !teaching ? unfinished(lesson.id) : Promise.resolve([]),
     unit && !teaching ? noteRead(id, unit) : Promise.resolve(null),
   ]);
@@ -117,7 +119,7 @@ export default async function LessonPage({ params, searchParams }: PageProps<"/t
                 <p>
                   {inLesson && inLesson.units.length > 1 && !teaching ? `${inLesson.why}. ` : ""}
                   {teaching
-                    ? `Only what ${first} should read. Nothing on this page gives an answer away.`
+                    ? `Only what ${first} should read. What would give an answer away — an essay's outline, a diagram's marks — is behind a toggle you have to open.`
                     : `Yours only, answers and all. ${first} sees nothing here until you send the review quiz, and daily practice carries on untouched.`}
                 </p>
               </div>
@@ -181,6 +183,7 @@ export default async function LessonPage({ params, searchParams }: PageProps<"/t
               review={{ size, kinds }}
               reviewQuestions={quizAnswers}
               practice={practice}
+              practiceAnswers={practiceAnswers}
               sentNotes={sentNotes}
               studentId={id}
             />

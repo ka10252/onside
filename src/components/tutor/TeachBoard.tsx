@@ -3,7 +3,9 @@
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { Blocks, Rich } from "@/components/Rich";
+import { Diagram } from "@/components/Diagram";
 import { Notes } from "@/components/Notes";
+import { MarkScheme } from "./MarkScheme";
 import { reportIfStale } from "@/components/stale";
 import type { LessonNote, TeachQuestion } from "@/lib/lesson";
 import {
@@ -565,6 +567,18 @@ function Run({
               </div>
             )}
           </>
+        )}
+        {q.marking && (
+          <details className="outline">
+            <summary>Open answer</summary>
+            <p className="outlegend" style={{ marginBottom: 4 }}>
+              <span className="muted">What the diagram has to show, and what the marks are given for</span>
+            </p>
+            {q.diagram && <Diagram name={q.diagram} caption="The figure the mark scheme asks for" />}
+            <div className="mstext">
+              <MarkScheme text={q.marking} />
+            </div>
+          </details>
         )}
         {!q.outline && q.marks >= 10 && (
           <p className="muted" style={{ fontSize: 13, marginTop: 14 }}>No model answer outline for this one.</p>

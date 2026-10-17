@@ -34,7 +34,7 @@ export type Lesson = {
 
 export type LessonItem = { question_id: string; position: number; outcome: "right" | "wrong" | null };
 
-const newId = (p: string) => `${p}_${Date.now().toString(36)}${randomBytes(3).toString("hex")}`;
+export const newId = (p: string) => `${p}_${Date.now().toString(36)}${randomBytes(3).toString("hex")}`;
 
 export async function getLesson(id: string): Promise<(Lesson & { items: LessonItem[] }) | null> {
   const l = await one<Lesson>("SELECT * FROM lessons WHERE id = ?", id);
@@ -178,6 +178,14 @@ export async function markOutcome(lessonId: string, questionId: string, outcome:
 export const REVIEW_TYPES = REVIEW_DEFAULT_KINDS;
 export const REVIEW_SIZE = 10;
 
+/** Takes turns between a lesson's units, so one of a pair cannot fill the whole set. */
+function alternate(qs: BankQuestion[], units: number[]): BankQuestion[] {
+  const queues = units.map((u) => qs.filter((q) => q.unit_number === u));
+  const out: BankQuestion[] = [];
+  while (queues.some((l) => l.length)) for (const l of queues) { const n = l.shift(); if (n) out.push(n); }
+  return out;
+}
+
 /**
  * Fills n places by taking turns between the kinds, so a quiz of five over four kinds is one of
  * each and not four definitions. Each kind's list is already in the order it should be drawn from —
@@ -277,13 +285,7 @@ export async function reviewPlan(lessonId: string, size = REVIEW_SIZE, kinds: Re
 
   // Each kind draws from its own list: nearest the wrong idea first, then the rest of the ground.
   // A lesson of two units takes turns between them, or one unit fills the whole quiz.
-  const units = unitsOfLesson(lesson.unit);
-  const byUnit = (qs: BankQuestion[]) => {
-    const queues = units.map((u) => qs.filter((q) => q.unit_number === u));
-    const out: BankQuestion[] = [];
-    while (queues.some((l) => l.length)) for (const l of queues) { const n = l.shift(); if (n) out.push(n); }
-    return out;
-  };
+  const byUnit = (qs: BankQuestion[]) => alternate(qs, unitsOfLesson(lesson.unit));
   const byKind = new Map<ReviewKind, BankQuestion[]>(
     kinds.map((k) => [k, [...byUnit(sameConcept), ...byUnit(sameSection), ...byUnit(rest)].filter((q) => kindOf(q) === k)]),
   );
@@ -496,4 +498,68 @@ export async function lessonSends(lesson: Lesson): Promise<{ homework: boolean; 
   if (lesson.review_set_id && !built) clear.push("review_set_id = NULL");
   if (clear.length) await run(`UPDATE lessons SET ${clear.join(", ")} WHERE id = ?`, lesson.id);
   return { homework, review };
+}
+
+export type PracticeSet = {
+  id: string;
+  setId: string;
+  title: string;
+  questions: number;
+  /** The assignment it went out as, or "queued:<set>" while it waits for its day. */
+  assignmentId: string | null;
+  createdAt: string;
+};
+
+/** The extra practice built for a lesson, newest last. */
+export async function practiceSets(lessonId: string): Promise<PracticeSet[]> {
+  return all<PracticeSet>(
+    `SELECT p.id, p.set_id AS "setId", s.title, p.assignment_id AS "assignmentId", p.created_at AS "createdAt",
+            (SELECT COUNT(*)::int FROM set_items i WHERE i.set_id = p.set_id) AS questions
+       FROM practice_sets p JOIN sets s ON s.id = p.set_id
+      WHERE p.lesson_id = ? ORDER BY p.created_at`,
+    lessonId,
+  );
+}
+
+/**
+ * Every question this lesson has already spent: the ones taught in it, the review quiz, the
+ * homework, every extra practice built before, and anything this student has ever been sent. Extra
+ * practice draws from what is left, so a lesson can be topped up again without repeating itself.
+ */
+async function spentOn(lesson: Lesson & { items: LessonItem[] }): Promise<Set<string>> {
+  const [fromSets, sent] = await Promise.all([
+    all<{ question_id: string }>(
+      `SELECT DISTINCT i.question_id FROM set_items i
+        WHERE i.set_id IN (SELECT set_id FROM practice_sets WHERE lesson_id = ?)
+           OR i.set_id = ? OR i.set_id = ?`,
+      lesson.id,
+      lesson.review_set_id ?? "",
+      lesson.homework_set_id ?? "",
+    ),
+    alreadySent(lesson.student_id),
+  ]);
+  return new Set([...lesson.items.map((i) => i.question_id), ...fromSets.map((r) => r.question_id), ...sent]);
+}
+
+export type PracticePlan = { picked: BankQuestion[]; short: string | null };
+
+/** Extra practice on the lesson's ground: n questions of the kinds asked for, none of them seen. */
+export async function practicePlan(lessonId: string, size: number, kinds: ReviewKind[]): Promise<PracticePlan> {
+  const lesson = await getLesson(lessonId);
+  if (!lesson || lesson.unit === null) return { picked: [], short: "That lesson is gone." };
+  const units = unitsOfLesson(lesson.unit);
+  const [bank, spent] = await Promise.all([bankRange(units), spentOn(lesson)]);
+  const free = bank.filter((q) => {
+    const k = reviewKindOf(q);
+    return k !== null && kinds.includes(k) && !spent.has(q.id);
+  });
+  const byKind = new Map<ReviewKind, BankQuestion[]>(
+    kinds.map((k) => [k, alternate(free, units).filter((q) => reviewKindOf(q) === k)]),
+  );
+  const picked = spread(byKind, kinds, size);
+  const where = units.map((u) => `unit ${u}`).join(" and ");
+  return {
+    picked,
+    short: picked.length >= size ? null : `only ${picked.length} unseen ${picked.length === 1 ? "question is" : "questions are"} left in ${where}`,
+  };
 }

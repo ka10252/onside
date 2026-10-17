@@ -268,6 +268,17 @@ CREATE TABLE IF NOT EXISTS lesson_items (
   PRIMARY KEY (lesson_id, question_id)
 );
 
+-- Extra practice built from a lesson's units. A lesson can have several, each one drawing from
+-- what the earlier ones left, so the same question is never set twice (Jin, 2026-10-18).
+CREATE TABLE IF NOT EXISTS practice_sets (
+  id            TEXT PRIMARY KEY,
+  lesson_id     TEXT NOT NULL REFERENCES lessons(id) ON DELETE CASCADE,
+  set_id        TEXT NOT NULL REFERENCES sets(id),
+  assignment_id TEXT,
+  created_at    TEXT NOT NULL DEFAULT (${NOW_SQL})
+);
+CREATE INDEX IF NOT EXISTS practice_lesson ON practice_sets (lesson_id, created_at);
+
 -- How the review quiz went when it was run at the start of the next lesson. Kept apart from
 -- lesson_items so that a question asked both in the lesson and in its review quiz has two records,
 -- and so the lesson's own outcomes keep deciding what the review quiz holds.

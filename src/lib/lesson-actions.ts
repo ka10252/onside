@@ -2,10 +2,23 @@
 
 
 import { revalidatePath } from "next/cache";
-import { assignNow, buildSet, getLesson, markOutcome, openLesson, reviewPlan, setLessonItems, unfinished, REVIEW_SIZE } from "./lesson";
+import {
+  assignNow,
+  buildSet,
+  getLesson,
+  markOutcome,
+  newId,
+  openLesson,
+  practicePlan,
+  practiceSets,
+  reviewPlan,
+  setLessonItems,
+  unfinished,
+  REVIEW_SIZE,
+} from "./lesson";
 import { REVIEW_KINDS, reviewKindOf, type ReviewKind } from "./question-types";
 import { fillTemplate } from "./lesson-template";
-import { run } from "./db";
+import { one, run, tx } from "./db";
 import { queueSet } from "./queue";
 import { unitsOfLesson } from "./lesson-plan";
 import { releaseNotes, unreleaseNotes } from "./revision";
@@ -253,4 +266,74 @@ export async function unsendNotes(studentId: string, unit: number): Promise<Less
   revalidatePath("/tutor/teach");
   revalidatePath("/student", "layout");
   return { ok: `Unit ${unit} notes are closed again.` };
+}
+
+/**
+ * Extra practice on a lesson's ground. A lesson can have as many as the bank allows: each one is
+ * drawn from what the lesson, its quiz, its homework and the earlier practice sets have left, so
+ * the student never meets the same question twice (Jin, 2026-10-18).
+ */
+export async function buildPractice(lessonId: string, size: number, kinds: ReviewKind[]): Promise<LessonState> {
+  const tutor = await requireUser("tutor");
+  const l = await getLesson(lessonId);
+  if (!l) return { error: "That lesson is gone." };
+  const plan = await practicePlan(lessonId, size, kinds.length ? kinds : REVIEW_KINDS);
+  if (plan.picked.length === 0) {
+    return { error: plan.short ? `Nothing left: ${plan.short}.` : "No unseen questions are left for these units." };
+  }
+  const asked = kinds.length ? kinds : REVIEW_KINDS;
+  const ids = plan.picked
+    .sort((a, b) => asked.indexOf(reviewKindOf(a)!) - asked.indexOf(reviewKindOf(b)!))
+    .map((q) => q.id);
+  const n = (await practiceSets(lessonId)).length + 1;
+  const setId = await buildSet({
+    title: `Practice ${n} · Unit ${l.unit} · ${new Date().toLocaleDateString("en-SG", { day: "numeric", month: "short", timeZone: "Asia/Singapore" })}`,
+    // Done at home, so the hints and the Helper are there, as in daily practice.
+    helper: "on",
+    questionIds: ids,
+    createdBy: tutor.id,
+  });
+  await run("INSERT INTO practice_sets (id, lesson_id, set_id) VALUES (?, ?, ?)", newId("prc"), lessonId, setId);
+  revalidatePath(back(l.student_id));
+  return { ok: `${ids.length} questions built.${plan.short ? ` ${plan.short}.` : ""} Look at it before you send it.`, setId };
+}
+
+export async function sendPractice(practiceId: string, due: string | null, sendOn: string | null = null): Promise<LessonState> {
+  await requireUser("tutor");
+  const p = await one<{ set_id: string; assignment_id: string | null; student_id: string }>(
+    `SELECT p.set_id, p.assignment_id, l.student_id FROM practice_sets p JOIN lessons l ON l.id = p.lesson_id WHERE p.id = ?`,
+    practiceId,
+  );
+  if (!p) return { error: "That practice set is gone." };
+  if (p.assignment_id) return { error: "That practice set has already gone out." };
+  const later = sendOn && sendOn > singaporeToday().date ? sendOn : null;
+  if (later) {
+    await queueSet(p.student_id, p.set_id, later, due);
+    await run("UPDATE practice_sets SET assignment_id = ? WHERE id = ?", `queued:${p.set_id}`, practiceId);
+    revalidatePath(back(p.student_id));
+    const when = new Date(`${later}T00:00:00Z`).toLocaleDateString("en-SG", { day: "numeric", month: "short", timeZone: "UTC" });
+    return { ok: `Waiting until ${when}.` };
+  }
+  const assignmentId = await assignNow(p.set_id, p.student_id, due);
+  await run("UPDATE practice_sets SET assignment_id = ? WHERE id = ?", assignmentId, practiceId);
+  revalidatePath(back(p.student_id));
+  return { ok: "Sent." };
+}
+
+/** Throws away a practice set that has not gone out, freeing its questions for the next one. */
+export async function dropPractice(practiceId: string): Promise<LessonState> {
+  await requireUser("tutor");
+  const p = await one<{ set_id: string; assignment_id: string | null; student_id: string }>(
+    `SELECT p.set_id, p.assignment_id, l.student_id FROM practice_sets p JOIN lessons l ON l.id = p.lesson_id WHERE p.id = ?`,
+    practiceId,
+  );
+  if (!p) return { error: "That practice set is gone." };
+  if (p.assignment_id) return { error: "It has gone out already, so it cannot be thrown away." };
+  await tx(async (t) => {
+    await t.run("DELETE FROM practice_sets WHERE id = ?", practiceId);
+    await t.run("DELETE FROM set_items WHERE set_id = ?", p.set_id);
+    await t.run("DELETE FROM sets WHERE id = ?", p.set_id);
+  });
+  revalidatePath(back(p.student_id));
+  return {};
 }

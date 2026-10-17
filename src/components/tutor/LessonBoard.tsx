@@ -8,7 +8,7 @@ import { PreviewPanel, QuestionLine } from "@/components/QuestionPreview";
 import { reportIfStale } from "@/components/stale";
 import { shortDateSG } from "@/lib/due";
 import type { BankQuestion } from "@/lib/admin";
-import type { Lesson, LessonItem, LessonNote, PrepareQuestion, ReviewPlan, UnitBrief } from "@/lib/lesson";
+import type { Lesson, LessonItem, LessonNote, PracticeSet, PrepareQuestion, ReviewPlan, UnitBrief } from "@/lib/lesson";
 import { KIND_LABEL, Q_TYPES, REVIEW_KINDS, TYPE_LABEL, typeOf, type QType, type ReviewKind } from "@/lib/question-types";
 import { Blocks, Rich } from "@/components/Rich";
 import { Diagram } from "@/components/Diagram";
@@ -17,7 +17,10 @@ import { MarkScheme } from "./MarkScheme";
 import {
   applyTemplate,
   buildHomework,
+  buildPractice,
   buildReviewQuiz,
+  dropPractice,
+  sendPractice,
   dropHomework,
   dropReviewQuiz,
   sendNotes,
@@ -46,6 +49,7 @@ export function LessonBoard({
   today,
   review,
   reviewQuestions,
+  practice,
   sentNotes,
   studentId,
 }: {
@@ -70,6 +74,8 @@ export function LessonBoard({
   review: { size: number; kinds: ReviewKind[] };
   /** The built review quiz with its answers, to go through before running it. */
   reviewQuestions: PrepareQuestion[];
+  /** Extra practice already built for this lesson, newest last. */
+  practice: PracticeSet[];
   /** Which of this lesson's units the student can already read, and when they were sent. */
   sentNotes: { unit: number; title: string; sentAt: string | null }[];
   studentId: string;
@@ -85,6 +91,8 @@ export function LessonBoard({
   const [sendOn, setSendOn] = useState("");
   const [dropped, setDropped] = useState<string[]>([]);
   const [reviewOn, setReviewOn] = useState("");
+  const [extraSize, setExtraSize] = useState(10);
+  const [extraKinds, setExtraKinds] = useState<ReviewKind[]>(REVIEW_KINDS);
   const [pending, start] = useTransition();
   const router = useRouter();
 
@@ -600,6 +608,58 @@ export function LessonBoard({
 
       <details className="card">
         <summary className="card-hd" style={{ cursor: "pointer" }}>
+          <h2>Extra practice</h2>
+          <span className="muted" style={{ fontSize: 14 }}>
+            {practice.length === 0
+              ? "Nothing built"
+              : `${practice.length} built · ${practice.filter((p) => p.assignmentId).length} sent`}
+          </span>
+        </summary>
+        <div className="cardbody stack" style={{ gap: 12 }}>
+          {practice.map((p) => (
+            <PracticeRow key={p.id} p={p} studentFirstName={studentFirstName} today={today} pending={pending} run={run} />
+          ))}
+          <div className="filters">
+            <span className="muted" style={{ fontSize: 13, alignSelf: "center" }}>How many</span>
+            {[5, 10, 15].map((n) => (
+              <button key={n} type="button" className={`chip${extraSize === n ? " on" : ""}`} onClick={() => setExtraSize(n)}>
+                {n}
+              </button>
+            ))}
+            <span className="filtersep" aria-hidden />
+            {REVIEW_KINDS.map((k) => {
+              const on = extraKinds.includes(k);
+              return (
+                <button
+                  key={k}
+                  type="button"
+                  className={`chip${on ? " on" : ""}`}
+                  disabled={on && extraKinds.length === 1}
+                  onClick={() => setExtraKinds((ks) => (on ? ks.filter((x) => x !== k) : [...ks, k]))}
+                >
+                  {KIND_LABEL[k]}
+                </button>
+              );
+            })}
+          </div>
+          <div className="rowacts">
+            <button
+              type="button"
+              className="btn accent"
+              disabled={pending}
+              onClick={() => run(() => buildPractice(lesson.id, extraSize, extraKinds))}
+            >
+              {pending ? "Building…" : "Build a practice set"}
+            </button>
+            <span className="muted" style={{ fontSize: 13 }}>
+              From this lesson&rsquo;s units, never a question {studentFirstName} has already been given. Hints and the helper on.
+            </span>
+          </div>
+        </div>
+      </details>
+
+      <details className="card">
+        <summary className="card-hd" style={{ cursor: "pointer" }}>
           <h2>Notes</h2>
           <span className="muted" style={{ fontSize: 14 }}>Yours only</span>
         </summary>
@@ -733,5 +793,48 @@ function PrepRow({
         </span>
       )}
     </li>
+  );
+}
+
+/** One built practice set: look at it, choose the day, send it — or throw it away unsent. */
+function PracticeRow({
+  p,
+  studentFirstName,
+  today,
+  pending,
+  run,
+}: {
+  p: PracticeSet;
+  studentFirstName: string;
+  today: string;
+  pending: boolean;
+  run: (job: () => Promise<{ error?: string; ok?: string }>) => void;
+}) {
+  const [on, setOn] = useState("");
+  const waiting = p.assignmentId?.startsWith("queued:");
+  return (
+    <div className="rowacts" style={{ flexWrap: "wrap", gap: 8 }}>
+      <b style={{ minWidth: 150 }}>{p.title}</b>
+      <span className="muted" style={{ fontSize: 13 }}>{p.questions} questions</span>
+      <a className="btn ghost sm" href={`/tutor/sets/${p.setId}/preview`} target="_blank" rel="noreferrer">
+        See it as {studentFirstName} will
+      </a>
+      {p.assignmentId ? (
+        <span className={`pill ${waiting ? "amber" : "green"}`}>{waiting ? "Waiting for its day" : "Sent"}</span>
+      ) : (
+        <>
+          <label className="opt" style={{ gap: 6 }}>
+            <span className="muted" style={{ fontSize: 13 }}>Send on</span>
+            <input type="date" className="in sm" value={on} min={today} onChange={(e) => setOn(e.target.value)} />
+          </label>
+          <button type="button" className="btn sm accent" disabled={pending} onClick={() => run(() => sendPractice(p.id, null, on || null))}>
+            {on && on > today ? `Hold until ${on}` : "Send"}
+          </button>
+          <button type="button" className="btn ghost sm" disabled={pending} onClick={() => run(() => dropPractice(p.id))}>
+            Throw away
+          </button>
+        </>
+      )}
+    </div>
   );
 }

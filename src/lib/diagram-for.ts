@@ -34,6 +34,9 @@ const BY_TAG: Record<string, string> = {
   "ppc (comparative advantage)": "ppc",
   "phillips curve": "phillips",
   "money market": "money-market",
+  "demand and marginal revenue": "demand-mr",
+  "labour market": "labour-market",
+  "labour market (minimum wage)": "labour-market",
   "business cycle": "business-cycle",
 };
 

@@ -981,6 +981,58 @@ function DemandElasticity({ caption }: { caption?: string }) {
 }
 
 /**
+ * A straight-line demand curve with its marginal revenue curve: MR falls twice as fast and cuts the
+ * quantity axis halfway along. Elasticity is not the slope — it changes along the line, and the two
+ * halves either side of the midpoint are where total revenue rises and where it falls.
+ */
+function DemandMr({ caption }: { caption?: string }) {
+  const d = line({ x: 60, y: 40 }, { x: 276, y: 192 });
+  const mid = { x: (60 + 276) / 2, y: (40 + 192) / 2 };
+  const mr = line({ x: 60, y: 40 }, { x: mid.x, y: 192 });
+  return (
+    <Frame x="Quantity" y="Price" caption={caption}>
+      <Straight l={d} label="D" colour={CURVE} />
+      <Straight l={mr} label="MR" colour={AXIS} />
+      <line x1="44" y1={d2(mid.y)} x2={d2(mid.x)} y2={d2(mid.y)} stroke={GUIDE} strokeWidth="1" strokeDasharray="3 3" />
+      <line x1={d2(mid.x)} y1={d2(mid.y)} x2={d2(mid.x)} y2="200" stroke={GUIDE} strokeWidth="1" strokeDasharray="3 3" />
+      <circle cx={d2(mid.x)} cy={d2(mid.y)} r="3.5" fill={SHIFT} />
+      <text x={d2(mid.x)} y="214" textAnchor="middle" className="dgmlab" fill={SHIFT}>MR = 0</text>
+      <text x="138" y="74" className="dgmlab" fill={SHIFT}>PED &gt; 1</text>
+      <text x="196" y="170" className="dgmlab" fill={SHIFT}>PED &lt; 1</text>
+    </Frame>
+  );
+}
+
+/**
+ * A minimum wage above the market rate: the same figure as a price floor, with the axes the labour
+ * market question uses. The gap between the labour offered and the labour wanted is unemployment.
+ */
+function LabourMarket({ caption }: { caption?: string }) {
+  const dl = line({ x: 62, y: 46 }, { x: 250, y: 190 });
+  const sl = line({ x: 62, y: 190 }, { x: 258, y: 42 });
+  const e1 = cross(dl, sl);
+  const w = e1.y - 34;
+  const qd = atY(dl, w);
+  const qs = atY(sl, w);
+  return (
+    <Frame x="Quantity of labour" y="Wage" caption={caption}>
+      <Straight l={sl} label="S labour" colour={CURVE} />
+      <Straight l={dl} label="D labour" colour={CURVE} />
+      <Eq at={e1} px="We" qx="Qe" colour={CURVE} />
+      {/* The wage goes on the left axis beside We, where Eq puts its prices; Flat's own label
+          would sit past the right edge of the frame. */}
+      <Flat y={w} label="" />
+      <text x="40" y={d2(w) + 4} textAnchor="end" className="dgmlab" fill={SHIFT}>Wmin</text>
+      <circle cx={d2(qd.x)} cy={d2(w)} r="3" fill={SHIFT} />
+      <circle cx={d2(qs.x)} cy={d2(w)} r="3" fill={SHIFT} />
+      <Gap from={qd.x} to={qs.x} y={w} drop={-16} label="unemployment" />
+      <text x={d2(qd.x)} y="214" textAnchor="middle" className="dgmlab" fill={SHIFT}>Qd</text>
+      <text x={d2(qs.x)} y="214" textAnchor="middle" className="dgmlab" fill={SHIFT}>Qs</text>
+    </Frame>
+  );
+}
+
+/**
  * Cost-push inflation: short-run supply shifts left, so the price level rises and output falls at
  * the same time. This is the diagram a stagflation question wants, and the one a student who has
  * only learnt the demand-pull picture draws wrongly.
@@ -1094,6 +1146,8 @@ const DIAGRAMS: Record<string, (p: { caption?: string }) => React.ReactElement> 
   quota: Quota,
   "supply-elasticity": SupplyElasticity,
   "demand-elasticity": DemandElasticity,
+  "demand-mr": DemandMr,
+  "labour-market": LabourMarket,
   "ad-as-monetarist": AdAsMonetarist,
   "business-cycle": BusinessCycle,
   "externality-production": ExternalityProduction,

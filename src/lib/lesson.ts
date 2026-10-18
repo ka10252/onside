@@ -8,7 +8,7 @@ import { neededBlocks } from "./extract";
 import { all, one, run, tx } from "./db";
 import { weightByUnit, type UnitWeight } from "./unit-weight";
 import { recipeFor, spanningIds, type Recipe } from "./lesson-template";
-import { REVIEW_DEFAULT_KINDS, reviewKindOf, type ReviewKind } from "./question-types";
+import { REVIEW_DEFAULT_KINDS, isPastSource, reviewKindOf, type QSource, type ReviewKind } from "./question-types";
 import { unitsOfLesson } from "./lesson-plan";
 
 /**
@@ -576,23 +576,43 @@ async function spentOn(lesson: Lesson & { items: LessonItem[] }): Promise<Set<st
 
 export type PracticePlan = { picked: BankQuestion[]; short: string | null };
 
-/** Extra practice on the lesson's ground: n questions of the kinds asked for, none of them seen. */
-export async function practicePlan(lessonId: string, size: number, kinds: ReviewKind[]): Promise<PracticePlan> {
+/**
+ * Extra practice on the lesson's ground: n questions of the kinds asked for, none of them seen.
+ * The papers come first unless the tutor says otherwise — a real question beats a written one, and
+ * that was not true of the first version, which filled sets from the unit tests (Jin, 2026-10-18).
+ */
+export async function practicePlan(
+  lessonId: string,
+  size: number,
+  kinds: ReviewKind[],
+  source: QSource = "past",
+): Promise<PracticePlan> {
   const lesson = await getLesson(lessonId);
   if (!lesson || lesson.unit === null) return { picked: [], short: "That lesson is gone." };
   const units = unitsOfLesson(lesson.unit);
   const [bank, spent] = await Promise.all([bankRange(units), spentOn(lesson)]);
-  const free = bank.filter((q) => {
+  const wanted = (q: BankQuestion) => {
     const k = reviewKindOf(q);
-    return k !== null && kinds.includes(k) && !spent.has(q.id);
-  });
+    if (k === null || !kinds.includes(k) || spent.has(q.id)) return false;
+    if (source === "past") return isPastSource(q.source);
+    if (source === "made") return !isPastSource(q.source);
+    return true;
+  };
+  const free = bank.filter(wanted);
+  // With either, a past-paper question is still taken before one written for a unit test.
+  const order = (qs: BankQuestion[]) =>
+    source === "either"
+      ? [...alternate(qs.filter((q) => isPastSource(q.source)), units), ...alternate(qs.filter((q) => !isPastSource(q.source)), units)]
+      : alternate(qs, units);
   const byKind = new Map<ReviewKind, BankQuestion[]>(
-    kinds.map((k) => [k, alternate(free, units).filter((q) => reviewKindOf(q) === k)]),
+    kinds.map((k) => [k, order(free).filter((q) => reviewKindOf(q) === k)]),
   );
   const picked = spread(byKind, kinds, size);
   const where = units.map((u) => `unit ${u}`).join(" and ");
-  return {
-    picked,
-    short: picked.length >= size ? null : `only ${picked.length} unseen ${picked.length === 1 ? "question is" : "questions are"} left in ${where}`,
-  };
+  const reasons = [];
+  if (source === "past" && kinds.includes("mcq")) reasons.push("the papers set no multiple choice");
+  if (picked.length < size) {
+    reasons.push(`only ${picked.length} unseen ${picked.length === 1 ? "question is" : "questions are"} left in ${where}`);
+  }
+  return { picked, short: reasons.length ? reasons.join(" · ") : null };
 }

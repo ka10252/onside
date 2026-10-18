@@ -9,7 +9,17 @@ import { reportIfStale } from "@/components/stale";
 import { shortDateSG } from "@/lib/due";
 import type { BankQuestion } from "@/lib/admin";
 import type { Lesson, LessonItem, LessonNote, PracticeSet, PrepareQuestion, ReviewPlan, UnitBrief } from "@/lib/lesson";
-import { KIND_LABEL, Q_TYPES, REVIEW_KINDS, TYPE_LABEL, typeOf, type QType, type ReviewKind } from "@/lib/question-types";
+import {
+  KIND_LABEL,
+  Q_TYPES,
+  REVIEW_KINDS,
+  SOURCE_LABEL,
+  TYPE_LABEL,
+  typeOf,
+  type QSource,
+  type QType,
+  type ReviewKind,
+} from "@/lib/question-types";
 import { Blocks, Rich } from "@/components/Rich";
 import { Diagram } from "@/components/Diagram";
 import { Notes } from "@/components/Notes";
@@ -96,6 +106,7 @@ export function LessonBoard({
   const [reviewOn, setReviewOn] = useState("");
   const [extraSize, setExtraSize] = useState(10);
   const [extraKinds, setExtraKinds] = useState<ReviewKind[]>(REVIEW_KINDS);
+  const [extraSource, setExtraSource] = useState<QSource>("past");
   const [pending, start] = useTransition();
   const router = useRouter();
 
@@ -633,6 +644,14 @@ export function LessonBoard({
             </details>
           )}
           <div className="filters">
+            <span className="muted" style={{ fontSize: 13, alignSelf: "center" }}>Where from</span>
+            {(["past", "either", "made"] as QSource[]).map((v) => (
+              <button key={v} type="button" className={`chip${extraSource === v ? " on" : ""}`} onClick={() => setExtraSource(v)}>
+                {SOURCE_LABEL[v]}
+              </button>
+            ))}
+          </div>
+          <div className="filters">
             <span className="muted" style={{ fontSize: 13, alignSelf: "center" }}>How many</span>
             {[5, 10, 15].map((n) => (
               <button key={n} type="button" className={`chip${extraSize === n ? " on" : ""}`} onClick={() => setExtraSize(n)}>
@@ -660,12 +679,13 @@ export function LessonBoard({
               type="button"
               className="btn accent"
               disabled={pending}
-              onClick={() => run(() => buildPractice(lesson.id, extraSize, extraKinds))}
+              onClick={() => run(() => buildPractice(lesson.id, extraSize, extraKinds, extraSource))}
             >
               {pending ? "Building…" : "Build a practice set"}
             </button>
             <span className="muted" style={{ fontSize: 13 }}>
               From this lesson&rsquo;s units, never a question {studentFirstName} has already been given. Hints and the helper on.
+              {extraSource === "past" && extraKinds.includes("mcq") ? " The papers set no multiple choice, so none will be in it." : ""}
             </span>
           </div>
         </div>

@@ -57,3 +57,17 @@ export function reviewKindOf(q: BankQuestion): ReviewKind | null {
   if (t !== "short") return t;
   return q.format === "calculation" || q.command_term === "calculate" ? "calculation" : "short";
 }
+
+/**
+ * Where a practice question comes from. The IB sets no multiple choice in Economics, so a set
+ * restricted to the papers has none — the tutor is told rather than quietly given fewer.
+ */
+export type QSource = "past" | "made" | "either";
+
+export const SOURCE_LABEL: Record<QSource, string> = {
+  past: "Past papers",
+  made: "Unit tests",
+  either: "Either",
+};
+
+export const isPastSource = (source: string) => source === "past";

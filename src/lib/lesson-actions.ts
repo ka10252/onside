@@ -16,7 +16,7 @@ import {
   unfinished,
   REVIEW_SIZE,
 } from "./lesson";
-import { REVIEW_KINDS, reviewKindOf, type ReviewKind } from "./question-types";
+import { REVIEW_KINDS, reviewKindOf, type QSource, type ReviewKind } from "./question-types";
 import { fillTemplate } from "./lesson-template";
 import { one, run, tx } from "./db";
 import { queueSet } from "./queue";
@@ -273,11 +273,16 @@ export async function unsendNotes(studentId: string, unit: number): Promise<Less
  * drawn from what the lesson, its quiz, its homework and the earlier practice sets have left, so
  * the student never meets the same question twice (Jin, 2026-10-18).
  */
-export async function buildPractice(lessonId: string, size: number, kinds: ReviewKind[]): Promise<LessonState> {
+export async function buildPractice(
+  lessonId: string,
+  size: number,
+  kinds: ReviewKind[],
+  source: QSource = "past",
+): Promise<LessonState> {
   const tutor = await requireUser("tutor");
   const l = await getLesson(lessonId);
   if (!l) return { error: "That lesson is gone." };
-  const plan = await practicePlan(lessonId, size, kinds.length ? kinds : REVIEW_KINDS);
+  const plan = await practicePlan(lessonId, size, kinds.length ? kinds : REVIEW_KINDS, source);
   if (plan.picked.length === 0) {
     return { error: plan.short ? `Nothing left: ${plan.short}.` : "No unseen questions are left for these units." };
   }
@@ -287,7 +292,7 @@ export async function buildPractice(lessonId: string, size: number, kinds: Revie
     .map((q) => q.id);
   const n = (await practiceSets(lessonId)).length + 1;
   const setId = await buildSet({
-    title: `Practice ${n} · Unit ${l.unit} · ${new Date().toLocaleDateString("en-SG", { day: "numeric", month: "short", timeZone: "Asia/Singapore" })}`,
+    title: `Practice ${n}${source === "past" ? " · past papers" : source === "made" ? " · unit tests" : ""} · Unit ${l.unit} · ${new Date().toLocaleDateString("en-SG", { day: "numeric", month: "short", timeZone: "Asia/Singapore" })}`,
     // Done at home, so the hints and the Helper are there, as in daily practice.
     helper: "on",
     questionIds: ids,

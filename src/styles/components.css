@@ -315,3 +315,6 @@ table.t tr.hov:hover td { background: var(--surface2); }
 .convo li.mk.flag .tm { color: var(--redtext, var(--red)); }
 .convo li.mk.flag span:last-child { color: var(--redtext, var(--red)); }
 .convo li.mk.flag span:last-child::after { background: var(--redtint, rgba(190, 18, 60, 0.14)); }
+
+/* Half-known: the middle of the three the teaching screen records. */
+.btn.lg.warn { background: var(--ambertint); border-color: var(--amber); color: var(--amber); font-weight: 700; }

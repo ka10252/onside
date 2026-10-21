@@ -8,10 +8,11 @@ import { PreviewPanel, QuestionLine } from "@/components/QuestionPreview";
 import { reportIfStale } from "@/components/stale";
 import { shortDateSG } from "@/lib/due";
 import type { BankQuestion } from "@/lib/admin";
-import type { Lesson, LessonItem, LessonNote, PracticeSet, PrepareQuestion, ReviewPlan, UnitBrief } from "@/lib/lesson";
+import type { Lesson, LessonItem, LessonNote, Outcome, PracticeSet, PrepareQuestion, ReviewPlan, UnitBrief } from "@/lib/lesson";
 import {
   KIND_LABEL,
   Q_TYPES,
+  PRACTICE_KINDS,
   REVIEW_KINDS,
   SOURCE_LABEL,
   TYPE_LABEL,
@@ -94,7 +95,7 @@ export function LessonBoard({
   studentId: string;
 }) {
   const [picked, setPicked] = useState<string[]>(lesson.items.map((i) => i.question_id));
-  const [outcomes, setOutcomes] = useState<Record<string, "right" | "wrong" | null>>(
+  const [outcomes, setOutcomes] = useState<Record<string, Outcome | null>>(
     Object.fromEntries(lesson.items.map((i) => [i.question_id, i.outcome])),
   );
   const [notes, setNotes] = useState(lesson.notes);
@@ -105,7 +106,7 @@ export function LessonBoard({
   const [dropped, setDropped] = useState<string[]>([]);
   const [reviewOn, setReviewOn] = useState("");
   const [extraSize, setExtraSize] = useState(10);
-  const [extraKinds, setExtraKinds] = useState<ReviewKind[]>(REVIEW_KINDS);
+  const [extraKinds, setExtraKinds] = useState<ReviewKind[]>(PRACTICE_KINDS);
   const [extraSource, setExtraSource] = useState<QSource>("past");
   const [pending, start] = useTransition();
   const router = useRouter();
@@ -132,7 +133,7 @@ export function LessonBoard({
     run(() => pickQuestions(lesson.id, next));
   }
 
-  function mark(id: string, outcome: "right" | "wrong") {
+  function mark(id: string, outcome: Outcome) {
     const next = outcomes[id] === outcome ? null : outcome;
     setOutcomes((o) => ({ ...o, [id]: next }));
     run(() => setOutcome(lesson.id, id, next));
@@ -659,7 +660,7 @@ export function LessonBoard({
               </button>
             ))}
             <span className="filtersep" aria-hidden />
-            {REVIEW_KINDS.map((k) => {
+            {PRACTICE_KINDS.map((k) => {
               const on = extraKinds.includes(k);
               return (
                 <button
@@ -748,9 +749,9 @@ function PrepRow({
   onMark,
 }: {
   q: PrepareQuestion;
-  outcome: "right" | "wrong" | null;
+  outcome: Outcome | null;
   pending: boolean;
-  onMark?: (id: string, outcome: "right" | "wrong") => void;
+  onMark?: (id: string, outcome: Outcome) => void;
 }) {
   return (
     <li>

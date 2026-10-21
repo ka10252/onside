@@ -33,9 +33,13 @@ export function typeOf(q: BankQuestion): QType {
  * they explain the mechanism" are different holes, and a quiz meant to check that last week closed
  * should be able to ask for one of each (Jin, 2026-10-08). Essays are never in a review quiz.
  */
-export type ReviewKind = "mcq" | "definition" | "short" | "calculation" | "diagram";
+export type ReviewKind = "mcq" | "definition" | "short" | "calculation" | "diagram" | "essay";
 
+/** What a review quiz may ask. Never an essay: it is a check, not a piece of writing. */
 export const REVIEW_KINDS: ReviewKind[] = ["mcq", "definition", "short", "calculation", "diagram"];
+
+/** What extra practice may ask. Essays included — it is work to take home (Jin, 2026-10-21). */
+export const PRACTICE_KINDS: ReviewKind[] = [...REVIEW_KINDS, "essay"];
 
 /** What a review quiz asks unless the tutor says otherwise: nothing that takes long to answer. */
 export const REVIEW_DEFAULT_KINDS: ReviewKind[] = ["mcq", "definition", "short", "calculation"];
@@ -48,12 +52,13 @@ export const KIND_LABEL: Record<ReviewKind, string> = {
   short: "Short answer",
   calculation: "Calculation",
   diagram: "Diagram",
+  essay: "Essay",
 };
 
-/** Which kind a review quiz would ask this as, or null for an essay, which it never asks. */
+/** Which kind a quiz or practice set would ask this as. */
 export function reviewKindOf(q: BankQuestion): ReviewKind | null {
   const t = typeOf(q);
-  if (t === "essay") return null;
+  if (t === "essay") return "essay";
   if (t !== "short") return t;
   return q.format === "calculation" || q.command_term === "calculate" ? "calculation" : "short";
 }

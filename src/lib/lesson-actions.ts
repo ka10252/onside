@@ -11,12 +11,13 @@ import {
   openLesson,
   practicePlan,
   practiceSets,
+  type Outcome,
   reviewPlan,
   setLessonItems,
   unfinished,
   REVIEW_SIZE,
 } from "./lesson";
-import { REVIEW_KINDS, reviewKindOf, type QSource, type ReviewKind } from "./question-types";
+import { PRACTICE_KINDS, REVIEW_KINDS, reviewKindOf, type QSource, type ReviewKind } from "./question-types";
 import { fillTemplate } from "./lesson-template";
 import { one, run, tx } from "./db";
 import { queueSet } from "./queue";
@@ -46,7 +47,7 @@ export async function pickQuestions(lessonId: string, questionIds: string[]): Pr
   return { ok: `${questionIds.length} ${questionIds.length === 1 ? "question" : "questions"} in this lesson.` };
 }
 
-export async function setOutcome(lessonId: string, questionId: string, outcome: "right" | "wrong" | null): Promise<LessonState> {
+export async function setOutcome(lessonId: string, questionId: string, outcome: Outcome | null): Promise<LessonState> {
   await requireUser("tutor");
   const l = await getLesson(lessonId);
   if (!l) return { error: "That lesson is gone." };
@@ -64,7 +65,7 @@ export async function setOutcome(lessonId: string, questionId: string, outcome: 
 export async function setReviewOutcome(
   lessonId: string,
   questionId: string,
-  outcome: "right" | "wrong" | null,
+  outcome: Outcome | null,
 ): Promise<LessonState> {
   await requireUser("tutor");
   const l = await getLesson(lessonId);
@@ -282,11 +283,11 @@ export async function buildPractice(
   const tutor = await requireUser("tutor");
   const l = await getLesson(lessonId);
   if (!l) return { error: "That lesson is gone." };
-  const plan = await practicePlan(lessonId, size, kinds.length ? kinds : REVIEW_KINDS, source);
+  const plan = await practicePlan(lessonId, size, kinds.length ? kinds : PRACTICE_KINDS, source);
   if (plan.picked.length === 0) {
     return { error: plan.short ? `Nothing left: ${plan.short}.` : "No unseen questions are left for these units." };
   }
-  const asked = kinds.length ? kinds : REVIEW_KINDS;
+  const asked = kinds.length ? kinds : PRACTICE_KINDS;
   const ids = plan.picked
     .sort((a, b) => asked.indexOf(reviewKindOf(a)!) - asked.indexOf(reviewKindOf(b)!))
     .map((q) => q.id);
@@ -340,5 +341,30 @@ export async function dropPractice(practiceId: string): Promise<LessonState> {
     await t.run("DELETE FROM sets WHERE id = ?", p.set_id);
   });
   revalidatePath(back(p.student_id));
+  return {};
+}
+
+/** How an extra practice question went, worked through on the shared screen. */
+export async function setPracticeOutcome(
+  lessonId: string,
+  questionId: string,
+  outcome: Outcome | null,
+): Promise<LessonState> {
+  await requireUser("tutor");
+  const l = await getLesson(lessonId);
+  if (!l) return { error: "That lesson is gone." };
+  if (outcome === null) {
+    await run("DELETE FROM practice_outcomes WHERE lesson_id = ? AND question_id = ?", lessonId, questionId);
+  } else {
+    await run(
+      `INSERT INTO practice_outcomes (lesson_id, question_id, outcome, at) VALUES (?, ?, ?, ?)
+         ON CONFLICT (lesson_id, question_id) DO UPDATE SET outcome = excluded.outcome, at = excluded.at`,
+      lessonId,
+      questionId,
+      outcome,
+      new Date().toISOString(),
+    );
+  }
+  revalidatePath(back(l.student_id));
   return {};
 }

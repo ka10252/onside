@@ -7,7 +7,7 @@ import { Diagram } from "@/components/Diagram";
 import { Notes } from "@/components/Notes";
 import { MarkScheme } from "./MarkScheme";
 import { reportIfStale } from "@/components/stale";
-import type { LessonNote, TeachQuestion } from "@/lib/lesson";
+import type { LessonNote, Outcome, TeachQuestion } from "@/lib/lesson";
 import {
   buildHomework,
   buildReviewQuiz,
@@ -15,6 +15,7 @@ import {
   dropReviewQuiz,
   sendHomework,
   setOutcome,
+  setPracticeOutcome,
   setReviewOutcome,
 } from "@/lib/lesson-actions";
 import { KIND_LABEL, REVIEW_DEFAULT_KINDS, REVIEW_DEFAULT_SIZE, REVIEW_KINDS, type ReviewKind } from "@/lib/question-types";
@@ -57,11 +58,14 @@ export function TeachBoard({
     withNotes.length ? "revision" : "questions",
   );
   const [part, setPart] = useState(0);
-  const [outcomes, setOutcomes] = useState<Record<string, "right" | "wrong" | null>>(
+  const [outcomes, setOutcomes] = useState<Record<string, Outcome | null>>(
     Object.fromEntries(questions.map((q) => [q.id, q.outcome])),
   );
-  const [reviewOutcomes, setReviewOutcomes] = useState<Record<string, "right" | "wrong" | null>>(
+  const [reviewOutcomes, setReviewOutcomes] = useState<Record<string, Outcome | null>>(
     Object.fromEntries(review.map((q) => [q.id, q.outcome])),
+  );
+  const [practiceOutcomes, setPracticeOutcomes] = useState<Record<string, Outcome | null>>(
+    Object.fromEntries(practice.map((q) => [q.id, q.outcome])),
   );
   const [pending, start] = useTransition();
   const [sendOn, setSendOn] = useState("");
@@ -121,7 +125,23 @@ export function TeachBoard({
     return (
       <div className="teach">
         {tabs}
-        <Run key="practice" questions={practice} outcomes={{}} pending={pending} />
+        <Run
+          key="practice"
+          questions={practice}
+          outcomes={practiceOutcomes}
+          pending={pending}
+          onMark={(id, outcome) => {
+            setPracticeOutcomes((o) => ({ ...o, [id]: outcome }));
+            start(async () => {
+              try {
+                await setPracticeOutcome(lessonId, id, outcome);
+                router.refresh();
+              } catch (e) {
+                if (!reportIfStale(e)) throw e;
+              }
+            });
+          }}
+        />
       </div>
     );
   }
@@ -206,7 +226,7 @@ export function TeachBoard({
     });
   }
 
-  function mark(id: string, outcome: "right" | "wrong" | null) {
+  function mark(id: string, outcome: Outcome | null) {
     setOutcomes((o) => ({ ...o, [id]: outcome }));
     start(async () => {
       try {
@@ -444,23 +464,27 @@ export function TeachBoard({
  * this, so they behave identically; only where the marks are recorded differs.
  */
 function Run({
-  questions,
+  questions: all,
   outcomes,
   pending,
   onMark,
   barEnd,
 }: {
   questions: TeachQuestion[];
-  outcomes: Record<string, "right" | "wrong" | null>;
+  outcomes: Record<string, Outcome | null>;
   pending: boolean;
   /** Left out where the questions are not being marked, as extra practice is not. */
-  onMark?: (id: string, outcome: "right" | "wrong" | null) => void;
+  onMark?: (id: string, outcome: Outcome | null) => void;
   /** Anything the lesson wants beside the count, such as ending the lesson. */
   barEnd?: React.ReactNode;
 }) {
   const [at, setAt] = useState(0);
   const [picked, setPicked] = useState<string | null>(null);
   const [shown, setShown] = useState<string | null>(null);
+  // A lesson covers two units, and a class works through one of them at a time.
+  const [unit, setUnit] = useState<number | null>(null);
+  const units = [...new Set(all.map((x) => x.unit))].sort((a, b) => a - b);
+  const questions = unit === null ? all : all.filter((x) => x.unit === unit);
   const q = questions[Math.min(at, questions.length - 1)];
   if (!q) return null;
   const done = questions.filter((x) => outcomes[x.id]).length;
@@ -471,7 +495,7 @@ function Run({
     setShown(null);
   }
 
-  function mark(outcome: "right" | "wrong", move = true) {
+  function mark(outcome: Outcome, move = true) {
     if (!onMark) return;
     const next = outcomes[q!.id] === outcome && move ? null : outcome;
     onMark(q!.id, next);
@@ -484,8 +508,27 @@ function Run({
     mark(picked === q.right ? "right" : "wrong", false);
   }
 
+  function toUnit(u: number | null) {
+    setUnit(u);
+    setAt(0);
+    setPicked(null);
+    setShown(null);
+  }
+
   return (
     <>
+      {units.length > 1 && (
+        <nav className="filters" aria-label="Which unit" style={{ marginBottom: 2 }}>
+          <button type="button" className={`chip${unit === null ? " on" : ""}`} onClick={() => toUnit(null)}>
+            Both units · {all.length}
+          </button>
+          {units.map((u) => (
+            <button key={u} type="button" className={`chip${unit === u ? " on" : ""}`} onClick={() => toUnit(u)}>
+              Unit {u} · {all.filter((x) => x.unit === u).length}
+            </button>
+          ))}
+        </nav>
+      )}
       <div className="teachbar">
         <span className="rowacts">
           <button type="button" className="btn ghost sm" onClick={() => go(at - 1)} disabled={at === 0}>
@@ -508,7 +551,7 @@ function Run({
             <button
               key={x.id}
               type="button"
-              className={`dot${i === at ? " on" : ""}${outcomes[x.id] === "right" ? " right" : outcomes[x.id] === "wrong" ? " wrong" : ""}`}
+              className={`dot${i === at ? " on" : ""}${outcomes[x.id] ? ` ${outcomes[x.id]}` : ""}`}
               onClick={() => go(i)}
             />
           ))}
@@ -600,6 +643,11 @@ function Run({
         <button type="button" className={`btn lg${outcomes[q.id] === "right" ? " primary" : ""}`} onClick={() => mark("right")} disabled={pending}>
           Got it
         </button>
+        {!q.right && (
+          <button type="button" className={`btn lg${outcomes[q.id] === "shaky" ? " warn" : ""}`} onClick={() => mark("shaky")} disabled={pending}>
+            Shaky
+          </button>
+        )}
         <button type="button" className={`btn lg${outcomes[q.id] === "wrong" ? " danger" : ""}`} onClick={() => mark("wrong")} disabled={pending}>
           Missed
         </button>

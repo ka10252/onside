@@ -32,7 +32,13 @@ export type Lesson = {
   homework_set_id: string | null;
 };
 
-export type LessonItem = { question_id: string; position: number; outcome: "right" | "wrong" | null };
+/**
+ * How a question went in the lesson. "shaky" is the middle one: answered, but not well enough to
+ * count as known — it is treated as a hole when the review quiz picks its ground (Jin, 2026-10-21).
+ */
+export type Outcome = "right" | "shaky" | "wrong";
+
+export type LessonItem = { question_id: string; position: number; outcome: Outcome | null };
 
 export const newId = (p: string) => `${p}_${Date.now().toString(36)}${randomBytes(3).toString("hex")}`;
 
@@ -171,7 +177,7 @@ export async function setLessonItems(lessonId: string, questionIds: string[]) {
   });
 }
 
-export async function markOutcome(lessonId: string, questionId: string, outcome: "right" | "wrong" | null) {
+export async function markOutcome(lessonId: string, questionId: string, outcome: Outcome | null) {
   await run("UPDATE lesson_items SET outcome = ? WHERE lesson_id = ? AND question_id = ?", outcome, lessonId, questionId);
 }
 
@@ -233,7 +239,8 @@ export async function reviewPlan(lessonId: string, size = REVIEW_SIZE, kinds: Re
   // A quiz can be wanted before anything has gone wrong — the lesson may have gone well, or may
   // not be marked yet. Then there is nothing to re-ask and the whole quiz comes off the lesson's
   // ground instead, which still answers whether the revision happened (Jin, 2026-10-12).
-  const wrongIds = lesson.items.filter((i) => i.outcome === "wrong").map((i) => i.question_id);
+  // A shaky answer is a hole too, so it sets the ground the quiz is drawn from.
+  const wrongIds = lesson.items.filter((i) => i.outcome === "wrong" || i.outcome === "shaky").map((i) => i.question_id);
 
   // The whole unit, not just the past papers: the IB sets no multiple choice, so the short
   // questions that make a review quiz work come from the unit tests.
@@ -325,11 +332,13 @@ export type TeachQuestion = {
   context: Block[];
   lead: Block[];
   options: { id: string; text: string }[];
-  outcome: "right" | "wrong" | null;
+  outcome: Outcome | null;
   /** For an essay: the outline of a model answer, which the tutor opens when the writing is done. */
   outline: string | null;
   /** For multiple choice only: which option is right, revealed when the class has chosen. */
   right: string | null;
+  /** Which unit it belongs to, so a lesson of two can be taken one unit at a time. */
+  unit: number;
   /** The figure the paper's own tag asks for, as one of the drawn diagrams, where we have it. */
   diagram: string | null;
   /**
@@ -371,8 +380,9 @@ export async function reviewQuizView(lessonId: string): Promise<TeachQuestion[]>
  */
 export async function practiceView(lessonId: string): Promise<TeachQuestion[]> {
   const items = await all<LessonItem>(
-    `SELECT i.question_id, i.position, NULL::text AS outcome
+    `SELECT i.question_id, i.position, o.outcome
        FROM practice_sets p JOIN set_items i ON i.set_id = p.set_id
+       LEFT JOIN practice_outcomes o ON o.lesson_id = p.lesson_id AND o.question_id = i.question_id
       WHERE p.lesson_id = ? ORDER BY p.created_at, i.position`,
     lessonId,
   );
@@ -390,9 +400,10 @@ async function teachQuestions(items: LessonItem[]): Promise<TeachQuestion[]> {
   if (items.length === 0) return [];
   const ids = items.map((i) => i.question_id);
   const holes = ids.map(() => "?").join(", ");
-  const rows = await all<{ id: string; marks: number; format: string; data: string; diagram_type: string | null }>(
-    `SELECT q.id, q.marks, q.format, q.data, p.diagram_type
-       FROM questions q LEFT JOIN past_items p ON p.id = substr(q.id, 4)
+  const rows = await all<{ id: string; marks: number; format: string; data: string; diagram_type: string | null; unit: number }>(
+    `SELECT q.id, q.marks, q.format, q.data, p.diagram_type, u.number AS unit
+       FROM questions q JOIN units u ON u.id = q.unit_id
+       LEFT JOIN past_items p ON p.id = substr(q.id, 4)
       WHERE q.id IN (${holes})`,
     ...ids,
   );
@@ -425,6 +436,7 @@ async function teachQuestions(items: LessonItem[]): Promise<TeachQuestion[]> {
       outline: outlines.get(row.id) ?? null,
       // Only the letter, and only for multiple choice: nothing else about the answer is fetched.
       right: !past && q.format === "mcq" ? String(q.answer).toUpperCase() : null,
+      unit: row.unit,
       diagram: diagramForTag(row.diagram_type),
       marking: typeOf2(row.format, row.marks, q) === "diagram" ? (past ? q.marking.text || null : answerText(q)) : null,
     });

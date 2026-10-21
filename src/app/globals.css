@@ -439,6 +439,7 @@ table.board { table-layout: fixed; min-width: 860px; }
 .teachbar .dot.on { outline: 2px solid var(--ink); outline-offset: 2px; }
 .teachbar .dot.right { background: var(--green); border-color: var(--green); }
 .teachbar .dot.wrong { background: var(--red); border-color: var(--red); }
+.teachbar .dot.shaky { background: var(--amber); border-color: var(--amber); }
 .teachcard { padding: 32px 36px; display: flex; flex-direction: column; gap: 16px; }
 .teachq { margin: 0; font-size: 26px; font-weight: 500; line-height: 1.35; }
 .btn.lg { height: 52px; padding: 0 28px; font-size: 17px; }

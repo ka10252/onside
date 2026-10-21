@@ -268,6 +268,15 @@ CREATE TABLE IF NOT EXISTS lesson_items (
   PRIMARY KEY (lesson_id, question_id)
 );
 
+-- How an extra practice question went when the class worked through it on the teaching screen.
+CREATE TABLE IF NOT EXISTS practice_outcomes (
+  lesson_id   TEXT NOT NULL REFERENCES lessons(id) ON DELETE CASCADE,
+  question_id TEXT NOT NULL REFERENCES questions(id),
+  outcome     TEXT,
+  at          TEXT,
+  PRIMARY KEY (lesson_id, question_id)
+);
+
 -- Extra practice built from a lesson's units. A lesson can have several, each one drawing from
 -- what the earlier ones left, so the same question is never set twice (Jin, 2026-10-18).
 CREATE TABLE IF NOT EXISTS practice_sets (

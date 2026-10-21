@@ -22,6 +22,7 @@ import { fillTemplate } from "./lesson-template";
 import { one, run, tx } from "./db";
 import { queueSet } from "./queue";
 import { unitsOfLesson } from "./lesson-plan";
+import { setReportSent } from "./lesson-report";
 import { releaseNotes, unreleaseNotes } from "./revision";
 import { singaporeToday } from "./schedule";
 import { requireUser } from "./session";
@@ -366,5 +367,30 @@ export async function setPracticeOutcome(
     );
   }
   revalidatePath(back(l.student_id));
+  return {};
+}
+
+/**
+ * Opens the lesson's record to the student: what it covered, how each question went, and what they
+ * wrote. It is not a set to solve — the homework, the quiz and the practice are those — so it goes
+ * on its own and can be taken back (Jin, 2026-10-21).
+ */
+export async function sendLessonRecord(lessonId: string): Promise<LessonState> {
+  await requireUser("tutor");
+  const l = await getLesson(lessonId);
+  if (!l) return { error: "That lesson is gone." };
+  await setReportSent(lessonId, true);
+  revalidatePath(back(l.student_id));
+  revalidatePath("/student", "layout");
+  return { ok: "Sent. It is on their Lessons tab." };
+}
+
+export async function unsendLessonRecord(lessonId: string): Promise<LessonState> {
+  await requireUser("tutor");
+  const l = await getLesson(lessonId);
+  if (!l) return { error: "That lesson is gone." };
+  await setReportSent(lessonId, false);
+  revalidatePath(back(l.student_id));
+  revalidatePath("/student", "layout");
   return {};
 }

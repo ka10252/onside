@@ -29,6 +29,7 @@ export type Lesson = {
   homework_assignment_id: string | null;
   /** The sets, built and waiting to be looked at before they go. */
   review_set_id: string | null;
+  report_sent_at: string | null;
   homework_set_id: string | null;
 };
 

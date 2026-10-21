@@ -31,7 +31,9 @@ import {
   buildPractice,
   buildReviewQuiz,
   dropPractice,
+  sendLessonRecord,
   sendPractice,
+  unsendLessonRecord,
   dropHomework,
   dropReviewQuiz,
   sendNotes,
@@ -688,6 +690,36 @@ export function LessonBoard({
               From this lesson&rsquo;s units, never a question {studentFirstName} has already been given. Hints and the helper on.
               {extraSource === "past" && extraKinds.includes("mcq") ? " The papers set no multiple choice, so none will be in it." : ""}
             </span>
+          </div>
+        </div>
+      </details>
+
+      <details className="card" open={!lesson.report_sent_at}>
+        <summary className="card-hd" style={{ cursor: "pointer" }}>
+          <h2>What {studentFirstName} takes away</h2>
+          <span className="muted" style={{ fontSize: 14 }}>
+            {lesson.report_sent_at ? `Sent ${shortDateSG(lesson.report_sent_at)}` : "Not sent"}
+          </span>
+        </summary>
+        <div className="cardbody stack" style={{ gap: 10 }}>
+          <p className="note" style={{ margin: 0 }}>
+            The record of this lesson, not a set to solve: every question it covered — in the lesson,
+            in the review quiz and in the extra practice — with how each one went and whatever{" "}
+            {studentFirstName} wrote. It opens on their Lessons tab.
+          </p>
+          <div className="rowacts" style={{ flexWrap: "wrap" }}>
+            <a className="btn ghost sm" href={`/tutor/students/${studentId}/lesson/record?lesson=${lesson.id}`} target="_blank" rel="noreferrer">
+              See it as {studentFirstName} will
+            </a>
+            {lesson.report_sent_at ? (
+              <button type="button" className="btn ghost sm" disabled={pending} onClick={() => run(() => unsendLessonRecord(lesson.id))}>
+                Take it back
+              </button>
+            ) : (
+              <button type="button" className="btn accent" disabled={pending} onClick={() => run(() => sendLessonRecord(lesson.id))}>
+                Send the record
+              </button>
+            )}
           </div>
         </div>
       </details>

@@ -76,10 +76,14 @@ export async function noteRead(studentId: string, unit: number): Promise<string 
 
 /** The student's tabs, with a mark on Revision notes while a note is waiting to be read. */
 export async function studentTabs(studentId: string): Promise<Tab[]> {
-  const notes = await studentNotes(studentId);
+  const [notes, lessons] = await Promise.all([
+    studentNotes(studentId),
+    one<{ n: number }>("SELECT COUNT(*)::int AS n FROM lessons WHERE student_id = ? AND report_sent_at IS NOT NULL", studentId),
+  ]);
   return [
     { href: "/student", label: "Assignments" },
     { href: "/student/notes", label: "Revision notes", dot: notes.some(unread) },
+    ...((lessons?.n ?? 0) > 0 ? [{ href: "/student/lessons", label: "Lessons" }] : []),
   ];
 }
 
